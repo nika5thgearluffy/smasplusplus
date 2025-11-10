@@ -1,0 +1,7 @@
+gfxwidth=32
+gfxheight=58
+width=32
+height=58
+framestyle=0
+frames=6
+nogravity=1

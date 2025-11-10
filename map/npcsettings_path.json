@@ -1,0 +1,92 @@
+{
+	"style" : "groupbox",
+	"title" : "Path Settings",
+	"layout": [
+		{
+			"control": "lineEdit",
+			"name": "name",
+			"title": "Name",
+			"tooltip": "Name of the path, to identify it.",
+			"value-default": ""
+		},
+		{
+			"control": "lineEdit",
+			"name": "points",
+			"title": "Points",
+			"tooltip": "The points of the spline, in order, separated by a comma.",
+			"value-default": "",
+			"placeholder": "0,0, 96,0, 128,32, etc"
+		},
+		{
+			"control": "lineEdit",
+			"name": "types",
+			"title": "Types",
+			"tooltip": "The types of path used for each point, in order, separated by a comma.",
+			"value-default": "",
+			"placeholder": "normal, normal, trail, etc"
+		},
+		{
+			"control": "spinbox",
+			"name": "smoothness",
+			"title": "Smoothness",
+			"type": "double",
+			"tooltip": "How smooth the path is.",
+			"value-default": 0.5,
+			"value-min": 0,
+			"value-max": 1,
+			"single-step": 0.1,
+			"decimals": 2
+		},
+		{
+			"control": "checkBox",
+			"name": "hideIfLocked",
+			"title": "Hide if Locked",
+			"tooltip": "If ticked, the path will be invisible when locked.",
+			"value-default": false
+		},
+        
+        {
+			"control": "group",
+			"name": "smb3settings",
+			"title": "SMB3-Related Settings",
+			"children": [
+                {
+                    "control": "checkBox",
+                    "name": "isLockedSMB3",
+                    "title": "Is Locked (SMB3)",
+                    "tooltip": "Unrelated to the locked system already in place. If checked, the player won't go through this path, even if it's visible. For this path to be unlocked, either a level must be completed, or the player must use a hammer from the map inventory.",
+                    "value-default": false
+                },
+                {
+                    "control": "checkBox",
+                    "name": "canUnlockWhenBeatingLevelSMB3",
+                    "title": "Unlock After Winning a Level (SMB3)",
+                    "tooltip": "If checked, the level (After beating) will unlock the path. This won't affect whether hammers can be used or not.",
+                    "value-default": false
+                },
+                {
+                    "control": "levelFile",
+                    "name": "levelBeatBeforeUnlockedSMB3",
+                    "title": "Unlock Level Filename (SMB3)",
+                    "tooltip": "Filename of the level that will unlock this path if beat with any win type above 0.",
+                    "value-default": ""
+                },
+                {
+                    "control": "checkBox",
+                    "name": "cantUnlockWithHammerSMB3",
+                    "title": "Can't Unlock With a Hammer (SMB3)",
+                    "tooltip": "If checked, the path can't be unlocked with a hammer.",
+                    "value-default": false
+                },
+                {
+                    "control": "lineEdit",
+                    "name": "lockedPathEventNameSMB3",
+                    "title": "Locked Path Event Name (SMB3)",
+                    "tooltip": "The event name of the locked path when unlocking.",
+                    "value-default": ""
+                }
+            ]
+        }
+    ]
+}
+

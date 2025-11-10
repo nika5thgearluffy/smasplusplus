@@ -1,0 +1,1 @@
+local smasMainMenu = require("smasMainMenu")
