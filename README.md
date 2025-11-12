@@ -11,9 +11,9 @@
     A project that recreates Super Mario All-Stars, with many more games, new features, and surprises
     <br />
     <br />
-    <a href="https://github.com/SpencerEverly/smasplusplus/issues">Report Bugs</a>
+    <a href="https://github.com/nika5thgearluffy/smasplusplus/issues">Report Bugs</a>
     ·
-    <a href="https://github.com/SpencerEverly/smasplusplus/wiki">How to install (Coming soon)</a>
+    <a href="https://github.com/nika5thgearluffy/smasplusplus/wiki">How to Install & Other Info</a>
   </p>
 </div>
 
