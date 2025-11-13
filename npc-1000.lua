@@ -122,7 +122,7 @@ end
 
 function newstar.onPostNPCKill(v,reason)
     if newstar.collectableIDMap[v.id] and npcManager.collected(v,reason) then
-        Routine.run(starget)
+        Routine.run(starget, v)
     end
 end
 

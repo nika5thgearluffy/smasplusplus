@@ -35,6 +35,7 @@ _G.smasResolutions = require("smasResolutions")
 _G.smasSMB1System = require("smasSMB1System")
 _G.smasCameraControl = require("smasCameraControl")
 _G.smasZoomSystem = require("smasZoomSystem")
+_G.smasM3ATWSystem = require("smasM3ATWSystem")
 
 if SMBX_VERSION == VER_SEE_MOD then
     smasOnlinePlay = require("smasOnlinePlay")

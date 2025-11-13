@@ -1,3 +1,1 @@
-function onStart()
-    Sound.changeMusicRNG(smasTables.mario3AroundTheWorldMusicRng, -1)
-end
+local level_dependencies_normal= require("level_dependencies_normal")

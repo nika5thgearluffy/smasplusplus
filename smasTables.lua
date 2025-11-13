@@ -260,7 +260,7 @@ smasTables.__smbspencerLevels = {
     "SMBS - W-3, L-1.lvlx",
 }
 
---All WSMBA levels, listed here for many reasons
+--All WSMBA levels
 smasTables.__wsmbaLevels = {
     "WSMBA - W-0, L-Bonus.lvlx",
     "WSMBA - W-0, L-MALC.lvlx",
@@ -299,12 +299,17 @@ smasTables.__wsmbaLevels = {
     "WSMBA - W-S, L-5.lvlx",
 }
 
---All SMB Special levels, for many reasons.
+--All SMB Special levels
 smasTables.__smbspecialLevels = {
     "SMBSp - W-1, L-1.lvlx",
     "SMBSp - W-1, L-2.lvlx",
     "SMBSp - W-1, L-3.lvlx",
     "SMBSp - W-1, L-4.lvlx",
+}
+
+-- All "Mario 3: All Around the World" levels
+smasTables.__m3AllAroundTheWorldLevels = {
+    "M3ATW - W-1, L-1.lvlx",
 }
 
 --Friendly place table for Mother Brain Rinka
