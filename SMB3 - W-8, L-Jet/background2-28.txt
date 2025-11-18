@@ -1,0 +1,21 @@
+[Layer1]
+img = "JetBG-1-CloudsLower.png"
+depth = INFINITE
+repeatX = true
+alignY = BOTTOM
+speedX = 0.5
+
+[Layer2]
+img = "JetBG-2-CloudsMiddle.png"
+depth = INFINITE
+repeatX = true
+alignY = BOTTOM
+speedX = 0.35
+opacity = 0.5
+
+[Layer3]
+img = "JetBG-3-CloudsFront.png"
+depth = INFINITE
+repeatX = true
+alignY = BOTTOM
+speedX = 0.2

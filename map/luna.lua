@@ -10,7 +10,6 @@ local playerManager = require("playermanager")
 if not Misc.inMarioChallenge() then
     smasDateAndTime = require("smasDateAndTime")
 end
-local debugbox = require("debugbox")
 
 function onStart()
     GameData.friendlyArea = true

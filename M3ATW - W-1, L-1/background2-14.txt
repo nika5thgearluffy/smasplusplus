@@ -1,0 +1,14 @@
+[background2]
+color = 0xF89048FF
+
+[Layer1]
+img = "background2-1-DesertBG1.png"
+depth = INFINITE
+repeatX = true
+alignY = BOTTOM
+
+[Layer2]
+img = "background2-2-DesertBG2.png"
+depth = INFINITE
+repeatX = true
+alignY = TOP

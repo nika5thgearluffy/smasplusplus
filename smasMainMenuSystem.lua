@@ -555,7 +555,11 @@ function smasMainMenuSystem.onDraw()
                     elseif currentOption.isGameData then
                         named[MenuCursor + 1] = transplate.getTranslation(smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][k].name).." ("..tostring(GameData[smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][k].numberToUse])..")"
                     elseif currentOption.isPauseplusValue then
-                        named[MenuCursor + 1] = transplate.getTranslation(smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][k].name).." ("..tostring(SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][k].numberToUse])..")"
+                        if (SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu]) then
+                            named[MenuCursor + 1] = transplate.getTranslation(smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][k].name).." ("..tostring(SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][k].numberToUse])..")"
+                        else
+                            named[MenuCursor + 1] = "pauseplus SaveData not found"
+                        end
                     end
                 
                 elseif currentOption.menuType == smasMainMenuSystem.menuTypes.MENU_MULTISELECT then

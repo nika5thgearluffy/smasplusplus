@@ -43,7 +43,7 @@ end
 
 local numberfont = textplus.loadFont("littleDialogue/font/1.ini")
 
-if not table.icontains(smasTables._noLevelPlaces,Level.filename()) then
+if not table.icontains(smasTables._noLevelPlaces, Level.filename()) then
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
         if SaveData.SMASPlusPlus.accessibility.enableTwirl then
             SysManager.sendToConsole("Twirling activated! Loading the twirl library...")
@@ -181,8 +181,6 @@ function globalgenerals.onStart()
     Sound.startupRefreshSystem()
     Playur.failsafeStartupPlayerCheck()
     if Misc.inEditor() then
-        debugbox = require("debugbox")
-        debugbox.bootactive = true
         if SMBX_VERSION == VER_SEE_MOD then
             Misc.setNewTestModeLevelData(Level.filename())
             SysManager.sendToConsole("SEE MOD ACTIVE! Editor level starter has been set to "..Level.filename()..".")

@@ -14,7 +14,7 @@ function smasAudioVolumeSystem.onDraw()
         if GameData.SMASPlusPlus.audio.sfxVolume == nil then
             GameData.SMASPlusPlus.audio.sfxVolume = 1
         end
-        if (pausemenu2 and pauseplus) or (pauseplus) then
+        if (pausemenu2 and pauseplus) or (pauseplus) and (SaveData.pauseplus.selectionData["soundsettings"]) then
             SaveData.pauseplus.selectionData["soundsettings"]["music volume"] = GameData.SMASPlusPlus.audio.musicVolume
             SaveData.pauseplus.selectionData["soundsettings"]["sfx volume"] = GameData.SMASPlusPlus.audio.sfxVolume
 

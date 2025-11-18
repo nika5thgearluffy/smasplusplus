@@ -1,0 +1,5 @@
+[Layer1]
+depth = INFINITE
+img = "background-1-forestArea.png"
+repeatX = true
+alignY = BOTTOM

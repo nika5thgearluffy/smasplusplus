@@ -1,4 +1,3 @@
-local debugbox = require("debugbox")
 local smasDateAndTime = require("smasDateAndTime")
 
 smasDateAndTime.enabled = false
@@ -8,7 +7,6 @@ smasBooleans.disablePauseMenu = true
 GameData.gameFirstLoaded = true
 
 smasBooleans.isOnMainMenu = false
-debugbox.bootactive = false
 GameData.rushModeActive = false
 
 local active = false

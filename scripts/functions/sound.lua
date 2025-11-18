@@ -103,10 +103,11 @@ function Sound.playSFX(name, volume, loops, delay, pan) --If you want to play an
     end
     
     if volume == nil then
-        volume = smasExtraSounds.volume
-    end
-    if smasExtraSounds.volume == nil then
-        volume = 1
+        if smasExtraSounds.volume == nil then
+            volume = 1
+        else
+            volume = smasExtraSounds.volume
+        end
     end
     if loops == nil then
         loops = 1
@@ -123,7 +124,7 @@ function Sound.playSFX(name, volume, loops, delay, pan) --If you want to play an
     
     if not eventObj.cancelled then
         if Sound.isExtraSoundsActive() then
-            if name == 0 then
+            if name == nil then
                 audiomasterSMAS.PlaySound({sound = "nothing.ogg", volume = volume, loops = loops, delay = delay, pan = pan})
             elseif not smasTables.stockSoundNumbersInOrder[name] and smasExtraSounds.sounds[name] then
                 if not smasExtraSounds.sounds[name].muted then
@@ -136,7 +137,7 @@ function Sound.playSFX(name, volume, loops, delay, pan) --If you want to play an
                 audiomasterSMAS.PlaySound({sound = file, volume = volume, loops = loops, delay = delay, pan = pan}) --Play it afterward
             end
         elseif not Sound.isExtraSoundsActive() then
-            if name == 0 then
+            if name == nil then
                 audiomasterSMAS.PlaySound({sound = "nothing.ogg", volume = volume, loops = loops, delay = delay, pan = pan})
             elseif smasTables.allVanillaSoundNumbersInOrder[name] then
                 audiomasterSMAS.PlaySound({sound = Audio.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
@@ -479,7 +480,7 @@ function Sound.changeMusicRNG(songTable, sectionNumber)
         error("Must have a table to RNG music!")
         return
     end
-    local musicCount = #songtable
+    local musicCount = #songTable
     if sectionNumber == -1 then
         for i = 0,20 do
             Sound.changeMusic(songTable[RNG.randomInt(1,musicCount)], i)

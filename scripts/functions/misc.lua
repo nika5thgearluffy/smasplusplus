@@ -28,7 +28,7 @@ function Misc.worldFilename() --Gets the world filename. Thanks KBM_Quine!
 end
 
 function Misc.inSuperMarioAllStarsPlusPlus() --Checks and sees if SMAS++ is being run. If not, some functions won't run. Idk if this is a reliable check but oh well, I tried.
-    if SMBX_VERSION ~= VER_SEE_MOD then
+    --[[if SMBX_VERSION ~= VER_SEE_MOD then
         return (Misc.worldFilename() == "__World Map.wld" --Checks to see if the world map is this...
             and io.exists(Misc.episodePath().."SMB1 - W-1, L-1.lvlx") --Checks the first levels of each mandatory game (+ SMBLL).
             and io.exists(Misc.episodePath().."SMBLL - W-1, L-1.lvlx")
@@ -39,7 +39,8 @@ function Misc.inSuperMarioAllStarsPlusPlus() --Checks and sees if SMAS++ is bein
         )
     elseif SMBX_VERSION == VER_SEE_MOD then
         return LunaDLL.LunaLuaInSMASPlusPlus()
-    end
+    end]]
+    return true
 end
 
 function Misc.listUserFiles(path)
