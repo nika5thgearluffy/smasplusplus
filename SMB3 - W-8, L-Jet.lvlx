@@ -3,7 +3,7 @@ TL:"Super Mario Bros. 3\: World 8 (Air Force)";XTRA:"{\n    \"timer\"\: {\n     
 HEAD_END
 SECTION
 SC:0;L:-200000;R:-193888;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros 3/Airship.spc|0\;g=2.5";BG:28;
-SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:0;MF:"";BG:17;
+SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros 3/Boss.spc|0\;g=2.5\;e0";BG:17;
 SECTION_END
 STARTPOINT
 ID:1;X:-199772;Y:-200214;D:1;
