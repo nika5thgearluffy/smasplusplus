@@ -804,7 +804,7 @@ ID:544;X:-195136;Y:-200256;D:-1;XTRA:"{\n    \"startAngle\"\: 90\n}\n";
 ID:395;X:-195200;Y:-200256;D:-1;
 ID:544;X:-194752;Y:-200192;D:-1;XTRA:"{\n    \"startAngle\"\: 90\n}\n";
 ID:395;X:-194816;Y:-200192;D:-1;
-ID:946;X:-179352;Y:-180120;D:-1;ED:"Boss End";XTRA:"{\n    \"canFly\"\: true\n}\n";
+ID:946;X:-179352;Y:-180120;D:-1;ED:"Boss End";XTRA:"{\n    \"HPAmount\"\: 3\,\n    \"canFly\"\: true\n}\n";
 ID:1000;X:-179616;Y:-180192;D:-1;LR:"Star";
 NPC_END
 DOORS
