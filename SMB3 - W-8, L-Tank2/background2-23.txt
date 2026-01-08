@@ -1,0 +1,17 @@
+[background2]
+; Name that will appear in the editor
+name = "SMB3 Tanks"
+
+; Layers below
+
+[Layer1]
+img = "background2-23-tankBG1.png"
+depth = INFINITE
+repeatX = true
+
+[Layer2]
+img = "background2-23-tankBG2.png"
+depth = INFINITE
+repeatX = true
+alignY=BOTTOM
+speedX=0.5
