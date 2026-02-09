@@ -1,6 +1,6 @@
 --[[
     magicHand (v1.0)
-    by Spencer Everly
+    by "The Sun God: Nika"
     
     For the use of placing editor entities onto X2
 ]]

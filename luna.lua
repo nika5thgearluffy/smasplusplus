@@ -1,18 +1,21 @@
---SUPER MARIO ALL-STARS++
---By Spencer Everly
---Here's the starting code that loads it all. How'd I do?
+--[[
+    SUPER MARIO ALL-STARS++
+    By "The Sun God: Nika"
 
---Total Stars:
---SMB1 = 43 (Done!)
---SMB2 = 22 (Done! Still need code for several things though)
---SMB3 = TBD (WIP)
---SMBLL (Optional) = 52 (Done!)
---SMW = TBD (WIP)
---SMBS = TBD (WIP)
---WSMBA = 24 (Done!)
---Lava Lands = 5 (WIP)
---Side Quest (Optional) = TBD (WIP)
---True Ending = 1 (WIP)
+    Here's the starting code that loads it all. How'd I do?
+
+    -- Total Stars --
+    SMB1 = 43 (Done!)
+    SMB2 = 22 (Done! Still need code for several things though)
+    SMB3 = TBD (WIP)
+    SMBLL (Optional) = 52 (Done!)
+    SMW = TBD (WIP)
+    SMBS = TBD (WIP)
+    WSMBA = 24 (Done!)
+    Lava Lands = 5 (WIP)
+    Side Quest (Optional) = TBD (WIP)
+    True Ending = 1 (WIP)
+]]
 
 function SysManagerSendToConsole(data)
     return console:println(tostring(data))

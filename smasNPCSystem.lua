@@ -1,5 +1,5 @@
 --smasNPCSystem.lua
---By Spencer Everly
+--By "The Sun God: Nika"
 
 --[[
     NPC option values:

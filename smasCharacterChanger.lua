@@ -1,5 +1,5 @@
 --smasCharacterChanger.lua (v1.0)
---By Spencer Everly
+--By "The Sun God: Nika"
 
 local smasCharacterChanger = {}
 

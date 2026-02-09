@@ -4,7 +4,8 @@
 --Edited by Rednaxela, because why not
 --Rocky was here too
 --Enjl.
---Spencer Everly.
+--"The Sun God: Nika".
+-- (Fuck the SMBX2 devs)
 local playerManagerSMAS = {}
 
 -- Local function definitions

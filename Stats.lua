@@ -4,7 +4,7 @@
 --These are commented because 1. I don't mind people raiding my episode files and 2. I like talking to myself.
 
 --Comments, Lua pretends these don't exist.
---Modded for Frisk by Spencer Everly
+--Modded for Frisk by "The Sun God: Nika"
 
 local colliders = require("colliders") -- We neeed this later
 

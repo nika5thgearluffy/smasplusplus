@@ -1,7 +1,7 @@
 --autoscroll.lua
 --v1.0.5
 --Created by Rednaxela, 2015
---Edited by Spencer Everly
+--Edited by "The Sun God: Nika"
 
 if (not API.isLoadingShared()) then
     Misc.warning("autoscroll API should be loaded shared")

@@ -1,5 +1,5 @@
 --SMAS++ MAIN MENU
---Code by Spencer Everly, MrDoubleA, and others
+--Code by "The Sun God: Nika", and others
 
 local smasMainMenu = {}
 
@@ -1317,10 +1317,8 @@ function smasMainMenu.onDraw()
             end
         end
         if not smasMainMenu.hideGameSMBXAndSMBX2Credits then
-            textplus.print{x=(camera.width / 2) - 220, y=480, text = "Game by Spencer Everly, SMBX by redigit, SMBX2 by", priority=-7, color=Color.red, xscale = 2, yscale = 2}
-            textplus.print{x=(camera.width / 2) - 222, y=477, text = "Game by Spencer Everly, SMBX by redigit, SMBX2 by", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
-            textplus.print{x=(camera.width / 2) - 236, y=500, text = "Horikawa Otane, Kevsoft, Rednaxela, Hoeloe, and Emral", priority=-7, color=Color.red, xscale = 2, yscale = 2}
-            textplus.print{x=(camera.width / 2) - 238, y=497, text = "Horikawa Otane, Kevsoft, Rednaxela, Hoeloe, and Emral", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
+            textplus.print{x=(camera.width / 2) - 220, y=480, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-7, color=Color.red, xscale = 2, yscale = 2}
+            textplus.print{x=(camera.width / 2) - 222, y=477, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
         end
         if smasMainMenu.showWorldMapSkipMessage then
             textplus.print{x=(camera.width / 2) - 360, y=450, text = "Hold down NOW to instantly skip to the World Map (3 seconds).", priority=0, color=Color.red, font=statusFont, xscale = 1.5, yscale = 1.5}

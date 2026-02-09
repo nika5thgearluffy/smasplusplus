@@ -1,5 +1,5 @@
 --smasBooleans.lua
---By Spencer Everly
+--By "The Sun God: Nika"
 local smasBooleans = {}
 
 --**UPDATER OPTIONS**

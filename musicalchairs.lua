@@ -1,6 +1,6 @@
 --musicalChairs.lua v1.0
---By Spencer Everly
---Yoshi beats for the win! SEE Mod only for now.
+--By "The Sun God: Nika"
+--Yoshi beats for the win!
 
 local musicalChairs = {}
 
@@ -114,15 +114,13 @@ function musicalChairs.onInitAPI()
 end
 
 function musicalChairs.onDraw()
-    if SMBX_VERSION == VER_SEE_MOD then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated and musicalChairs.enabled then
-            for i = 0,20 do
-                if (musicalChairs.musicList[Section(i).music] ~= nil and player.section == i) then
-                    if player.mount == MOUNT_YOSHI then
-                        Sound.unmuteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
-                    else
-                        Sound.muteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
-                    end
+    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated and musicalChairs.enabled then
+        for i = 0,20 do
+            if (musicalChairs.musicList[Section(i).music] ~= nil and player.section == i) then
+                if player.mount == MOUNT_YOSHI then
+                    Sound.unmuteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
+                else
+                    Sound.muteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
                 end
             end
         end

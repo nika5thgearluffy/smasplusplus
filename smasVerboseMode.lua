@@ -1,5 +1,5 @@
 --smasVerboseMode.lua
---By Spencer Everly
+--By "The Sun God: Nika"
 
 local textplus = require("textplus")
 local lazyprintSMAS = require("lazyprintSMAS")

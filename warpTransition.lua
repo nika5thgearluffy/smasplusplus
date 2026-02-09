@@ -1,7 +1,7 @@
 --[[
 
     warpTransition.lua (v1.1.3)
-    by MrDoubleA (Modded by Spencer Everly)
+    by MrDoubleA (Modded by "The Sun God: Nika")
 
     See bottom of file for settings
 

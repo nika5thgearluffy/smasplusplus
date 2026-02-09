@@ -24,7 +24,7 @@ return {
     --SMAS++ MAIN MENU: Save Migration Tool: Migration Cancelled
     ["0x0000000000000012"] = "<setPos 400 32 0.5 -0.7>Please note that you need to upgrade your save data to use Demo 3. Try again next time when you are ready to do so.<question MigrateSaveMenuCancel>",
     --SMAS++ MAIN MENU: Failsafe Menu Restart: You Died
-    ["0x0000000000000013"] = "<setPos 400 32 0.5 -0.9>It looks like the menu restarted.<page>When that happened, you probably died here in the main menu.<page>If there are any problems, don't hesitate to email spencer.everly@gmail.com or contact them on Discord at Spencer Everly#1997.<question ToMenuResetTwo>",
+    ["0x0000000000000013"] = "<setPos 400 32 0.5 -0.9>It looks like the menu restarted.<page>When that happened, you probably died here in the main menu.<page>If there are any problems, don't hesitate to report the repository.<question ToMenuResetTwo>",
     --SMAS++ MAIN MENU: Main Menu Selection (Main)
     ["0x0000000000000014"] = "<setPos 400 32 0.5 -1.0><question MainMenu>",
     --SMAS++ MAIN MENU: Main Menu Selection (Minigames)

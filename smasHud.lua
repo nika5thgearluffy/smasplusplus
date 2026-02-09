@@ -3,7 +3,7 @@
 --SMBX HUD Defaults & Override System Library----
 --------------For Super Mario Bros X-------------
 ----------------------v1.1-----------------------
--------Edited for SMAS++ by Spencer Everly-------
+----Edited for SMAS++ by "The Sun God: Nika"-----
 local smasHud = {}
 
 if SaveData.SMASPlusPlus == nil then

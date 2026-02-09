@@ -1,5 +1,5 @@
 --pausemenu13.lua (v2.0, SMAS++ Edition)
---By Spencer Everly
+--By "The Sun God: Nika"
 --v2.0 introduces a more-accurate-to SMBX-1.3 pause menu.
 
 local pausemenu13 = {}

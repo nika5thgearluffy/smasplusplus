@@ -1,4 +1,4 @@
---Modded tremendously by Spencer Everly. I took this broken code and did it justice. How did I do?
+--Modded tremendously by "The Sun God: Nika". I took this broken code and did it justice. How did I do?
 --Original message and credits by Coldcolor900:
 
 --[[

@@ -1,5 +1,5 @@
 --[[smasMainMenuSystem.lua (v1.0)
-By Spencer Everly
+By "The Sun God: Nika"
 
 For more information, please refer to the comments below.
 ]]

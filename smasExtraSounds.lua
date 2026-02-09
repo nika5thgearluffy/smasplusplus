@@ -1,6 +1,6 @@
 --[[
 
-smasExtraSounds.lua (Formerly extrasounds.lua) by Spencer Everly (v0.4.0)
+smasExtraSounds.lua (Formerly extrasounds.lua) by "The Sun God: Nika" (v0.4.0)
 
 To use this everywhere, you can simply put this under luna.lua:
 _G.smasExtraSounds = require("smasExtraSounds")

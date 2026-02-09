@@ -1,5 +1,5 @@
 --smasBlockSystem.lua v1.0
---By Spencer Everly
+--By "The Sun God: Nika"
 --Makes the coin hit system more accurate to Mario games, adds the not-known-as-much invisible 1UP block system from SMB1, and some other stuff
 
 local smasBlockSystem = {}

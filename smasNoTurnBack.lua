@@ -1,5 +1,5 @@
 --smasNoTurnBack.lua (v1.2)
---By Spencer Everly
+--By "The Sun God: Nika"
 --This script provides a remake of the noTurnBack option, but with additional things like going left but not turning back right, and other things!
 
 local smasNoTurnBack = {}

@@ -1,6 +1,6 @@
 --mapTransition
 --Based off mapTransition by MrDoubleA
---Coded by Spencer Everly
+--Coded by "The Sun God: Nika"
 
 local mapTransition = {}
 

@@ -1,4 +1,4 @@
---smasHudSystem, or anotherHudSystem by Spencer Everly
+--smasHudSystem, or anotherHudSystem by "The Sun God: Nika"
 --Check all the comments, plus the end of the file for more info
 
 local Routine = require("routine")

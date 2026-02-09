@@ -4,7 +4,7 @@
 
 ----------------------timer----------------------                                   
 -------------Created by Enjl  - 2018-------------
-------------Modded by Spencer Everly-------------
+----------Modded by "The Sun God: Nika"----------
 ---------Simplistic Mario Timer Library----------
 --------------For Super Mario Bros X-------------
 ----------------------v1.2-----------------------

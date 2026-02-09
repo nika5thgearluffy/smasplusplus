@@ -1,5 +1,5 @@
 --comboSounds by MrDoubleA (ATWE)
---Modded by Spencer Everly for SMAS++
+--Modded by "The Sun God: Nika" for SMAS++
 
 local npcManager = require("npcManager")
 local smasExtraSounds = require("smasExtraSounds")
