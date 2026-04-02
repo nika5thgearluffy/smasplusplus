@@ -220,6 +220,11 @@ smasTables.__smb3Levels = {
     "SMB3 - W-8, L-Tank2.lvlx",
     "SMB3 - W-8, L-Castle.lvlx",
     "SMB3 - W-e, L-1.lvlx",
+    "SMB3 - W-e, L-2.lvlx",
+    "SMB3 - W-e, L-3.lvlx",
+    "SMB3 - W-e, L-4.lvlx",
+    "SMB3 - W-e, L-5.lvlx",
+    "SMB3 - W-e, L-6.lvlx",
 }
 
 smasTables.__smwLevels = {

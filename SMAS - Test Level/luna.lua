@@ -8,7 +8,6 @@ if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
 end
 
 local pauseplus = require("pauseplus")
-local debugbox = require("debugbox")
 local smasExtraSounds = require("smasExtraSounds")
 local smasHudSystem = require("smasHudSystem")
 local smasDateAndTime = require("smasDateAndTime")
@@ -59,7 +58,7 @@ function onKeyboardPressDirect(k)
     end
 end
 
-function onNPCHarm(eventToken, npc, harmType, culprit)
+--[[function onNPCHarm(eventToken, npc, harmType, culprit)
     if harmType == HARM_TYPE_NPC then
         --Fireball harm
         if not NPC.config[npc.id].nofireball then
@@ -90,7 +89,7 @@ function onNPCHarm(eventToken, npc, harmType, culprit)
             end
         end
     end
-end
+end]]
 
 function onDraw()
     if snapshottaken then

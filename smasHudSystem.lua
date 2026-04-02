@@ -517,7 +517,7 @@ function smasHudSystem.onTick()
         SaveData.SMASPlusPlus.hud.score = maxScore
     end
     if not smasBooleans.isInClassicBattleMode then
-        if SysManager.isOutsideOfUnplayeredAreas() then
+        if (SysManager.isOutsideOfUnplayeredAreas() or Level.filename() == "SMAS - Test Level.lvlx") then
             if Misc.score() ~= 0 then
                 SaveData.SMASPlusPlus.hud.score = SaveData.SMASPlusPlus.hud.score + Misc.score()
                 SysManager.sendToConsole(tostring(Misc.score()).." points earned.")

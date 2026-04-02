@@ -259,14 +259,14 @@ end
     --flashPlayer = true,activateSFX = "_OST/_Sound Effects/HIT_4.ogg",
 --})
 
-Cheats.register("fourwallsmas",{ --Unlocks the debugbox, useful for the editor
+--[[Cheats.register("fourwallsmas",{ --Unlocks the debugbox, useful for the editor
     onActivate = (function()
         Defines.player_hasCheated = false
         debugbox = require("debugbox")
         return true -- this makes the cheat not toggleable
     end),
     flashPlayer = true,activateSFX = 67,
-})
+})]]
 
 Cheats.register("ilikespencereverly",{ --Turns all music into the future S!TS! new reboot theme song
     onActivate = (function()
