@@ -874,6 +874,12 @@ function smasCheats.onDraw()
             p.forcedState = FORCEDSTATE_INVISIBLE
         end
     end
+    -- Swimming in lava
+    if Cheats.get("lavaplayer").active then
+        for _,p in ipairs(Player.get()) do
+            
+        end
+    end
     for k,v in ipairs(Cheats.listCheats()) do
         if Cheats.get(v).active then
             smasCheats.timeWhenCheatExecuted[v] = smasCheats.timeWhenCheatExecuted[v] + 1

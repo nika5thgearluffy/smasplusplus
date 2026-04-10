@@ -83,7 +83,7 @@ npcManager.registerHarmTypes(npcID,
 		--HARM_TYPE_FROMBELOW,
 		--HARM_TYPE_NPC,
 		--HARM_TYPE_PROJECTILE_USED,
-		--HARM_TYPE_LAVA,
+		HARM_TYPE_LAVA,
 		--HARM_TYPE_HELD,
 		--HARM_TYPE_TAIL,
 		--HARM_TYPE_SPINJUMP,
@@ -145,13 +145,17 @@ function fireballAI(v)
         fire.speedX = -2.5
         fire.speedY = 1.5
         Routine.waitFrames(45, false)
-        fire.speedY = 0
+        if fire.isValid then
+            fire.speedY = 0
+        end
     else
         local fire = NPC.spawn(87, v.x + 16, v.y)
         fire.speedX = 2.5
         fire.speedY = 1.5
         Routine.waitFrames(45, false)
-        fire.speedY = 0
+        if fire.isValid then
+            fire.speedY = 0
+        end
     end
 end
 
