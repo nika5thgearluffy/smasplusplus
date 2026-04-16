@@ -16,20 +16,13 @@ function Misk.onInitAPI()
     registerEvent(Misk,"onCameraDraw")
 end
 
-function Misc.worldFilename() --Gets the world filename. Thanks KBM_Quine!
-    local episodeFiles = Misc.listFiles(Misc.episodePath())
-    local worldFile
-    for _,v in ipairs(episodeFiles) do
-        if string.match(v, ".*%.wld") then
-            worldFile = string.match(v, ".*%.wld")
-        end
-    end
-    return worldFile
+function Misc.worldFilename() -- Gets the world filename. This is kept in case if anything outside of this script calls this function. Will be removed after everything is changed for SMBX2R
+    return Episode.filename()
 end
 
 function Misc.inSuperMarioAllStarsPlusPlus() --Checks and sees if SMAS++ is being run. If not, some functions won't run. Idk if this is a reliable check but oh well, I tried.
     --[[if SMBX_VERSION ~= VER_SEE_MOD then
-        return (Misc.worldFilename() == "__World Map.wld" --Checks to see if the world map is this...
+        return (Episode.filename() == "__World Map.wld" --Checks to see if the world map is this...
             and io.exists(Misc.episodePath().."SMB1 - W-1, L-1.lvlx") --Checks the first levels of each mandatory game (+ SMBLL).
             and io.exists(Misc.episodePath().."SMBLL - W-1, L-1.lvlx")
             and io.exists(Misc.episodePath().."SMB2 - W-1, L-1.lvlx")
@@ -959,7 +952,7 @@ function Misc.setLegacyCreditString(index, stringd)
 end
 
 function Misc.getLegacyCredits()
-    local worldFile = FileFormats.openWorldHeader(Misc.worldFilename())
+    local worldFile = FileFormats.openWorldHeader(Episode.filename())
     local authors = worldFile.authors
     return string.split(authors, "\n", true, true)
 end
