@@ -6,7 +6,12 @@ local costume = {}
 
 costume.loaded = false
 
+-- Is Tangent lunging?
 local lunging = false
+
+-- Cooldown until Tangent can lunge again.
+local lungeCooldown = 0
+
 
 function costume.onInit(p)
     plr = p
@@ -68,6 +73,7 @@ end
 
 function costume.lungeattack()
     if (plr.powerup == 5) == false then
+        lungeCooldown = 40
         plr:mem(0x140, FIELD_WORD, 0) --Blinker is 0
         player:mem(0x120, FIELD_BOOL, false) --Making sure Alt Jump isn't pressed until after the attack
         plr:mem(0x172, FIELD_BOOL, false) --No run either, in case
@@ -92,6 +98,9 @@ end
 function costume.onTick()
     if SaveData.toggleCostumeAbilities then
         local hitNPCs = Colliders.getColliding{a = player, b = hitNPCs, btype = Colliders.NPC}
+        if lungeCooldown > 0 then
+            lungeCooldown = lungeCooldown - 1
+        end
         if lunging then
             plr.keys.left = false
             plr.keys.right = false
@@ -134,7 +143,7 @@ end
 function costume.onKeyboardPress(keyCode, repeated)
     if SaveData.toggleCostumeAbilities then
         local specialKey = SaveData.SMASPlusPlus.player[1].controls.specialKey
-        if keyCode == smasTables.keyboardMap[specialKey] and not repeated and not lunging then
+        if keyCode == smasTables.keyboardMap[specialKey] and not repeated and not lunging and lungeCooldown == 0 then
             costume.lungeattack()
         end
     end
@@ -143,7 +152,7 @@ end
 function costume.onControllerButtonPress(button, playerIdx)
     if SaveData.toggleCostumeAbilities then
         if playerIdx == 1 then
-            if button == SaveData.SMASPlusPlus.player[1].controls.specialButton and not lunging then
+            if button == SaveData.SMASPlusPlus.player[1].controls.specialButton and not lunging and lungeCooldown == 0 then
                 costume.lungeattack()
             end
         end
