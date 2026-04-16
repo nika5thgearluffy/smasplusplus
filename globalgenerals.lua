@@ -14,6 +14,7 @@ local steve = require("steve")
 local yoshi = require("yiYoshi/yiYoshi")
 local inputconfigurator = require("inputconfig")
 local musicalchairs = require("musicalchairs")
+local customCamera = require("scripts/customCamera")
 
 if GameData.enableBattleMode then
     SysManager.sendToConsole("Classic Battle Mode active! Loading the pause menu library...")

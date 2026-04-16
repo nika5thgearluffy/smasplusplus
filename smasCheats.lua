@@ -35,6 +35,7 @@ Cheats.deregister("itsameultimaterinka") --This will be deregistered because I'm
 function smasCheats.onInitAPI()
     registerEvent(smasCheats,"onDraw")
     registerEvent(smasCheats,"onTick")
+    registerEvent(smasCheats,"onPlayerKill")
 end
 
 smasCheats.moneytreeActive = false
@@ -855,7 +856,7 @@ end
 smasCheats.timeWhenCheatExecuted = {}
 
 for k,v in ipairs(Cheats.listCheats()) do
-    smasCheats.timeWhenCheatExecuted[v] = 0
+    smasCheats.timeWhenCheatExecuted[v] = -1
 end
 
 function smasCheats.checkCheatStatusAndDisable()
@@ -865,6 +866,18 @@ function smasCheats.checkCheatStatusAndDisable()
         end
     end
     Cheats.enabled = false
+end
+
+function smasCheats.onPlayerKill(evt)
+    if Cheats.get("lavaplayer").active then
+        for _,p in ipairs(Player.get()) do
+            for k,v in ipairs(Block.get(smasTables.allLavaBlockIDs)) do
+                if Collisionz.CheckCollision(p, v) and not smasBooleans.lavaPlayerBypassLava then
+                    evt.cancelled = true
+                end
+            end
+        end
+    end
 end
 
 function smasCheats.onDraw()
@@ -877,14 +890,33 @@ function smasCheats.onDraw()
     -- Swimming in lava
     if Cheats.get("lavaplayer").active then
         for _,p in ipairs(Player.get()) do
-            
+            for k,v in ipairs(Block.get(smasTables.allLavaBlockIDs)) do
+                if Collisionz.CheckCollision(p, v) and not smasBooleans.lavaPlayerBypassLava then
+                    --p.noblockcollision = true
+                    p:mem(0x34, FIELD_WORD, 2)
+                    p:mem(0x36, FIELD_BOOL, true)
+                else
+                    --p.noblockcollision = false
+                end
+            end
+        end
+    end
+    if not Cheats.get("lavaplayer").active then
+        if smasCheats.timeWhenCheatExecuted["lavaplayer"] == 0 then
+            for _,p in ipairs(Player.get()) do
+                if not p.noblockcollision then
+                    --p.noblockcollision = true
+                end
+            end
         end
     end
     for k,v in ipairs(Cheats.listCheats()) do
         if Cheats.get(v).active then
             smasCheats.timeWhenCheatExecuted[v] = smasCheats.timeWhenCheatExecuted[v] + 1
         else
-            smasCheats.timeWhenCheatExecuted[v] = 0
+            if smasCheats.timeWhenCheatExecuted[v] > -1 then
+                smasCheats.timeWhenCheatExecuted[v] = smasCheats.timeWhenCheatExecuted[v] - 1
+            end
         end
         if SMBX_VERSION ~= VER_SEE_MOD then
             if smasCheats.timeWhenCheatExecuted[v] == 1 then

@@ -689,6 +689,158 @@ local allsmallenemies = table.map{1,2,3,4,5,6,7,8,12,15,17,18,19,20,23,24,25,27,
 local allbigenemies = table.map{71,72,466,467,618} --Every single big X2 enemy.
 local enemyfireballs = table.map{85,87,246,276} --All enemy fireballs.
 
+
+function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
+    if smasExtraSounds.active then
+        for k,p in ipairs(Player.get()) do
+
+
+
+
+            --**JUMPING**
+            if hasJumped(p, Cheats.get("ahippinandahoppin").active) and soundID == 1 then
+                eventObj.cancelled = true
+                if smasExtraSounds.enableJumpingSFX then
+                    if not smasExtraSounds.useOriginalJumpInstead then
+                        if p.powerup >= 2 then
+                            smasExtraSounds.playSFX(1)
+                        else
+                            smasExtraSounds.playSFX(158)
+                        end
+                    else 
+                        smasExtraSounds.playSFX(1)
+                    end
+                end
+            end
+
+
+
+
+            --**DOUBLE JUMPING**
+            if (p:mem(0x00, FIELD_BOOL) and p:mem(0x174, FIELD_BOOL) and p.keys.jump == KEYS_PRESSED) and soundID == 1 then
+                eventObj.cancelled = true
+                if smasExtraSounds.enableDoubleJumpingSFX then
+                    if smasExtraSounds.useOriginalJumpForDoubleJump then
+                        smasExtraSounds.playSFX(1)
+                    elseif not smasExtraSounds.useOriginalJumpForDoubleJump then
+                        smasExtraSounds.playSFX(158)
+                    end
+                end
+            end
+
+
+
+            --**YOSHI UNMOUNT**
+            if p.mount == 3 then
+                if (p.keys.altJump == KEYS_PRESSED) and soundID == 1 then
+                    eventObj.cancelled = true
+                    if not smasExtraSounds.useJumpSoundInsteadWhenUnmountingYoshi then
+                        if smasExtraSounds.enableBootSFX then
+                            smasExtraSounds.playSFX(35)
+                        end
+                    elseif smasExtraSounds.useJumpSoundInsteadWhenUnmountingYoshi then
+                        if smasExtraSounds.enableJumpingSFX then
+                            smasExtraSounds.playSFX(1)
+                        end
+                    end
+                end
+            end
+
+
+
+            --**SLIDING**
+            if p:isOnGround() then
+                if (p.speedX < 0 and p.rightKeyPressing) or (p.speedX > 0 and p.leftKeyPressing) and soundID == 10 then --Is the player sliding?
+                    eventObj.cancelled = true
+                    if smasExtraSounds.enableSlidingSFX then
+                        smasExtraSounds.playSFX(10, smasExtraSounds.volume, 1, smasExtraSounds.playerSlidingDelay) --Sliding SFX
+                    end
+                end
+            end
+
+
+
+            --**TAIL ATTACK**
+            if p.powerup == 4 or p.powerup == 5 then
+                if isTailSwiping(p) and soundID == 33 then --Is the key pressed, and active, and the forced state is none, while not climbing and not on a mount and not ducking (And not dead)?
+                    eventObj.cancelled = true
+                    if smasExtraSounds.enableTailAttackSFX then
+                        smasExtraSounds.playSFX(33)
+                    end
+                end
+            end
+
+
+
+            --**SPINJUMPING**
+            if normalCharacters[p.character] then
+                if (p:isOnGround() and not p.keys.down and p.mount == 0 and (not GameData.winStateActive or GameData.winStateActive == nil) and Level.endState() == 0) then --If on the ground, not holding down, and not on a mount...
+                    if (p:mem(0x120, FIELD_BOOL) and p.keys.altJump == KEYS_PRESSED) then --If alt jump is pressed and jump has been activated...
+                        if not p:mem(0x50, FIELD_BOOL) and soundID == 33 then
+                            eventObj.cancelled = true
+                            if smasExtraSounds.enableSpinjumpingSFX then
+                                smasExtraSounds.playSFX(33)
+                            end
+                        end
+                    end
+                end
+            elseif linkCharacters[p.character] then
+                if (p:isOnGround() and Level.endState() == 0) then --If on the ground...
+                    if (p:mem(0x120, FIELD_BOOL) and p.keys.altJump == KEYS_PRESSED) then --If alt jump is pressed and jump has been activated...
+                        if not p:mem(0x50, FIELD_BOOL) and soundID == 1 then
+                            eventObj.cancelled = true
+                            if smasExtraSounds.enableJumpingSFX then
+                                smasExtraSounds.playSFX(1)
+                            end
+                        end
+                    end
+                end
+            end
+
+
+
+            --**SPINJUMP FIRE/ICEBALLS**
+            if p:mem(0x50, FIELD_BOOL) and p.holdingNPC == nil then --Is the player spinjumping while not holding an item?
+                if p:mem(0x160, FIELD_WORD) == 0 then --Is the cooldown on this number?
+                    if p.powerup == 3 and soundID == 18 then --Fireball sound
+                        eventObj.cancelled = true
+                        if smasExtraSounds.enableFireFlowerSFX then
+                            smasExtraSounds.playSFX(18)
+                        end
+                    end
+                    if p.powerup == 7 and soundID == 18 then --Iceball sound
+                        eventObj.cancelled = true
+                        if smasExtraSounds.enableIceFlowerSFX then
+                            if not smasExtraSounds.useFireSoundForIce then
+                                smasExtraSounds.playSFX(93)
+                            else
+                                smasExtraSounds.playSFX(18)
+                            end
+                        end
+                    end
+                end
+            end
+
+
+
+            --**FIREBALL HAMMER SUIT SHIELD HIT**
+            for k,v in ipairs(NPC.getIntersecting(p.x - 15, p.y - 15, p.x + p.width + 30, p.y + p.height + 30)) do
+                if ((p.powerup == 6 and p:mem(0x12E,FIELD_BOOL) and p.mount == 0 and not linkCharacters[p.character]) or (p.mount == 1 and p.mountColor == 2) and enemyfireballs[v.id] and harmtype == HARM_TYPE_VANISH) and soundID == 3 then
+                    eventObj.cancelled = true
+                    if smasExtraSounds.enableFireballHammerShieldHitSFX then
+                        smasExtraSounds.playSFX(169)
+                    end
+                end
+            end
+
+
+
+
+        end
+    end
+end
+
+
 function smasExtraSounds.onDraw()
     for k,v in ipairs(smasExtraSounds.soundNamesInOrder) do
         if not smasExtraSounds.stockSoundNumbersInOrder[k] then
@@ -715,12 +867,10 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
         Audio.sounds[4].muted = true --block-smash.ogg
         Audio.sounds[7].muted = true --mushroom.ogg
         Audio.sounds[8].muted = true --player-dead.ogg
-        Audio.sounds[10].muted = true --player-slide.ogg
         Audio.sounds[14].muted = true --coin.ogg
         Audio.sounds[15].muted = true --1up.ogg
         --Audio.sounds[17].muted = true --warp.ogg
         Audio.sounds[18].muted = true --fireball.ogg
-        Audio.sounds[33].muted = true --tail.ogg
         Audio.sounds[36].muted = true --smash.ogg
         Audio.sounds[39].muted = true --birdo-hit.ogg
         Audio.sounds[42].muted = true --npc-fireball.ogg
@@ -738,102 +888,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             
             
 
-            --**YOSHI UNMOUNT**
-            if p.mount == 3 then
-                if (p:mem(0x11E, FIELD_BOOL) and p.keys.altJump == KEYS_PRESSED) then
-                    if not smasExtraSounds.useJumpSoundInsteadWhenUnmountingYoshi then
-                        if smasExtraSounds.enableBootSFX then
-                            smasExtraSounds.playSFX(35)
-                        end
-                    elseif smasExtraSounds.useJumpSoundInsteadWhenUnmountingYoshi then
-                        if smasExtraSounds.enableJumpingSFX then
-                            smasExtraSounds.playSFX(1)
-                        end
-                    end
-                end
-            end
-            
-            
-            
-            
-            
-            --**SLIDING**
-            if p:isOnGround() then
-                if (p.speedX < 0 and p.rightKeyPressing) or (p.speedX > 0 and p.leftKeyPressing) then --Is the player sliding?
-                    if smasExtraSounds.enableSlidingSFX then
-                        smasExtraSounds.playSFX(10, smasExtraSounds.volume, 1, smasExtraSounds.playerSlidingDelay) --Sliding SFX
-                    end
-                end
-            end
-            
-            
-            
-            
-            --**TAIL ATTACK**
-            if p.powerup == 4 or p.powerup == 5 then
-                if isTailSwiping(p) then --Is the key pressed, and active, and the forced state is none, while not climbing and not on a mount and not ducking (And not dead)?
-                    if smasExtraSounds.enableTailAttackSFX then
-                        smasExtraSounds.playSFX(33)
-                    end
-                end
-            end
-            
-            
-            
-            
-            
-            --**SPINJUMPING**
-            if normalCharacters[p.character] then
-                if (p:isOnGround() and not p.keys.down and p.mount == 0 and (not GameData.winStateActive or GameData.winStateActive == nil) and Level.endState() == 0) then --If on the ground, not holding down, and not on a mount...
-                    if (p:mem(0x120, FIELD_BOOL) and p.keys.altJump == KEYS_PRESSED) then --If alt jump is pressed and jump has been activated...
-                        if p:mem(0x50, FIELD_BOOL) == false then
-                            if smasExtraSounds.enableSpinjumpingSFX then
-                                smasExtraSounds.playSFX(33)
-                            end
-                        end
-                    end
-                end
-            elseif linkCharacters[p.character] then
-                if (p:isOnGround() and Level.endState() == 0) then --If on the ground...
-                    if (p:mem(0x120, FIELD_BOOL) and p.keys.altJump == KEYS_PRESSED) then --If alt jump is pressed and jump has been activated...
-                        if p:mem(0x50, FIELD_BOOL) == false then
-                            if smasExtraSounds.enableJumpingSFX then
-                                smasExtraSounds.playSFX(1)
-                            end
-                        end
-                    end
-                end
-            end
-            
-            
-            
-            
-            --**SPINJUMP FIRE/ICEBALLS**
-            if p:mem(0x50, FIELD_BOOL) and p.holdingNPC == nil then --Is the player spinjumping while not holding an item?
-                if p:mem(0x160, FIELD_WORD) == 0 then --Is the cooldown on this number?
-                    if p.powerup == 3 then --Fireball sound
-                        if smasExtraSounds.enableFireFlowerSFX then
-                            smasExtraSounds.playSFX(18)
-                        end
-                    end
-                    if p.powerup == 7 then --Iceball sound
-                        if smasExtraSounds.enableIceFlowerSFX then
-                            if not smasExtraSounds.useFireSoundForIce then
-                                smasExtraSounds.playSFX(93)
-                            elseif smasExtraSounds.useFireSoundForIce then
-                                smasExtraSounds.playSFX(18)
-                            end
-                        end
-                    end
-                end
-            end
-            if not p:mem(0x50, FIELD_BOOL) then --Is the player not spinjumping?
-                
-            end
-        
-        
-            
-            
             --**GRABBING SHELLS**
             if Player.count() == 1 then
                 if p.holdingNPC ~= nil then
@@ -849,21 +903,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
                                     smasExtraSounds.playSFX(156)
                                 end
                             end
-                        end
-                    end
-                end
-            end
-            
-            
-            
-            
-            --**FIREBALL HAMMER SUIT SHIELD HIT (Block Hit Muting Detection)**
-            if ((p.powerup == 6 and p:mem(0x12E,FIELD_BOOL) and p.mount == 0 and not linkCharacters[p.character]) or (p.mount == 1 and p.mountColor == 2)) then
-                for k,v in ipairs(NPC.getIntersecting(p.x - 15, p.y - 15, p.x + p.width + 30, p.y + p.height + 30)) do
-                    if enemyfireballs[v.id] then
-                        if smasExtraSounds.enableFireballHammerShieldHitSFX then
-                            Audio.sounds[3].muted = true
-                            Routine.run(smasExtraSounds.tempMuteBlockHit)
                         end
                     end
                 end
@@ -1253,51 +1292,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             Audio.sounds[77].muted = false --zelda-stab.ogg
             Audio.sounds[81].muted = false --zelda-rupee.ogg
             smasExtraSounds.disableSoundMarker = true
-        end
-    end
-end
-
-function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
-    if smasExtraSounds.active then
-        for k,p in ipairs(Player.get()) do
-
-
-
-
-            --**JUMPING**
-            if hasJumped(p, Cheats.get("ahippinandahoppin").active) and soundID == 1 then
-                eventObj.cancelled = true
-                if smasExtraSounds.enableJumpingSFX then
-                    if not smasExtraSounds.useOriginalJumpInstead then
-                        if p.powerup >= 2 then
-                            smasExtraSounds.playSFX(1)
-                        else
-                            smasExtraSounds.playSFX(158)
-                        end
-                    else 
-                        smasExtraSounds.playSFX(1)
-                    end
-                end
-            end
-
-
-
-
-            --**DOUBLE JUMPING**
-            if (p:mem(0x00, FIELD_BOOL) and p:mem(0x174, FIELD_BOOL) and p.keys.jump == KEYS_PRESSED) and soundID == 1 then
-                eventObj.cancelled = true
-                if smasExtraSounds.enableDoubleJumpingSFX then
-                    if smasExtraSounds.useOriginalJumpForDoubleJump then
-                        smasExtraSounds.playSFX(1)
-                    elseif not smasExtraSounds.useOriginalJumpForDoubleJump then
-                        smasExtraSounds.playSFX(158)
-                    end
-                end
-            end
-
-
-
-
         end
     end
 end
@@ -1720,13 +1714,7 @@ function smasExtraSounds.onPostNPCKill(npc, harmtype) --NPC Kill stuff, for cust
                 
                 
                 --**FIREBALL HAMMER SUIT SHIELD HIT (SFX)**
-                for k,v in ipairs(NPC.getIntersecting(p.x - 15, p.y - 15, p.x + p.width + 30, p.y + p.height + 30)) do
-                    if ((p.powerup == 6 and p:mem(0x12E,FIELD_BOOL) and p.mount == 0 and not linkCharacters[p.character]) or (p.mount == 1 and p.mountColor == 2) and enemyfireballs[v.id] and harmtype == HARM_TYPE_VANISH) then
-                        if smasExtraSounds.enableFireballHammerShieldHitSFX then
-                            smasExtraSounds.playSFX(169)
-                        end
-                    end
-                end
+                
                 
                 
                 

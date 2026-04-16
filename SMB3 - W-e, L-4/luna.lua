@@ -15,12 +15,12 @@ function onEvent(eventName)
     end
     if eventName == ("Boss End") then
         Sound.playSFX(138)
-        Sound.changeMusic("_OST/Super Mario Bros/Castle.ogg", 0)
-        Screen.setCameraPosition(-200000,-200600,-200000,-194688)
+        Sound.changeMusic(0, 0)
         for k,v in ipairs(NPC.get(87)) do
             if v.isValid then
                 v:kill(HARM_TYPE_VANISH)
             end
         end
+        Screen.setCameraPosition(-200000,-200600,-200000,-194688)
     end
 end

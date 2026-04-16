@@ -144,6 +144,9 @@ end
 if GameData.SMASPlusPlus.misc.weatherSaved == nil then
     GameData.SMASPlusPlus.misc.weatherSaved = {}
 end
+if GameData.SMASPlusPlus.firstLaunched == nil then
+    GameData.SMASPlusPlus.firstLaunched = false
+end
 
 
 

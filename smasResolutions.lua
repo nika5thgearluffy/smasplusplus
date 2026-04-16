@@ -30,7 +30,10 @@ function smasResolutions.changeResolution(onMainMenu)
         onMainMenu = false
     end
     Routine.run(function()
+        -- Wait one frame, since it won't update unless we do so
         Routine.waitFrames(1, true)
+
+        -- Now set the resolution
         if SaveData.SMASPlusPlus.options.resolution == "fullscreen" then
             Screen.changeResolution(800,600)
             if onMainMenu then
@@ -56,6 +59,12 @@ function smasResolutions.changeResolution(onMainMenu)
             if onMainMenu then
                 SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 1
             end
+        end
+
+        -- And set the window size when first starting the game.
+        if not GameData.SMASPlusPlus.firstLaunched then
+            --Monitor.setWindowSize(Screen.width(), Screen.height())
+            GameData.SMASPlusPlus.firstLaunched = true
         end
     end)
 end

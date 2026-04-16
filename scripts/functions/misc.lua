@@ -838,22 +838,16 @@ local oldx = 0
 local oldy = 0
 
 function Misc.shakeWindow(shakenumber)
-    if SMBX_VERSION ~= VER_SEE_MOD then
-        Misc.warn("You are using the original LunaLua, and not the SEE Mod for this command. Please retrieve the SEE Mod by downloading it over at this website: https://github.com/SpencerEverly/smbx2-seemod")
-        SysManager.sendToConsole("NOT USING SEE MOD! Shake window command has stopped.")
+    if Misc.isFullscreen() then
+        SysManager.sendToConsole("IN FULLSCREEN! Shake window command has stopped.")
         return
     else
-        if Misc.isFullscreen() then
-            SysManager.sendToConsole("IN FULLSCREEN! Shake window command has stopped.")
-            return
-        else
-            oldx = Misc.getWindowXPosition()
-            oldy = Misc.getWindowYPosition()
-            
-            shaketally = shakenumber
-            
-            SysManager.sendToConsole("Shake window command has executed with a shake tally of "..tostring(shakenumber)..".")
-        end
+        oldx = Monitor.x()
+        oldy = Monitor.y()
+        
+        shaketally = shakenumber
+        
+        SysManager.sendToConsole("Shake window command has executed with a shake tally of "..tostring(shakenumber)..".")
     end
 end
 
@@ -1073,14 +1067,12 @@ end
 local screenShakeCaptureBuffer = Graphics.CaptureBuffer(800,600)
 
 function Misk.onDraw()
-    if SMBX_VERSION == VER_SEE_MOD then
-        if (screenShakeCaptureBuffer.width ~= camera.width or screenShakeCaptureBuffer.height ~= camera.height) then
-            screenShakeCaptureBuffer = Graphics.CaptureBuffer(camera.width, camera.height)
-        end
-        if shaketally > 0 then
-            shaketally = shaketally - 1
-            Misc.setWindowPosition(((oldx + math.random(((shaketally / 4 + 4))) - math.random((shaketally / 4) + 4))),((oldy + math.random(((shaketally / 4) + 4))) - math.random(((shaketally / 4) + 4)))) --Thanks Toby Fox!
-        end
+    if (screenShakeCaptureBuffer.width ~= camera.width or screenShakeCaptureBuffer.height ~= camera.height) then
+        screenShakeCaptureBuffer = Graphics.CaptureBuffer(camera.width, camera.height)
+    end
+    if shaketally > 0 then
+        shaketally = shaketally - 1
+        Monitor.setWindowPosition(((oldx + math.random(((shaketally / 4 + 4))) - math.random((shaketally / 4) + 4))),((oldy + math.random(((shaketally / 4) + 4))) - math.random(((shaketally / 4) + 4)))) --Thanks Toby Fox!
     end
     if screenShakeTally > -1 then
         screenShakeTally = screenShakeTally - 1

@@ -24,20 +24,14 @@ function Screen.height() --Actual height, with resolution support
     return camera.height
 end
 
-function Screen.cursorX() --Cursor X position (Used for Steve and cursor.lua). Resolution support is only on the SEE Mod for now
-    if SMBX_VERSION == VER_SEE_MOD then
-        return Misc.getCursorPosition()[1]
-    else
-        return mem(0x00B2D6BC, FIELD_DFLOAT)
-    end
+function Screen.cursorX() --Cursor X position (Used for Steve and cursor.lua)
+    local x,y = Misc.getCursorPosition()
+    return x
 end
 
-function Screen.cursorY() --Cursor Y position (Used for Steve and cursor.lua). Resolution support is only on the SEE Mod for now
-    if SMBX_VERSION == VER_SEE_MOD then
-        return Misc.getCursorPosition()[2]
-    else
-        return mem(0x00B2D6C4, FIELD_DFLOAT)
-    end
+function Screen.cursorY() --Cursor Y position (Used for Steve and cursor.lua)
+    local x,y = Misc.getCursorPosition()
+    return y
 end
 
 local oldBoundaryLeft,oldBoundaryRight,oldBoundaryTop,oldBoundaryBottom = 0,0,0,0
@@ -48,6 +42,7 @@ local cameraPausedWhileScrolling = true
 Screen.playersOutOfBounds = {}
 Screen.activeCameraScrolls = {} --Adds to a table whether any is active
 local tempBool = false
+local boundaryCameraX,boundaryCameraY = 0,0
 
 function Screen.getSectionBounds(section)
     local bounds = Section(section).boundary
@@ -128,7 +123,10 @@ function Screen.setCameraPosition(leftbound,upbound,downbound,rightbound,speed,i
     oldBoundaryRight = bounds.right
     oldBoundaryTop = bounds.up
     oldBoundaryBottom = bounds.down
-    
+
+    boundaryCameraX = camera.x
+    boundaryCameraY = camera.y
+
     cameraPanSpeed = speed
     cameraPausedWhileScrolling = isPausedWhileScrolling
     
@@ -295,17 +293,13 @@ function Screen.onDraw()
         if cameraPausedWhileScrolling then
             Misc.pause()
         end
-        --[[for i = 1,Player.count() do
-            if Player(i).x + Player(i).width >= boundaryRight then
-                if Player(i).y <= boundaryBottom then
-                    tempBool = true
-                    table.insert(Screen.playersOutOfBounds, Player(i))
-                end
-            end
-            if not tempBool then
-                
-            end
-        end]]
+        local section = player.sectionObj
+        local bounds = section.boundary
+        bounds.left = boundaryLeft
+        bounds.right = boundaryRight
+        bounds.top = boundaryTop
+        bounds.bottom = boundaryBottom
+        section.boundary = bounds
         for section, state in pairs(Screen.activeCameraScrolls) do
             local x1, y1, y2, x2 = Screen.getSectionBounds(section)
             
@@ -329,7 +323,7 @@ function Screen.onDraw()
                 Screen.setSectionBounds(section, x1, y1, y2, x2)
             end
         end
-        if camera.x == Screen.onlyCalculateLeftCameraDimensions(boundaryLeft, 1, false) then
+        if (Screen.activeCameraScrolls[section] == nil) then
             local section = player.sectionObj
             local bounds = section.boundary
             bounds.left = boundaryLeft

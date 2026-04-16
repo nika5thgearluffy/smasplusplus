@@ -57,5 +57,7 @@ smasBooleans.inFuzzyMode = false
 smasBooleans.canSpeedUpMusicWhenTimerIsLessThan100 = true
 --If the key is activated, this is true.
 smasBooleans.keyholeActivated = false
+-- If we need to bypass lavaplayer (The cheat) for touching lava, this should be set to true. Else, this is false.
+smasBooleans.lavaPlayerBypassLava = false
 
 return smasBooleans

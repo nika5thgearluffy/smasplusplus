@@ -363,6 +363,20 @@ local runkey = Graphics.loadImageResolved("inputhud/run.png")
 local altrunkey = Graphics.loadImageResolved("inputhud/altrun.png")
 local bottomkeys = Graphics.loadImageResolved("inputhud/bottomkey.png")
 
+function onGIFRecord(noSFXs, isActive) -- This will replace the GIF sounds to custom ones
+    noSFXs.cancelled = true
+    if Misc.isRecordingGIF() then
+        Sound.playSFX("gif-start.ogg")
+    else
+        Sound.playSFX("gif-end.ogg")
+    end
+end
+
+function onScreenCapture(noSFXs) -- This will replace the snapshot sound to a custom one
+    noSFXs.cancelled = true
+    Sound.playSFX("snapshot.ogg")
+end
+
 function onDraw()
     if Misc.inEditor() then
         player.keys.pause = false
@@ -370,54 +384,7 @@ function onDraw()
             player2.keys.pause = false
         end
     end
-    if noItemSound then
-        Audio.sounds[12].muted = true
-        cameratimer = cameratimer - 1
-        if cameratimer <= 0 then
-            cameratimer = 10
-            Audio.sounds[12].muted = false
-            noItemSound = false
-        end
-    end
 
-    if SMBX_VERSION ~= VER_SEE_MOD then
-        if noSoundGif then
-            Audio.sounds[12].muted = true
-            Audio.sounds[24].muted = true
-            cameratimer = cameratimer - 1
-            if not GameData.__gifIsRecording then
-                GameData.__gifIsRecording = true
-            else
-                GameData.__gifIsRecording = false
-            end
-            if cameratimer <= 0 then
-                cameratimer = 10
-                Audio.sounds[12].muted = false
-                Audio.sounds[24].muted = false
-                noItemSoundGif = false
-            end
-        end
-        if GameData.__gifIsRecording then
-            
-        end
-    else
-        if Misc.isGIFRecording() then
-            gifRecordTimer = gifRecordTimer + 1
-            if gifRecordTimer <= 5 then
-                Audio.sounds[12].muted = true
-                Audio.sounds[24].muted = true
-            end
-            if gifRecordTimer == 1 then
-                
-            end
-            if gifRecordTimer == 6 then
-                Audio.sounds[12].muted = false
-                Audio.sounds[24].muted = false
-            end
-        elseif not Misc.isGIFRecording() then
-            gifRecordTimer = 0
-        end
-    end
     if SaveData.speedrunMode then
         Graphics.drawImageWP(inputhudbg,4,566,-1.9) -- Released Keys
         if player.keys.left == KEYS_DOWN then -- Pressed Left Key
@@ -487,31 +454,7 @@ function onDraw()
     end
 end
 
-function onKeyboardPressDirect(k, repeated) --This will replace the GIF recording/snapshot sounds to some custom ones
-    if k == VK_F11 then
-        Audio.sounds[12].muted = true
-        Audio.sounds[24].muted = true
-        noSoundGif = true
-        if SMBX_VERSION ~= VER_SEE_MOD then
-            if not GameData.__gifIsRecording then
-                Sound.playSFX("gif-start.ogg")
-            elseif GameData.__gifIsRecording then
-                Sound.playSFX("gif-end.ogg")
-            end
-        else
-            if Misc.isGIFRecording() then
-                Sound.playSFX("gif-end.ogg")
-            elseif not Misc.isGIFRecording() then
-                Sound.playSFX("gif-start.ogg")
-            end
-        end
-    end
-    if k == VK_F12 then
-        Audio.sounds[12].muted = true
-        noItemSound = true
-        Sound.playSFX("snapshot.ogg")
-    end
-end
+
 
 function onTick()
     mem(0x00B25130,FIELD_WORD,2) --This will prevent split screen, again (Just in case)
