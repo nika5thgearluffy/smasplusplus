@@ -86,6 +86,7 @@ local currentDeathRoutine
     --SaveData.GameOverCount = 0 --This is only when the library publically releases for the wild to use
 --end
 
+smasHudSystem.deathAnimationActive = false -- Is the death animation active?
 smasHudSystem.hasDied = false --If the player died or not
 smasHudSystem.exitToMap = false --Whenever to exit to the map after dying instead of reloading the level afterward (Not commonly used as reloading the level is much faster than kicking straight to the map)
 smasHudSystem.activated = true --Whenever the death animation is activated
@@ -261,6 +262,7 @@ end
 
 function smasHudSystem.quickDeathTrigger()
     SysManager.sendToConsole("Quick death trigger activated.")
+    smasHudSystem.deathAnimationActive = true
     if currentDeathRoutine and currentDeathRoutine.isValid then
         currentDeathRoutine:abort()
     end
@@ -290,6 +292,7 @@ end
 
 function thirteenModeDeath()
     SysManager.sendToConsole("Everyone has died.")
+    smasHudSystem.deathAnimationActive = true
     smasBooleans.musicMuted = true
     Audio.MusicVolume(0)
     if SaveData.SMASPlusPlus.hud.lives < 0 and SaveData.SMASPlusPlus.accessibility.enableLives then
@@ -329,12 +332,13 @@ end
 
 function diedanimation(plr) --The entire animation when dying. The pause and sound is there to avoid not animating at all, but is IS a nice touch
     if smasHudSystem.activated then
+        smasHudSystem.deathAnimationActive = true
         if not smasBooleans.isOnMainMenu then
             if not Misc.inMarioChallenge() then
                 if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
                     if not smasBooleans.isInClassicBattleMode then
                         SysManager.sendToConsole("The player has died.")
-                        if (player.character == CHARACTER_MARIO) == true or (player.character == CHARACTER_LUIGI) == true or (player.character == CHARACTER_PEACH) == true or (player.character == CHARACTER_TOAD) == true or (player.character == CHARACTER_LINK) == true or (player.character == CHARACTER_MEGAMAN) == true or (player.character == CHARACTER_WARIO) == true or (player.character == CHARACTER_BOWSER) == true or (player.character == CHARACTER_KLONOA) == true or (player.character == CHARACTER_ROSALINA) == true or (player.character == CHARACTER_SNAKE) == true or (player.character == CHARACTER_ZELDA) == true or (player.character == CHARACTER_ULTIMATERINKA) == true or (player.character == CHARACTER_UNCLEBROADSWORD) == true or (player.character == CHARACTER_SAMUS) == true then
+                        if (player.character == CHARACTER_MARIO) or (player.character == CHARACTER_LUIGI) or (player.character == CHARACTER_PEACH) or (player.character == CHARACTER_TOAD) or (player.character == CHARACTER_LINK) or (player.character == CHARACTER_MEGAMAN) or (player.character == CHARACTER_WARIO) or (player.character == CHARACTER_BOWSER) or (player.character == CHARACTER_KLONOA) or (player.character == CHARACTER_ROSALINA) or (player.character == CHARACTER_SNAKE) or (player.character == CHARACTER_ZELDA) or (player.character == CHARACTER_ULTIMATERINKA) or (player.character == CHARACTER_UNCLEBROADSWORD) or (player.character == CHARACTER_SAMUS) then
                             if player.deathTimer == 0 then
                                 smasBooleans.musicMuted = true
                                 Audio.MusicVolume(0)
@@ -356,7 +360,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                 Routine.waitFrames(110, true)
                                 smasBooleans.musicMuted = false
                                 Misc.unpause()
-                                if gameoveractivate == false then --If not in a gameover state...
+                                if not gameoveractivate then --If not in a gameover state...
                                     fadeoutcompleted = true --...when waited enough time, unpause and reload the level
                                 end
                                 if fadeoutcompleted then
@@ -364,9 +368,9 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                         SaveData.SMASPlusPlus.hud.lives = 5
                                     end
                                     smasHudSystem.hasDied = true
-                                    if smasHudSystem.exitToMap == false then --Reload the level from here
+                                    if not smasHudSystem.exitToMap then --Reload the level from here
                                         Level.load(Level.filename())
-                                    elseif smasHudSystem.exitToMap == true then --Or else, just exit the level. It can be smwMap, or the vanilla map
+                                    elseif smasHudSystem.exitToMap then --Or else, just exit the level. It can be smwMap, or the vanilla map
                                         Level.load("map.lvlx")
                                     end
                                 end
@@ -386,7 +390,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                 end
                             end
                         end
-                        if (player.character == CHARACTER_NINJABOMBERMAN) == true then --Do a different death animation with yiYoshi if active
+                        if (player.character == CHARACTER_NINJABOMBERMAN) then --Do a different death animation with yiYoshi if active
                             if player.deathTimer == 0 then
                                 smasBooleans.musicMuted = true
                                 Audio.MusicVolume(0)
@@ -404,7 +408,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                 canQuicklyResumeLevelWhenDying = false
                                 smasBooleans.musicMuted = false
                                 Misc.unpause()
-                                if gameoveractivate == false then
+                                if not gameoveractivate then
                                     fadeoutcompleted = true --When waited enough time, unpause and reload the level
                                 end
                                 if fadeoutcompleted then --Or else, just exit the level
@@ -412,9 +416,9 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                         SaveData.SMASPlusPlus.hud.lives = 5
                                     end
                                     smasHudSystem.hasDied = true
-                                    if smasHudSystem.exitToMap == false then
+                                    if not smasHudSystem.exitToMap then
                                         Level.load(Level.filename())
-                                    elseif smasHudSystem.exitToMap == true then
+                                    elseif smasHudSystem.exitToMap then
                                         Level.load("map.lvlx")
                                     end
                                 end
@@ -470,6 +474,14 @@ function smasHudSystem.onPostPlayerKill(plr) --To cancel the death entirely
 end
 
 function smasHudSystem.onTick()
+    if smasHudSystem.deathAnimationActive then
+        local yPosition = (player.y - camera.y) - Screen.getScreenSize()[2]
+        if yPosition > 60 then
+            for k,v in ipairs(Effect.get(smasTables.allPlayerDeathEffectIDs)) do
+                v.y = yPosition
+            end
+        end
+    end
     if mem(0x00B2C5AC, FIELD_FLOAT) < 1 then --This is to prevent the old Game Over system
         mem(0x00B2C5AC, FIELD_FLOAT, 1)
     end
