@@ -545,7 +545,8 @@ local function harmNPC(npc,...) -- npc:harm but it returns if it actually did an
 end
 
 local function isShooting(p)
-    return (p:mem(0x160, FIELD_WORD) == 0
+    return (
+        p:mem(0x160, FIELD_WORD) == 30
         and Level.endState() == 0
         and (
             not GameData.winStateActive
@@ -567,7 +568,8 @@ local function isShooting(p)
 end
 
 local function isShootingLink(p)
-    return (p:mem(0x160, FIELD_WORD) == 0
+    return (
+        p:mem(0x160, FIELD_WORD) == 30
         and p:mem(0x162, FIELD_WORD) == 0
         and Level.endState() == 0
         and (
@@ -801,15 +803,14 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
 
             --**SPINJUMP FIRE/ICEBALLS**
             if p:mem(0x50, FIELD_BOOL) and p.holdingNPC == nil then --Is the player spinjumping while not holding an item?
-                if p:mem(0x160, FIELD_WORD) == 0 then --Is the cooldown on this number?
-                    if p.powerup == 3 and soundID == 18 then --Fireball sound
-                        eventObj.cancelled = true
+                if p:mem(0x160, FIELD_WORD) == 0 and soundID == 18 then --Is the cooldown on this number?
+                    eventObj.cancelled = true
+                    if p.powerup == 3 then --Fireball sound
                         if smasExtraSounds.enableFireFlowerSFX then
                             smasExtraSounds.playSFX(18)
                         end
                     end
-                    if p.powerup == 7 and soundID == 18 then --Iceball sound
-                        eventObj.cancelled = true
+                    if p.powerup == 7 then --Iceball sound
                         if smasExtraSounds.enableIceFlowerSFX then
                             if not smasExtraSounds.useFireSoundForIce then
                                 smasExtraSounds.playSFX(93)
@@ -835,7 +836,62 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
 
 
 
+            --**FIREBALLS/HAMMERS/ICEBALLS**
+            if isShooting(p) and soundID == 18 then
+                eventObj.cancelled = true
+                if normalCharactersWithoutMegaman[p.character] then
+                    if p.powerup == 3 then --Fireball sound
+                        if smasExtraSounds.enableFireFlowerSFX then
+                            smasExtraSounds.playSFX(18, smasExtraSounds.volume)
+                        end
+                    end
+                    if p.powerup == 6 then --Hammer throw sound
+                        if smasExtraSounds.enableHammerSuitSFX then
+                            if not smasExtraSounds.useFireSoundForHammerSuit then
+                                smasExtraSounds.playSFX(105, smasExtraSounds.volume)
+                            elseif smasExtraSounds.useFireSoundForHammerSuit then
+                                smasExtraSounds.playSFX(18, smasExtraSounds.volume)
+                            end
+                        end
+                    end
+                    if p.powerup == 7 then --Iceball sound
+                        if smasExtraSounds.enableIceFlowerSFX then
+                            if not smasExtraSounds.useFireSoundForIce then
+                                smasExtraSounds.playSFX(93, smasExtraSounds.volume)
+                            elseif smasExtraSounds.useFireSoundForIce then
+                                smasExtraSounds.playSFX(18, smasExtraSounds.volume)
+                            end
+                        end
+                    end
+                end
+            end
+            
+            
+            
+            
+            --**LINK SLASHING**
+            if isShootingLink(p) and soundID == 77 then
+                eventObj.cancelled = true
+                if linkCharacters[p.character] then
+                    if p.powerup == 3 then --Fireball sound
+                        if smasExtraSounds.enableLinkSlashFireballSFX then
+                            smasExtraSounds.playSFX(161, smasExtraSounds.volume)
+                        end
+                    elseif p.powerup == 7 then --Iceball sound
+                        if smasExtraSounds.enableLinkSlashIceballSFX then
+                            smasExtraSounds.playSFX(162, smasExtraSounds.volume)
+                        end
+                    else
+                        if smasExtraSounds.enableLinkSlashSFX then
+                            smasExtraSounds.playSFX(77, smasExtraSounds.volume)
+                        end
+                    end
+                end
+            end
 
+
+
+            
         end
     end
 end
@@ -863,14 +919,12 @@ end
 function smasExtraSounds.onTick() --This is a list of sounds that'll need to be replaced within each costume. They're muted here for obivious reasons.
     if smasExtraSounds.active then --Only mute when active
         smasExtraSounds.disableSoundMarker = false --Make sure, when disabled, it only unmutes once when disabled
-        Audio.sounds[1].muted = true --player-jump.ogg
         Audio.sounds[4].muted = true --block-smash.ogg
         Audio.sounds[7].muted = true --mushroom.ogg
         Audio.sounds[8].muted = true --player-dead.ogg
         Audio.sounds[14].muted = true --coin.ogg
         Audio.sounds[15].muted = true --1up.ogg
         --Audio.sounds[17].muted = true --warp.ogg
-        Audio.sounds[18].muted = true --fireball.ogg
         Audio.sounds[36].muted = true --smash.ogg
         Audio.sounds[39].muted = true --birdo-hit.ogg
         Audio.sounds[42].muted = true --npc-fireball.ogg
@@ -1274,15 +1328,12 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
     end
     if not smasExtraSounds.active then --Unmute when not active
         if not smasExtraSounds.disableSoundMarker then
-            Audio.sounds[1].muted = false --player-jump.ogg
             Audio.sounds[4].muted = false --block-smash.ogg
             Audio.sounds[7].muted = false --mushroom.ogg
             Audio.sounds[8].muted = false --player-dead.ogg
-            Audio.sounds[10].muted = false --player-slide.ogg
             Audio.sounds[14].muted = false --coin.ogg
             Audio.sounds[15].muted = false --1up.ogg
             --Audio.sounds[17].muted = false --warp.ogg
-            Audio.sounds[18].muted = false --fireball.ogg
             Audio.sounds[33].muted = false --tail.ogg
             Audio.sounds[36].muted = false --smash.ogg
             Audio.sounds[39].muted = false --birdo-hit.ogg
@@ -1464,62 +1515,6 @@ function smasExtraSounds.onInputUpdate() --Button pressing for such commands
     if not Misc.isPaused() then
         if smasExtraSounds.active then
             for _,p in ipairs(Player.get()) do --Get all players
-            
-            
-            
-                
-                
-                
-                --**FIREBALLS/HAMMERS/ICEBALLS**
-                if isShooting(p) then
-                    if normalCharactersWithoutMegaman[p.character] then
-                        if p.powerup == 3 then --Fireball sound
-                            if smasExtraSounds.enableFireFlowerSFX then
-                                smasExtraSounds.playSFX(18, smasExtraSounds.volume)
-                            end
-                        end
-                        if p.powerup == 6 then --Hammer throw sound
-                            if smasExtraSounds.enableHammerSuitSFX then
-                                if not smasExtraSounds.useFireSoundForHammerSuit then
-                                    smasExtraSounds.playSFX(105, smasExtraSounds.volume)
-                                elseif smasExtraSounds.useFireSoundForHammerSuit then
-                                    smasExtraSounds.playSFX(18, smasExtraSounds.volume)
-                                end
-                            end
-                        end
-                        if p.powerup == 7 then --Iceball sound
-                            if smasExtraSounds.enableIceFlowerSFX then
-                                if not smasExtraSounds.useFireSoundForIce then
-                                    smasExtraSounds.playSFX(93, smasExtraSounds.volume)
-                                elseif smasExtraSounds.useFireSoundForIce then
-                                    smasExtraSounds.playSFX(18, smasExtraSounds.volume)
-                                end
-                            end
-                        end
-                    end
-                end
-                
-                
-                
-                
-                --**LINK SLASHING**
-                if isShootingLink(p) then
-                    if linkCharacters[p.character] then
-                        if p.powerup == 3 then --Fireball sound
-                            if smasExtraSounds.enableLinkSlashFireballSFX then
-                                smasExtraSounds.playSFX(161, smasExtraSounds.volume)
-                            end
-                        elseif p.powerup == 7 then --Iceball sound
-                            if smasExtraSounds.enableLinkSlashIceballSFX then
-                                smasExtraSounds.playSFX(162, smasExtraSounds.volume)
-                            end
-                        else
-                            if smasExtraSounds.enableLinkSlashSFX then
-                                smasExtraSounds.playSFX(77, smasExtraSounds.volume)
-                            end
-                        end
-                    end
-                end
                 
                 
                 

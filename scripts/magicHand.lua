@@ -672,6 +672,7 @@ registerEvent(magicHand,"onMouseButtonEvent")
 registerEvent(magicHand,"onMouseWheelEvent")
 registerEvent(magicHand,"onKeyboardKeyPress")
 registerEvent(magicHand,"onKeyboardPressDirect")
+registerEvent(magicHand,"onKeyboardPress")
     
 -- Enable the magic hand in the editor, if "smasBooleans.enableEditorMagicHand" is true
 if Misc.inEditor() and smasBooleans.enableEditorMagicHand then
@@ -741,20 +742,16 @@ function magicHand.onKeyboardPressDirect(keyCode, isHolding, chara)
     end
 end
 
-function magicHand.onKeyboardKeyPress(virtualKey, strKey)
+function magicHand.onKeyboardPress(virtualKey)
     if magicHand.enabledInEpisode and magicHand.canBeToggled() then
         if virtualKey == magicHand.keyBindingForOpening then
             toggleBool = not toggleBool
             magicHand.toggle(toggleBool)
             if toggleBool then
-                if SMBX_VERSION == VER_SEE_MOD then --Misc.runWhenUnfocused isn't in Beta 5 yet
-                    Misc.runWhenUnfocused(true)
-                end
+                Misc.setRunWhenUnfocused(true)
                 Sound.playSFX("toggle-on-magicHand.ogg")
             else
-                if SMBX_VERSION == VER_SEE_MOD then
-                    Misc.runWhenUnfocused(false)
-                end
+                Misc.setRunWhenUnfocused(false)
                 Sound.playSFX("toggle-off-magicHand.ogg")
             end
         end

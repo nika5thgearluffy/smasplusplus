@@ -106,6 +106,7 @@ _G.smasGlobals = require("smasGlobals")
 _G.smasMemoryAddresses = require("smasMemoryAddresses")
 _G.smasKeySystem = require("smasKeySystem")
 _G.smasHud = require("smasHud")
+--_G.smasHud2 = require("smasHud2")
 _G.smasAudioVolumeSystem = require("smasAudioVolumeSystem")
 _G.smasAnimationSystem = require("smasAnimationSystem")
 _G.smasVerboseMode = require("smasVerboseMode")
@@ -122,9 +123,6 @@ _G.smasPWing = require("smasPWing")
 _G.smasExtraSounds = require("smasExtraSounds")
 _G.smasMapInventorySystem = require("smasMapInventorySystem")
 _G.smasWarpSystem = require("smasWarpSystem")
-if Misc.inEditor() and smasBooleans.enableEditorMagicHand then
-    _G.smasMagicHand = require("scripts/magicHand")
-end
 
 --Then we do everything else.
 GameData.levelMusicTemporary = {}
