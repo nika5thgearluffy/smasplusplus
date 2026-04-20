@@ -301,6 +301,41 @@ do
 
         return value
     end
+    
+    function pauseplus.setSelectionValue(submenu,option,val)
+        if option == nil then -- Search every menu
+            option = submenu
+
+            for _,submenuName in ipairs(pauseplus.submenuNames) do
+                local value = pauseplus.getSelectionValue(submenuName,option)
+
+                if value ~= nil then
+                    submenuName = val
+                end
+            end
+
+            return nil
+        end
+        
+
+        if selectionData[submenu] == nil then
+            return
+        end
+
+        local name = getOptionSaveName(option)
+        local value = selectionData[submenu][name]
+
+        if value == nil then
+            return
+        end
+        
+        
+        if selectionNames[submenu] ~= nil and selectionNames[submenu][name] ~= nil then
+            selectionNames[submenu][name][value] = val
+        end
+
+        return value
+    end
 
 
 

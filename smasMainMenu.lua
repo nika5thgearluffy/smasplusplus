@@ -1288,7 +1288,7 @@ function smasMainMenu.onDraw()
             textplus.print{x = (camera.width / 2) - 200, y=390, text = "Press jump to start", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFont}
         end
         if smasMainMenu.showWebsiteTextOnScreen then
-            textplus.print{x=(camera.width / 2) - 370, y=522, text = "github.com/SpencerEverly/smasplusplus", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFontWebsite}
+            textplus.print{x=(camera.width / 2) - 398, y=522, text = "github.com/nika5thgearluffy/smasplusplus", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFontWebsite}
         end
         if smasMainMenu.showLogoOnScreen then
             if SaveData.SMASPlusPlus.options.currentLanguage == "english" then
@@ -1317,8 +1317,8 @@ function smasMainMenu.onDraw()
             end
         end
         if not smasMainMenu.hideGameSMBXAndSMBX2Credits then
-            textplus.print{x=(camera.width / 2) - 220, y=480, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-7, color=Color.red, xscale = 2, yscale = 2}
-            textplus.print{x=(camera.width / 2) - 222, y=477, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
+            textplus.print{x=(camera.width / 2) - 200, y=480, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-7, color=Color.red, xscale = 2, yscale = 2}
+            textplus.print{x=(camera.width / 2) - 202, y=477, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
         end
         if smasMainMenu.showWorldMapSkipMessage then
             textplus.print{x=(camera.width / 2) - 360, y=450, text = "Hold down NOW to instantly skip to the World Map (3 seconds).", priority=0, color=Color.red, font=statusFont, xscale = 1.5, yscale = 1.5}
@@ -1496,8 +1496,8 @@ smasMainMenuSystem.addMenuItem{name = "Erase Save Data", section = smasMainMenuS
 
 --SMAS++ MAIN MENU: Main Menu Selection (Audio Settings)
 smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, title = "Audio Settings", menuBackTo = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MAIN, xCenter = 150, yCenter = 310}
-smasMainMenuSystem.addMenuItem{name = "Music Volume", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_NUMBERVALUE, isFunction = false, isSaveData = false, isGameData = false, isPauseplusValue = true, pauseplusSubmenu = "soundsettings", numberToUse = "music volume", minimumNumber = 0, numberStep = 5, maxNumber = 100}
-smasMainMenuSystem.addMenuItem{name = "SFX Volume", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_NUMBERVALUE, isFunction = false, isSaveData = false, isGameData = false, isPauseplusValue = true, pauseplusSubmenu = "soundsettings", numberToUse = "sfx volume", minimumNumber = 0, numberStep = 0.1, maxNumber = 1}
+smasMainMenuSystem.addMenuItem{name = "Music Volume", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_NUMBERVALUE, isFunction = true, isSaveData = false, isGameData = false, isPauseplusValue = true, pauseplusSubmenu = "soundsettings", numberToUse = "music volume", minimumNumber = 0, numberStep = 5, maxNumber = 100, functionToRun = (function() smasAudioVolumeSystem.setVolumeNow = true end)}
+smasMainMenuSystem.addMenuItem{name = "SFX Volume", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_NUMBERVALUE, isFunction = true, isSaveData = false, isGameData = false, isPauseplusValue = true, pauseplusSubmenu = "soundsettings", numberToUse = "sfx volume", minimumNumber = 0, numberStep = 0.1, maxNumber = 1, functionToRun = (function() smasAudioVolumeSystem.setVolumeNow = true end)}
 smasMainMenuSystem.addMenuItem{name = "Enable P-Wing SFX", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_BOOLEAN, isFunction = false, booleanToUse = "disable p-wing sound", isSaveData = false, isGameData = false, isPauseplusValue = true, pauseplusSubmenu = "soundsettings"}
 smasMainMenuSystem.addMenuItem{name = "Original SMBX Sounds", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MUSICANDSOUNDS, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_BOOLEAN, isFunction = false, booleanToUse = "use the original smbx sound system", isSaveData = false, isGameData = false, isPauseplusValue = true, pauseplusSubmenu = "soundsettings"}
 

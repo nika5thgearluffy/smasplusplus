@@ -174,6 +174,7 @@ local blockManager = require("blockManager") --Used to detect brick breaks when 
 local inspect = require("ext/inspect")
 local rng = require("base/rng")
 local bettereffects = require("base/game/bettereffects")
+local playerManager = require("base/playermanager")
 
 local npcToCoinTimer = 0 --This is used for the NPC to Coin sound.
 local holdingTimer = 0 --To count a timer on how long a player has held an item.
@@ -546,8 +547,7 @@ end
 
 local function isShooting(p)
     return (
-        p:mem(0x160, FIELD_WORD) == 30
-        and Level.endState() == 0
+        Level.endState() == 0
         and (
             not GameData.winStateActive
             or GameData.winStateActive == nil
@@ -567,10 +567,58 @@ local function isShooting(p)
     )
 end
 
-local function isShootingLink(p)
+local function isShootingMario(p)
     return (
         p:mem(0x160, FIELD_WORD) == 30
-        and p:mem(0x162, FIELD_WORD) == 0
+        and isShooting(p)
+    )
+end
+
+local function isShootingLuigi(p)
+    return (
+        p:mem(0x160, FIELD_WORD) == 35
+        and isShooting(p)
+    )
+end
+
+local function isShootingPeach(p)
+    return (
+        p:mem(0x160, FIELD_WORD) == 40
+        and isShooting(p)
+    )
+end
+
+local function isShootingToad(p)
+    return (
+        p:mem(0x160, FIELD_WORD) == 25
+        and isShooting(p)
+    )
+end
+
+local function isShootingLink(p)
+    return (
+        p:mem(0x162, FIELD_WORD) == 40
+        and Level.endState() == 0
+        and (
+            not GameData.winStateActive
+            or GameData.winStateActive == nil
+        )
+        and p.deathTimer == 0
+        and p.forcedState == 0
+        and p.holdingNPC == nil
+        and not p.climbing
+        and (
+            p.mount == MOUNT_NONE
+            or p.mount == MOUNT_BOOT
+        )
+        and p.keys.run == KEYS_PRESSED or p.keys.altRun == KEYS_PRESSED
+        and p:mem(0x172, FIELD_BOOL)
+    )
+end
+
+local function isShootingLinkHammer(p)
+    return (
+        p:mem(0x162, FIELD_WORD) == 25
         and Level.endState() == 0
         and (
             not GameData.winStateActive
@@ -837,7 +885,13 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
 
 
             --**FIREBALLS/HAMMERS/ICEBALLS**
-            if isShooting(p) and soundID == 18 then
+            if (
+                (playerManager.getBaseID(p.character) == 1 and isShootingMario(p))
+                or (playerManager.getBaseID(p.character) == 2 and isShootingLuigi(p))
+                or (playerManager.getBaseID(p.character) == 3 and isShootingPeach(p))
+                or (playerManager.getBaseID(p.character) == 4 and isShootingToad(p))
+            )
+            and soundID == 18 then
                 eventObj.cancelled = true
                 if normalCharactersWithoutMegaman[p.character] then
                     if p.powerup == 3 then --Fireball sound
@@ -869,8 +923,8 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
             
             
             
-            --**LINK SLASHING**
-            if isShootingLink(p) and soundID == 77 then
+            --**LINK SLASHING (FIRE & ICE)**
+            if (isShootingLink(p) and soundID == 82) then
                 eventObj.cancelled = true
                 if linkCharacters[p.character] then
                     if p.powerup == 3 then --Fireball sound

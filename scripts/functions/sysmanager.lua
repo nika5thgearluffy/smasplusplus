@@ -392,12 +392,12 @@ function SysManager.loadIntroTheme() --Loads the theme after execution. If setti
     end
 end
 
-function SysManager.parseSMBX64Bool(string) --Parses a bool from a save file (Thanks KBM_Quine!)
+function SysManager.parseSMBX64Bool(string) --Parses a bool from a save file
     if string.match(string, "#TRUE#") then return true end
     if string.match(string, "#FALSE#") then return false end
 end
 
-function SysManager.parseSaveFile(slot) --Parses a save file (Thanks KBM_Quine!)
+function SysManager.parseSaveFile(slot) --Parses a save file
     local t = {}
     local savFile = Misc.resolveFile("save" .. slot ..".sav")
     local lines = io.readFileLines(savFile)
@@ -814,10 +814,6 @@ function SysManager.checkEditorEntity()
     else
         return {}
     end
-end
-
-function SysManager.isConditionSet(variableToCheck, ...)
-    
 end
 
 return SysManager

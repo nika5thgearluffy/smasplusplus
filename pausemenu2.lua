@@ -1420,6 +1420,18 @@ local function dlcteleport()
     Misc.unpause()
 end
 
+function musicVolume()
+    -- Update music volume right away
+    GameData.SMASPlusPlus.audio.musicVolume = pauseplus.getSelectionValue("soundsettings","Music Volume")
+    smasAudioVolumeSystem.setVolumeNow = true
+end
+
+function sfxVolume()
+    -- Update SFX volume right away
+    GameData.SMASPlusPlus.audio.sfxVolume = pauseplus.getSelectionValue("soundsettings","SFX Volume")
+    smasAudioVolumeSystem.setVolumeNow = true
+end
+
 function pauseSpecifics()
     pauseplus.font = textplus.loadFont("littleDialogue/font/sonicMania-smallFont.ini")
     pauseplus.scale = 1.5
@@ -1436,16 +1448,16 @@ function pauseSpecifics()
         pauseplus.createOption("main",{text = "Start a New Stage",closeMenu = true,description = "Starts a new stage in Classic Battle Mode. The stage will be picked at random!",action = function() Routine.run(battlemodenewstage) end})
         pauseplus.createOption("main",{text = "Restart this Stage",closeMenu = true,description = "Restarts the same stage over. Useful if you're stuck somewhere and need to restart the match.",action = function() Routine.run(restartlevel) end})
         pauseplus.createSubmenu("settings",{headerText = "<size 1.5>Settings/Options</size>"})
-        pauseplus.createOption("settings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%"})
-        pauseplus.createOption("settings",{text = "SFX Volume",description = "Turn the sound effect volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 1,selectionMin = 0,selectionMax = 1,selectionStep = 0.1,selectionFormat = "%d%%"})
+        pauseplus.createOption("settings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%", action = function() musicVolume() end})
+        pauseplus.createOption("settings",{text = "SFX Volume",description = "Turn the sound effect volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 1,selectionMin = 0,selectionMax = 1,selectionStep = 0.1,selectionFormat = "%d%%", action = function() sfxVolume() end})
         pauseplus.createOption("main",{text = "Exit Battle Mode",closeMenu = true,description = "To exit battle mode, use this option. This will reset the game back to the preboot menu.",action = function() Routine.run(battlemodeexit) end})
     end
     if GameData.rushModeActive then
         pauseplus.createOption("main",{text = "Start a New Stage",closeMenu = true,description = "Starts a new stage in Rush Mode. The stage will be picked at random!",action = function() Routine.run(rushmodenewstage) end})
         pauseplus.createOption("main",{text = "Restart this Stage",closeMenu = true,description = "Restarts the same stage over. Useful if you're stuck somewhere.",action = function() Routine.run(restartlevel) end})
         pauseplus.createSubmenu("settings",{headerText = "<size 1.5>Settings/Options</size>"})
-        pauseplus.createOption("settings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%"})
-        pauseplus.createOption("settings",{text = "SFX Volume",description = "Turn the sound effect volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 1,selectionMin = 0,selectionMax = 1,selectionStep = 0.1,selectionFormat = "%d%%"})
+        pauseplus.createOption("settings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%", action = function() musicVolume() end})
+        pauseplus.createOption("settings",{text = "SFX Volume",description = "Turn the sound effect volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 1,selectionMin = 0,selectionMax = 1,selectionStep = 0.1,selectionFormat = "%d%%", action = function() sfxVolume() end})
         pauseplus.createOption("main",{text = "Exit Rush Mode",closeMenu = true,description = "To exit Rush Mode, use this option. This will reset the game back to the preboot menu.",action = function() Routine.run(battlemodeexit) end})
     end
     if (not smasBooleans.isInClassicBattleMode) and (GameData.rushModeActive == nil or not GameData.rushModeActive) and (not Misc.inMarioChallenge()) then
@@ -1520,8 +1532,8 @@ function pauseSpecifics()
         -- pauseplus.createOption("miscsettings",{text = "Enable Original WSMBA Mode",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable the original Where SMB Attacks mode. This will only apply to WSMBA levels.", action = function() wsmbaoriginalgraphicsoggle() end})
         
         --Sound Settings
-        pauseplus.createOption("soundsettings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%"})
-        pauseplus.createOption("soundsettings",{text = "SFX Volume",description = "Turn the sound effect volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 1,selectionMin = 0,selectionMax = 1,selectionStep = 0.1,selectionFormat = "%d%%"})
+        pauseplus.createOption("soundsettings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%", action = function() musicVolume() end})
+        pauseplus.createOption("soundsettings",{text = "SFX Volume",description = "Turn the sound effect volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 1,selectionMin = 0,selectionMax = 1,selectionStep = 0.1,selectionFormat = "%d%%", action = function() sfxVolume() end})
         pauseplus.createOption("soundsettings",{text = "Disable P-Wing Sound",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Disables the P-Wing sound. Toggle again to turn on.",action = function() togglepwingsfx() end})
         pauseplus.createOption("soundsettings",{text = "Use the Original SMBX Sound System",selectionType = pauseplus.SELECTION_CHECKBOX,description = "This options disables all the new sounds (Except P-Wing) and reverts back to the original sound system.",action = function() Routine.run(smbxdefaultsoundsystem) end})
         
