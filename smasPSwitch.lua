@@ -47,14 +47,12 @@ end
 
 
 
-function smasPSwitch.inNoPSwitchMusicPlayingSituations()
-    for _,p in ipairs(Player.get()) do
-        return (p.hasStarman
-            or p.isMega
-            or GameData.winStateActive
-            or Level.endState() > 0
-        )
-    end
+function smasPSwitch.inNoPSwitchMusicPlayingSituations(p)
+    return (p.hasStarman
+        or p.isMega
+        or GameData.winStateActive
+        or Level.endState() > 0
+    )
 end
 
 
@@ -79,7 +77,7 @@ function smasPSwitch.onDraw()
         
         
         --Make sure the music stops when collecting a starman, a megashroom, or winning a level if active
-        if smasPSwitch.inNoPSwitchMusicPlayingSituations() then
+        if smasPSwitch.inNoPSwitchMusicPlayingSituations(p) then
             if pSwitchMusic ~= nil then
                 smasBooleans.musicMuted = false
                 pSwitchMusic:Stop()
