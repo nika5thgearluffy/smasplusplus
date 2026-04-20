@@ -33,6 +33,7 @@ _G.Evento = require("scripts/functions/events")
 _G.Effectx = require("scripts/functions/effect")
 _G.Collisionz = require("scripts/functions/collision")
 _G.Liquidz = require("scripts/functions/liquid")
+_G.Levul = require("scripts/functions/level")
 
 SysManager.sendToConsole("Loaded SMASFunctions.")
 

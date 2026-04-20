@@ -18,7 +18,7 @@ smasBooleans.compatibilityMode13Mode = false
 local warps
 local effect
 
-local debugtext = true
+local debugtext = false
 local fonttester = textplus.loadFont("littleDialogue/font/press-start.ini")
 
 function effectSpawn()

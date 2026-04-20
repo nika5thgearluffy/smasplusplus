@@ -573,7 +573,7 @@ function smasHud.drawBombs(splitOffset, thisCam, thisPlayer, priority)
 end
 
 function smasHud.drawStars(splitOffset, thisCam, thisPlayer, priority)
-    local stars = (SaveData.totalStarCount)
+    local stars = (SaveData.SMASPlusPlus.levels.starCount)
     if stars > 0 then
         local sprite = GetSprite("stars", thisPlayer.character);
         drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.stars, sprite, stars, priority)
@@ -649,7 +649,7 @@ function smasHud.drawHUDCoins(thisPlayer, priority)
 end
 
 function smasHud.drawHUDStars(thisPlayer, priority)
-    local stars = (SaveData.totalStarCount)
+    local stars = (SaveData.SMASPlusPlus.levels.starCount)
     if stars > 0 then
         local sprite = GetSprite("stars", thisPlayer.character);
         drawCounter(0, {width = 800}, thisPlayer, smasHud.overworld.offsets.stars, sprite, stars, priority);

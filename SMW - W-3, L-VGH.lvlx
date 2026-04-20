@@ -1,5 +1,5 @@
 HEAD
-TL:"Super Mario World\: Vanilla Ghost House (Wowsie)";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
+TL:"Super Mario World\: Vanilla Ghost House";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
 SC:0;L:-200000;R:-194368;T:-200864;B:-200000;MZ:24;MF:"_OST/Super Mario World/Ghost House.spc|0\;g=2.5";BG:42;

@@ -134,7 +134,7 @@ end
 
 function realstar.isStarCollected(npc, filename)
     local collected = false
-    if table.icontains(SaveData.completeLevels,Level.filename()) then
+    if table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
         collected = true
     end
     return collected
@@ -207,11 +207,11 @@ function realstar.onPostNPCKill(v,reason)
         Routine.run(starget)
         if GameData.rushModeActive == false or GameData.rushModeActive == nil then
             if Misc.inMarioChallenge() == false then
-                if not table.icontains(SaveData.completeLevels,Level.filename()) then
-                    SaveData.totalStarCount = SaveData.totalStarCount + 1
-                    table.insert(SaveData.completeLevels,Level.filename())
-                elseif table.icontains(SaveData.completeLevels,Level.filename()) then
-                    SaveData.totalStarCount = SaveData.totalStarCount
+                if not table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
+                    SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount + 1
+                    table.insert(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename())
+                elseif table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
+                    SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount
                 end
             end
         end

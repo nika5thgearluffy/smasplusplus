@@ -143,7 +143,7 @@ function minHUD.drawHUD(camIdx,priority,isSplit)
     -- Stars
     if starCounterSet == 1 then
         Graphics.drawImageWP(starCounter, Screen.calculateCameraDimensions(450, 1), 4, 4.9999)
-        textplus.print{text = tostring(SaveData.totalStarCount), font = minFont, priority = 4.9999, x = Screen.calculateCameraDimensions(484, 1), y = 4, xscale = 2, yscale = 2, color = Color.fromHexRGBA(0xFFFFFFFF)}
+        textplus.print{text = tostring(SaveData.SMASPlusPlus.levels.starCount), font = minFont, priority = 4.9999, x = Screen.calculateCameraDimensions(484, 1), y = 4, xscale = 2, yscale = 2, color = Color.fromHexRGBA(0xFFFFFFFF)}
     end
 
     -- Score

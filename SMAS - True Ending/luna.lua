@@ -2,7 +2,7 @@ local level_dependencies_normal= require("level_dependencies_normal")
 local Routine = require("routine")
 local furyinventory = require("furyinventory")
 
-local stars = SaveData.totalStarCount
+local stars = SaveData.SMASPlusPlus.levels.starCount
 
 local whiteflash = false
 local blackscreen = false

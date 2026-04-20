@@ -289,38 +289,8 @@ function goalTape.startExit(args)
 
     megashroom.StopMega(p,true)
     starman.stop(p)
-    
-    if not GameData.rushModeActive or GameData.rushModeActive == nil then
-        if not Misc.inMarioChallenge() then
-            if args.useOptionalTable then
-                if not table.icontains(SaveData.completeLevelsOptional,Level.filename()) then
-                    if args.addToTable then
-                        table.insert(SaveData.completeLevelsOptional,Level.filename())
-                    end
-                    if args.incrementStarCount then
-                        SaveData.totalStarCount = SaveData.totalStarCount + 1
-                    else
-                        SaveData.totalStarCount = SaveData.totalStarCount
-                    end
-                elseif table.icontains(SaveData.completeLevelsOptional,Level.filename()) then
-                    SaveData.totalStarCount = SaveData.totalStarCount
-                end
-            else
-                if not table.icontains(SaveData.completeLevels,Level.filename()) then
-                    if args.addToTable then
-                        table.insert(SaveData.completeLevels,Level.filename())
-                    end
-                    if args.incrementStarCount then
-                        SaveData.totalStarCount = SaveData.totalStarCount + 1
-                    else
-                        SaveData.totalStarCount = SaveData.totalStarCount
-                    end
-                elseif table.icontains(SaveData.completeLevels,Level.filename()) then
-                    SaveData.totalStarCount = SaveData.totalStarCount
-                end
-            end
-        end
-    end
+
+    Levul.markComplete(args.incrementStarCount, args.useOptionalTable, args.addToTable)
     
     smasBooleans.musicMuted = true
     

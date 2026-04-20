@@ -154,37 +154,7 @@ function flagpoleSMAS.onTickNPC(v)
             if data.tick > 65 * 2 then
                 data.tick = 0
                 data.state = 2
-                if GameData.rushModeActive == false or GameData.rushModeActive == nil then
-                    if Misc.inMarioChallenge() == false then
-                        if v.data._settings.useOptionalTable then
-                            if not table.icontains(SaveData.completeLevelsOptional,Level.filename()) then
-                                if v.data._settings.incrementStarCount then
-                                    SaveData.totalStarCount = SaveData.totalStarCount + 1
-                                else
-                                    SaveData.totalStarCount = SaveData.totalStarCount
-                                end
-                                if v.data._settings.addToTable then
-                                    table.insert(SaveData.completeLevelsOptional,Level.filename())
-                                end
-                            elseif table.icontains(SaveData.completeLevelsOptional,Level.filename()) then
-                                SaveData.totalStarCount = SaveData.totalStarCount
-                            end
-                        else
-                            if not table.icontains(SaveData.completeLevels,Level.filename()) then
-                                if v.data._settings.incrementStarCount then
-                                    SaveData.totalStarCount = SaveData.totalStarCount + 1
-                                else
-                                    SaveData.totalStarCount = SaveData.totalStarCount
-                                end
-                                if v.data._settings.addToTable then
-                                    table.insert(SaveData.completeLevels,Level.filename())
-                                end
-                            elseif table.icontains(SaveData.completeLevels,Level.filename()) then
-                                SaveData.totalStarCount = SaveData.totalStarCount
-                            end
-                        end
-                    end
-                end
+                Levul.markComplete(v.data._settings.incrementStarCount, v.data._settings.useOptionalTable, v.data._settings.addToTable)
                 Sound.playSFX(136)
                 SFX.play(58)
             end

@@ -404,31 +404,31 @@ function runHubUpdate()
     end
     Routine.waitFrames(1, true)
     if not malcmusic.holiday then --and SaveData.genosideStage <= 2 then
-        if SaveData.totalStarCount <= 3 or SaveData.totalStarCount == nil then
+        if SaveData.SMASPlusPlus.levels.starCount <= 3 or SaveData.SMASPlusPlus.levels.starCount == nil then
             StageNegative1()
         end
-        if SaveData.totalStarCount >= 4 and SaveData.totalStarCount <= 9 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 4 and SaveData.SMASPlusPlus.levels.starCount <= 9 then
             Stage0()
         end
-        if SaveData.totalStarCount >= 10 and SaveData.totalStarCount <= 15 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 10 and SaveData.SMASPlusPlus.levels.starCount <= 15 then
             Stage1()
         end
-        if SaveData.totalStarCount >= 16 and SaveData.totalStarCount <= 21 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 16 and SaveData.SMASPlusPlus.levels.starCount <= 21 then
             Stage2()
         end
-        if SaveData.totalStarCount >= 22 and SaveData.totalStarCount <= 27 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 22 and SaveData.SMASPlusPlus.levels.starCount <= 27 then
             Stage3()
         end
-        if SaveData.totalStarCount >= 28 and SaveData.totalStarCount <= 31 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 28 and SaveData.SMASPlusPlus.levels.starCount <= 31 then
             Stage4()
         end
-        if SaveData.totalStarCount >= 32 and SaveData.totalStarCount <= 37 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 32 and SaveData.SMASPlusPlus.levels.starCount <= 37 then
             Stage5()
         end
-        if SaveData.totalStarCount >= 38 and SaveData.totalStarCount <= 43 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 38 and SaveData.SMASPlusPlus.levels.starCount <= 43 then
             Stage6()
         end
-        if SaveData.totalStarCount >= 44 then
+        if SaveData.SMASPlusPlus.levels.starCount >= 44 then
             Stage7()
         end
     end
@@ -487,7 +487,7 @@ function onEvent(eventName)
         myShop:open()
     end
     if eventName == "StarList" then
-        littleDialogue.create({text = "<boxStyle infobooth>OUR RECORDS SHOW THAT YOU HAVE AT LEAST "..SaveData.totalStarCount.." STARS IN YOUR GAME PROGRESSION.<page>THE STARS YOU HAVE COLLECTED IN THE MANDATORY LEVELS IS "..#SaveData.completeLevels..". THE STARS YOU HAVE COLLECTED IN ALL OTHER LEVELS IS "..#SaveData.completeLevelsOptional..".<page>THE STAR COUNT OF EVERY STAR YOU COLLECTED OVERALL IS "..SaveData.starsgrabbed..".<page>TO FINISH YOUR GAME AND UNLOCK THE TRUE ENDING, YOU'LL NEED TO COLLECT "..SysManager.totalStarsLeftForTrueEnding().." MORE.<page>THANKS FOR PROCESSING THE INFORMATION I HAVE EXPLAINED. GOOD DAY."})
+        littleDialogue.create({text = "<boxStyle infobooth>OUR RECORDS SHOW THAT YOU HAVE AT LEAST "..SaveData.SMASPlusPlus.levels.starCount.." STARS IN YOUR GAME PROGRESSION.<page>THE STARS YOU HAVE COLLECTED IN THE MANDATORY LEVELS IS "..#SaveData.SMASPlusPlus.levels.complete.normal..". THE STARS YOU HAVE COLLECTED IN ALL OTHER LEVELS IS "..#SaveData.SMASPlusPlus.levels.complete.optional..".<page>THE STAR COUNT OF EVERY STAR YOU COLLECTED OVERALL IS "..SaveData.starsgrabbed..".<page>TO FINISH YOUR GAME AND UNLOCK THE TRUE ENDING, YOU'LL NEED TO COLLECT "..SysManager.totalStarsLeftForTrueEnding().." MORE.<page>THANKS FOR PROCESSING THE INFORMATION I HAVE EXPLAINED. GOOD DAY."})
     end
     if eventName == "GeneralList" then
         littleDialogue.create({text = "<boxStyle infobooth>OUR RECORDS SHOW THAT YOU HAVE GOT "..SaveData.GameOverCount.." GAME OVERS IN YOUR GAME PROGRESSION.<page>YOU ALSO HAVE RECENTLY WENT IN (number) LEVELS.<page>THE SCORE COUNT IS "..SaveData.SMASPlusPlus.hud.score.." AND THE COIN COUNT IS "..SaveData.SMASPlusPlus.hud.coinsClassic..".<page>YOU HAVE ALSO STOMPED ON "..SaveData.goombaStomps.." GOOMBAS, AND "..SaveData.koopaStomps.." KOOPA TROOPAS.<page>THE TOTAL AMOUNT OF COINS COLLECTED OVERALL IS "..SaveData.SMASPlusPlus.hud.coins..".<page>OVERALL, YOU HAVE USED "..SaveData.totalmushrooms.." MUSHROOMS, "..SaveData.totalfireflowers.." FIRE FLOWERS, "..SaveData.totalleafs.." SUPER LEAFS, "..SaveData.totaltanookis.." TANOOKI SUITS, "..SaveData.totalhammersuits.." HAMMER SUITS, AND "..SaveData.totaliceflowers.." ICE FLOWERS.<page>YOU ALSO GRABBED "..SaveData.starsgrabbed.." TOTAL STARS REGARDLESS OF COMPLETION OR NOT, USED "..SaveData.starmansused.." STARMANS, "..SaveData.megamushroomssused.." MEGA MUSHROOMS,<page>AND I HOPE YOU'VE HAD A FUN TIME.<page>THANKS FOR PROCESSING THE INFORMATION I HAVE EXPLAINED. GOOD DAY."})

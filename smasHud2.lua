@@ -33,6 +33,9 @@ smasHud.elements.icons = {
     timer = Graphics.sprites.hardcoded["52"].img,
     heartFull = Graphics.sprites.hardcoded["36-1"].img,
     heartEmpty = Graphics.sprites.hardcoded["36-2"].img,
+    key = Graphics.sprites.hardcoded["33-0"].img,
+    rupees = Graphics.sprites.hardcoded["33-6"].img,
+    bombs = Graphics.sprites.hardcoded["33-8"].img,
 }
 
 smasHud.drawing = {}
@@ -93,7 +96,7 @@ function smasHud.drawHud()
         end
         -- Stars
         if smasHud.elements.show.starCount then
-            local stars = SaveData.totalStarCount
+            local stars = SaveData.SMASPlusPlus.levels.starCount
             if stars > 0 then
                 Graphics.drawImageWP(smasHud.elements.icons.starCount, smasHud.drawing.angles.left + 15, 50, smasHud.priority)
                 Graphics.drawImageWP(smasHud.elements.icons.x, smasHud.drawing.angles.left + 35, 50, smasHud.priority)

@@ -42,7 +42,7 @@ function costume.drawHUD(camIdx,priority,isSplit)
     --Stars
     Graphics.drawImageWP(starCounter, 305, 26, -4.3)
     textplus.print{text = "x", font = minFont, priority = -4.3, x = 335, y = 26, xscale = 2, yscale = 2, color = Color.fromHexRGBA(0xFFFFFFFF)}
-    textplus.print{text = tostring(SaveData.totalStarCount), font = minFont, priority = -4.3, x = 350, y = 26, xscale = 2, yscale = 2, color = Color.fromHexRGBA(0xFFFFFFFF)}
+    textplus.print{text = tostring(SaveData.SMASPlusPlus.levels.starCount), font = minFont, priority = -4.3, x = 350, y = 26, xscale = 2, yscale = 2, color = Color.fromHexRGBA(0xFFFFFFFF)}
 
     --Score
     textplus.print{text = tostring(SaveData.SMASPlusPlus.hud.score), font = minFont, priority = -4.3, x = 432, y = 26, xscale = 2, yscale = 2, color = Color.fromHexRGBA(0xFFFFFFFF)}

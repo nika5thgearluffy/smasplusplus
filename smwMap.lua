@@ -30,11 +30,11 @@ end
 if SaveData.borderEnabled == nil then
     SaveData.borderEnabled = true
 end
-if SaveData.totalStarCount == nil then --This will make a new star count system that won't corrupt save files
-    SaveData.totalStarCount = 0
+if SaveData.SMASPlusPlus.levels.starCount == nil then --This will make a new star count system that won't corrupt save files
+    SaveData.SMASPlusPlus.levels.starCount = 0
 end
-if SaveData.completeLevels == nil then --This will add a table to list completed levels
-    SaveData.completeLevels = {}
+if SaveData.SMASPlusPlus.levels.complete.normal == nil then --This will add a table to list completed levels
+    SaveData.SMASPlusPlus.levels.complete.normal = {}
 end
 
 if SaveData.SMASPlusPlus.options.resolution == nil then
@@ -4087,10 +4087,10 @@ do
                 {
                     icon = Graphics.sprites.hardcoded["33-5"],
                     isEnabled = (function()
-                        return SaveData.totalStarCount > 0
+                        return SaveData.SMASPlusPlus.levels.starCount > 0
                     end),
                     getValue = (function()
-                        return SaveData.totalStarCount
+                        return SaveData.SMASPlusPlus.levels.starCount
                     end),
                 }
             }
@@ -4121,10 +4121,10 @@ do
                 {
                     icon = Graphics.sprites.hardcoded["33-5"],
                     isEnabled = (function()
-                        return SaveData.totalStarCount > 0
+                        return SaveData.SMASPlusPlus.levels.starCount > 0
                     end),
                     getValue = (function()
-                        return SaveData.totalStarCount
+                        return SaveData.SMASPlusPlus.levels.starCount
                     end),
                 }
             }
@@ -4150,10 +4150,10 @@ do
                 {
                     icon = Graphics.sprites.hardcoded["33-5"],
                     isEnabled = (function()
-                        return SaveData.totalStarCount > 0
+                        return SaveData.SMASPlusPlus.levels.starCount > 0
                     end),
                     getValue = (function()
-                        return SaveData.totalStarCount
+                        return SaveData.SMASPlusPlus.levels.starCount
                     end),
                 }
             }
@@ -4170,10 +4170,10 @@ do
                 {
                     icon = Graphics.sprites.hardcoded["33-5"],
                     isEnabled = (function()
-                        return SaveData.totalStarCount > 0
+                        return SaveData.SMASPlusPlus.levels.starCount > 0
                     end),
                     getValue = (function()
-                        return SaveData.totalStarCount
+                        return SaveData.SMASPlusPlus.levels.starCount
                     end),
                 }
             }
@@ -4213,10 +4213,10 @@ do
                 {
                     icon = Graphics.sprites.hardcoded["33-5"],
                     isEnabled = (function()
-                        return SaveData.totalStarCount > 0
+                        return SaveData.SMASPlusPlus.levels.starCount > 0
                     end),
                     getValue = (function()
-                        return SaveData.totalStarCount
+                        return SaveData.SMASPlusPlus.levels.starCount
                     end),
                 }
             }
@@ -4247,10 +4247,10 @@ do
                 {
                     icon = Graphics.sprites.hardcoded["33-5"],
                     isEnabled = (function()
-                        return SaveData.totalStarCount > 0
+                        return SaveData.SMASPlusPlus.levels.starCount > 0
                     end),
                     getValue = (function()
-                        return SaveData.totalStarCount
+                        return SaveData.SMASPlusPlus.levels.starCount
                     end),
                 }
             }

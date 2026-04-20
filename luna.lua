@@ -248,7 +248,7 @@ Graphics.sprites.effect[152].img = Graphics.loadImageResolved("graphics/smbx2og/
 Graphics.sprites.effect[153].img = Graphics.loadImageResolved("graphics/smbx2og/effect/effect-153.png")
 Graphics.sprites.ultimaterinka[player.powerup].img = Graphics.loadImageResolved("graphics/smbx2og/character/ultimaterinka-2.png")
 
-Progress.value = SaveData.totalStarCount --Every level load, we will save the total stars used with the launcher
+Progress.value = SaveData.SMASPlusPlus.levels.starCount --Every level load, we will save the total stars used with the launcher
 
 if SaveData.playerName == nil then --This is for adding the player name to the launcher, aside from the total stars used
     Progress.savename = "Player" --If the player name is nil, use "Player" instead
@@ -298,7 +298,7 @@ function onStart() --Now do onStart...
     warpstaractive = true
     if Misc.inMarioChallenge() then --Just in case if the Mario Challenge is active, do these things to update the Challenge...
         SaveData.SMASPlusPlus.hud.coinsClassic = mem(0x00B2C5A8, FIELD_WORD)
-        SaveData.totalStarCount = mem(0x00B251E0, FIELD_WORD)
+        SaveData.SMASPlusPlus.levels.starCount = mem(0x00B251E0, FIELD_WORD)
     end
     --Do the weather SaveData additions
     if SaveData.dateplayedweather == nil then
@@ -466,9 +466,9 @@ function onTick()
     --Now we'll overhaul the door star required system
     if warpstaractive then
         for _,warp in ipairs(Warp.get()) do
-            if warp.starsRequired <= SaveData.totalStarCount then
+            if warp.starsRequired <= SaveData.SMASPlusPlus.levels.starCount then
                 warp.starsRequired = 0
-            elseif warp.starsRequired > SaveData.totalStarCount then
+            elseif warp.starsRequired > SaveData.SMASPlusPlus.levels.starCount then
                 --warp.starsRequired = warpStarDoorList(warp) --Try to have this read-only?
             end
         end

@@ -285,15 +285,15 @@ function MigrateOldSave3() --Migration started + completed
     GameData.temporaryReserveStored = player.reservePowerup
     for k,v in ipairs(smasTables.__allLevels) do
         if table.icontains(Misc.getLegacyStarsCollectedNameOnly(),v) then
-            table.insert(SaveData.completeLevels, v)
+            table.insert(SaveData.SMASPlusPlus.levels.complete.normal, v)
         end
     end
     for k,v in ipairs(smasTables.__allLevelsOptional) do
         if table.icontains(Misc.getLegacyStarsCollectedNameOnly(),v) then
-            table.insert(SaveData.completeLevelsOptional, v)
+            table.insert(SaveData.SMASPlusPlus.levels.complete.optional, v)
         end
     end
-    SaveData.totalStarCount = #SaveData.completeLevels
+    SaveData.SMASPlusPlus.levels.starCount = #SaveData.SMASPlusPlus.levels.complete.normal
     Misc.eraseMainSaveSlot(Misc.saveSlot())
     littleDialogue.create({text = transplate.getTranslation("0x0000000000000011"), pauses = false, updatesInPause = true})
 end

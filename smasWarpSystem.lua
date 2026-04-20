@@ -55,7 +55,7 @@ function smasWarpSystem.onTick()
             for _,warp in ipairs(Warp.getIntersectingEntrance(x,y,x+p.width,y+p.height)) do
                 if smasWarpSystem.instantWarps[warp.warpType] and not warp.isHidden and not warp.fromOtherLevel
                 and (not warp.locked or (p.holdingNPC ~= nil and p.holdingNPC.id == 31))
-                and (warp.starsRequired <= SaveData.totalStarCount)
+                and (warp.starsRequired <= SaveData.SMASPlusPlus.levels.starCount)
                 then
                     -- Make sure whoever player is going in... goes in
                     p:teleport(warp.exitX, warp.exitY)

@@ -8,14 +8,14 @@ starsystem.stardoor = Graphics.loadImageResolved("starlock.png")
 local opacity = 0
 
 --Star system SaveData variables
-if SaveData.totalStarCount == nil then --This will make a new star count system that won't corrupt save files
-    SaveData.totalStarCount = 0
+if SaveData.SMASPlusPlus.levels.starCount == nil then --This will make a new star count system that won't corrupt save files
+    SaveData.SMASPlusPlus.levels.starCount = 0
 end
-if SaveData.completeLevels == nil then --This will add a table to list completed levels when collecting win states
-    SaveData.completeLevels = {}
+if SaveData.SMASPlusPlus.levels.complete.normal == nil then --This will add a table to list completed levels when collecting win states
+    SaveData.SMASPlusPlus.levels.complete.normal = {}
 end
-if SaveData.completeLevelsOptional == nil then --This will add a table to list completed levels when collecting win states in optional levels
-    SaveData.completeLevelsOptional = {}
+if SaveData.SMASPlusPlus.levels.complete.optional == nil then --This will add a table to list completed levels when collecting win states in optional levels
+    SaveData.SMASPlusPlus.levels.complete.optional = {}
 end
 
 function starsystem.onInitAPI()
@@ -25,7 +25,7 @@ end
 function starsystem.onDraw()
     local warps = Warp.get()
     for _,v in ipairs(warps) do
-        if v.isValid and (not v.isHidden) and v.starsRequired > SaveData.totalStarCount then
+        if v.isValid and (not v.isHidden) and v.starsRequired > SaveData.SMASPlusPlus.levels.starCount then
             Graphics.drawImageToSceneWP(starsystem.stardoor, v.entranceX + 0.5 * v.entranceWidth - 12, v.entranceY - 20, -40) --This will draw the star door locks, since the original image is invisible
         end
     end

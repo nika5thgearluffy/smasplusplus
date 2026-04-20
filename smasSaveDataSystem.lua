@@ -262,6 +262,20 @@ if SaveData.totalcoins ~= nil then -- If using the old SaveData variable, use th
     SaveData.totalcoins = nil
 end
 
+if SaveData.completeLevels ~= nil then
+    SaveData.SMASPlusPlus.levels.complete.normal = SaveData.completeLevels
+    SaveData.completeLevels = nil
+end
+if SaveData.completeLevelsOptional ~= nil then
+    SaveData.SMASPlusPlus.levels.complete.optional = SaveData.completeLevelsOptional
+    SaveData.completeLevelsOptional = nil
+end
+
+if SaveData.totalStarCount ~= nil then
+    SaveData.SMASPlusPlus.levels.starCount = SaveData.totalStarCount
+    SaveData.totalStarCount = nil
+end
+
 
 
 

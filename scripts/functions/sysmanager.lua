@@ -223,21 +223,21 @@ if Misc.inSuperMarioAllStarsPlusPlus() then
     --Star Count
     
     function SysManager.maxOutStars() --This maxs the star count to 9999
-        SaveData.totalStarCount = 9999
+        SaveData.SMASPlusPlus.levels.starCount = 9999
         SysManager.sendToConsole("Star count is now maxed out.")
     end
     
     function SysManager.clearAllStars() --This clears all the stars, and even all the level tables
         Sound.playSFX(67)
-        SaveData.totalStarCount = 0
-        for k in pairs(SaveData.completeLevels) do
-            SaveData.completeLevels[k] = nil
+        SaveData.SMASPlusPlus.levels.starCount = 0
+        for k in pairs(SaveData.SMASPlusPlus.levels.complete.normal) do
+            SaveData.SMASPlusPlus.levels.complete.normal[k] = nil
         end
-        for k in pairs(SaveData.completeLevelsOptional) do
-            SaveData.completeLevelsOptional[k] = nil
+        for k in pairs(SaveData.SMASPlusPlus.levels.complete.optional) do
+            SaveData.SMASPlusPlus.levels.complete.optional[k] = nil
         end
-        SaveData.completeLevels = {}
-        SaveData.completeLevelsOptional = {}
+        SaveData.SMASPlusPlus.levels.complete.normal = {}
+        SaveData.SMASPlusPlus.levels.complete.optional = {}
         SysManager.sendToConsole("Star count has been reset and cleared. All level completion status has also been deleted.")
     end
     
@@ -254,18 +254,18 @@ if Misc.inSuperMarioAllStarsPlusPlus() then
         else
         end
         if mathcount == subtract then
-            SaveData.totalStarCount = SaveData.totalStarCount - stars
+            SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount - stars
         elseif mathcount == add then
-            SaveData.totalStarCount = SaveData.totalStarCount + stars
+            SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount + stars
         end
     end
 end
     
 function SysManager.starCount() --This lists the count of the stars
-    if SaveData.totalStarCount == nil then
+    if SaveData.SMASPlusPlus.levels.starCount == nil then
         return mem(0x00B251E0, FIELD_WORD)
     else
-        return SaveData.totalStarCount
+        return SaveData.SMASPlusPlus.levels.starCount
     end
 end
 
@@ -564,7 +564,7 @@ function SysManager.getDefaultPlayerUsername()
 end
 
 function SysManager.totalStarsLeftForTrueEnding()
-    local stars = (200 - SaveData.totalStarCount)
+    local stars = (200 - SaveData.SMASPlusPlus.levels.starCount)
     if stars < 0 then
         return 0
     else

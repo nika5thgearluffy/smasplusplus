@@ -1517,7 +1517,7 @@ function pauseSpecifics()
         -- Misc. Settings
         pauseplus.createOption("miscsettings",{text = "Enable SMB1 Hard Mode",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable SMB1 Hard Mode. This will only apply to SMB1 levels.", action = function() smb1hardmodetoggle() end})
         pauseplus.createOption("miscsettings",{text = "Enable All Night Nippon Mode",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable the All Night Nippon Mode. This will only apply to SMB1 and SMBLL levels.", action = function() smb1allnightnipponoggle() end})
-        pauseplus.createOption("miscsettings",{text = "Enable Original WSMBA Mode",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable the original Where SMB Attacks mode. This will only apply to WSMBA levels.", action = function() wsmbaoriginalgraphicsoggle() end})
+        -- pauseplus.createOption("miscsettings",{text = "Enable Original WSMBA Mode",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable the original Where SMB Attacks mode. This will only apply to WSMBA levels.", action = function() wsmbaoriginalgraphicsoggle() end})
         
         --Sound Settings
         pauseplus.createOption("soundsettings",{text = "Music Volume",description = "Turn the music volume lower or higher. Useful for gameplay while using headphones!",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 60,selectionMin = 0,selectionMax = 100,selectionStep = 5,selectionFormat = "%d%%"})
@@ -1527,9 +1527,7 @@ function pauseSpecifics()
         
         --Screen Settings
         pauseplus.createOption("screensettings",{text = "Enable CRT Display",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable a CRT display when playing the game! Great for TV nostalgia.", action =  function() crtChangeSettings() end})
-        if SMBX_VERSION == VER_SEE_MOD then
-            pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck"}, action = function() Routine.run(changeResolutionSettings) end})
-        end
+        pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck"}, action = function() Routine.run(changeResolutionSettings) end})
         
         --Character Menu
         if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
@@ -1559,10 +1557,10 @@ function pauseSpecifics()
 
         --Teleportation Menu
         if not isOverworld then
-            if (Level.filename() == "map.lvlx") == false then
+            if not (Level.filename() == "map.lvlx") then
                 pauseplus.createOption("teleportmenu",{text = "Teleport to the Previous Level",closeMenu = true,description = "Returns to the previously played level. Useful while you're in the Hub.",action = function() Routine.run(returntolastlevel) end})
             end
-            if (Level.filename() == "MALC - HUB.lvlx") == true then
+            if (Level.filename() == "MALC - HUB.lvlx") then
                 pauseplus.createOption("teleportmenu",{text = "Teleport to the Tourist Center",closeMenu = true,description = "Teleports to inside of the 1st building in Me and Larry City. Useful for fast traveling!", action =  function() Routine.run(touristhub) end})
                 pauseplus.createOption("teleportmenu",{text = "Teleport to the Warp Zone",closeMenu = true,description = "Teleports to the skies, in the Hub Warp Zone. Useful for fast traveling!", action =  function() Routine.run(warpzonehub) end})
                 pauseplus.createOption("teleportmenu",{text = "Teleport to the Character Switch Menu",closeMenu = true,description = "Teleports to the Tourist Center's Character Switch Room. Useful for fast traveling!", action =  function() Routine.run(switchhub) end})
@@ -1570,16 +1568,24 @@ function pauseSpecifics()
                 pauseplus.createOption("teleportmenu",{text = "Teleport Back to the Start",closeMenu = true,description = "Teleports back to the starting point of the Hub. Useful for fast traveling!", action =  function() Routine.run(starthub) end})
             end
         end
-        if (Level.filename() == "map.lvlx") == true then
+        if (Level.filename() == "map.lvlx") then
             pauseplus.createOption("teleportmenu",{text = "Teleport back to the Start",closeMenu = true,description = "Teleports back to the starting point of the map. Useful for fast traveling!", action =  function() Routine.run(startteleport) end})
             pauseplus.createOption("teleportmenu",{text = "Teleport to the Hub",closeMenu = true,description = "Teleports back to the Hub marker on the map. Useful for fast traveling!", action = function() Routine.run(hubmapteleport) end})
             pauseplus.createOption("teleportmenu",{text = "Teleport to the Side Quest",closeMenu = true,description = "Teleports back to the Side Quest starting point of the map. Useful for fast traveling!", action = function() Routine.run(sideteleport) end})
             pauseplus.createOption("teleportmenu",{text = "Teleport to the DLC World",closeMenu = true,description = "Teleports back to the DLC World starting point of the map. Useful for fast traveling!", action = function() Routine.run(dlcteleport) end})
         end
-        if not isOverworld and (Level.filename() == "MALC - HUB.lvlx") == false and (Level.filename() == "map.lvlx") == false then
+        if not isOverworld and not (Level.filename() == "MALC - HUB.lvlx") and not (Level.filename() == "map.lvlx") then
             pauseplus.createOption("teleportmenu",{text = "Teleport to the Hub",description = "Teleport to the Me and Larry City Hub. Useful for fast traveling!",closeMenu = true, actions = {function() Routine.run(hubteleportlevel) end}})
         end
     end
+    -- Run all toggle functions after creating the pause menu to take effect when starting the level (Except for resolutions, since that's being set somewhere else in the game)
+    smb1hardmodetoggle()
+    smb1allnightnipponoggle()
+    togglepwingsfx()
+    Routine.run(smbxdefaultsoundsystem)
+    Routine.run(toggleabilitiescost)
+    Routine.run(toggleprofanecostume)
+    Routine.run(toggleintroscostume)
 end
 
 --Main Menu
