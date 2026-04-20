@@ -682,7 +682,7 @@ SysManager.editorMessageValuesToReplace = {
 }
 
 function SysManager.checkEditorEntity()
-    if SMBX_VERSION == VER_SEE_MOD and Misc.inEditor() then
+    if Misc.inEditor() then
         local placedItem = Misc.getEditorPlacedItem()
         if placedItem == "nil" then return {} end
 
@@ -814,6 +814,10 @@ function SysManager.checkEditorEntity()
     else
         return {}
     end
+end
+
+function SysManager.isConditionSet(variableToCheck, ...)
+    
 end
 
 return SysManager
