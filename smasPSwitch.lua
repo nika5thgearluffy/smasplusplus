@@ -13,12 +13,14 @@ local deathTimerPSwitch = 0
 
 function smasPSwitch.startPSwitchMusic() --Starts the P-Switch music.
     if not smasPSwitch.pSwitchMusicStarted then
-        if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
-            SysManager.sendToConsole("P-Switch music activated!")
-            Sound.muteMusic(-1)
-            smasBooleans.musicMuted = true
-            pSwitchMusic = SFX.play(smasCharacterInfo.pSwitchMusic, Audio.MusicVolume() / 100, 0)
-            smasPSwitch.pSwitchMusicStarted = true
+        for _,p in ipairs(Player.get()) do --Make sure all players are counted if i.e. using supermario128...
+            if not smasPSwitch.inNoPSwitchMusicPlayingSituations(p) then
+                SysManager.sendToConsole("P-Switch music activated!")
+                Sound.muteMusic(-1)
+                smasBooleans.musicMuted = true
+                pSwitchMusic = SFX.play(smasCharacterInfo.pSwitchMusic, Audio.MusicVolume() / 100, 0)
+                smasPSwitch.pSwitchMusicStarted = true
+            end
         end
     end
 end
@@ -35,12 +37,14 @@ function smasPSwitch.stopPSwitchMusic(resetLevelMusic) --Stops the P-Switch musi
     end
     
     smasPSwitch.pSwitchMusicStarted = false
-    
-    if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
-        if resetLevelMusic then
-            SysManager.sendToConsole("P-Switch music deactivated!")
-            smasBooleans.musicMuted = false
-            Sound.restoreMusic(-1)
+
+    for _,p in ipairs(Player.get()) do --Make sure all players are counted if i.e. using supermario128...
+        if not smasPSwitch.inNoPSwitchMusicPlayingSituations(p) then
+            if resetLevelMusic then
+                SysManager.sendToConsole("P-Switch music deactivated!")
+                smasBooleans.musicMuted = false
+                Sound.restoreMusic(-1)
+            end
         end
     end
 end

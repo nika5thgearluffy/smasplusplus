@@ -62,12 +62,12 @@ function smasHudSystem.onInitAPI() --This requires all the libraries that will b
     registerEvent(smasHudSystem, "onDraw")
     registerEvent(smasHudSystem, "onExit")
     registerEvent(smasHudSystem, "onTick")
-    registerEvent(smasHudSystem, "onPlayerHarm")
-    registerEvent(smasHudSystem, "onPlayerKill")
     registerEvent(smasHudSystem, "onPostPlayerKill")
     registerEvent(smasHudSystem, "onPostNPCKill")
     registerEvent(smasHudSystem, "onPostBlockHit")
     registerEvent(smasHudSystem, "onInputUpdate")
+    
+    registerEvent(smasHudSystem, "onPlayerDie")
     
     ready = true
 end
@@ -355,7 +355,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                 canQuicklyResumeLevelWhenDying = true
                                 Routine.waitFrames(165)
                                 canQuicklyResumeLevelWhenDying = false
-                                Misc.pause()
+                                --Misc.pause()
                                 fadeoutdeath = true --This starts the fade out animation
                                 Routine.waitFrames(110, true)
                                 smasBooleans.musicMuted = false
@@ -471,6 +471,12 @@ end
 
 function smasHudSystem.onPostPlayerKill(plr) --To cancel the death entirely
     currentDeathRoutine = Routine.run(diedanimation, plr)
+end
+
+function smasHudSystem.onPlayerDie(eventObj, plr) -- We're not going to kick back to the map after 200 ticks has passed, so cancel the die sequence
+    if smasHudSystem.deathAnimationActive then
+        eventObj.cancelled = true
+    end
 end
 
 function smasHudSystem.onTick()
