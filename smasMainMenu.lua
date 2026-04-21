@@ -739,30 +739,15 @@ end
 
 function BootSMASPlusPlusPreExecute() --This is the routine animation to execute the SMAS++ countdown to load either the intro or the map.
     smasMainMenuSystem.menuOpen = false
-    Sound.playSFX("startsmasboot-executed.ogg")
-    Sound.playSFX("startsmasboot-timerbeep.ogg")
-    smasMainMenu.showWorldMapSkipMessage = true
-    smasMainMenu.showLogoOnScreen = true
-    Routine.wait(1.0) --Each second play a sound
-    Sound.playSFX("startsmasboot-timerbeep.ogg")
-    Routine.wait(1.0)
-    Sound.playSFX("startsmasboot-timerbeep.ogg")
-    Routine.wait(1.0)
     Sound.playSFX("startsmasboot-fullyexecuted.ogg")
     smasMainMenu.showBlackScreen = true --Black out everything
     smasMainMenu.showLogoOnScreen = false
-    smasMainMenu.showWorldMapSkipMessage = false
     autoscroll.scrollLeft(5000) --Make sure that autoscroll doesn't move the player when loading any other level by accident
     Sound.muteMusic(-1) --Change the music to nothing
     Routine.wait(0.5)
     GameData.gameFirstLoaded = false
     Misc.saveGame()
-    if (player.keys.down == KEYS_DOWN) then --Either one when holding down or not, executes a routine on which one to execute
-        Routine.run(mapExit)
-    end
-    if not (player.keys.down == KEYS_DOWN) then 
-        Routine.run(introExit)
-    end
+    Routine.run(mapExit)
 end
 
 function BootCredits() --The credits lvl will probably be scrapped or not, depends
@@ -1304,16 +1289,16 @@ function smasMainMenu.onDraw()
         end
         if smasMainMenu.showStatusOfMultiplayerOnScreen then
             if Player.count() == 1 then
-                textplus.print{x=(camera.width / 2) - 157, y=10, text = "2 player mode is DISABLED", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
+                --textplus.print{x=(camera.width / 2) - 157, y=10, text = "2 player mode is DISABLED", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
             elseif Player.count() >= 2 then
-                textplus.print{x=(camera.width / 2) - 162, y=10, text = "2 player mode is ENABLED", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
+                --textplus.print{x=(camera.width / 2) - 162, y=10, text = "2 player mode is ENABLED", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
             end
         end
         if smasMainMenu.showStatusOf13ModeOnScreen then
             if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                textplus.print{x=(camera.width / 2) - 157, y=26, text = "SMBX 1.3 mode is DISABLED", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
+                --textplus.print{x=(camera.width / 2) - 157, y=26, text = "SMBX 1.3 mode is DISABLED", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
             elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                textplus.print{x=(camera.width / 2) - 162, y=26, text = "SMBX 1.3 mode is ENABLED", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
+                --textplus.print{x=(camera.width / 2) - 162, y=26, text = "SMBX 1.3 mode is ENABLED", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
             end
         end
         if not smasMainMenu.hideGameSMBXAndSMBX2Credits then
@@ -1361,21 +1346,11 @@ end
 smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.SECTION_MAIN, title = "Main Menu", xCenter = 150, yCenter = 310}
 smasMainMenuSystem.addMenuItem{name = "Start Game", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BootSMASPlusPlusPreExecute) end}
 smasMainMenuSystem.addMenuItem{name = "Load Game Help", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BootGameHelpPreExecute) end}
-smasMainMenuSystem.addMenuItem{name = "Minigames", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MINIGAMES, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Online Multiplayer", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BootOnlinePreExecute) end}
-smasMainMenuSystem.addMenuItem{name = "Main Menu Themes", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Settings/Options", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_SETTINGS_MAIN, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Credits", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 7, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_CREDITS, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Exit Main Menu", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 8, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.exitDialogue(false) end}
-smasMainMenuSystem.addMenuItem{name = "Exit Game", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 9, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(ExitGame1) end}
-
-
-
-
---SMAS++ MAIN MENU: Main Menu Selection (Minigames)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.SECTION_MINIGAMES, title = "Minigames", menuBackTo = smasMainMenuSystem.menuSections.SECTION_MAIN, xCenter = 150, yCenter = 310}
-smasMainMenuSystem.addMenuItem{name = "Classic Battle Mode (2P)", section = smasMainMenuSystem.menuSections.SECTION_MINIGAMES, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BattleModeDisEnable1) end}
-smasMainMenuSystem.addMenuItem{name = "Rush Mode (1P)", section = smasMainMenuSystem.menuSections.SECTION_MINIGAMES, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(RushModeMenu1) end}
+smasMainMenuSystem.addMenuItem{name = "Main Menu Themes", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, 0, false) end}
+smasMainMenuSystem.addMenuItem{name = "Settings/Options", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_SETTINGS_MAIN, 0, false) end}
+smasMainMenuSystem.addMenuItem{name = "Credits", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_CREDITS, 0, false) end}
+smasMainMenuSystem.addMenuItem{name = "Exit Main Menu", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.exitDialogue(false) end}
+smasMainMenuSystem.addMenuItem{name = "Exit Game", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 7, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(ExitGame1) end}
 
 
 
@@ -1436,30 +1411,6 @@ smasMainMenuSystem.addMenuItem{name = "Mario Forever", section = smasMainMenuSys
 smasMainMenuSystem.addMenuItem{name = "The Watery Airship", section = smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, sectionItem = 17, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.themeSelected = 17 Routine.run(themeSelected) end}
 smasMainMenuSystem.addMenuItem{name = "Circuit Central", section = smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, sectionItem = 18, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.themeSelected = 18 Routine.run(themeSelected) end}
 smasMainMenuSystem.addMenuItem{name = "Metroid Prime 2", section = smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, sectionItem = 19, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.themeSelected = 19 Routine.run(themeSelected) end}
-
-
-
-
-
---SMAS++ MAIN MENU: Main Menu Selection (Battle Mode: Select Level)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, title = "Select level.", xCenter = 160, yCenter = 310, cantGoBack = true}
-smasMainMenuSystem.addMenuItem{name = "Exit Battle Mode", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_EXIT, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Random Level", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(battleRandomLevelSelect) end}
-smasMainMenuSystem.addMenuItem{name = "Battle Zone", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 1 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Battleshrooms", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 2 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Classic Castle Battle", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 3 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Dry Dry Desert", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 4 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Hyrule Temple", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 7, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 5 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Invasion Battlehammer", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 8, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 6 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Lakitu Mechazone", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 9, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 7 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Lethal Lava Level", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 10, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 8 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Retroville Underground", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 11, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 9 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Slippy Slap Snowland", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 12, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 10 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Woody Warzone", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 13, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 11 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "Sky High In the Skies", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 14, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 12 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "NSMBDS, Level 1", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 15, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 13 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "NSMBDS, Level 2", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 16, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 14 Routine.run(battleLevelSelected) end}
-smasMainMenuSystem.addMenuItem{name = "NSMBDS, Level 3", section = smasMainMenuSystem.menuSections.SECTION_BATTLEMODELEVELSELECT, sectionItem = 17, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.battleModeLevel = 15 Routine.run(battleLevelSelected) end}
 
 
 
@@ -1590,37 +1541,6 @@ smasMainMenuSystem.addMenuItem{name = "Okay.", section = smasMainMenuSystem.menu
 smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_CREDITS, cantGoBack = true, xCenter = 180, yCenter = 230, dialogMessage = "For information on everything that made this episode possible,<page>It wouldn't have been possible without more than 100 people and counting.<page>To see the credits of this episode, go into the worlds folder,<page>the SMAS folder, and redirect to the CREDITS.txt file in the folder.", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 300}
 smasMainMenuSystem.addMenuItem{name = "Exit", section = smasMainMenuSystem.menuSections.DIALOG_CREDITS, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MAIN, 0, false) end}
 
-
-
-
-
---SMAS++ MAIN MENU: Main Menu Dialog (Classic Battle Mode Toggle: You can use!, 2P needs enabling)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_NEED2NDPLAYER, cantGoBack = true, xCenter = 180, yCenter = 230, dialogMessage = "Since you have X2 characters disabled, you can use Battle Mode!<page>Would you like to start battle mode? We'll need to enable 2 player mode first.", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 300}
-smasMainMenuSystem.addMenuItem{name = "Yes", section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_NEED2NDPLAYER, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Playur.activate2ndPlayer() smasMainMenu.classicBattleSelect() end}
-smasMainMenuSystem.addMenuItem{name = "No", section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_NEED2NDPLAYER, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MINIGAMES, 0, false) end}
-
-
-
-
-
---SMAS++ MAIN MENU: Main Menu Dialog (Classic Battle Mode Toggle: You can use!, 2P is already enabled)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE2NDPLAYER, cantGoBack = true, xCenter = 180, yCenter = 230, dialogMessage = "Since you have X2 characters disabled, you can use Battle Mode!<page>Would you like to start battle mode? You already have 2 player mode enabled for this.", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 300}
-smasMainMenuSystem.addMenuItem{name = "Yes", section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE2NDPLAYER, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenu.classicBattleSelect() end}
-smasMainMenuSystem.addMenuItem{name = "No", section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE2NDPLAYER, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MINIGAMES, 0, false) end}
-
-
-
-
---SMAS++ MAIN MENU: Main Menu Dialog (Classic Battle Mode Toggle: You can't use)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE13MODEON, cantGoBack = true, xCenter = 180, yCenter = 230, dialogMessage = "Unfortunately, you'll need to turn on 1.3 Mode to start Classic Battle Mode.<page>This is due to stability and game breaking reasons.", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 300}
-smasMainMenuSystem.addMenuItem{name = "Okay.", section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE13MODEON, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MINIGAMES, 0, false) end}
-
-
-
-
---SMAS++ MAIN MENU: Main Menu Dialog (Classic Battle Mode: Exiting)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_EXIT, cantGoBack = true, xCenter = 180, yCenter = 210, dialogMessage = "Exiting battle mode activated. You'll need to manually turn off 2 player mode in the settings tab.", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 300}
-smasMainMenuSystem.addMenuItem{name = "Okay.", section = smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_EXIT, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MINIGAMES, 0, false) end}
 
 
 
