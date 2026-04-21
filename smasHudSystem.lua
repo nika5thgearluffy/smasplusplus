@@ -79,6 +79,7 @@ local blackscreenonly = false
 
 local canQuicklyResumeLevelWhenDying = false
 local fadeOutDeathQuick = false
+local hasFaded = false
 
 local currentDeathRoutine
 
@@ -565,6 +566,12 @@ function smasHudSystem.onDraw()
     if fadeoutdeath then --Fade out related code
         time = time + 1
         Graphics.drawScreen{color = Color.black..math.max(0,time/35),priority = 6}
+        if time >= 35 then
+            hasFaded = true
+        end
+        if hasFaded then
+            Misc.pause()
+        end
     end
     if fadeOutDeathQuick then --Fade out related code
         time = time + 1
