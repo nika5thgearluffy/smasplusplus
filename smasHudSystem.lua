@@ -569,7 +569,7 @@ function smasHudSystem.onDraw()
         if time >= 35 then
             hasFaded = true
         end
-        if hasFaded then
+        if time == 34 then
             Misc.pause()
         end
     end
