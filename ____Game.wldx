@@ -1,0 +1,6 @@
+HEAD
+TL:"Super Mario All-Stars++";IT:"SMAS - Start.lvlx";HB:1;CD:"All levels are by Nintendo\nGame by \"The Sun God\: Nika\"\nFor more credits\, see the \nCREDITS.txt file in the episode folder.\nThanks for playing!";CPID:"SMBX2";
+HEAD_END
+LEVELS
+ID:1;X:0;Y:0;LT:"Return to the Game";LF:"SMAS - Start.lvlx";SP:1;
+LEVELS_END

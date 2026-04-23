@@ -135,6 +135,16 @@ function block90.onCollideBlock(block, hitter) --SMW BLock
     end
 end
 
+local function eggOneUpChanger(block, contentID)
+    Routine.waitFrames(1)
+    for k,v in ipairs(NPC.get(96)) do
+        local blockToNPC = block.y - v.y
+        if v.getIntersecting(block.x - 10, block.y, block.x + block.width, block.y + block.height + 10) then
+            v.ai1 = contentID
+        end
+    end
+end
+
 function smasBlockSystem.onPostBlockHit(block, fromUpper, playerornil)
     if smasBlockSystem.enableSMB1Invisible1UPSystem then
         --Life detection, for the SMB1 system
@@ -176,7 +186,8 @@ function smasBlockSystem.onPostBlockHit(block, fromUpper, playerornil)
             if playerornil ~= nil then
                 if playerornil.mount == MOUNT_YOSHI and smasBlockSystem.yoshiNPCs[block.contentID] then
                     SysManager.sendToConsole("Yoshi already mounted on Player "..tostring(playerornil.idx)..", changed to 1UP mushroom.")
-                    block.contentID = 1187
+                    Routine.run(eggOneUpChanger, block, 187)
+                    --block.contentID = 1187
                 end
             end
         end
