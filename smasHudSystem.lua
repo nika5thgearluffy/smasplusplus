@@ -287,7 +287,7 @@ function smasHudSystem.quickDeathTrigger()
     if not smasHudSystem.exitToMap then
         Level.load(Level.filename())
     elseif smasHudSystem.exitToMap then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
 end
 
@@ -327,7 +327,7 @@ function thirteenModeDeath()
     if not smasHudSystem.exitToMap then
         Level.load(Level.filename())
     elseif smasHudSystem.exitToMap then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
 end
 
@@ -372,7 +372,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                     if not smasHudSystem.exitToMap then --Reload the level from here
                                         Level.load(Level.filename())
                                     elseif smasHudSystem.exitToMap then --Or else, just exit the level. It can be smwMap, or the vanilla map
-                                        Level.load("map.lvlx")
+                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                     end
                                 end
                                 if gameoveractivate then --Quick game over screen stuff.
@@ -386,7 +386,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                     if not smasHudSystem.exitToMap then
                                         Level.load(Level.filename())
                                     elseif smasHudSystem.exitToMap then
-                                        Level.load("map.lvlx")
+                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                     end
                                 end
                             end
@@ -420,7 +420,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                     if not smasHudSystem.exitToMap then
                                         Level.load(Level.filename())
                                     elseif smasHudSystem.exitToMap then
-                                        Level.load("map.lvlx")
+                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                     end
                                 end
                                 if gameoveractivate then --Quick game over screen stuff.
@@ -434,7 +434,7 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
                                     if not smasHudSystem.exitToMap then
                                         Level.load(Level.filename())
                                     elseif smasHudSystem.exitToMap then
-                                        Level.load("map.lvlx")
+                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                     end
                                 end
                             end
@@ -591,7 +591,7 @@ function smasHudSystem.onExit()
     if smasHudSystem.hasDied and not smasHudSystem.exitToMap then
         Level.load(Level.filename())
     elseif smasHudSystem.hasDied and smasHudSystem.exitToMap then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
 end
 

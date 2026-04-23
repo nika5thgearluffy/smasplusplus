@@ -470,9 +470,9 @@ function SysManager.parseSaveFile(slot) --Parses a save file
 end
 
 function SysManager.loadMap() --Loads the map, or the editor-specified area.
-    SysManager.sendToConsole("Loading world map...")
+    SysManager.sendToConsole("Loading world map/hub level...")
     if not Misc.inEditor() then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     elseif Misc.inEditor() then
         Level.load(SaveData.editorWinnerLevelReload)
     end
@@ -814,6 +814,13 @@ function SysManager.checkEditorEntity()
     else
         return {}
     end
+end
+
+-- Changes the map/hub to this filename. Note that this'll be the exit for all levels, so be careful.
+function SysManager.changeMapHub(levelFilename)
+    mem(0x00B25724, FIELD_STRING, levelFilename)
+    GameData.SMASPlusPlus.game.hubLevel = levelFilename
+    SysManager.sendToConsole("Map hub changed to \""..levelFilename.."\".")
 end
 
 return SysManager

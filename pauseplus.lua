@@ -342,7 +342,7 @@ do
     function pauseplus.quit()
         playSFX(pauseplus.quitgameSFX)
         if Misc.inEditor() and not isOverworld then
-            Level.load("map.lvlx")
+            Level.load(GameData.SMASPlusPlus.game.hubLevel)
         else
             Misc.exitEngine()
             
@@ -358,7 +358,7 @@ do
     end
 
     function pauseplus.exitLevel()
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
 
         Misc.unpause()
     end    

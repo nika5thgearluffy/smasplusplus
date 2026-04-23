@@ -398,6 +398,14 @@ function smasMainMenuSystem.onInputUpdate()
                                         SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] = SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] - currentOption.numberStep
                                     end
                                 end
+                            else
+                                if MenuCursor > 3 then
+                                    MenuCursor = MenuCursor - 4
+                                    Sound.playSFX(74)
+                                elseif MenuCursor <= 3 and MenuCursor > 0 then
+                                    MenuCursor = 0
+                                    Sound.playSFX(74)
+                                end
                             end
                         elseif p.keys.right == KEYS_PRESSED then
                             if currentOption.numberToUse ~= "" then
@@ -416,6 +424,16 @@ function smasMainMenuSystem.onInputUpdate()
                                         Sound.playSFX(26)
                                         SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] = SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] + currentOption.numberStep
                                     end
+                                end
+                            else
+                                local numberEnder = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 5
+                                local endingPoint = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
+                                if MenuCursor < numberEnder then
+                                    MenuCursor = MenuCursor + 4
+                                    Sound.playSFX(74)
+                                elseif MenuCursor >= numberEnder and MenuCursor < endingPoint then
+                                    MenuCursor = endingPoint
+                                    Sound.playSFX(74)
                                 end
                             end
                         elseif p.keys.jump == KEYS_PRESSED then

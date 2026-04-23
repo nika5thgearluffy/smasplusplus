@@ -187,13 +187,8 @@ function globalgenerals.onStart()
             SysManager.sendToConsole("SEE MOD ACTIVE! Editor level starter has been set to "..Level.filename()..".")
         end
     end
-    if GameData.____mainMenuComplete == true then
-        if (mem(0x00B25724, FIELD_STRING) == "SMAS - Start.lvlx") then
-            mem(0x00B25724, FIELD_STRING, "map.lvlx")
-        end
-    end
-    if SaveData.lastLevelPlayed == nil then
-        SaveData.lastLevelPlayed = Level.filename()
+    if GameData.SMASPlusPlus.game.mainMenuCompleted then
+        mem(0x00B25724, FIELD_STRING, GameData.SMASPlusPlus.game.hubLevel)
     end
     Sound.checkPWingSoundStatus()
     Sound.checkSMBXSoundSystemStatus()
@@ -443,7 +438,6 @@ function globalgenerals.onDraw()
 end
 
 function globalgenerals.onExitLevel(winType)
-    SysManager.exitLevel(winType)
     if Misc.inEditor() then
         for _,p in ipairs(Player.get()) do
             if SaveData.SMASPlusPlus.hud.reserve[_] ~= 0 then
@@ -454,6 +448,7 @@ function globalgenerals.onExitLevel(winType)
 end
 
 function globalgenerals.onExit()
+    -- Make sure the lives are set to 1 if 0
     if mem(0x00B2C5AC,FIELD_FLOAT) == 0 then
         if (killed == true or killed2 == true) then
             mem(0x00B2C5AC,FIELD_FLOAT,1)
@@ -464,18 +459,15 @@ function globalgenerals.onExit()
         SysManager.sendToConsole("Credits exiting detected! Exiting to the credits level...")
         Level.load("SMAS - Credits.lvlx")
     end
-    if not table.icontains(smasTables._friendlyPlaces,Level.filename()) then
-        SaveData.lastLevelPlayed = Level.filename()
-    end
     if not Misc.inMarioChallenge() then
         for _,p in ipairs(Player.get()) do
             if Misc.inEditor() then
                 GameData.tempReserve[p.idx] = p.reservePowerup
             end
         end
-        File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(camera.width)..","..tostring(camera.height))
+        File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(Screen.width())..","..tostring(Screen.height()))
     elseif Misc.inMarioChallenge() then
-        File.writeToFile("loadscreeninfo.txt", "mariochallenge,"..tostring(camera.width)..","..tostring(camera.height))
+        File.writeToFile("loadscreeninfo.txt", "mariochallenge,"..tostring(Screen.width())..","..tostring(Screen.height()))
     end
 end
 

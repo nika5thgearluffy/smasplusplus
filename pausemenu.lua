@@ -327,7 +327,7 @@ local function exitlevel2()
     Audio.MusicVolume(0)
     Audio.MusicPause()
     Sound.playSFX("world_warp.ogg")
-    Routine.run(function() exitscreen = true Routine.wait(0.7, true) pausemenu.paused = false Misc.unpause() Audio.MusicVolume(nil) Level.load("map.lvlx") end)
+    Routine.run(function() exitscreen = true Routine.wait(0.7, true) pausemenu.paused = false Misc.unpause() Audio.MusicVolume(nil) Level.load(GameData.SMASPlusPlus.game.hubLevel) end)
 end
 
 local function exitlevel()
@@ -335,7 +335,7 @@ local function exitlevel()
     smasBooleans.musicMuted = true
     Audio.MusicPause()
     Sound.playSFX("quitmenu_close.ogg")
-    Routine.run(function() exitscreen = true Routine.wait(0.4, true) pausemenu.paused = false Misc.unpause() Audio.MusicVolume(nil) smasBooleans.musicMuted = false Level.load("map.lvlx") end)
+    Routine.run(function() exitscreen = true Routine.wait(0.4, true) pausemenu.paused = false Misc.unpause() Audio.MusicVolume(nil) smasBooleans.musicMuted = false Level.load(GameData.SMASPlusPlus.game.hubLevel) end)
 end
 
 local function restartlevel()
@@ -988,7 +988,7 @@ local function dlcmapload()
     pausemenu.paused = false
     pausemenu.paused_other = false
     Misc.unpause()
-    Level.load("map.lvlx", nil, nil)
+    Level.load(GameData.SMASPlusPlus.game.hubLevel, nil, nil)
 end
 
 local function cycle(dir)

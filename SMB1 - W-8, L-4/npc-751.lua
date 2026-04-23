@@ -604,7 +604,7 @@ function sampleNPC.onTickEndNPC(v)
 
         if data.deathTimer == 360 + settings.endLevelThemeDuration + 120 then
             mem(0x00B2C5D4,FIELD_WORD,settings.winState)
-            Level.load("map.lvlx")
+            Level.load(GameData.SMASPlusPlus.game.hubLevel)
 
             Checkpoint.reset()
         end

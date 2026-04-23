@@ -162,7 +162,7 @@ end
 local reloadChooser
 
 if SaveData.editorWinnerLevelReload == nil then
-    SaveData.editorWinnerLevelReload = "map.lvlx"
+    SaveData.editorWinnerLevelReload = GameData.SMASPlusPlus.game.hubLevel
 end
 
 if SaveData.reloadLevelFilenameInEditor == nil then
@@ -172,9 +172,9 @@ end
 local function editorreloadchooser()
     Sound.playSFX("console/console_info.ogg")
     reloadChooser = pauseplus.getSelectionValue("editormenu","Reload on Level Win Exit to")
-    if reloadChooser == "World Map" then
+    if reloadChooser == "World Map/Hub" then
         SaveData.reloadLevelFilenameInEditor = false
-        SaveData.editorWinnerLevelReload = "map.lvlx"
+        SaveData.editorWinnerLevelReload = GameData.SMASPlusPlus.game.hubLevel
     elseif reloadChooser == "Restart Level" then
         SaveData.reloadLevelFilenameInEditor = true
         SaveData.editorWinnerLevelReload = Level.filename()
@@ -1176,18 +1176,6 @@ function rushmodenewstage()
     Level.load(smasTables.__allMandatoryLevels[rng.randomInt(1,#smasTables.__allMandatoryLevels)], nil, nil)
 end
 
-function returntolastlevel()
-    pauseplus.canControlMenu = false
-    Sound.playSFX("lastlevel_warp.ogg")
-    startFadeOut()
-    Misc.saveGame()
-    Routine.wait(1.3,true)
-    Misc.unpause()
-    exitFadeActive = false
-    exitFadeActiveDone = true
-    Level.load(SaveData.lastLevelPlayed)
-end
-
 local function exitlevel2()
     pauseplus.canControlMenu = false
     Audio.MusicVolume(0)
@@ -1201,7 +1189,7 @@ local function exitlevel2()
     exitFadeActive = false
     exitFadeActiveDone = true
     smasBooleans.musicMuted = false
-    Level.load("map.lvlx")
+    Level.load(GameData.SMASPlusPlus.game.hubLevel)
 end
 
 function saveAndQuitRoutine()
@@ -1465,11 +1453,11 @@ function pauseSpecifics()
         if Misc.inEditor() then
             pauseplus.createOption("main",{text = "Editor Menu",goToSubmenu = "editormenu",description = "Testing 1-2-3! If testing the game, this menu is for you!"})
         end
-        if (Level.filename() == "map.lvlx") == false then
+        if not (Level.filename() == GameData.SMASPlusPlus.game.hubLevel) then
             pauseplus.createOption("main",{text = "Restart",closeMenu = true,description = "Restart the area you're currently in. You'll warp back to the last checkpoint if crossed one.", action = function() Routine.run(restartlevel) end})
         end
-        if (Level.filename() == "map.lvlx") == false then
-            pauseplus.createOption("main",{text = "Return to the Map",closeMenu = true,description = "Returns to the map of the game.",action = function() Routine.run(exitlevel2) end})
+        if not (Level.filename() == GameData.SMASPlusPlus.game.hubLevel) then
+            pauseplus.createOption("main",{text = "Return to the Map/Hub",closeMenu = true,description = "Returns to the map/hub of the game. Depending on where you're at, the map/hub might be a different map/hub.",action = function() Routine.run(exitlevel2) end})
         end
         pauseplus.createSubmenu("settings",{headerText = "<size 1.5>Settings/Options</size>"})
         pauseplus.createSubmenu("charactermenu",{headerText = "<size 1.5>Character Options</size>"})
@@ -1480,7 +1468,7 @@ function pauseSpecifics()
         pauseplus.createSubmenu("savingsettings",{headerText = "<size 1.5>Saving Options</size>"})
         pauseplus.createOption("main",{text = "Character Options",goToSubmenu = "charactermenu",description = "Switch characters on the fly!"})
         pauseplus.createOption("main",{text = "Settings/Options",goToSubmenu = "settings",description = "Set some settings to enhance your gameplay."})
-        if (Level.filename() == "map.lvlx") == true then
+        if (Level.filename() == "map.lvlx") then
             pauseplus.createOption("main",{text = "Teleportation Options",goToSubmenu = "teleportmenu",description = "Teleport to many places with this option (Select areas)."})
         elseif (Level.filename() == "MALC - HUB.lvlx") == true then
             pauseplus.createOption("main",{text = "Teleportation Options",goToSubmenu = "teleportmenu",description = "Teleport to many places with this option (Select areas)."})
@@ -1546,7 +1534,7 @@ function pauseSpecifics()
             pauseplus.createOption("charactermenu",{text = "Change Character",closeMenu = true,description = "Switch the player's character to anything of your choice!", action =  function() smasCharacterChanger.startChanger() end})
             pauseplus.createSubmenu("costumeoptions",{headerText = "<size 1.5>Costume Specific Options</size>"})
             pauseplus.createOption("charactermenu",{text = "Costume Specific Options",goToSubmenu = "costumeoptions",description = "Change settings regarding the costume that is currently being worn."})
-            --if (Level.filename() == "map.lvlx") == false then
+            --if not (Level.filename() == "map.lvlx") then
                 --pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "Toggle the status of multiplayer. This will only work on 1.3 Mode (If in Normal Mode this won't do anything).",action = function() checkingplayerstatus() end})
             --end
         end
@@ -1555,7 +1543,7 @@ function pauseSpecifics()
             pauseplus.createOption("charactermenu",{text = "Change Character 1P (Next)",description = "Switch the 1st Player's character to anything of your choice!",action =  function() characterchange13() end})
             pauseplus.createOption("charactermenu",{text = "Change Character 2P (Previous)",description = "Switch the 2nd Player's character to anything of your choice!",action =  function() characterchange13_2pleft() end})
             pauseplus.createOption("charactermenu",{text = "Change Character 2P (Next)",description = "Switch the 2nd Player's character to anything of your choice!",action =  function() characterchange13_2p() end})
-            --if (Level.filename() == "map.lvlx") == false then
+            --if not (Level.filename() == "map.lvlx") then
                 --pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "Toggle the status of multiplayer. This will only work on 1.3 Mode (If in Normal Mode this won't do anything).",action = function() checkingplayerstatus13() end})
             --end
         end
@@ -1569,9 +1557,6 @@ function pauseSpecifics()
 
         --Teleportation Menu
         if not isOverworld then
-            if not (Level.filename() == "map.lvlx") then
-                pauseplus.createOption("teleportmenu",{text = "Teleport to the Previous Level",closeMenu = true,description = "Returns to the previously played level. Useful while you're in the Hub.",action = function() Routine.run(returntolastlevel) end})
-            end
             if (Level.filename() == "MALC - HUB.lvlx") then
                 pauseplus.createOption("teleportmenu",{text = "Teleport to the Tourist Center",closeMenu = true,description = "Teleports to inside of the 1st building in Me and Larry City. Useful for fast traveling!", action =  function() Routine.run(touristhub) end})
                 pauseplus.createOption("teleportmenu",{text = "Teleport to the Warp Zone",closeMenu = true,description = "Teleports to the skies, in the Hub Warp Zone. Useful for fast traveling!", action =  function() Routine.run(warpzonehub) end})

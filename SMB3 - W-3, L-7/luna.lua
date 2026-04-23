@@ -7,6 +7,6 @@ function onEvent(eventName)
         SFX.play("_OST/Super Mario Bros 3/Battle Mode Win.ogg")
     end
     if eventName == "End Level" then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
 end

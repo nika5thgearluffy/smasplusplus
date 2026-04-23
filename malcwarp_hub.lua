@@ -61,7 +61,7 @@ function malcwarp.onKeyboardPress(k)
         onePressedState = false
         if k == VK_1 then
             Misc.saveGame()
-            Level.load("map.lvlx")
+            Level.load(GameData.SMASPlusPlus.game.hubLevel)
             onePressedState = true
         end
     end

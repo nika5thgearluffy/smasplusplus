@@ -88,7 +88,7 @@ local killed = false
 local statusFont = textplus.loadFont("littleDialogue/font/6.ini")
 
 function introExit()
-    GameData.____mainMenuComplete = true
+    GameData.SMASPlusPlus.game.mainMenuCompleted = true
     autoscroll.scrollLeft(5000)
     Routine.waitFrames(38)
     smasMainMenu.startedmenu = 0
@@ -236,10 +236,10 @@ function theme18scrolling()
 end
 
 function mapExit()
-    GameData.____mainMenuComplete = true
+    GameData.SMASPlusPlus.game.mainMenuCompleted = true
     autoscroll.scrollLeft(5000)
     Routine.waitFrames(38)
-    Level.load("map.lvlx")
+    Level.load(GameData.SMASPlusPlus.game.hubLevel)
 end
 
 function easterEgg() --SnooPINGAS I see? ._.

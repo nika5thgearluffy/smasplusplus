@@ -44,7 +44,7 @@ function onEvent(eventName)
         Sound.playSFX(27)
     end
     if eventName == "Continued2" then
-        Level.load(SaveData.lastLevelPlayed, nil, 0)
+        
     end
     if eventName == "Restart1" then
         Sound.playSFX(27)

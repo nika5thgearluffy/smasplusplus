@@ -167,7 +167,7 @@ ID:808;X:-193776;Y:-197952;W:16;H:16;
 ID:808;X:-193520;Y:-197504;W:16;H:16;
 ID:808;X:-193776;Y:-197472;W:16;H:16;
 ID:808;X:-194304;Y:-198080;W:16;H:16;
-ID:808;X:-194176;Y:-197600;W:16;H:16;
+ID:808;X:-194128;Y:-197616;W:16;H:16;
 ID:808;X:-193232;Y:-198080;W:16;H:16;
 ID:808;X:-193216;Y:-198080;W:16;H:16;
 ID:808;X:-193856;Y:-198112;W:16;H:16;
@@ -1147,6 +1147,14 @@ ID:862;X:-197344;Y:-199744;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"hide
 ID:862;X:-197056;Y:-200256;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"lockedPathEventName\"\: \"SMB3W-2LockedPath1\"\,\n        \"partOfLockedLevel\"\: \"SMB3 - W-2\, L-Fortress.lvlx\"\,\n        \"partOfLockedPath\"\: \"toSMB3W-2LockedPath1\"\n    }\n}\n";
 ID:863;X:-196640;Y:-200480;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"lockedPathEventName\"\: \"SMB3W-2LockedRock2\"\,\n        \"partOfLockedPath\"\: \"toSMB3W-2ThiefsHouse1\"\n    }\n}\n";
 ID:863;X:-196896;Y:-200288;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"lockedPathEventName\"\: \"SMB3W-2LockedRock1\"\,\n        \"partOfLockedPath\"\: \"toSMB3W-2Path6\"\n    }\n}\n";
+ID:860;X:-197088;Y:-200320;W:32;H:32;
+ID:860;X:-197120;Y:-200352;W:32;H:32;
+ID:860;X:-197088;Y:-200384;W:32;H:32;
+ID:860;X:-197152;Y:-200384;W:32;H:32;
+ID:860;X:-197024;Y:-200384;W:32;H:32;
+ID:839;X:-194240;Y:-197600;W:32;H:32;
+ID:839;X:-194208;Y:-197600;W:32;H:32;
+ID:839;X:-194272;Y:-197600;W:32;H:32;
 BLOCK_END
 BGO
 ID:751;X:-195584;Y:-197984;
@@ -1680,6 +1688,7 @@ ID:795;X:-196224;Y:-197856;
 ID:795;X:-196224;Y:-197824;
 ID:795;X:-196224;Y:-197792;
 ID:795;X:-196224;Y:-197760;
+ID:752;X:-194240;Y:-197664;
 BGO_END
 NPC
 ID:753;X:-199904;Y:-197056;D:-1;XTRA:"{\n    \"backgroundName\"\: \"sky\"\,\n    \"customMusicPath\"\: \"_OST/Mario Forever/World 1 (Original).mod\"\,\n    \"height\"\: 1200\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: false\,\n    \"width\"\: 1500\n}\n";
@@ -1698,7 +1707,7 @@ ID:752;X:-194528;Y:-197792;D:-1;XTRA:"{\n    \"name\"\: \"toSMB2\"\,\n    \"poin
 ID:752;X:-194496;Y:-197760;D:-1;XTRA:"{\n    \"name\"\: \"toGameSelect3\"\,\n    \"points\"\: \"-32\, 0\, 258\, 0\"\n}\n";
 ID:821;X:-194240;Y:-197856;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"destinationWarpName\"\: \"WarpToGameSelectSMB3\"\,\n    \"levelTitle\"\: \"Super Mario Bros. 3\"\,\n    \"path_down\"\: \"toSMB3\"\,\n    \"warpName\"\: \"SMB3BeginWarp\"\n}\n";
 ID:752;X:-194240;Y:-197792;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3\"\,\n    \"points\"\: \"0\, 32\, 0\, -64\"\n}\n";
-ID:837;X:-194240;Y:-197760;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"path_left\"\: \"toGameSelect3\"\,\n    \"path_right\"\: \"toGameSelect4\"\,\n    \"path_up\"\: \"toSMB3\"\,\n    \"unlock_left\"\: 1\,\n    \"unlock_right\"\: 1\,\n    \"unlock_up\"\: 1\n}\n";
+ID:838;X:-194240;Y:-197760;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"path_down\"\: \"toSMB3eReaderHub\"\,\n    \"path_left\"\: \"toGameSelect3\"\,\n    \"path_right\"\: \"toGameSelect4\"\,\n    \"path_up\"\: \"toSMB3\"\,\n    \"unlock_down\"\: 1\,\n    \"unlock_left\"\: 1\,\n    \"unlock_right\"\: 1\,\n    \"unlock_up\"\: 1\n}\n";
 ID:821;X:-193952;Y:-197856;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"destinationWarpName\"\: \"WarpToGameSelectSMBLL\"\,\n    \"levelTitle\"\: \"Super Mario Bros. Lost Levels\"\,\n    \"path_down\"\: \"toSMBLL\"\,\n    \"warpName\"\: \"SMBLLBeginWarp\"\n}\n";
 ID:838;X:-193952;Y:-197760;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"path_down\"\: \"toDLCMap\"\,\n    \"path_left\"\: \"toGameSelect4\"\,\n    \"path_right\"\: \"toGameSelect5\"\,\n    \"path_up\"\: \"toSMBLL\"\,\n    \"unlock_down\"\: 1\,\n    \"unlock_left\"\: 1\,\n    \"unlock_right\"\: 1\,\n    \"unlock_up\"\: 1\n}\n";
 ID:752;X:-194208;Y:-197760;D:-1;XTRA:"{\n    \"name\"\: \"toGameSelect4\"\,\n    \"points\"\: \"-32\, 0\, 258\, 0\"\n}\n";
@@ -2285,7 +2294,7 @@ ID:762;X:-192832;Y:-195904;D:-1;
 ID:752;X:-192960;Y:-195840;D:-1;XTRA:"{\n    \"name\"\: \"toSMWDonutGhostHouse\"\,\n    \"points\"\: \"0\,32\, 0\,-32\, 32\,-64\, 64\,-64\"\n}\n";
 ID:752;X:-192992;Y:-195808;D:-1;XTRA:"{\n    \"hideIfLocked\"\: true\,\n    \"name\"\: \"toSMWGreenSwitchPalace\"\,\n    \"points\"\: \"32\,0\, -32\,0\"\n}\n";
 ID:830;X:-192640;Y:-195936;D:-1;XTRA:"{\n    \"destinationPathName\"\: \"toSMWVanillaDomeCC\"\,\n    \"warpName\"\: \"toSMWVanillaDomeMain\"\n}\n";
-ID:807;X:-192896;Y:-195968;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMW - W-2\, L-TSA.lvlx\"\,\n    \"levelTitle\"\: \"Top Secret Area\"\,\n    \"path_down\"\: \"toSMWTopSecretArea\"\,\n    \"path_right\"\: \"toSMWSuperSecretArea\"\,\n    \"unlock_right\"\: 6\n}\n";
+ID:771;X:-192896;Y:-195968;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMW - W-2\, L-TSA.lvlx\"\,\n    \"levelTitle\"\: \"Top Secret Area\"\,\n    \"path_down\"\: \"toSMWTopSecretArea\"\,\n    \"path_right\"\: \"toSMWSuperSecretArea\"\,\n    \"unlock_right\"\: 6\n}\n";
 ID:815;X:-192896;Y:-195904;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"levelFilename\"\: \"SMW - W-2\, L-DPGH.lvlx\"\,\n    \"levelTitle\"\: \"Donut Ghost House\"\,\n    \"path_down\"\: \"toSMWDonutGhostHouseSecret\"\,\n    \"path_left\"\: \"toSMWDonutGhostHouse\"\,\n    \"path_right\"\: \"toSMWDonutPlains3\"\,\n    \"path_up\"\: \"toSMWTopSecretArea\"\,\n    \"unlock_down\"\: 0\,\n    \"unlock_right\"\: 9\,\n    \"unlock_up\"\: 6\n}\n";
 ID:823;X:-192896;Y:-195552;D:-1;XTRA:"{\n    \"destinationPathName\"\: \"toSMWDonutPlainsYI\"\,\n    \"pathWalkingDirection\"\: 1\,\n    \"warpName\"\: \"toSMWDonutPlainsMain\"\n}\n";
 ID:752;X:-192736;Y:-195904;D:-1;XTRA:"{\n    \"name\"\: \"toSMWDonutPlains4\"\,\n    \"points\"\: \"-32\,0\, 0\,0\, 32\,64\"\,\n    \"smoothness\"\: 0.30000000000000004\n}\n";
@@ -2715,6 +2724,8 @@ ID:752;X:-196480;Y:-200320;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-2Path9\"\,\n  
 ID:752;X:-196896;Y:-200416;D:-1;XTRA:"{\n    \"name\"\: \"toSMB32-QuicksandP2\"\,\n    \"points\"\: \"-32\, 0\, 96\, 0\"\n}\n";
 ID:821;X:-197568;Y:-197792;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-3Area1WarpEnd\"\,\n    \"levelTitle\"\: \"To Section A\"\,\n    \"path_left\"\: \"toSMB3W-3Warp1\"\,\n    \"path_up\"\: \"toSMB33-1\"\,\n    \"warpName\"\: \"SMB3W-3Area1WarpBegin\"\n}\n";
 ID:752;X:-197600;Y:-197792;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-3Warp1\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
+ID:752;X:-194240;Y:-197696;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3eReaderHub\"\,\n    \"points\"\: \"0\, 32\, 0\, -64\"\n}\n";
+ID:848;X:-194240;Y:-197664;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"levelFilename\"\: \"SMB3 - W-e\, Hub.lvlx\"\,\n    \"levelTitle\"\: \"World e\"\,\n    \"path_up\"\: \"toSMB3eReaderHub\"\,\n    \"unlock_up\"\: 1\n}\n";
 NPC_END
 LAYERS
 LR:"Default";

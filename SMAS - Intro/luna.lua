@@ -114,10 +114,10 @@ function onEvent(eventName)
         player.downKeyPressing = false
     end
     if eventName == "WorldMapWarp" then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
     if eventName == "Skip Intro Execution" then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
 end
 

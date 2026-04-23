@@ -63,7 +63,7 @@ function malcwarp.onKeyboardPress(k)
         if k == VK_1 then
             --This is needed if booting for the first time, and for the usual yadda yadda
             --Level.load("SMAS - World Map Warp.lvlx", nil, nil)
-            Level.load("map.lvlx")
+            Level.load(GameData.SMASPlusPlus.game.hubLevel)
             onePressedState = true
         end
     end

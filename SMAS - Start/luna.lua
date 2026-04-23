@@ -48,10 +48,6 @@ local littleDialogue = require("littleDialogue")
 
 local statusFont = textplus.loadFont("littleDialogue/font/6.ini")
 
-if GameData.____mainMenuComplete == nil then
-    GameData.____mainMenuComplete = false
-end
-
 local function startupdater()
     bootshow = false
     blackscreen = true
@@ -209,19 +205,19 @@ function onInputUpdate()
                         SysManager.loadIntroTheme()
                     end
                     if activeselected == 2 then
-                        GameData.____mainMenuComplete = true
+                        GameData.SMASPlusPlus.game.mainMenuCompleted = true
                         GameData.gameFirstLoaded = false
-                        Level.load("map.lvlx")
+                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
                     end
                     if activeselected == 3 then
-                        GameData.____mainMenuComplete = true
+                        GameData.SMASPlusPlus.game.mainMenuCompleted = true
                         SaveData.speedrunMode = not SaveData.speedrunMode
                         if not SaveData.firstBootCompleted then
                             SaveData.firstBootCompleted = true
                         end
                         GameData.gameFirstLoaded = false
                         Misc.saveGame()
-                        Level.load("map.lvlx")
+                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
                     end
                     if activeselected == 4 then
                         player.setCostume(1, nil)

@@ -11,17 +11,8 @@ local letterWidths = {
 local EP_LIST_PTR = mem(0x00B250FC, FIELD_DWORD)
 local episodePath = _episodePath
 local Player = {}
-_G.OnSEEMod = true
 
---Detecting whenever we're on the SEE Mod or not
-if frameBufferWidth == nil then
-    OnSEEMod = false
-    _G.frameBufferWidth = 800
-end
-if frameBufferHeight == nil then
-    OnSEEMod = false
-    _G.frameBufferHeight = 600
-end
+local frameBufferWidth,frameBufferHeight = Graphics.getMainFramebufferSize()
  
 do
     -- The following code makes the loading screen slightly less restricted
@@ -214,11 +205,6 @@ local episodePath = mem(0x00B2C61C, FIELD_STRING)
 local image = Graphics.loadImage("loadscreen.png")
 local blackscreen = Graphics.loadImage("black-screen.png")
 local loadicon = Graphics.loadImage("loadscreen-logo.png")
-local nesborder = Graphics.loadImage("graphics/resolutionborders/nes.png")
-local gbborder = Graphics.loadImage("graphics/resolutionborders/gb.png")
-local gbaborder = Graphics.loadImage("graphics/resolutionborders/gba.png")
-local iphoneoneborder = Graphics.loadImage("graphics/resolutionborders/iphone1st.png")
-local threedsborder = Graphics.loadImage("graphics/resolutionborders/3ds.png")
 local mariochallengemodeimg = Graphics.loadImage("graphics/mariochallenge/loadimage.png")
 
 local frame = 0

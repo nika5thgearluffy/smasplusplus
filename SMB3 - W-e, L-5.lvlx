@@ -2,8 +2,8 @@ HEAD
 TL:"Super Mario Bros. 3 (Classic World 2-2)";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 300\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-193632;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Swimming.spc|0\;g=2.5";BG:56;
-SC:1;L:-180000;R:-177792;T:-180600;B:-180000;MZ:0;MF:"";BG:1;
+SC:0;L:-200000;R:-193632;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Swimming (SMA4).spc|0\;g=2.5\;e0";BG:56;
+SC:1;L:-180000;R:-177792;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Overworld.ogg";BG:1;
 SECTION_END
 STARTPOINT
 ID:1;X:-199900;Y:-200470;D:1;

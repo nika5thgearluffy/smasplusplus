@@ -2357,17 +2357,17 @@ do
             SFX.play(26)
 
             return
-        elseif Misc.GetKeyState(VK_BACK) and Misc.inEditor() then
+        --[[elseif Misc.GetKeyState(VK_BACK) and Misc.inEditor() then
             local middleFunction = (function()
                 SaveData.smwMap = {}
 
                 Misc.unpause()
-                Level.load("map.lvlx")
+                Level.load(GameData.SMASPlusPlus.game.hubLevel)
             end)
 
             smwMap.startTransition(middleFunction,nil, smwMap.transitionSettings.selectedLevelSettings)
 
-            return
+            return]]
         
         end
 

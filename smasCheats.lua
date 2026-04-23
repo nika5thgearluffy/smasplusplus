@@ -790,7 +790,7 @@ local iscoolstrings = {
     "spencereverlyiscool",
 }
 
-for i = 1,2 do
+for i = 1,#iscoolstrings do
     Cheats.register(iscoolstrings[i],{ --A message box pops up, referencing 38A's password screen, but will have a hint on guessing the password below it. When guessed correctly, you will enter to the very first SpencerlyEverly video of the level that was shown on Levels of NSMBDS, Level Editor! After clearing, you'll be taken back to where you were before.
         onActivate = (function()
             Defines.player_hasCheated = false
@@ -847,7 +847,7 @@ function easteregggoodnessyeah()
         Cheats.trigger("spencereverlyiscool")
     end
     if Level.filename() == "LONSMBDSLE - W-1, L-2.lvlx" then
-        Level.load(SaveData.lastLevelPlayed)
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     else
         Level.load("LONSMBDSLE - W-1, L-2.lvlx")
     end

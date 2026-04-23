@@ -82,6 +82,16 @@ if SaveData.SMASPlusPlus.game.firstBootMapPathFixed == nil then
     SaveData.SMASPlusPlus.game.firstBootMapPathFixed = false
 end
 
+-- True if the main menu booted the world map.
+if GameData.SMASPlusPlus.game.mainMenuCompleted == nil then
+    GameData.SMASPlusPlus.game.mainMenuCompleted = false
+end
+
+-- Hub level for map exits
+if GameData.SMASPlusPlus.game.hubLevel == nil then
+    GameData.SMASPlusPlus.game.hubLevel = "map.lvlx"
+end
+
 --**Special button assignments**
 for i = 1,8 do
     SaveData.SMASPlusPlus.player[i].controls.specialKey = SaveData.SMASPlusPlus.player[i].controls.specialKey or 68 --Special button (Keyboard)

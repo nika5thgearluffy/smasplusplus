@@ -20,7 +20,7 @@ end
 
 function onEvent(eventName)
     if eventName == "ExitToMap2" then
-        Level.load("map.lvlx")
+        Level.load(GameData.SMASPlusPlus.game.hubLevel)
     end
 end
 

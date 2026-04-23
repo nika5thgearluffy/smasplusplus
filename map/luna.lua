@@ -1,5 +1,11 @@
 local smwMap = require("smwMap")
 local littleDialogue = require("littleDialogue")
+
+-- Change the hub level to the world map
+if GameData.SMASPlusPlus.game.hubLevel ~= Level.filename() then
+    SysManager.changeMapHub(Level.filename())
+end
+
 _G.pausemenu2 = require("pausemenu2")
 
 if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
