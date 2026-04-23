@@ -2664,8 +2664,8 @@ ID:752;X:-200896;Y:-195072;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-7Pipe5\"\,\n  
 ID:821;X:-200608;Y:-195104;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"toSMB3W-7PipeWarpH1\"\,\n    \"levelTitle\"\: \"Warp H\"\,\n    \"path_left\"\: \"toSMB37-7\"\,\n    \"path_up\"\: \"\"\,\n    \"warpName\"\: \"toSMB3W-7PipeWarpH2\"\n}\n";
 ID:752;X:-200640;Y:-195104;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-7\"\,\n    \"points\"\: \"32\, 0\, -128\, 0\"\n}\n";
 ID:767;X:-200768;Y:-195104;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, L-7.lvlx\"\,\n    \"levelTitle\"\: \"7-7\: Starman Run\"\,\n    \"path_down\"\: \"toSMB37-8Path1\"\,\n    \"path_right\"\: \"toSMB37-7\"\,\n    \"unlock_down\"\: 9\n}\n";
-ID:768;X:-200640;Y:-195040;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, L-8.lvlx\"\,\n    \"levelTitle\"\: \"7-8\: Around the Plants\"\,\n    \"path_left\"\: \"toSMB37-8\"\,\n    \"unlock_down\"\: 2\n}\n";
-ID:752;X:-200768;Y:-195072;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-8Path1\"\,\n    \"points\"\: \"0\, -32\, 0\, 32\, 0\, 32\"\n}\n";
+ID:768;X:-200640;Y:-195040;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, L-8.lvlx\"\,\n    \"levelTitle\"\: \"7-8\: Around the Plants\"\,\n    \"path_left\"\: \"toSMB37-8Path2\"\,\n    \"unlock_down\"\: 2\n}\n";
+ID:752;X:-200768;Y:-195072;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-8Path1\"\,\n    \"points\"\: \"0\, -32\, 0\, 32\, 64\, 32\"\n}\n";
 ID:840;X:-197216;Y:-199776;D:-1;XTRA:"{\n    \"path_down\"\: \"toSMB31-Bonus1P2\"\,\n    \"path_right\"\: \"toSMB31-Bonus1\"\,\n    \"path_up\"\: \"toSMB3W1Path1\"\n}\n";
 ID:752;X:-197216;Y:-199744;D:-1;XTRA:"{\n    \"name\"\: \"toSMB31-Bonus1P2\"\,\n    \"points\"\: \"0\, -32\, 0\, 32\"\n}\n";
 ID:752;X:-197216;Y:-199808;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W1Path1\"\,\n    \"points\"\: \"0\, -32\, 0\, 32\"\n}\n";
@@ -2743,7 +2743,7 @@ ID:752;X:-194240;Y:-197696;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3eReaderHub\"\,\n
 ID:848;X:-194240;Y:-197664;D:-1;XTRA:"{\n    \"alwaysVisible\"\: true\,\n    \"levelFilename\"\: \"SMB3 - W-e\, Hub.lvlx\"\,\n    \"levelTitle\"\: \"World e\"\,\n    \"path_up\"\: \"toSMB3eReaderHub\"\,\n    \"unlock_up\"\: 1\n}\n";
 ID:769;X:-200704;Y:-194976;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, L-9.lvlx\"\,\n    \"levelTitle\"\: \"7-9\: Desert Pipe Haven\"\,\n    \"path_right\"\: \"toSMB37-Fortress2\"\,\n    \"path_up\"\: \"toSMB37-9\"\,\n    \"unlock_right\"\: 9\n}\n";
 ID:752;X:-200704;Y:-195008;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-9\"\,\n    \"points\"\: \"0\, -32\, 0\, 32\"\n}\n";
-ID:842;X:-200704;Y:-195040;D:-1;
+ID:842;X:-200704;Y:-195040;D:-1;XTRA:"{\n    \"path_down\"\: \"toSMB37-9\"\,\n    \"path_left\"\: \"toSMB37-8Path1\"\,\n    \"path_right\"\: \"toSMB37-8Path2\"\n}\n";
 ID:752;X:-200672;Y:-195040;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-8Path2\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
 ID:849;X:-200576;Y:-194976;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, L-Fortress2.lvlx\"\,\n    \"levelTitle\"\: \"Fortress #13\: Boom Boom\"\,\n    \"path_down\"\: \"toSMB37-PP2\"\,\n    \"path_left\"\: \"toSMB37-Fortress2\"\,\n    \"unlock_down\"\: 9\n}\n";
 ID:752;X:-200672;Y:-194976;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-Fortress2\"\,\n    \"points\"\: \"-32\, 0\, 96\, 0\"\n}\n";
