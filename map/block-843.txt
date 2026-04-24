@@ -1,3 +1,2 @@
 frames=4
 framespeed=10
-priority=-90

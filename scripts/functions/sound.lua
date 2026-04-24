@@ -152,16 +152,11 @@ end
 
 function Sound.clearUnusedCostumeSounds()
     if lunatime.tick() > 10 then
-        if SMBX_VERSION ~= VER_SEE_MOD then
-            SysManager.sendToConsole("NOT USING SEE MOD! Costume sound refresher has stopped.")
-            return
-        else
-            for k,v in ipairs(smasTables.soundNamesInOrder) do
-                if (smasTables.previouslyCachedSoundFiles[k] ~= smasTables.currentlyCachedSoundFiles[k]) then
-                    SysManager.sendToConsole("Unmatched sound detected: "..smasTables.previouslyCachedSoundFiles[k]..", will clear off from cache until next reload...")
-                    if Audio.SfxIsInCache(smasTables.previouslyCachedSoundFiles[k]) then
-                        Audio.SfxClearFromCache(smasTables.previouslyCachedSoundFiles[k])
-                    end
+        for k,v in ipairs(smasTables.soundNamesInOrder) do
+            if (smasTables.previouslyCachedSoundFiles[k] ~= smasTables.currentlyCachedSoundFiles[k]) then
+                SysManager.sendToConsole("Unmatched sound detected: "..smasTables.previouslyCachedSoundFiles[k]..", will clear off from cache until next reload...")
+                if Audio.SfxInCache(smasTables.previouslyCachedSoundFiles[k]) then
+                    Audio.SfxClear(smasTables.previouslyCachedSoundFiles[k])
                 end
             end
         end
