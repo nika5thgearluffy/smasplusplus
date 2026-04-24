@@ -1704,6 +1704,38 @@ ID:795;X:-196224;Y:-197824;
 ID:795;X:-196224;Y:-197792;
 ID:795;X:-196224;Y:-197760;
 ID:752;X:-194240;Y:-197664;
+ID:796;X:-201600;Y:-195744;
+ID:754;X:-201312;Y:-195680;
+ID:754;X:-201280;Y:-195680;
+ID:754;X:-201248;Y:-195680;
+ID:754;X:-201216;Y:-195680;
+ID:754;X:-201184;Y:-195680;
+ID:754;X:-201184;Y:-195648;
+ID:754;X:-201216;Y:-195648;
+ID:754;X:-201248;Y:-195648;
+ID:754;X:-201280;Y:-195648;
+ID:754;X:-201312;Y:-195648;
+ID:754;X:-201312;Y:-195616;
+ID:754;X:-201312;Y:-195584;
+ID:754;X:-201344;Y:-195584;
+ID:754;X:-201376;Y:-195584;
+ID:754;X:-201376;Y:-195552;
+ID:754;X:-201376;Y:-195520;
+ID:754;X:-201344;Y:-195520;
+ID:754;X:-201344;Y:-195552;
+ID:754;X:-201312;Y:-195520;
+ID:754;X:-201312;Y:-195552;
+ID:754;X:-201280;Y:-195520;
+ID:754;X:-201280;Y:-195552;
+ID:754;X:-201248;Y:-195552;
+ID:754;X:-201216;Y:-195520;
+ID:754;X:-201248;Y:-195520;
+ID:754;X:-201216;Y:-195552;
+ID:754;X:-201184;Y:-195552;
+ID:754;X:-201184;Y:-195584;
+ID:754;X:-201184;Y:-195616;
+ID:754;X:-201248;Y:-195616;
+ID:754;X:-201248;Y:-195584;
 BGO_END
 NPC
 ID:753;X:-199904;Y:-197056;D:-1;XTRA:"{\n    \"backgroundName\"\: \"sky\"\,\n    \"customMusicPath\"\: \"_OST/Mario Forever/World 1 (Original).mod\"\,\n    \"height\"\: 1200\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: false\,\n    \"width\"\: 1500\n}\n";
@@ -2753,6 +2785,8 @@ ID:854;X:-200704;Y:-194912;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, 
 ID:752;X:-200608;Y:-194912;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-Castle\"\,\n    \"points\"\: \"32\, 0\, -96\, 0\"\n}\n";
 ID:821;X:-200768;Y:-194912;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-8BeginWarp\"\,\n    \"levelTitle\"\: \"Warp to World 8\"\,\n    \"path_right\"\: \"toSMB3W-7EndPipe\"\,\n    \"warpName\"\: \"SMB3W-7EndWarp\"\n}\n";
 ID:752;X:-200736;Y:-194912;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-7EndPipe\"\,\n    \"points\"\: \"32\, 0\, -32\, 0\"\n}\n";
+ID:753;X:-201600;Y:-195744;D:-1;XTRA:"{\n    \"backgroundName\"\: \"\"\,\n    \"customMusicPath\"\: \"_OST/Super Mario Bros 3/Dark Land.spc|0\;g=2.5\"\,\n    \"height\"\: 384\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: true\,\n    \"width\"\: 512\n}\n";
+ID:821;X:-201536;Y:-195616;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-7EndWarp\"\,\n    \"levelTitle\"\: \"Warp to World 7\"\,\n    \"path_right\"\: \"\"\,\n    \"warpName\"\: \"SMB3W-8BeginWarp\"\n}\n";
 NPC_END
 LAYERS
 LR:"Default";
