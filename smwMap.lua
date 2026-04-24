@@ -2357,7 +2357,7 @@ do
             SFX.play(26)
 
             return
-        --[[elseif Misc.GetKeyState(VK_BACK) and Misc.inEditor() then
+        elseif Misc.GetKeyState(VK_BACK) and Misc.inEditor() then
             local middleFunction = (function()
                 SaveData.smwMap = {}
 
@@ -2367,7 +2367,7 @@ do
 
             smwMap.startTransition(middleFunction,nil, smwMap.transitionSettings.selectedLevelSettings)
 
-            return]]
+            return
         
         end
 
@@ -4891,7 +4891,7 @@ function smwMap.onExit()
 end
 
 function smwMap.onKeyboardPressDirect(k, repeated, str)
-    if k == VK_Y and not repeated and Misc.inEditor then
+    if k == VK_Y and not repeated and Misc.inEditor() then
         smwMap.unlockLockedPath()
     end
 end
