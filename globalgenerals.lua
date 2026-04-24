@@ -445,6 +445,7 @@ function globalgenerals.onExitLevel(winType)
             end
         end
     end
+    SysManager.exitLevel(winType)
 end
 
 function globalgenerals.onExit()

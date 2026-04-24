@@ -161,8 +161,8 @@ end
 
 local reloadChooser
 
-if SaveData.editorWinnerLevelReload == nil then
-    SaveData.editorWinnerLevelReload = GameData.SMASPlusPlus.game.hubLevel
+if SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo == nil then
+    SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = GameData.SMASPlusPlus.game.hubLevel
 end
 
 if SaveData.reloadLevelFilenameInEditor == nil then
@@ -174,13 +174,13 @@ local function editorreloadchooser()
     reloadChooser = pauseplus.getSelectionValue("editormenu","Reload on Level Win Exit to")
     if reloadChooser == "World Map/Hub" then
         SaveData.reloadLevelFilenameInEditor = false
-        SaveData.editorWinnerLevelReload = GameData.SMASPlusPlus.game.hubLevel
+        SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = GameData.SMASPlusPlus.game.hubLevel
     elseif reloadChooser == "Restart Level" then
         SaveData.reloadLevelFilenameInEditor = true
-        SaveData.editorWinnerLevelReload = Level.filename()
+        SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = Level.filename()
     elseif reloadChooser == "Boot Menu" then
         SaveData.reloadLevelFilenameInEditor = false
-        SaveData.editorWinnerLevelReload = "SMAS - Start.lvlx"
+        SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = "SMAS - Start.lvlx"
     end
 end
 
@@ -693,7 +693,7 @@ function pausemenu2.onDraw()
         end
     end
     if SaveData.reloadLevelFilenameInEditor then
-        SaveData.editorWinnerLevelReload = Level.filename()
+        SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = Level.filename()
     end
     if exitFadeActive then
         Audio.MusicVolume(0)

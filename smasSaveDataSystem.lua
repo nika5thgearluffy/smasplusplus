@@ -20,6 +20,7 @@ SaveData.SMASPlusPlus.audio = SaveData.SMASPlusPlus.audio or {}
 SaveData.SMASPlusPlus.game = SaveData.SMASPlusPlus.game or {}
 SaveData.SMASPlusPlus.player = SaveData.SMASPlusPlus.player or {}
 SaveData.SMASPlusPlus.misc = SaveData.SMASPlusPlus.misc or {}
+SaveData.SMASPlusPlus.misc.editor = SaveData.SMASPlusPlus.misc.editor or {}
 SaveData.SMASPlusPlus.levels = SaveData.SMASPlusPlus.levels or {}
 SaveData.SMASPlusPlus.levels.complete = SaveData.SMASPlusPlus.levels.complete or {}
 SaveData.SMASPlusPlus.characters = SaveData.SMASPlusPlus.characters or {}
@@ -148,14 +149,20 @@ end
 if SaveData.SMBXSoundSystem == nil then
     SaveData.SMBXSoundSystem = false
 end
+
 if GameData.SMASPlusPlus.misc.weatherIsSet == nil then
     GameData.SMASPlusPlus.misc.weatherIsSet = true
 end
 if GameData.SMASPlusPlus.misc.weatherSaved == nil then
     GameData.SMASPlusPlus.misc.weatherSaved = {}
 end
+
 if GameData.SMASPlusPlus.firstLaunched == nil then
     GameData.SMASPlusPlus.firstLaunched = false
+end
+
+if SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo == nil then
+    SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = GameData.SMASPlusPlus.game.hubLevel
 end
 
 
@@ -284,6 +291,11 @@ end
 if SaveData.totalStarCount ~= nil then
     SaveData.SMASPlusPlus.levels.starCount = SaveData.totalStarCount
     SaveData.totalStarCount = nil
+end
+
+if SaveData.editorWinnerLevelReload ~= nil then
+    SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = SaveData.editorWinnerLevelReload
+    SaveData.editorWinnerLevelReload = nil
 end
 
 

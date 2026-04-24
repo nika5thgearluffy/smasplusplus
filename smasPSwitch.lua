@@ -107,11 +107,11 @@ function smasPSwitch.onDraw()
     --Stop P-Switch/Stopwatch codes
     if mem(0x00B2C62C, FIELD_WORD) == 1 then --P-Switch
         smasBooleans.pSwitchActive = false
-        smasPSwitch.stopPSwitchMusic()
+        smasPSwitch.stopPSwitchMusic(true)
     end
     if mem(0x00B2C62E, FIELD_WORD) == 1 then --Stopwatch
         smasBooleans.stopWatchActive = false
-        smasPSwitch.stopPSwitchMusic()
+        smasPSwitch.stopPSwitchMusic(true)
     end
     
     
