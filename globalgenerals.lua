@@ -449,13 +449,6 @@ function globalgenerals.onExitLevel(winType)
 end
 
 function globalgenerals.onExit()
-    -- Make sure the lives are set to 1 if 0
-    if mem(0x00B2C5AC,FIELD_FLOAT) == 0 then
-        if (killed == true or killed2 == true) then
-            mem(0x00B2C5AC,FIELD_FLOAT,1)
-            Level.load(Level.filename())
-        end
-    end
     if mem(0x00B2C89C, FIELD_BOOL) then --Let's prevent the credits from execution.
         SysManager.sendToConsole("Credits exiting detected! Exiting to the credits level...")
         Level.load("SMAS - Credits.lvlx")

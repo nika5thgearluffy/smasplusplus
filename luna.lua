@@ -61,9 +61,6 @@ end
 
 if mem(0x00B251E0, FIELD_WORD) == 0 then
     --Make sure we do these if the star count is set at 0
-    if mem(0x00B2C5AC,FIELD_FLOAT) > 1 then
-        mem(0x00B2C5AC,FIELD_FLOAT,1) --Decrease legacy lives to 1
-    end
     if Misc.score() > 0 then
         Misc.score(-Misc.score()) --Decrease legacy score to 0
     end
@@ -466,10 +463,6 @@ end
 
 function onTick()
     mem(0x00B25130,FIELD_WORD,2) --This will prevent split screen, again (Just in case)
-    --Let's not get game overs/broken launcher kicking (These are life global memories).
-    if mem(0x00B2C5AC,FIELD_FLOAT) < 1 then --This is to prevent the old Game Over system
-        mem(0x00B2C5AC,FIELD_FLOAT,1)
-    end
     if table.icontains(smasTables._friendlyPlaces,Level.filename()) then
         GameData.friendlyArea = true --Set this to prevent Mother Brain Rinka from getting killed in places such as the boot screen, intro, or the Hub
     end

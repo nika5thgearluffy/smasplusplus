@@ -288,8 +288,6 @@ function onTick()
     end
 end
 
-local playerlives = mem(0x00B2C5AC,FIELD_FLOAT)
-
 function onStart()
     if SaveData.introselect == nil then
         SaveData.introselect = SaveData.introselect or 1
