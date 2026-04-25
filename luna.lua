@@ -375,6 +375,16 @@ function onScreenCapture(noSFXs) -- This will replace the snapshot sound to a cu
     Sound.playSFX("snapshot.ogg")
 end
 
+function onLetterboxToggle(isToggled)
+    if Misc.isFullscreen() then
+        if isToggled then
+            Sound.playSFX("letterbox-enable.ogg")
+        else
+            Sound.playSFX("letterbox-disable.ogg")
+        end
+    end
+end
+
 function onDraw()
     if Misc.inEditor() then
         player.keys.pause = false
