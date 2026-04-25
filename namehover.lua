@@ -17,7 +17,7 @@ end
 
 function namehover.onDraw()
     if namehover.active == true then
-        local namep1 = "<color white>"..SaveData.playerName.."</color>"
+        local namep1 = "<color white>"..SaveData.SMASPlusPlus.game.username.."</color>"
         local name1 = textplus.layout(textplus.parse(namep1, {xscale=1, yscale=1, align="center", color=Color.white..1.0, font=smbxdefault, maxWidth=450}), player.x - camera.x + 16)
         local w = name1.width
         textplus.render{x = player.x - camera.x + 8 - name1.width*0.5, y = player.y - camera.y, layout = name1, priority = -24}

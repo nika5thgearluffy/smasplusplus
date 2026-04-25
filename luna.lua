@@ -247,10 +247,10 @@ Graphics.sprites.ultimaterinka[player.powerup].img = Graphics.loadImageResolved(
 
 Progress.value = SaveData.SMASPlusPlus.levels.starCount --Every level load, we will save the total stars used with the launcher
 
-if SaveData.playerName == nil then --This is for adding the player name to the launcher, aside from the total stars used
+if SaveData.SMASPlusPlus.game.username == nil then --This is for adding the player name to the launcher, aside from the total stars used
     Progress.savename = "Player" --If the player name is nil, use "Player" instead
 else
-    Progress.savename = SaveData.playerName --Or else just use the SaveData variable if it exists
+    Progress.savename = SaveData.SMASPlusPlus.game.username --Or else just use the SaveData variable if it exists
 end
 
 --Make sure the warp door system doesn't get active until onStart saves the original count first...
@@ -383,6 +383,12 @@ function onLetterboxToggle(isToggled)
 end
 
 function onDraw()
+    -- Do this so that the PFP would need to be removed if non-existant
+    local pfpFileSize = File.getSize(SaveData.SMASPlusPlus.game.pfp)
+    if pfpFileSize == -1 then
+        SaveData.SMASPlusPlus.game.pfp = Img.load("graphics/default_pfp.png")
+    end
+
     if Misc.inEditor() then
         player.keys.pause = false
         if Player.count() >= 2 then

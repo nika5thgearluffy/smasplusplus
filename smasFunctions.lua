@@ -20,7 +20,7 @@ _G.smasSaveDataSystem = require("smasSaveDataSystem") --Load smasSaveDataSystem 
 
 --Now for the base functions!
 _G.Misk = require("scripts/functions/misc")
-_G.File = require("scripts/functions/file")
+_G.Filed = require("scripts/functions/file")
 _G.Img = require("scripts/functions/img")
 _G.Sound = require("scripts/functions/sound")
 _G.Tabled = require("scripts/functions/table")

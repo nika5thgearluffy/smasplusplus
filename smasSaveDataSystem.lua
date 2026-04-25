@@ -1,5 +1,7 @@
 local smasSaveDataSystem = {}
 
+local smasFunctions = require("smasFunctions")
+
 if GameData.SMASPlusPlus == nil then
     GameData.SMASPlusPlus = {}
 end
@@ -165,6 +167,14 @@ if SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo == nil then
     SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = GameData.SMASPlusPlus.game.hubLevel
 end
 
+if SaveData.SMASPlusPlus.game.pfp == nil then
+    SaveData.SMASPlusPlus.game.pfp = Graphics.loadImageResolved("graphics/default_pfp.png")
+end
+
+if SaveData.SMASPlusPlus.game.username == nil then
+    SaveData.SMASPlusPlus.game.username = SysManager.getDefaultPlayerUsername()
+end
+
 
 
 
@@ -296,6 +306,16 @@ end
 if SaveData.editorWinnerLevelReload ~= nil then
     SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo = SaveData.editorWinnerLevelReload
     SaveData.editorWinnerLevelReload = nil
+end
+
+if SaveData.playerPfp ~= nil then
+    SaveData.SMASPlusPlus.game.pfp = Img.load(SaveData.playerPfp)
+    SaveData.playerPfp = nil
+end
+
+if SaveData.playerName ~= nil then
+    SaveData.SMASPlusPlus.game.username = SaveData.playerName
+    SaveData.playerName = nil
 end
 
 

@@ -32,7 +32,7 @@ function keyboard.cmd()
     printString("" .. keyboard.buffer:gsub("\n", "\n "))
     if GameData.playernameenter then
         if keyboard.buffer ~= "" then
-            SaveData.playerName = keyboard.buffer
+            SaveData.SMASPlusPlus.game.username = keyboard.buffer
             keyboard.buffer = ""
             keyboard.cursorPos = 0
             Sound.playSFX("console/console_success.ogg")
@@ -47,10 +47,10 @@ function keyboard.cmd()
     end
     if GameData.playerpfpenter then
         if keyboard.buffer ~= "" then
-            if SaveData.playerPfp == nil then
-                SaveData.playerPfp = keyboard.buffer
+            if SaveData.SMASPlusPlus.game.pfp == nil then
+                SaveData.SMASPlusPlus.game.pfp = keyboard.buffer
             else
-                SaveData.playerPfp = keyboard.buffer
+                SaveData.SMASPlusPlus.game.pfp = keyboard.buffer
             end
             keyboard.buffer = ""
             keyboard.cursorPos = 0
@@ -66,7 +66,7 @@ function keyboard.cmd()
     end
     if GameData.playernameenterfirstboot then
         if keyboard.buffer ~= "" then
-            SaveData.playerName = keyboard.buffer
+            SaveData.SMASPlusPlus.game.username = keyboard.buffer
             keyboard.buffer = ""
             keyboard.cursorPos = 0
             Sound.playSFX("console/console_success.ogg")
@@ -165,7 +165,7 @@ function keyboard.onControllerButtonPress(button)
             GameData.reopenmenu = true
         elseif GameData.playernameenterfirstboot == true or GameData.playernameenterfirstboot == nil then
             Sound.playSFX("console/console_resetfont.ogg")
-            SaveData.playerName = "Player"
+            SaveData.SMASPlusPlus.game.username = "Player"
             keyboard.active = false
             GameData.enablekeyboard = false
             GameData.firstbootkeyboardconfig = true
@@ -192,7 +192,7 @@ function keyboard.onKeyboardPressDirect(vk, repeated, char)
                 GameData.reopenmenu = true
             elseif GameData.playernameenterfirstboot == true or GameData.playernameenterfirstboot == nil then
                 Sound.playSFX("console/console_resetfont.ogg")
-                SaveData.playerName = "Player"
+                SaveData.SMASPlusPlus.game.username = "Player"
                 keyboard.active = false
                 GameData.enablekeyboard = false
                 GameData.firstbootkeyboardconfig = true

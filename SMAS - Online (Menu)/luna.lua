@@ -86,8 +86,8 @@ function startConnecting()
     smasOnlinePlay.startConnecting()
 end
 
-local IPHostBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.playerName, pause = false}
-local IPClientBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.playerName, pause = false}
+local IPHostBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
+local IPClientBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
 
 local function IPAddressHostEnter()
     GameData.playerEnteringHostIP = true

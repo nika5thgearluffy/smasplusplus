@@ -1,4 +1,4 @@
-local File = {}
+local Filed = {}
 
 function File.load(name) --This will not only check the main SMBX2 folders, but will also check for other common SMAS++ directories
     return (Misc.resolveFile(name)
@@ -8,7 +8,7 @@ function File.load(name) --This will not only check the main SMBX2 folders, but 
         or Misc.resolveFile("scripts/" .. name)
         or Misc.resolveFile("graphics/" .. name)
         or Misc.resolveFile("sound/" .. name)
-        or Misc.resolveFile("___MainUserDirectory/" .. name)
+        or Misc.userFilesDirectory() .. name
     )
 end
 
@@ -158,4 +158,4 @@ function File.fileToKilobyteSize(file)
     return bytesize / 1024
 end
 
-return File
+return Filed

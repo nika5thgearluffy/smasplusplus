@@ -328,7 +328,7 @@ end
 function SysManager.exitLevelToWarpPoint(warp)
     for _,p in ipairs(Player.get()) do
         if p:mem(0x15E, FIELD_WORD) >= warp and p.forcedState == FORCEDSTATE_INVISIBLE then
-            if (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil) then
+            if Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil) then
                 SysManager.loadMap()
             else
                 Level.load(Warp.get()[warp].levelFilename)
@@ -646,6 +646,20 @@ function SysManager.changeMapHub(levelFilename)
     mem(0x00B25724, FIELD_STRING, levelFilename)
     GameData.SMASPlusPlus.game.hubLevel = levelFilename
     SysManager.sendToConsole("Map hub changed to \""..levelFilename.."\".")
+end
+
+-- Gets the extension from a filepath.
+function SysManager.getExtensionFromFilepath(filePath)
+    return filePath:match("^.+(%..+)$")
+end
+
+-- Same as last, except it gets the filename
+function SysManager.getFilenameFromFilepath(filePath)
+    return filePath:match("^.+/(.+)$")
+end
+
+function SysManager.getUserFilesSMASPlusPlusDirectory()
+    return Misc.userFilesDirectory().."SMASPlusPlus/"
 end
 
 return SysManager

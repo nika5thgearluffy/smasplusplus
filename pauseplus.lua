@@ -790,14 +790,22 @@ end
 
 -- Menu logic
 do
-    local function getMovementDirection(back,forward,currentOption,minOption,maxOption,step)
+    local function getMovementDirection(back,forward,currentOption,minOption,maxOption,isVertical,step)
         step = step or 1
         
         
-        if player.rawKeys[back] == KEYS_PRESSED and (currentOption-step) >= minOption then
-            return -1*step
-        elseif player.rawKeys[forward] == KEYS_PRESSED and (currentOption+step) <= maxOption then
-            return 1*step
+        if not isVertical then
+            if player.rawKeys[back] == KEYS_PRESSED and (currentOption-step) >= minOption then
+                return -1*step
+            elseif player.rawKeys[forward] == KEYS_PRESSED and (currentOption+step) <= maxOption then
+                return 1*step
+            end
+        else
+            if player.rawKeys[back] == KEYS_PRESSED and (currentOption-step) >= minOption - 1 then
+                return -1*step
+            elseif player.rawKeys[forward] == KEYS_PRESSED and (currentOption+step) <= maxOption + 1 then
+                return 1*step
+            end
         end
     end
 
@@ -872,10 +880,17 @@ do
         local saveName = getOptionSaveName(optionObj.text)
 
 
-        local verticalMovementDirection = getMovementDirection("up","down",pauseplus.currentOption,1,#submenuObj.options)
+        local verticalMovementDirection = getMovementDirection("up","down",pauseplus.currentOption,1,#submenuObj.options,true)
 
         if verticalMovementDirection ~= nil then
-            pauseplus.currentOption = pauseplus.currentOption + verticalMovementDirection
+            local tempNavigator = pauseplus.currentOption + verticalMovementDirection
+            if tempNavigator >= 1 and tempNavigator <= #submenuObj.options then
+                pauseplus.currentOption = tempNavigator
+            elseif tempNavigator < 1 then
+                pauseplus.currentOption = #submenuObj.options
+            elseif tempNavigator > #submenuObj.options then
+                pauseplus.currentOption = 1
+            end
             playSFX(pauseplus.moveSFX)
         elseif optionObj.selectionType ~= nil and optionObj.selectionType ~= pauseplus.SELECTION_CHECKBOX then
             local min,max
@@ -887,7 +902,7 @@ do
                 max = #optionObj.selectionNames
             end
 
-            local horizontalMovementDirection = getMovementDirection("left","right",submenuSelectionData[saveName],min,max,optionObj.selectionStep)
+            local horizontalMovementDirection = getMovementDirection("left","right",submenuSelectionData[saveName],min,max,optionObj.selectionStep,false)
 
             if horizontalMovementDirection ~= nil then
                 local step = (optionObj.selectionStep or 1)

@@ -519,13 +519,13 @@ function startConfiguratorKeyboardP2()
     inputconfigurator.assigningToPlayer2 = true
 end
 
-local nameBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.playerName, pause = false}
-local pfpBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.playerPfp, pause = false}
+local nameBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
+local pfpBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.pfp, pause = false}
 
 function startKeyboard()
     smasMainMenuSystem.menuOpen = false
     Sound.playSFX(29)
-    newkeyboard.setVariable = SaveData.playerName
+    newkeyboard.setVariable = SaveData.SMASPlusPlus.game.username
     nameBoard:open()
     GameData.playernameenter = true
 end
@@ -533,17 +533,24 @@ end
 function startKeyboardFirstBoot()
     smasMainMenuSystem.menuOpen = false
     Sound.playSFX(29)
-    newkeyboard.setVariable = SaveData.playerName
+    newkeyboard.setVariable = SaveData.SMASPlusPlus.game.username
     nameBoard:open()
     GameData.playernameenterfirstboot = true
 end
 
 function startKeyboardPFP()
-    smasMainMenuSystem.menuOpen = false
     Sound.playSFX(29)
-    newkeyboard.setVariable = SaveData.playerPfp
-    pfpBoard:open()
-    GameData.playerpfpenter = true
+    local pfpImage = File.openDialogAndGetFilepath()
+    if SysManager.getExtensionFromFilepath(pfpImage) == ".png" or SysManager.getExtensionFromFilepath(pfpImage) == ".PNG" then
+        local finalPFPImage = SysManager.getUserFilesSMASPlusPlusDirectory().."save"..tostring(Misc.saveSlot()).."_pfp.png"
+        --File.copy(pfpImage, finalPFPImage)
+        SaveData.SMASPlusPlus.game.pfp = pfpImage
+        Sound.playSFX("save_dismiss.ogg")
+    elseif (SysManager.getExtensionFromFilepath(pfpImage) ~= ".png" or SysManager.getExtensionFromFilepath(pfpImage) ~= ".PNG") or pfpImage == "" then
+        SaveData.SMASPlusPlus.game.pfp = ""
+        Sound.playSFX(152)
+    end
+    smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_SETTINGS_MANAGE, 0, false)
 end
 
 function startSaveSwitcher1()
@@ -1154,19 +1161,19 @@ function smasMainMenu.onDraw()
         local hitNPCs = Colliders.getColliding{a = cursor.scenepos, b = hitNPCs, btype = Colliders.NPC}
         
         if smasMainMenu.showPFPImageOnScreen then
-            if SaveData.playerPfp == nil then
-                sprite.draw{texture = Img.load("pfp/pfp.png"), width = 40, height = 40, x = 10, y = 555, priority = -7}
-            elseif SaveData.playerPfp then
-                sprite.draw{texture = Img.load("___MainUserDirectory/"..SaveData.playerPfp..""), width = 40, height = 40, x = 10, y = 555, priority = -7}
+            if SaveData.SMASPlusPlus.game.pfp == nil or SaveData.SMASPlusPlus.game.pfp == "" then
+                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = 555, priority = -7}
+            elseif SaveData.SMASPlusPlus.game.pfp then
+                sprite.draw{texture = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp), width = 40, height = 40, x = 10, y = 555, priority = -7}
             elseif unexpected_condition then
-                sprite.draw{texture = Img.load("pfp/pfp.png"), width = 40, height = 40, x = 10, y = 555, priority = -7}
+                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = 555, priority = -7}
             end
         end
         if smasMainMenu.showPlayerNameOnScreen then
-            if SaveData.playerName == nil then
+            if SaveData.SMASPlusPlus.game.username == nil then
                 textplus.print{x = 60, y = 569, text = "<color rainbow>"..SysManager.getDefaultPlayerUsername().."</color>", font = smasMainMenu.sonicManiaFont, priority = -7, xscale = 1, yscale = 1}
             else
-                textplus.print{x = 60, y = 569, text = "<color rainbow>"..SaveData.playerName.."</color>", font = smasMainMenu.sonicManiaFont, priority = -7, xscale = 1, yscale = 1}
+                textplus.print{x = 60, y = 569, text = "<color rainbow>"..SaveData.SMASPlusPlus.game.username.."</color>", font = smasMainMenu.sonicManiaFont, priority = -7, xscale = 1, yscale = 1}
             end
         end
         if Level.filename() == "intro_8bit.lvlx" then
@@ -1494,7 +1501,7 @@ smasMainMenuSystem.addMenuItem{name = "Exit", section = smasMainMenuSystem.menuS
 
 
 --SMAS++ MAIN MENU: Main Menu Dialog (Change Profile Picture: Information)
-smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_SETTINGS_CHANGEPFP_INFO, cantGoBack = true, xCenter = 180, yCenter = 250, dialogMessage = "Your profile picture can be used when you launch Online Multiplayer, or to see who is running the game at this session.<page>Your profile picture will also be used during the story, along with your name.<page>To specify the profile picture using the keyboard, please type up the path from '___MainUserDirectory' to the profile picture you are going to use.<page>'___MainUserDirectory' is a user modifiable directory that can be used for files you specify for the episode, such as a profile picture (PNG only).<page>Don't worry if you don't want to specify one, there's already a default profile picture for you already set up.<page>But if you want to go ahead and set one up, please specify to begin anytime on that menu.<page>With that out of the way, that's how you set up a profile picture for the episode!", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 280}
+smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.DIALOG_SETTINGS_CHANGEPFP_INFO, cantGoBack = true, xCenter = 180, yCenter = 250, dialogMessage = "Your profile picture can be used to see who is running the game at this session.<page>Your profile picture will also be used during the story, along with your name.<page>To specify your profile picture, select begin to pop up an open dialog box.<page>From there, open up a PNG file that'll be your profile picture.<page>After opening one up, your image will be used and saved in your \"!user-files\" directory.<page>Don't worry if you don't want to specify one, there's already a default profile picture for you already set up.<page>But if you want to go ahead and set one up, please specify to begin anytime on that menu.<page>With that out of the way, that's how you set up a profile picture for the episode!", menuMainType = smasMainMenuSystem.menuMainTypes.MENUMAIN_DIALOG, dialogMessageY = 280}
 smasMainMenuSystem.addMenuItem{name = "Okay!", section = smasMainMenuSystem.menuSections.DIALOG_SETTINGS_CHANGEPFP_INFO, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_SETTINGS_CHANGEPFP, 0, false) end}
 
 

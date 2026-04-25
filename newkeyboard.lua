@@ -428,19 +428,19 @@ function keyboard.onDraw()
         keyboard.timer = keyboard.timer - 1
         if keyboard.timer <= 0 then
             if GameData.playernameenter then
-                SaveData.playerName = actBoard.text
+                SaveData.SMASPlusPlus.game.username = actBoard.text
                 if smasBooleans.isOnMainMenu then
                     GameData.reopenmenu = true
                 end
             end
             if GameData.playerpfpenter then
-                SaveData.playerPfp = actBoard.text
+                SaveData.SMASPlusPlus.game.pfp = actBoard.text
                 if smasBooleans.isOnMainMenu then
                     GameData.reopenmenu = true
                 end
             end
             if GameData.playernameenterfirstboot then
-                SaveData.playerName = actBoard.text
+                SaveData.SMASPlusPlus.game.username = actBoard.text
                 if smasBooleans.isOnMainMenu then
                     GameData.firstbootkeyboardconfig = true
                 end

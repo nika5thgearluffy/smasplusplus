@@ -244,8 +244,8 @@ function onInputUpdate()
                         Level.load("intro_SMAS.lvlx")
                     end
                     if activeselected == 6 then
-                        SaveData.playerName = nil
-                        SaveData.playerPfp = nil
+                        SaveData.SMASPlusPlus.game.username = nil
+                        SaveData.SMASPlusPlus.game.pfp = nil
                         SysManager.loadIntroTheme()
                     end
                     if activeselected == 7 then
