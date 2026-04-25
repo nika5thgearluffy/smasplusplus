@@ -1,7 +1,7 @@
 {
     "game": {
-        "update-check-website": "http://spencereverly.pythonanywhere.com/SpencerEverly/update-check.json",
-		"update-error-website": "http://github.com/SpencerEverly/smasplusplus/tree/main/_smasupdater",
+        "update-check-website": "",
+		"update-error-website": "",
 		"update-error-message": "Could not load info to download SMASUpdater.",
         "version-1": 0,
         "version-2": 0,
