@@ -1,9 +1,7 @@
 local littleDialogue = require("littleDialogue")
 local playerManager = require("playerManager")
 local textplus = require("textplus")
-if not Misc.inMarioChallenge() then
-    smasDateAndTime = require("smasDateAndTime")
-end
+smasDateAndTime = require("smasDateAndTime")
 local Routine = require("routine")
 local warpTransition = require("warpTransition")
 local anothercurrency = require("ShopSystem/anothercurrency")

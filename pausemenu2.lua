@@ -1,7 +1,5 @@
 local pausemenu2 = {}
 
-if Misc.inMarioChallenge() then return end
-
 if GameData.____editorPowerupState == nil then
     GameData.____editorPowerupState = 1
 end

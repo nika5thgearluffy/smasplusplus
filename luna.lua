@@ -46,16 +46,14 @@ GameData.__EpisodeFolder = Misc.episodePath()
 GameData.__SaveSlot = Misc.saveSlot()
 
 --Make sure we warn the user to upgrade the legacy save data while we can...
-if not Misc.inMarioChallenge() then
-    if mem(0x00B251E0, FIELD_WORD) >= 1 then
-        SysManager.sendToConsole("Legacy star count greater than 1! Assuming we're loading a save file from Demo 2 and below...")
-        if GameData.warnUserAboutOldStars == nil then
-            GameData.warnUserAboutOldStars = true
-        end
-        if GameData.warnUserAboutOldStars then
-            Text.windowDebugSimple("It looks like your using a legacy save file from before Demo 3 (Or before April 10th, 2022). You'll need to migrate your save data as soon as you boot the game! That way your data can still be used in the future. Please migrate your save while you can!")
-            GameData.warnUserAboutOldStars = false
-        end
+if mem(0x00B251E0, FIELD_WORD) >= 1 then
+    SysManager.sendToConsole("Legacy star count greater than 1! Assuming we're loading a save file from Demo 2 and below...")
+    if GameData.warnUserAboutOldStars == nil then
+        GameData.warnUserAboutOldStars = true
+    end
+    if GameData.warnUserAboutOldStars then
+        Text.windowDebugSimple("It looks like your using a legacy save file from before Demo 3 (Or before April 10th, 2022). You'll need to migrate your save data as soon as you boot the game! That way your data can still be used in the future. Please migrate your save while you can!")
+        GameData.warnUserAboutOldStars = false
     end
 end
 
@@ -133,12 +131,6 @@ _G.cursor = require("cursor")
 _G.Timer = require("timer-mod")
 _G.lazyprintSMAS = require("lazyprintSMAS")
 _G.autoscrolla = require("autoscrolla")
-
---Making sure we're in the Mario Challenge... if so, automatically enable X2 characters.
-if Misc.inMarioChallenge() then
-    SysManager.sendToConsole("Mario Challenge detected! Loading game in minimal mode...")
-    SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-end
 
 --This will add multiple player arguments.
 for i = 1,200 do
@@ -293,10 +285,6 @@ function onStart() --Now do onStart...
     end
     --Below will start the star door system
     warpstaractive = true
-    if Misc.inMarioChallenge() then --Just in case if the Mario Challenge is active, do these things to update the Challenge...
-        SaveData.SMASPlusPlus.hud.coinsClassic = mem(0x00B2C5A8, FIELD_WORD)
-        SaveData.SMASPlusPlus.levels.starCount = mem(0x00B251E0, FIELD_WORD)
-    end
     --Do the weather SaveData additions
     if SaveData.dateplayedweather == nil then
         SaveData.dateplayedweather = weatherControl
@@ -332,7 +320,7 @@ function onStart() --Now do onStart...
     if SaveData.firstBootCompleted == 1 then
         SaveData.firstBootCompleted = true
     end
-    if not Misc.inMarioChallenge() and (not SaveData.SMASPlusPlus.game.onePointThreeModeActivated) and not Misc.inEditor() and (SaveData.currentCharacter ~= nil and SaveData.SMASPlusPlus.player[1].currentCostume ~= nil) then
+    if (not SaveData.SMASPlusPlus.game.onePointThreeModeActivated) and not Misc.inEditor() and (SaveData.currentCharacter ~= nil and SaveData.SMASPlusPlus.player[1].currentCostume ~= nil) then
         player.character = SaveData.currentCharacter
         player.setCostume(SaveData.currentCharacter, SaveData.SMASPlusPlus.player[1].currentCostume, false)
     end
@@ -446,23 +434,6 @@ function onDraw()
             SaveData.currentCostumePath = "N/A"
         end
     end
-    
-    if Misc.inMarioChallenge() then
-        if lunatime.tick() == 6 then
-            if player.character == 10 then
-                if player:getCostume() == "SMB3-WALUIGI" then
-                    player.setCostume(3, "SMB3-WALUIGI", false)
-                    player:transform(3, false)
-                else
-                    player.setCostume(3, "NINJABOMBERMAN", false)
-                    player:transform(3, false)
-                end
-            elseif player.character == 14 then
-                player.setCostume(4, "ULTIMATERINKA", false)
-                player:transform(4, false)
-            end
-        end
-    end
 end
 
 
@@ -506,27 +477,6 @@ end
 function onPause(evt)
     evt.cancelled = true
     isPauseMenuOpen = not isPauseMenuOpen
-end
-
-function onExit()
-    if Misc.inMarioChallenge() then
-        local oldpoints = Misc.score()
-        mem(0x00B2C5A8, FIELD_WORD, SaveData.SMASPlusPlus.hud.coinsClassic)
-        if SaveData.SMASPlusPlus.hud.score > 9999990 then
-            SaveData.SMASPlusPlus.hud.score = 9999990
-        end
-        Misc.score(oldpoints - SaveData.SMASPlusPlus.hud.score)
-        if SaveData.SMASPlusPlus.hud.lives > 99 then
-            mem(0x00B2C5AC, FIELD_FLOAT, 99)
-        else
-            mem(0x00B2C5AC, FIELD_FLOAT, SaveData.SMASPlusPlus.hud.lives)
-        end
-        if player.character == 3 and SaveData.SMASPlusPlus.player[1].currentCostume == "NINJABOMBERMAN" then
-            player:transform(10, false)
-        elseif player.character == 4 and SaveData.SMASPlusPlus.player[1].currentCostume == "ULTIMATERINKA" then
-            player:transform(14, false)
-        end
-    end
 end
 
 function onCheatActivate(cheat)

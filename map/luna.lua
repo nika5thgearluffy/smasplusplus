@@ -13,9 +13,7 @@ if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
 end
 
 local playerManager = require("playermanager")
-if not Misc.inMarioChallenge() then
-    smasDateAndTime = require("smasDateAndTime")
-end
+smasDateAndTime = require("smasDateAndTime")
 
 function onStart()
     GameData.friendlyArea = true

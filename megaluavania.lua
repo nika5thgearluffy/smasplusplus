@@ -10,9 +10,7 @@ local playerAnim = API.load("playerAnim")
 local textblox = API.load("textblox")
 local particles = API.load("particles")
 local pausemenu = require("pauseplus")
-if not Misc.inMarioChallenge() then
-    smasDateAndTime = require("smasDateAndTime")
-end
+smasDateAndTime = require("smasDateAndTime")
 local inventory = require("furyinventory")
 
 local cooldown = 0
@@ -708,9 +706,7 @@ function megaluavania.onInputUpdate()
             pausemenu.canPause = false
             inventory.activated = false
             mainblackscreenshow = false
-            if not Misc.inMarioChallenge() then
-                smasDateAndTime.position = 4
-            end
+            smasDateAndTime.position = 4
             textblox.active = true
             hudshow = false
         elseif v.initiated == megaluavania.BATTLE_LOST then

@@ -304,23 +304,21 @@ function SysManager.loadMap() --Loads the map, or the editor-specified area.
 end
 
 function SysManager.exitLevel(winType) --Exits a level with the win type specified.
-    if not Misc.inMarioChallenge() then
-        for _,p in ipairs(Player.get()) do
-            if not (p:mem(0x15E, FIELD_WORD) >= 1 and p.forcedState == FORCEDSTATE_INVISIBLE) then
-                if winType >= 1 then
-                    SysManager.sendToConsole("You won! You got the win type "..tostring(winType)..".")
-                    SysManager.loadMap()
-                end
-            else
-                if Warp.get()[p:mem(0x15E, FIELD_WORD) - 1] and Warp.get()[p:mem(0x15E, FIELD_WORD) - 1].levelFilename ~= nil then
-                    SysManager.sendToConsole("This warp has a level warp point. Warping to "..Warp.get()[p:mem(0x15E, FIELD_WORD) - 1].levelFilename.."...")
-                else
-                    SysManager.sendToConsole("This warp has a level warp point, but there's no filename detected. Warping anyway...")
-                end
-                local warp = p:mem(0x15E, FIELD_WORD) - 1
-                EventManager.callEvent("onWarpToOtherLevel", warp, p)
-                SysManager.exitLevelToWarpPoint(warp)
+    for _,p in ipairs(Player.get()) do
+        if not (p:mem(0x15E, FIELD_WORD) >= 1 and p.forcedState == FORCEDSTATE_INVISIBLE) then
+            if winType >= 1 then
+                SysManager.sendToConsole("You won! You got the win type "..tostring(winType)..".")
+                SysManager.loadMap()
             end
+        else
+            if Warp.get()[p:mem(0x15E, FIELD_WORD) - 1] and Warp.get()[p:mem(0x15E, FIELD_WORD) - 1].levelFilename ~= nil then
+                SysManager.sendToConsole("This warp has a level warp point. Warping to "..Warp.get()[p:mem(0x15E, FIELD_WORD) - 1].levelFilename.."...")
+            else
+                SysManager.sendToConsole("This warp has a level warp point, but there's no filename detected. Warping anyway...")
+            end
+            local warp = p:mem(0x15E, FIELD_WORD) - 1
+            EventManager.callEvent("onWarpToOtherLevel", warp, p)
+            SysManager.exitLevelToWarpPoint(warp)
         end
     end
 end

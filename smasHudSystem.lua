@@ -335,124 +335,116 @@ function diedanimation(plr) --The entire animation when dying. The pause and sou
     if smasHudSystem.activated then
         smasHudSystem.deathAnimationActive = true
         if not smasBooleans.isOnMainMenu then
-            if not Misc.inMarioChallenge() then
-                if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                    if not smasBooleans.isInClassicBattleMode then
-                        SysManager.sendToConsole("The player has died.")
-                        if (player.character == CHARACTER_MARIO) or (player.character == CHARACTER_LUIGI) or (player.character == CHARACTER_PEACH) or (player.character == CHARACTER_TOAD) or (player.character == CHARACTER_LINK) or (player.character == CHARACTER_MEGAMAN) or (player.character == CHARACTER_WARIO) or (player.character == CHARACTER_BOWSER) or (player.character == CHARACTER_KLONOA) or (player.character == CHARACTER_ROSALINA) or (player.character == CHARACTER_SNAKE) or (player.character == CHARACTER_ZELDA) or (player.character == CHARACTER_ULTIMATERINKA) or (player.character == CHARACTER_UNCLEBROADSWORD) or (player.character == CHARACTER_SAMUS) then
-                            if player.deathTimer == 0 then
-                                smasBooleans.musicMuted = true
-                                Audio.MusicVolume(0)
-                                SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
-                                SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1 --This marks a life lost
-                                if SaveData.SMASPlusPlus.hud.lives < 0 and SaveData.SMASPlusPlus.accessibility.enableLives then --If less than 0, the quick game over screen will activate
-                                    SysManager.sendToConsole("A game over screen will occur.")
-                                    gameoveractivate = true
-                                    SaveData.SMASPlusPlus.hud.lives = 0
-                                elseif SaveData.SMASPlusPlus.hud.lives < 0 and not SaveData.SMASPlusPlus.accessibility.enableLives then
-                                    gameoveractivate2 = true
+            if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+                if not smasBooleans.isInClassicBattleMode then
+                    SysManager.sendToConsole("The player has died.")
+                    if (player.character ~= CHARACTER_NINJABOMBERMAN) then
+                        if player.deathTimer == 0 then
+                            smasBooleans.musicMuted = true
+                            Audio.MusicVolume(0)
+                            SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
+                            SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1 --This marks a life lost
+                            if SaveData.SMASPlusPlus.hud.lives < 0 and SaveData.SMASPlusPlus.accessibility.enableLives then --If less than 0, the quick game over screen will activate
+                                SysManager.sendToConsole("A game over screen will occur.")
+                                gameoveractivate = true
+                                SaveData.SMASPlusPlus.hud.lives = 0
+                            elseif SaveData.SMASPlusPlus.hud.lives < 0 and not SaveData.SMASPlusPlus.accessibility.enableLives then
+                                gameoveractivate2 = true
+                            end
+                            Misc.saveGame() --Save the game to save what we've added/edited
+                            canQuicklyResumeLevelWhenDying = true
+                            Routine.waitFrames(165)
+                            canQuicklyResumeLevelWhenDying = false
+                            --Misc.pause()
+                            fadeoutdeath = true --This starts the fade out animation
+                            Routine.waitFrames(110, true)
+                            smasBooleans.musicMuted = false
+                            Misc.unpause()
+                            if not gameoveractivate then --If not in a gameover state...
+                                fadeoutcompleted = true --...when waited enough time, unpause and reload the level
+                            end
+                            if fadeoutcompleted then
+                                if gameoveractivate2 then
+                                    SaveData.SMASPlusPlus.hud.lives = 5
                                 end
-                                Misc.saveGame() --Save the game to save what we've added/edited
-                                canQuicklyResumeLevelWhenDying = true
-                                Routine.waitFrames(165)
-                                canQuicklyResumeLevelWhenDying = false
-                                --Misc.pause()
-                                fadeoutdeath = true --This starts the fade out animation
-                                Routine.waitFrames(110, true)
-                                smasBooleans.musicMuted = false
-                                Misc.unpause()
-                                if not gameoveractivate then --If not in a gameover state...
-                                    fadeoutcompleted = true --...when waited enough time, unpause and reload the level
+                                smasHudSystem.hasDied = true
+                                if not smasHudSystem.exitToMap then --Reload the level from here
+                                    Level.load(Level.filename())
+                                elseif smasHudSystem.exitToMap then --Or else, just exit the level. It can be smwMap, or the vanilla map
+                                    Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                 end
-                                if fadeoutcompleted then
-                                    if gameoveractivate2 then
-                                        SaveData.SMASPlusPlus.hud.lives = 5
-                                    end
-                                    smasHudSystem.hasDied = true
-                                    if not smasHudSystem.exitToMap then --Reload the level from here
-                                        Level.load(Level.filename())
-                                    elseif smasHudSystem.exitToMap then --Or else, just exit the level. It can be smwMap, or the vanilla map
-                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
-                                    end
-                                end
-                                if gameoveractivate then --Quick game over screen stuff.
-                                    Misc.pause()
-                                    gameovershow = true --Show the GAME OVER text
-                                    SaveData.GameOverCount = SaveData.GameOverCount + 1 --Increase a game over count marker
-                                    smasHudSystem.gameOverSequences()
-                                    Misc.unpause() --Unpause afterward
-                                    SaveData.SMASPlusPlus.hud.lives = 5 --Refill the lives back to 5
-                                    smasHudSystem.hasDied = true --The player has now died
-                                    if not smasHudSystem.exitToMap then
-                                        Level.load(Level.filename())
-                                    elseif smasHudSystem.exitToMap then
-                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
-                                    end
+                            end
+                            if gameoveractivate then --Quick game over screen stuff.
+                                Misc.pause()
+                                gameovershow = true --Show the GAME OVER text
+                                SaveData.GameOverCount = SaveData.GameOverCount + 1 --Increase a game over count marker
+                                smasHudSystem.gameOverSequences()
+                                Misc.unpause() --Unpause afterward
+                                SaveData.SMASPlusPlus.hud.lives = 5 --Refill the lives back to 5
+                                smasHudSystem.hasDied = true --The player has now died
+                                if not smasHudSystem.exitToMap then
+                                    Level.load(Level.filename())
+                                elseif smasHudSystem.exitToMap then
+                                    Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                 end
                             end
                         end
-                        if (player.character == CHARACTER_NINJABOMBERMAN) then --Do a different death animation with yiYoshi if active
-                            if player.deathTimer == 0 then
-                                smasBooleans.musicMuted = true
-                                Audio.MusicVolume(0)
-                                SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
-                                SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1
-                                if SaveData.SMASPlusPlus.hud.lives < 0 and SaveData.SMASPlusPlus.accessibility.enableLives then
-                                    gameoveractivate = true
-                                    SaveData.SMASPlusPlus.hud.lives = 0
-                                elseif SaveData.SMASPlusPlus.hud.lives < 0 and not SaveData.SMASPlusPlus.accessibility.enableLives then
-                                    gameoveractivate2 = true
+                    elseif (player.character == CHARACTER_NINJABOMBERMAN) then --Do a different death animation with yiYoshi if active
+                        if player.deathTimer == 0 then
+                            smasBooleans.musicMuted = true
+                            Audio.MusicVolume(0)
+                            SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
+                            SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1
+                            if SaveData.SMASPlusPlus.hud.lives < 0 and SaveData.SMASPlusPlus.accessibility.enableLives then
+                                gameoveractivate = true
+                                SaveData.SMASPlusPlus.hud.lives = 0
+                            elseif SaveData.SMASPlusPlus.hud.lives < 0 and not SaveData.SMASPlusPlus.accessibility.enableLives then
+                                gameoveractivate2 = true
+                            end
+                            Misc.saveGame() --Save the game to save what we've added/edited
+                            canQuicklyResumeLevelWhenDying = true
+                            Routine.waitFrames(360, true)
+                            canQuicklyResumeLevelWhenDying = false
+                            smasBooleans.musicMuted = false
+                            Misc.unpause()
+                            if not gameoveractivate then
+                                fadeoutcompleted = true --When waited enough time, unpause and reload the level
+                            end
+                            if fadeoutcompleted then --Or else, just exit the level
+                                if gameoveractivate2 then
+                                    SaveData.SMASPlusPlus.hud.lives = 5
                                 end
-                                Misc.saveGame() --Save the game to save what we've added/edited
-                                canQuicklyResumeLevelWhenDying = true
-                                Routine.waitFrames(360, true)
-                                canQuicklyResumeLevelWhenDying = false
-                                smasBooleans.musicMuted = false
-                                Misc.unpause()
-                                if not gameoveractivate then
-                                    fadeoutcompleted = true --When waited enough time, unpause and reload the level
+                                smasHudSystem.hasDied = true
+                                if not smasHudSystem.exitToMap then
+                                    Level.load(Level.filename())
+                                elseif smasHudSystem.exitToMap then
+                                    Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                 end
-                                if fadeoutcompleted then --Or else, just exit the level
-                                    if gameoveractivate2 then
-                                        SaveData.SMASPlusPlus.hud.lives = 5
-                                    end
-                                    smasHudSystem.hasDied = true
-                                    if not smasHudSystem.exitToMap then
-                                        Level.load(Level.filename())
-                                    elseif smasHudSystem.exitToMap then
-                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
-                                    end
-                                end
-                                if gameoveractivate then --Quick game over screen stuff.
-                                    Misc.pause()
-                                    gameovershow = true --Show the GAME OVER text
-                                    SaveData.GameOverCount = SaveData.GameOverCount + 1 --Increase a game over count marker
-                                    smasHudSystem.gameOverSequences()
-                                    Misc.unpause() --Unpause afterward
-                                    SaveData.SMASPlusPlus.hud.lives = 5 --Refill the lives back to 5
-                                    smasHudSystem.hasDied = true --The player has now died
-                                    if not smasHudSystem.exitToMap then
-                                        Level.load(Level.filename())
-                                    elseif smasHudSystem.exitToMap then
-                                        Level.load(GameData.SMASPlusPlus.game.hubLevel)
-                                    end
+                            end
+                            if gameoveractivate then --Quick game over screen stuff.
+                                Misc.pause()
+                                gameovershow = true --Show the GAME OVER text
+                                SaveData.GameOverCount = SaveData.GameOverCount + 1 --Increase a game over count marker
+                                smasHudSystem.gameOverSequences()
+                                Misc.unpause() --Unpause afterward
+                                SaveData.SMASPlusPlus.hud.lives = 5 --Refill the lives back to 5
+                                smasHudSystem.hasDied = true --The player has now died
+                                if not smasHudSystem.exitToMap then
+                                    Level.load(Level.filename())
+                                elseif smasHudSystem.exitToMap then
+                                    Level.load(GameData.SMASPlusPlus.game.hubLevel)
                                 end
                             end
                         end
-                    end
-                end
-                if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                    if not smasBooleans.isInClassicBattleMode then
-                        SysManager.sendToConsole("A player has died.")
-                        SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
-                        SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1 --This marks a life lost
                     end
                 end
             end
-            if Misc.inMarioChallenge() then
-                SysManager.sendToConsole("The player has died.")
-                SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
-                SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1 --This marks a life lost
+            if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+                if not smasBooleans.isInClassicBattleMode then
+                    SysManager.sendToConsole("A player has died.")
+                    SaveData.SMASPlusPlus.hud.deathCount = SaveData.SMASPlusPlus.hud.deathCount + 1 --This marks a death count, for info regarding how many times you died
+                    SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - 1 --This marks a life lost
+                end
             end
         end
     end

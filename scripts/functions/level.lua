@@ -1,7 +1,7 @@
 local Levul = {}
 
 function Levul.markComplete(incrementCount, isOptional, addToTable)
-    if (GameData.rushModeActive == nil or not GameData.rushModeActive) and not Misc.inMarioChallenge() then
+    if (GameData.rushModeActive == nil or not GameData.rushModeActive) then
         if isOptional then
             if not table.icontains(SaveData.SMASPlusPlus.levels.complete.optional,Level.filename()) then
                 if addToTable then

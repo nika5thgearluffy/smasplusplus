@@ -205,14 +205,12 @@ function realstar.onPostNPCKill(v,reason)
             end
         end
         Routine.run(starget)
-        if GameData.rushModeActive == false or GameData.rushModeActive == nil then
-            if Misc.inMarioChallenge() == false then
-                if not table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
-                    SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount + 1
-                    table.insert(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename())
-                elseif table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
-                    SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount
-                end
+        if not GameData.rushModeActive or GameData.rushModeActive == nil then
+            if not table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
+                SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount + 1
+                table.insert(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename())
+            elseif table.icontains(SaveData.SMASPlusPlus.levels.complete.normal,Level.filename()) then
+                SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount
             end
         end
     end

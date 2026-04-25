@@ -20,9 +20,7 @@ smasHud.visible.timer = false
 smasHud.visible.levelname = false
 smasHud.visible.overworldPlayer = false
 smasHud.visible.deathCount = false
-if not Misc.inMarioChallenge() then
-    smasHud.visible.customItemBox = false
-end
+smasHud.visible.customItemBox = false
 
 local exitscreen = false
 

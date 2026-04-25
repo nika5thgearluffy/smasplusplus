@@ -391,7 +391,7 @@ local frametimer = 0
 local actualframecount
 
 function globalgenerals.onDraw()
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated and not Misc.inMarioChallenge() then
+    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
         if player.character <= 5 then
             if SaveData.SMASPlusPlus.player[1].currentCostume == "N/A" then
                 player:setCostume(playerManager.getCostumes(player.character)[1])
@@ -453,16 +453,12 @@ function globalgenerals.onExit()
         SysManager.sendToConsole("Credits exiting detected! Exiting to the credits level...")
         Level.load("SMAS - Credits.lvlx")
     end
-    if not Misc.inMarioChallenge() then
-        for _,p in ipairs(Player.get()) do
-            if Misc.inEditor() then
-                GameData.tempReserve[p.idx] = p.reservePowerup
-            end
+    for _,p in ipairs(Player.get()) do
+        if Misc.inEditor() then
+            GameData.tempReserve[p.idx] = p.reservePowerup
         end
-        File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(Screen.width())..","..tostring(Screen.height()))
-    elseif Misc.inMarioChallenge() then
-        File.writeToFile("loadscreeninfo.txt", "mariochallenge,"..tostring(Screen.width())..","..tostring(Screen.height()))
     end
+    File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(Screen.width())..","..tostring(Screen.height()))
 end
 
 return globalgenerals
