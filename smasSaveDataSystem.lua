@@ -1,7 +1,5 @@
 local smasSaveDataSystem = {}
 
-local smasFunctions = require("smasFunctions")
-
 if GameData.SMASPlusPlus == nil then
     GameData.SMASPlusPlus = {}
 end
@@ -172,7 +170,7 @@ if SaveData.SMASPlusPlus.game.pfp == nil then
 end
 
 if SaveData.SMASPlusPlus.game.username == nil then
-    SaveData.SMASPlusPlus.game.username = SysManager.getDefaultPlayerUsername()
+    SaveData.SMASPlusPlus.game.username = "Player"
 end
 
 
