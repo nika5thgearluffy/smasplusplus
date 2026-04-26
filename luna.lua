@@ -361,12 +361,10 @@ function onScreenCapture(noSFXs) -- This will replace the snapshot sound to a cu
 end
 
 function onLetterboxToggle(isToggled)
-    if Misc.isFullscreen() then
-        if isToggled then
-            Sound.playSFX("letterbox-enable.ogg")
-        else
-            Sound.playSFX("letterbox-disable.ogg")
-        end
+    if isToggled then
+        Sound.playSFX("letterbox-enable.ogg")
+    else
+        Sound.playSFX("letterbox-disable.ogg")
     end
 end
 
