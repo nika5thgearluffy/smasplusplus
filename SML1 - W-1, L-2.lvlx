@@ -967,6 +967,8 @@ ID:580;X:-193728;Y:-200416;D:-1;
 ID:578;X:-193392;Y:-200320;D:-1;
 ID:580;X:-193360;Y:-200448;D:-1;
 ID:578;X:-192112;Y:-200192;D:-1;
+ID:953;X:-191264;Y:-200480;D:-1;XTRA:"{\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
+ID:953;X:-191264;Y:-200064;D:-1;XTRA:"{\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
 NPC_END
 LAYERS
 LR:"Default";
