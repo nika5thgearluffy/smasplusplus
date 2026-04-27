@@ -363,6 +363,7 @@ smasExtraSounds.soundNamesInOrder = {
     "fireball2", --167
     "fireball3", --168
     "fireball-hit-hammershield", --169
+    "sml1-exit", --170
 }
 
 smasExtraSounds.stockSoundNumbersInOrder = table.map{2,3,5,6,9,11,12,13,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34,35,37,38,40,41,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,78,79,80,82,83,84,85,86,87,88,89,90,91}

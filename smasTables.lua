@@ -1123,6 +1123,7 @@ smasTables.soundNamesInOrder = {
     "fireball2", --167
     "fireball3", --168
     "fireball-hit-hammershield", --169
+    "sml1-exit", --170
 }
 
 smasTables.keyboardMap = {
