@@ -116,11 +116,13 @@ end
 function musicalChairs.onDraw()
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated and musicalChairs.enabled then
         for i = 0,20 do
-            if (musicalChairs.musicList[Section(i).music] ~= nil and player.section == i) then
-                if player.mount == MOUNT_YOSHI then
-                    Sound.unmuteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
-                else
-                    Sound.muteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
+            for _,p in ipairs(Player.get()) do
+                if (musicalChairs.musicList[Section(i).music] ~= nil and p.section == i) then
+                    if p.mount == MOUNT_YOSHI then
+                        Sound.unmuteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
+                    else
+                        Sound.muteChannel(musicalChairs.musicList[Section(i).music].yoshiTrack)
+                    end
                 end
             end
         end
