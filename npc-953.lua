@@ -9,10 +9,10 @@ local smasStarSystem = require("smasStarSystem")
 local neworb = {}
 
 local npcID = NPC_ID
-local id = 999
+local id = 953
 
 local neworbSettings = {
-    id = 999,
+    id = 953,
     
     gfxwidth = 32,
     gfxheight = 32,
@@ -50,6 +50,7 @@ local neworbSettings = {
     ignorethrownnpcs = true,
 
     isinteractable = true,
+    notcointransformable = true,
     
     
 }
