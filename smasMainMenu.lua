@@ -543,8 +543,8 @@ function startKeyboardPFP()
     local pfpImage = File.openDialogAndGetFilepath()
     if SysManager.getExtensionFromFilepath(pfpImage) == ".png" or SysManager.getExtensionFromFilepath(pfpImage) == ".PNG" then
         local finalPFPImage = SysManager.getUserFilesSMASPlusPlusDirectory().."save"..tostring(Misc.saveSlot()).."_pfp.png"
-        --File.copy(pfpImage, finalPFPImage)
-        SaveData.SMASPlusPlus.game.pfp = pfpImage
+        File.copy(pfpImage, finalPFPImage)
+        SaveData.SMASPlusPlus.game.pfp = finalPFPImage
         Sound.playSFX("save_dismiss.ogg")
     elseif (SysManager.getExtensionFromFilepath(pfpImage) ~= ".png" or SysManager.getExtensionFromFilepath(pfpImage) ~= ".PNG") or pfpImage == "" then
         SaveData.SMASPlusPlus.game.pfp = ""

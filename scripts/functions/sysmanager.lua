@@ -657,7 +657,7 @@ function SysManager.getFilenameFromFilepath(filePath)
 end
 
 function SysManager.getUserFilesSMASPlusPlusDirectory()
-    return Misc.userFilesDirectory().."SMASPlusPlus/"
+    return Misc.userFilesDirectory().."SMASPlusPlus\\"
 end
 
 return SysManager

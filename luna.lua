@@ -132,6 +132,11 @@ _G.Timer = require("timer-mod")
 _G.lazyprintSMAS = require("lazyprintSMAS")
 _G.autoscrolla = require("autoscrolla")
 
+-- Create the user files directory if it doesn't exist yet...
+if not File.folderExists(SysManager.getUserFilesSMASPlusPlusDirectory()) then
+    File.createFolder(SysManager.getUserFilesSMASPlusPlusDirectory())
+end
+
 --This will add multiple player arguments.
 for i = 1,200 do
     _G["player".. i] = Player(i)
