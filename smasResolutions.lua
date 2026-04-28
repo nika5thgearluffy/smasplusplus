@@ -63,8 +63,8 @@ function smasResolutions.changeResolution(onMainMenu)
 
         -- And set the window size when first starting the game.
         if not GameData.SMASPlusPlus.firstLaunched then
-            Monitor.setWindowSize(Screen.width(), Monitor.height())
-            --Monitor.centerWindow(1)
+            Window.setSize(Screen.width(), Window.height())
+            Window.center(Window.findMonitor())
             GameData.SMASPlusPlus.firstLaunched = true
         end
     end)

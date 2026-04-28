@@ -835,8 +835,8 @@ function Misc.shakeWindow(shakenumber)
         SysManager.sendToConsole("IN FULLSCREEN! Shake window command has stopped.")
         return
     else
-        oldx = Monitor.x()
-        oldy = Monitor.y()
+        oldx = Window.x()
+        oldy = Window.y()
         
         shaketally = shakenumber
         
@@ -1065,7 +1065,7 @@ function Misk.onDraw()
     end
     if shaketally > 0 then
         shaketally = shaketally - 1
-        Monitor.setWindowPosition(((oldx + math.random(((shaketally / 4 + 4))) - math.random((shaketally / 4) + 4))),((oldy + math.random(((shaketally / 4) + 4))) - math.random(((shaketally / 4) + 4)))) --Thanks Toby Fox!
+        Window.setPosition(((oldx + math.random(((shaketally / 4 + 4))) - math.random((shaketally / 4) + 4))),((oldy + math.random(((shaketally / 4) + 4))) - math.random(((shaketally / 4) + 4)))) --Thanks Toby Fox!
     end
     if screenShakeTally > -1 then
         screenShakeTally = screenShakeTally - 1
