@@ -656,6 +656,11 @@ function SysManager.getFilenameFromFilepath(filePath)
     return filePath:match("^.+/(.+)$")
 end
 
+-- This gets the filepath starting from the episode directory.
+function SysManager.getFilepathFromEpisodeDirectory(filePath)
+    return
+end
+
 function SysManager.getUserFilesSMASPlusPlusDirectory()
     return Misc.userFilesDirectory().."SMASPlusPlus\\"
 end
