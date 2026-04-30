@@ -400,25 +400,38 @@ function malcmusic.doSnowWeather()
     end
 end
 
-function malcmusic.onStart()
-    -- Get the weather from Los Angeles, CA
-    Internet.downloadFile(malcmusic.weatherJsonURL, "")
-end
+local weatherIconList = {
+    [12] = "rain",
+    [13] = "rain",
+    [14] = "rain",
+    [39] = "rain",
+    [40] = "rain",
+    [18] = "rain",
+    [19] = "snow",
+    [20] = "snow",
+    [21] = "snow",
+    [29] = "snow",
+    [22] = "snow",
+    [23] = "snow",
+    [43] = "snow",
+    [44] = "snow",
+    [24] = "snow",
+    [25] = "snow",
+    [26] = "snow",
+}
 
-function malcmusic.onDownloadComplete(bufferResult)
-    if Internet.downloadURL() == malcmusic.weatherJsonURL then
-        malcmusic.weatherJsonParsed = json.decode(bufferResult)
-    end
-end
-
-function malcmusic.onTick()
+function malcmusic.updateWeatherAndMusic()
     for i = 0,20 do
         local SectionAll = Section(i)
         
         if Time.hour() ~= hourChanger[Time.hour()] and EventManager.onStartRan then
             Sound.playSFX("hour-change.ogg")
+            -- Just in case, poll to download the weather again
+            Internet.downloadFile(malcmusic.weatherJsonURL, "")
             hourChanger[Time.hour()] = Time.hour()
-            -- Use malcmusic.weatherJsonParsed.WeatherText instead once I determine all the WeatherText states
+            if malcmusic.weatherJsonParsed and weatherIconList[malcmusic.weatherJsonParsed.WeatherIcon] then
+                SaveData.dateplayedweather = weatherIconList[malcmusic.weatherJsonParsed.WeatherIcon]
+            end
             if SaveData.dateplayedweather == "snow" then
                 if not malcmusic.holiday then
                     for k,v in ipairs(malcmusic.outsideSections) do
@@ -461,6 +474,24 @@ function malcmusic.onTick()
             malcmusic.doRainWeather()
         end
     end
+end
+
+function malcmusic.onStart()
+    -- Get the weather from Los Angeles, CA
+    Internet.downloadFile(malcmusic.weatherJsonURL, "")
+end
+
+function malcmusic.onDownloadComplete(bufferResult)
+    if Internet.downloadURL() == malcmusic.weatherJsonURL then
+        -- Parse the JSON
+        malcmusic.weatherJsonParsed = json.decode(bufferResult)
+        -- Also reupdate the weather
+        malcmusic.updateWeatherAndMusic()
+    end
+end
+
+function malcmusic.onTick()
+    malcmusic.updateWeatherAndMusic()
 end
 
 function malcmusic.onExit()

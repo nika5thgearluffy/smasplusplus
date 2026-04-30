@@ -563,9 +563,9 @@ littleDialogue.registerAnswer("strike1",{text = "Sure",addText = "That's one sig
 
 
 
-littleDialogue.registerAnswer("mayoradvice",{text = "My name is wrong (Or something isn't right).",addText = "If you're name is wrong, don't direct it to me! Direct it to Spencer Everly. They'll fix the issue on the next update.<page>Spencer should be able to reach you on Discord at Spencer Everly#1997.<page>Or use their email at spencer.everly@gmail.com.<page>Or you can report bugs on the official GitHub page.<page>Reporting bugs makes the player experience a lot better if you do these things!"})
+littleDialogue.registerAnswer("mayoradvice",{text = "My name is wrong (Or something isn't right).",addText = "If you're name is wrong, don't direct it to me! Direct it to \"The Sun God: Nika\". They'll fix the issue on the next update.<page>Nika should be able to reach you on the GitHub issues page.<page>You can report bugs there, you know!<page>It makes the player experience things a lot better if you do that!"})
 littleDialogue.registerAnswer("mayoradvice",{text = "Give me advice.",addText = "Sure thing! Here is what you need to know:<page>Unfinished advice is the advice that's never gonna get answered until the game's first version is released.<page>That means wait until the full release."})
-littleDialogue.registerAnswer("mayoradvice",{text = "Why is everyone orange guns?",addText = "Because Spencer Everly was a dumb kid who made this species. I don't have anything else to say."})
+littleDialogue.registerAnswer("mayoradvice",{text = "Why is everyone orange guns?",addText = "Because Nika was a dumb kid who made this species. I don't have anything else to say."})
 littleDialogue.registerAnswer("mayoradvice",{text = "Is life even good anymore?",addText = "If you feel suicidal, call 988.<page>I can't see another life taken away from me, and NOT right here."})
 littleDialogue.registerAnswer("mayoradvice",{text = "Where am I?",addText = "You're in Mars, in the biggest city of the planet, Me and Larry City.<page>Filled with tall buildings and many areas, us Mearians roam through life trying to live and survive like any other human does.<page>Where did we come from? Why are we here? Why can't we live with humans in peace?<page>Nobody knows..."})
 littleDialogue.registerAnswer("mayoradvice",{text = "Nevermind.",addText = "Gotcha. Let me know if you need anything."})
@@ -574,7 +574,7 @@ littleDialogue.registerAnswer("mayoradvice",{text = "Nevermind.",addText = "Gotc
 
 
 
-littleDialogue.registerAnswer("mayoradvicehigh",{text = "My name is wrong (Or something isn't right).",addText = "Do a... email...<page>spencer.everly@outloo... uh, yahoo... uh...<page>No... it's gmail.com... yeah.<page>Email that."})
+littleDialogue.registerAnswer("mayoradvicehigh",{text = "My name is wrong (Or something isn't right).",addText = "Do a... email...<page>nika5thgearluffy@outloo... uh, yahoo... uh...<page>No... it's gmail.com... yeah.<page>Email that."})
 littleDialogue.registerAnswer("mayoradvicehigh",{text = "Give me advice.",addText = "Advise 1: I want more weed.<page>Advise 2: Then give me more weed.<page>Advise 3: Uh... I forgot, what again?"})
 littleDialogue.registerAnswer("mayoradvicehigh",{text = "Why is everyone orange guns?",addText = "Because tomatoes talk in... a show... I forgot."})
 littleDialogue.registerAnswer("mayoradvicehigh",{text = "Is life even good anymore?",addText = "Call the 988 number.<page>It's a number... weed, ack!"})
@@ -585,7 +585,7 @@ littleDialogue.registerAnswer("mayoradvicehigh",{text = "Nevermind.",addText = "
 
 
 
-littleDialogue.registerAnswer("semoviefav",{text = "Super Mario All-Stars Plus Plus",addText = "That's not a movie, that's a game you dolt!"})
+littleDialogue.registerAnswer("semoviefav",{text = "Super Mario All-Stars++",addText = "That's not a movie, that's a game you dolt!"})
 littleDialogue.registerAnswer("semoviefav",{text = "Caillou Gets Grounded: The Movie",addText = "Are you deranged or something? I hated those killing scenes!"})
 littleDialogue.registerAnswer("semoviefav",{text = "Beverly Hills ChihWALL-E",addText = "And we're married! ...that movie is weird."})
 littleDialogue.registerAnswer("semoviefav",{text = "Caillou Gets Grounded 2: The Revenge",addText = "Massive improvement, not gonna lie...<page>Some stuff felt... off though. But that's just me."})

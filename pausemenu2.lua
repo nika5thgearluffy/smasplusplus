@@ -1570,7 +1570,7 @@ function pauseSpecifics()
             pauseplus.createOption("teleportmenu",{text = "Teleport to the DLC World",closeMenu = true,description = "Teleports back to the DLC World starting point of the map. Useful for fast traveling!", action = function() Routine.run(dlcteleport) end})
         end
         if not isOverworld and not (Level.filename() == "MALC - HUB.lvlx") and not (Level.filename() == "map.lvlx") then
-            pauseplus.createOption("teleportmenu",{text = "Teleport to the Hub",description = "Teleport to the Me and Larry City Hub. Useful for fast traveling!",closeMenu = true, actions = {function() Routine.run(hubteleportlevel) end}})
+            pauseplus.createOption("teleportmenu",{text = "Teleport to Me and Larry City",description = "Teleport to Me and Larry City. Useful for fast traveling!",closeMenu = true, actions = {function() Routine.run(hubteleportlevel) end}})
         end
     end
     -- Run all toggle functions after creating the pause menu to take effect when starting the level (Except for resolutions, since that's being set somewhere else in the game)
