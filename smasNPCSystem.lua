@@ -38,9 +38,31 @@ local testNPC = Graphics.loadImageResolved("MALC - HUB/npc-466.png")
 local testNPC2 = Graphics.loadImageResolved("npc-946.png")
 local messageDialogMark = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-43.png")
 
+-- This is used so the infinite 1UP trick can exist
+-- [CLAUDE AI WAS USED IN THIS PART OF THE CODE]
+local shellComboCount = {}  -- track combo per shell NPC index
+local shellPrevX = {}       -- track previous X position per shell
+local shellStuck = {}  -- new flag to track stuck state
+
+local pointsTable = {2, 3, 4, 5, 6, 7, 8, 9}  -- SCORE_100 through SCORE_8000
+
+local function awardComboPoints(shell, idx)
+    shellComboCount[idx] = shellComboCount[idx] + 1
+    
+    -- Give points slightly above the shell so they're visible
+    local pointPos = vector(shell.x + shell.width / 2, shell.y - 16)
+    
+    if shellComboCount[idx] >= 8 then
+        Misc.givePoints(10, pointPos, false)  -- SCORE_1UP
+    else
+        local pointIdx = pointsTable[shellComboCount[idx]]
+        Misc.givePoints(pointIdx, pointPos, false)
+    end
+end
+
 function smasNPCSystem.onInitAPI()
     registerEvent(smasNPCSystem,"onStart")
-    registerEvent(smasNPCSystem,"onTick")
+    --registerEvent(smasNPCSystem,"onTick")
     registerEvent(smasNPCSystem,"onDraw")
 end
 
@@ -163,6 +185,73 @@ end
 function smasNPCSystem.onStart()
     if Level.filename() == "SMB1 - W-1, L-1.lvlx" then
         --smasNPCSystem.createNPC{id = 1, image = testNPC2, frameCount = 17, x = player.x, y = player.y - 300, width = 68, height = 54, direction = -1, isFriendly = true, cantMove = true, useVanillaLayers = true, attachToLayer = "Default", movementSpeed = 2, frameSpeed = 3, messageToSpeak = ""}
+    end
+end
+
+-- [CLAUDE AI WAS USED IN THIS PART OF THE CODE]
+function smasNPCSystem.onTick()
+    -- Loop through all koopa shell NPCs
+    for k, shell in ipairs(NPC.get(NPC.SHELL)) do
+        local idx = shell.idx
+
+        if shellPrevX[idx] == nil then
+            shellPrevX[idx] = shell.x
+            shellComboCount[idx] = 0
+            shellStuck[idx] = false
+        end
+
+        -- Check if shell is active OR stuck
+        if shell.speedX ~= 0 then
+            local posChanged = math.abs(shell.x - shellPrevX[idx]) > 0.1
+
+            if not posChanged and not shellStuck[idx] then
+                local nearbyBlocks = Block.getIntersecting(
+                    shell.x - 2, shell.y,
+                    shell.x + shell.width + 2, shell.y + shell.height
+                )
+
+                if #nearbyBlocks > 0 then
+                    shell.speedX = 0
+                    shellStuck[idx] = true
+                end
+            end
+
+            if shellStuck[idx] then
+                local touchingNPCs = NPC.getIntersecting(
+                    shell.x, shell.y,
+                    shell.x + shell.width, shell.y + shell.height
+                )
+
+                for _, npc in ipairs(touchingNPCs) do
+                    if npc ~= shell then
+                        awardComboPoints(shell, idx)
+                    end
+                end
+
+                for i = 1, Player.count() do
+                    local playerIntersects = Player.getIntersecting(
+                        shell.x, shell.y,
+                        shell.x + shell.width, shell.y + shell.height
+                    )
+
+                    for _, pl in ipairs(playerIntersects) do
+                        if pl.speedY > 0 and pl.y - pl.height <= shell.y - 8 then
+                            pl.speedY = -7
+                            awardComboPoints(shell, idx)
+                        end
+                    end
+                end
+            else
+                shellComboCount[idx] = 0
+            end
+
+            shellPrevX[idx] = shell.x
+        else
+            -- Shell is fully stopped and not stuck, clean up
+            shellPrevX[idx] = nil
+            shellComboCount[idx] = nil
+            shellStuck[idx] = nil
+        end
     end
 end
 
