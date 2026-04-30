@@ -12,6 +12,6 @@ function onEvent(eventName)
         Sound.changeMusic(0, 0)
     end
     if eventName == "End Level" then
-        Level.exit(LEVEL_WIN_TYPE_STAR)
+        
     end
 end

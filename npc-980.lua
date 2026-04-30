@@ -83,12 +83,12 @@ function muteMusic(sectionid) --Mute all section music, or just mute a specific 
     if sectionid == -1 then --If -1, all section music will be muted
         for i = 0,20 do
             musiclist = {Section(i).music}
-            GameData.levelMusicTemporary[i] = Section(i).music
+            GameData.SMASPlusPlus.audio.levelMusicTemp[i] = Section(i).music
             Audio.MusicChange(i, 0)
         end
     elseif sectionid >= 0 or sectionid <= 20 then
         musiclist = {Section(sectionid).music}
-        GameData.levelMusicTemporary[sectionid] = Section(sectionid).music
+        GameData.SMASPlusPlus.audio.levelMusicTemp[sectionid] = Section(sectionid).music
         Audio.MusicChange(sectionid, 0)
     end
 end

@@ -2,7 +2,6 @@
 --By "The Sun God: Nika"
 
 local textplus = require("textplus")
-local lazyprintSMAS = require("lazyprintSMAS")
 local inspect = require("ext/inspect")
 
 local smasVerboseMode = {}
@@ -70,19 +69,13 @@ end
 function smasVerboseMode.onStart()
     SysManager.sendToConsole("Level has officially started.")
     SysManager.sendToConsole("Level filename: "..Level.filename())
-    SysManager.sendToConsole("Level name: "..Misc.getActualLevelName())
+    SysManager.sendToConsole("Level name: "..Level.name())
     if Playur.currentWarp(player) == 0 then
         SysManager.sendToConsole("Player 1 starting point (X/Y): "..tostring(Playur.startPointCoordinateX(1)).."/"..tostring(Playur.startPointCoordinateY(1)))
         if Player.count() >= 2 then
             SysManager.sendToConsole("Player 2 starting point (X/Y): "..tostring(Playur.startPointCoordinateX(2)).."/"..tostring(Playur.startPointCoordinateY(2)))
         end
     end
-    --lazyprintSMAS.monitor(player, {"x", "y", "powerup", "width", "height", "character"})
-    --lazyprintSMAS.monitor(player, {"mount", "mountColor", "mountType", "forcedState", "forcedTimer"})
-    --lazyprintSMAS.monitor(camera, {"x", "y", "width", "height"})
-    --for i = 0,20 do
-        --lazyprintSMAS.monitor(Section(i), {"music", "underwater", "noTurnBack"})
-    --end
 end
 
 function smasVerboseMode.onEvent(eventName)

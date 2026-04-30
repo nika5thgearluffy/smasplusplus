@@ -5,12 +5,12 @@ local playerManager = require("playermanager")
 local smasTables = require("smasTables")
 local audiomasterSMAS = require("scripts/audiomasterSMAS")
 
-if GameData.levelMusicTemporary == nil then
-    GameData.levelMusicTemporary = {}
+if GameData.SMASPlusPlus.audio.levelMusicTemp == nil then
+    GameData.SMASPlusPlus.audio.levelMusicTemp = {}
 end
 
-if GameData.levelMusic == nil then
-    GameData.levelMusic = {}
+if GameData.SMASPlusPlus.audio.levelMusic == nil then
+    GameData.SMASPlusPlus.audio.levelMusic = {}
 end
 
 function Sound.onInitAPI()
@@ -287,7 +287,7 @@ function Sound.muteMusic(sectionid) --Mute all section music, or just mute a spe
         SysManager.sendToConsole("Muting music on all sections...")
         for i = 0,20 do
             musiclist = {Section(i).music}
-            GameData.levelMusicTemporary[i] = Section(i).music
+            GameData.SMASPlusPlus.audio.levelMusicTemp[i] = Section(i).music
             Audio.MusicChange(i, 0)
         end
         if smasBooleans then
@@ -297,7 +297,7 @@ function Sound.muteMusic(sectionid) --Mute all section music, or just mute a spe
     elseif sectionid >= 0 or sectionid <= 20 then
         SysManager.sendToConsole("Muting music on section "..tostring(sectionid).."...")
         musiclist = {Section(sectionid).music}
-        GameData.levelMusicTemporary[sectionid] = Section(sectionid).music
+        GameData.SMASPlusPlus.audio.levelMusicTemp[sectionid] = Section(sectionid).music
         Audio.MusicChange(sectionid, 0)
         if smasBooleans then
             SysManager.sendToConsole("smasBooleans music muted boolean set to true.")
@@ -313,7 +313,7 @@ function Sound.restoreMusic(sectionid) --Restore all section music, or just rest
     if sectionid == -1 then --If -1, all section music will be restored
         SysManager.sendToConsole("Restoring music on all sections...")
         for i = 0,20 do
-            songname = GameData.levelMusicTemporary[i]
+            songname = GameData.SMASPlusPlus.audio.levelMusicTemp[i]
             Section(i).music = songname
         end
         if smasBooleans then
@@ -322,7 +322,7 @@ function Sound.restoreMusic(sectionid) --Restore all section music, or just rest
         end
     elseif sectionid >= 0 or sectionid <= 20 then
         SysManager.sendToConsole("Restoring music on section "..tostring(sectionid).."...")
-        songname = GameData.levelMusicTemporary[sectionid]
+        songname = GameData.SMASPlusPlus.audio.levelMusicTemp[sectionid]
         Section(sectionid).music = songname
         if smasBooleans then
             SysManager.sendToConsole("smasBooleans music muted boolean set to false.")
@@ -339,12 +339,12 @@ function Sound.refreshMusic(sectionid) --Refresh the music that's currently play
         SysManager.sendToConsole("Refreshing music on all sections...")
         for i = 0,20 do
             musiclist = {Section(i).music}
-            GameData.levelMusicTemporary[i] = Section(i).music
+            GameData.SMASPlusPlus.audio.levelMusicTemp[i] = Section(i).music
         end
     elseif sectionid >= 0 or sectionid <= 20 then
         SysManager.sendToConsole("Refreshing music on section "..tostring(sectionid).."...")
         musiclist = {Section(sectionid).music}
-        GameData.levelMusicTemporary[sectionid] = Section(sectionid).music
+        GameData.SMASPlusPlus.audio.levelMusicTemp[sectionid] = Section(sectionid).music
     elseif sectionid >= 21 then
         error("That's higher than SMBX2 can go. Go to a lower section than that.")
         return
@@ -353,19 +353,19 @@ end
 
 function Sound.restoreOriginalMusic(sectionid) --Restore all original section music, or just restore a specific section
     if sectionid == -1 then --If -1, all section music will be restored
-        if GameData.levelMusic ~= {} then
+        if GameData.SMASPlusPlus.audio.levelMusic ~= {} then
             SysManager.sendToConsole("Refreshing originally stored music on all sections...")
             for i = 0,20 do
-                songname = GameData.levelMusic[i]
+                songname = GameData.SMASPlusPlus.audio.levelMusic[i]
                 Section(i).music = songname
             end
         else
             return
         end
     elseif sectionid >= 0 or sectionid <= 20 then
-        if GameData.levelMusic ~= {} then
+        if GameData.SMASPlusPlus.audio.levelMusic ~= {} then
             SysManager.sendToConsole("Refreshing originally stored music on section "..tostring(sectionid).."...")
-            songname = GameData.levelMusic[sectionid]
+            songname = GameData.SMASPlusPlus.audio.levelMusic[sectionid]
             Section(sectionid).music = songname
         else
             return
@@ -410,10 +410,10 @@ function Sound.startupRefreshSystem()
         return
     elseif not started then
         for i = 0,20 do
-            GameData.levelMusic[i] = Section(i).music
+            GameData.SMASPlusPlus.audio.levelMusic[i] = Section(i).music
         end
         for i = 0,20 do
-            GameData.levelMusicTemporary[i] = Section(i).music
+            GameData.SMASPlusPlus.audio.levelMusicTemp[i] = Section(i).music
         end
         SysManager.sendToConsole("Music refresh system has been set up.")
         started = true

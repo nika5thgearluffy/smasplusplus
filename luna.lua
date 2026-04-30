@@ -7,11 +7,11 @@
     -- Total Stars --
     SMB1 = 43 (Done!)
     SMB2 = 22 (Done! Still need code for several things though)
-    SMB3 = TBD (WIP)
+    SMB3 = TBD (Done! Still need World e finished though)
     SMBLL (Optional) = 52 (Done!)
     SMW = TBD (WIP)
-    SMBS = TBD (WIP)
-    WSMBA = 24 (Done!)
+    SML1 = TBD (WIP)
+    SML2 = TBD (WIP)
     Lava Lands = 5 (WIP)
     Side Quest (Optional) = TBD (WIP)
     True Ending = 1 (WIP)
@@ -52,19 +52,17 @@ if mem(0x00B251E0, FIELD_WORD) >= 1 then
         GameData.warnUserAboutOldStars = true
     end
     if GameData.warnUserAboutOldStars then
-        Text.windowDebugSimple("It looks like your using a legacy save file from before Demo 3 (Or before April 10th, 2022). You'll need to migrate your save data as soon as you boot the game! That way your data can still be used in the future. Please migrate your save while you can!")
+        Misc.dialogSimple("It looks like your using a legacy save file from before Demo 3 (Or before April 10th, 2022). You'll need to migrate your save data as soon as you boot the game! That way your data can still be used in the future. Please migrate your save while you can!")
         GameData.warnUserAboutOldStars = false
     end
 end
 
-if mem(0x00B251E0, FIELD_WORD) == 0 then
-    --Make sure we do these if the star count is set at 0
-    if Misc.score() > 0 then
-        Misc.score(-Misc.score()) --Decrease legacy score to 0
-    end
+--Decrease legacy score to 0
+if Misc.score() > 0 then
+    Misc.score(-Misc.score()) 
 end
 
--- Set the window title and icon (Beta 5)
+-- Set the window title and icon
 if Misc.setWindowTitle ~= nil then
     SysManager.sendToConsole("Window title set.")
     Misc.setWindowTitle("Super Mario All-Stars++")
@@ -120,16 +118,11 @@ _G.smasMapInventorySystem = require("smasMapInventorySystem")
 _G.smasWarpSystem = require("smasWarpSystem")
 
 --Then we do everything else.
-GameData.levelMusicTemporary = {}
-GameData.levelMusic = {}
 _G.smwMap = require("smwMap")
 _G.classicEvents = require("classiceventsmod")
-_G.darkness = require("darknessa")
-_G.events = require("editorevents_mod")
 _G.extraNPCProperties = require("extraNPCProperties")
 _G.cursor = require("cursor")
 _G.Timer = require("timer-mod")
-_G.lazyprintSMAS = require("lazyprintSMAS")
 _G.autoscrolla = require("autoscrolla")
 
 -- Create the user files directory if it doesn't exist yet...
@@ -160,44 +153,6 @@ if (VER_BETA4_PATCH_4_1 ~= nil) and (SMBX_VERSION <= VER_BETA4_PATCH_4_1 or SMBX
             playMusic(newSection)
         end
     end
-end
-
-function plObjectErrorWorkaround() --To prevent the plObject a nil value error, this needs to be redone here
-    local players = Player.get()
-    for plIndex, plData in ipairs(playerData) do
-        local plObject = players[plIndex]
-        for _,keymapEnumValue in ipairs(playerKeymapKeys) do
-            local keymapPropertyName = playerKeymapProperties[keymapEnumValue]
-            checkKeyboardEvent(plObject, plIndex, plData, keymapPropertyName, keymapEnumValue)
-        end
-        if(plObject:mem(0x60, FIELD_WORD) == -1 and plData.playerJumping == false)then
-            EventManager.callEventInternal("onJump", {plIndex})
-        elseif(plObject:mem(0x60, FIELD_WORD) == 0 and plData.playerJumping == true)then
-            EventManager.callEventInternal("onJumpEnd", {plIndex})
-        end
-        
-        local section = plObject.section
-        if(section ~= plData.currentSection)then
-            local evLoadSecitionName = "onLoadSection"
-            EventManager.callEventInternal(evLoadSecitionName, {plIndex})
-            EventManager.callEventInternal(evLoadSecitionName .. section, {plIndex})
-        end
-        EventManager.callEventInternal("onLoopSection" .. section, {plIndex})
-        
-        -- Copy new data here to plData
-        for _,keymapEnumValue in ipairs(playerKeymapKeys) do
-            local keymapPropertyName = playerKeymapProperties[keymapEnumValue]
-            plData[keymapPropertyName] = plObject[keymapPropertyName]
-        end
-        
-        plData.playerJumping = plObject:mem(0x60, FIELD_WORD) == -1
-        
-        plData.currentSection = section
-    end
-end
-
-function classicEvents.doEvents() --To prevent the plObject a nil value error, this needs to be moved to a pcall function
-    pcall (function() plObjectErrorWorkaround() end)
 end
 
 --Now that everything has been loaded, start loading the medium important stuff

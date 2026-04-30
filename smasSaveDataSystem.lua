@@ -31,6 +31,10 @@ for i = 1,8 do
     SaveData.SMASPlusPlus.player[i].controls = SaveData.SMASPlusPlus.player[i].controls or {}
 end
 
+-- **Level music storage**
+GameData.SMASPlusPlus.audio.levelMusic = {}
+GameData.SMASPlusPlus.audio.levelMusicTemp = {}
+
 --**Player-related data**
 --**Themes, resolutions**
 if SaveData.SMASPlusPlus.options.resolution == nil then
