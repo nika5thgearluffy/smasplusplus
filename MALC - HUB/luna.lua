@@ -1,5 +1,5 @@
 local level_dependencies_normal = require("level_dependencies_hub")
-local malcmusic = require ("malcmusic")
+_G.malcmusic = require ("malcmusic")
 local littleDialogue = require("littleDialogue")
 local HUDimage = Graphics.loadImage("MALC-HUD.png")
 local playerManager = require("playerManager")

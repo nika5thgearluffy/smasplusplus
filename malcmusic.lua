@@ -34,6 +34,9 @@ local prevPreviousState = false
 local currentSfx = nil
 
 malcmusic.holiday = false
+-- Weather is set to get info from Los Angeles, CA (And no, asking the user where they live for accurate location weather is a huge flag, since this is a game, so no way am I implementing that)
+malcmusic.weatherJsonURL = "https://api.accuweather.com/currentconditions/v1/2626754?apikey=6e30dc9ea2aa4d3eb99ad8f6630174cd&details=true"
+malcmusic.weatherJsonParsed = nil
 
 local sec0 = Section(0)
 local sec6 = Section(6)
@@ -47,6 +50,7 @@ function malcmusic.onInitAPI()
     registerEvent(malcmusic, "onEvent")
     registerEvent(malcmusic, "onDraw")
     registerEvent(malcmusic, "onExit")
+    registerEvent(malcmusic, "onDownloadComplete")
     ready = true
 end
 
@@ -397,16 +401,24 @@ function malcmusic.doSnowWeather()
 end
 
 function malcmusic.onStart()
-    
+    -- Get the weather from Los Angeles, CA
+    Internet.downloadFile(malcmusic.weatherJsonURL, "")
+end
+
+function malcmusic.onDownloadComplete(bufferResult)
+    if Internet.downloadURL() == malcmusic.weatherJsonURL then
+        malcmusic.weatherJsonParsed = json.decode(bufferResult)
+    end
 end
 
 function malcmusic.onTick()
     for i = 0,20 do
         local SectionAll = Section(i)
         
-        if Time.hour() ~= hourChanger[Time.hour()] then
+        if Time.hour() ~= hourChanger[Time.hour()] and EventManager.onStartRan then
             Sound.playSFX("hour-change.ogg")
             hourChanger[Time.hour()] = Time.hour()
+            -- Use malcmusic.weatherJsonParsed.WeatherText instead once I determine all the WeatherText states
             if SaveData.dateplayedweather == "snow" then
                 if not malcmusic.holiday then
                     for k,v in ipairs(malcmusic.outsideSections) do
@@ -423,7 +435,7 @@ function malcmusic.onTick()
                         end
                     end
                 end
-            elseif SaveData.dateplayedweather == "sunny" then
+            else
                 if not malcmusic.holiday then
                     for k,v in ipairs(malcmusic.outsideSections) do
                         if not smasBooleans.musicMuted or not smasBooleans.musicMutedTemporary then
