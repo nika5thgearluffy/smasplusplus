@@ -170,7 +170,7 @@ if SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo == nil then
 end
 
 if SaveData.SMASPlusPlus.game.pfp == nil then
-    SaveData.SMASPlusPlus.game.pfp = Graphics.loadImageResolved("graphics/default_pfp.png")
+    SaveData.SMASPlusPlus.game.pfp = Misc.resolveFile("graphics/default_pfp.png")
 end
 
 if SaveData.SMASPlusPlus.game.username == nil then
