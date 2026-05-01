@@ -96,8 +96,8 @@ end
 
 local internetCheck = false
 
-function smasUpdater.onDownloadComplete(bufferData)
-    if Internet.downloadFilename() == "manifest.json" then
+function smasUpdater.onDownloadComplete(bufferData, url, filename)
+    if filename == "manifest.json" then
         smasUpdater.updateTimer = 0
         smasUpdater.updateStage = 2
         smasUpdater.manifestJSON = smasUpdater.readVersionUpdateList()
@@ -107,11 +107,11 @@ end
 function smasUpdater.onDraw()
     if smasUpdater.doUpdate and not Misc.inEditor() and not io.exists(Misc.episodePath().."dontupdate") then
         if smasUpdater.drawUpdateText then
-            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = 400, y = 290, priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 500}
+            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 500}
             if Internet.downloadFilename() ~= "" then
                 textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                textplus.print{text = tostring(Internet.downloadProgress()), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(520, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(430, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = tostring(Internet.downloadProgress()).."%", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(480, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
         end
         
