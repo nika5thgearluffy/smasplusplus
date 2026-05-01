@@ -66,7 +66,7 @@ function smasUpdater.readVersionUpdateList()
     local f = io.open(Misc.episodePath().."manifest.json", "r")
     local contentsTable
     if f ~= nil then
-        contentsTable = json.decode(f:read())
+        contentsTable = json.decode(f:read("*all"))
         f:close()
     end
     return contentsTable
@@ -126,25 +126,28 @@ function smasUpdater.onDraw()
                 if smasUpdater.updateTimer == 5 then
                     smasUpdater.downloadLatestUpdateConfig()
                 end
-                if smasUpdater.updateTimer == 6 then
+                if smasUpdater.updateTimer >= 6 and smasUpdater.updateTimer <= 25 then
                     if Internet.downloadProgress() ~= 0 then
                         internetCheck = true
                     end
                 end
-                if smasUpdater.updateTimer >= 7 then
+                if smasUpdater.updateTimer >= 26 then
                     if Internet.downloadProgress() == 0 and smasUpdater.manifestJSON ~= nil and smasUpdater.manifestJSON.files ~= nil then
                         smasUpdater.updateStage = 2
                     end
                 end
             end
-            if internetCheck then
+            if internetCheck and smasUpdater.updateStage >= 2 then
                 if smasUpdater.updateStage == 2 then
                     -- Handle deleted files first
                     if smasUpdater.manifestJSON.deleted then
                         for _, path in ipairs(smasUpdater.manifestJSON.deleted) do
-                            local fullPath = Misc.episodePath()..path
-                            if io.exists(fullPath) then
-                                os.remove(fullPath)
+                            -- Sanitize path to prevent directory traversal
+                            if not path:find("%.%.") and not path:find("^/") and not path:find("^%a:") then
+                                local fullPath = Misc.episodePath()..path
+                                if io.exists(fullPath) then
+                                    os.remove(fullPath)
+                                end
                             end
                         end
                         smasUpdater.updateStage = 3
@@ -169,7 +172,7 @@ function smasUpdater.onDraw()
                         smasUpdater.updateStage = 4
                     end
                 end
-            else
+            elseif not internetCheck and smasUpdater.updateStage == 1 and smasUpdater.updateTimer >= 26 then
                 smasUpdater.drawVersionText = false
                 UpdateMessageForUpdater = "No internet! Skipping update..."
                 smasUpdater.updateTimer = smasUpdater.updateTimer + 1
