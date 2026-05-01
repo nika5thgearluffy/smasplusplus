@@ -315,7 +315,7 @@ if SaveData.editorWinnerLevelReload ~= nil then
 end
 
 if SaveData.playerPfp ~= nil then
-    SaveData.SMASPlusPlus.game.pfp = Img.load(SaveData.playerPfp)
+    SaveData.SMASPlusPlus.game.pfp = SaveData.playerPfp
     SaveData.playerPfp = nil
 end
 
