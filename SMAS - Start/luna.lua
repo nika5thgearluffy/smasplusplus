@@ -1,4 +1,5 @@
 local smasDateAndTime = require("smasDateAndTime")
+local smasUpdater = require("smasUpdater")
 
 smasDateAndTime.enabled = false
 
