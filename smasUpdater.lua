@@ -108,8 +108,10 @@ function smasUpdater.onDraw()
     if smasUpdater.doUpdate and not Misc.inEditor() and not io.exists(Misc.episodePath().."dontupdate") then
         if smasUpdater.drawUpdateText then
             textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = 400, y = 290, priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 500}
-            if smasUpdater.drawVersionText then
-                textplus.print{text = smasUpdater.versionNumber(), pivot = vector.v2(0.5,0.5), x = 400, y = 250, priority = 10, color = Color.white, font = statusFont, xscale = 1.5, yscale = 1.5}
+            if Internet.downloadFilename() ~= "" then
+                textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = tostring(Internet.downloadProgress()), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(520, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
         end
         
@@ -122,11 +124,9 @@ function smasUpdater.onDraw()
                 smasUpdater.updateTimer = smasUpdater.updateTimer + 1
                 if smasUpdater.updateTimer == 1 then
                     UpdateMessageForUpdater = "Checking for updates..."
-                end
-                if smasUpdater.updateTimer == 5 then
                     smasUpdater.downloadLatestUpdateConfig()
                 end
-                if smasUpdater.updateTimer >= 6 and smasUpdater.updateTimer <= 25 then
+                if smasUpdater.updateTimer >= 2 and smasUpdater.updateTimer <= 25 then
                     if Internet.downloadProgress() ~= 0 then
                         internetCheck = true
                     end
@@ -195,11 +195,6 @@ function smasUpdater.onDraw()
             
             if smasUpdater.drawUpdateText then
                 textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                if Internet.downloadFilename() ~= "" then
-                    textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                    textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                    textplus.print{text = tostring(Internet.downloadProgress()), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(520, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                end
             end
             
             if not smasUpdater.doneUpdating then

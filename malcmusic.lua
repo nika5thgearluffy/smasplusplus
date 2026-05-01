@@ -430,7 +430,7 @@ function malcmusic.updateWeatherAndMusic()
             Internet.downloadFile(malcmusic.weatherJsonURL, "")
             hourChanger[Time.hour()] = Time.hour()
             if malcmusic.weatherJsonParsed then
-                SaveData.SMASPlusPlus.misc.weatherForecast = malcmusic.weatherJsonParsed.properties.peroids[1].shortForecast
+                SaveData.SMASPlusPlus.misc.weatherForecast = malcmusic.weatherJsonParsed.properties.periods[1].shortForecast
             end
             if SaveData.SMASPlusPlus.misc.weatherForecast == "Snowy" then
                 if not malcmusic.holiday then
