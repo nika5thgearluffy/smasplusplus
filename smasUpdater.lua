@@ -104,16 +104,22 @@ function smasUpdater.onDownloadComplete(bufferData, url, filename)
         smasUpdater.updateStage = 2
         smasUpdater.manifestJSON = smasUpdater.readVersionUpdateList()
     end
+    if smasUpdater.updateStage == 3 then
+        smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
+    end
 end
 
 function smasUpdater.onDraw()
     if smasUpdater.doUpdate and not Misc.inEditor() and not io.exists(Misc.episodePath().."dontupdate") then
         if smasUpdater.drawUpdateText then
-            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 500}
+            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 800}
             if Internet.downloadFilename() ~= "" then
-                textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                textplus.print{text = tostring(Internet.downloadProgress()).."%", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(480, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = tostring(Internet.downloadProgress()).."%", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(480, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+            end
+            if smasUpdater.updateStage == 3 then
+                textplus.print{text = tostring(smasUpdater.currentFileIndex).."/"..tostring(#smasUpdater.manifestJSON.files), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(540, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
         end
         
@@ -128,19 +134,10 @@ function smasUpdater.onDraw()
                     UpdateMessageForUpdater = "Checking for updates..."
                     smasUpdater.downloadLatestUpdateConfig()
                 end
-                if smasUpdater.updateTimer >= 2 and smasUpdater.updateTimer <= 25 then
-                    if Internet.downloadProgress() ~= 0 then
-                        internetCheck = true
-                    end
-                end
-                if smasUpdater.updateTimer >= 26 then
-                    if Internet.downloadProgress() == 0 and smasUpdater.manifestJSON ~= nil and smasUpdater.manifestJSON.files ~= nil then
-                        smasUpdater.updateStage = 2
-                    end
-                end
             end
             if internetCheck and smasUpdater.updateStage >= 2 then
                 if smasUpdater.updateStage == 2 then
+                    UpdateMessageForUpdater = "Cleaning up files for new update..."
                     -- Handle deleted files first
                     if smasUpdater.manifestJSON.deleted then
                         for _, path in ipairs(smasUpdater.manifestJSON.deleted) do
@@ -153,15 +150,18 @@ function smasUpdater.onDraw()
                             end
                         end
                         smasUpdater.updateStage = 3
+                    else
+                        smasUpdater.updateStage = 3
                     end
                 end
                 if smasUpdater.updateStage == 3 then
+                    UpdateMessageForUpdater = "Downloading the latest update... this will take a while."
                     local file = smasUpdater.manifestJSON.files[smasUpdater.currentFileIndex]
                     if file then
                         if not Internet.isDownloading() then
                             local localMD5 = File.getMD5Hash(Misc.episodePath()..file.path)
                             if localMD5 ~= file.md5 then
-                                smasUpdater.downloadFile(file.url, file.path)
+                                smasUpdater.downloadFile(file.url, Misc.episodePath()..file.path)
                             else
                                 -- File matches, move to next
                                 smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
@@ -171,10 +171,12 @@ function smasUpdater.onDraw()
                     else
                         -- No more files, done
                         smasUpdater.doneUpdating = true
+                        UpdateMessageForUpdater = "Update complete! Restarting game..."
+                        GameData.SMASPlusPlus.game.updateDownloaded = true
                         smasUpdater.updateStage = 4
                     end
                 end
-            elseif not internetCheck and smasUpdater.updateStage == 1 and smasUpdater.updateTimer >= 26 then
+            elseif not internetCheck and smasUpdater.updateStage == 1 and not Internet.isDownloading() then
                 smasUpdater.drawVersionText = false
                 UpdateMessageForUpdater = "No internet! Skipping update..."
                 smasUpdater.updateTimer = smasUpdater.updateTimer + 1
@@ -196,7 +198,7 @@ function smasUpdater.onDraw()
             UpdateMessageForUpdater = "On the editor. Skipping update..."
             
             if smasUpdater.drawUpdateText then
-                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
             
             if not smasUpdater.doneUpdating then
@@ -211,7 +213,7 @@ function smasUpdater.onDraw()
             UpdateMessageForUpdater = "Skipping update..."
             
             if smasUpdater.drawUpdateText then
-                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
             
             if not smasUpdater.doneUpdating then

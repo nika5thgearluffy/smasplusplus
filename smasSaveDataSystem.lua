@@ -181,6 +181,10 @@ if SaveData.SMASPlusPlus.misc.weatherForecast == nil then
     SaveData.SMASPlusPlus.misc.weatherForecast = "Sunny"
 end
 
+if GameData.SMASPlusPlus.game.updateDownloaded == nil then
+    GameData.SMASPlusPlus.game.updateDownloaded = false
+end
+
 
 
 
