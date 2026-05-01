@@ -1,7 +1,5 @@
 local smasUpdater = {}
 
-if SMBX_VERSION ~= VER_SEE_MOD then return smasUpdater end
-
 local textplus = require("textplus")
 local statusFont = textplus.loadFont("littleDialogue/font/6.ini")
 
@@ -24,9 +22,15 @@ smasUpdater.checkFileDownloadIndicator = 0
 smasUpdater.tableOfFilesToCheckSizes = {}
 smasUpdater.tableOfFilesToDownload = {}
 
+smasUpdater.manifestJSON = {}
+smasUpdater.currentFileIndex = 1
+
+local manifestRetrieved = false
+
 function smasUpdater.onInitAPI()
     registerEvent(smasUpdater,"onStart")
     registerEvent(smasUpdater,"onDraw")
+    registerEvent(smasUpdater,"onDownloadComplete")
 end
 
 smasUpdater.urlStringTable = {
@@ -47,119 +51,36 @@ function smasUpdater.stringToURLPiece(stringd)
     return stringValue2
 end
 
-function smasUpdater.downloadFile(url, folder, file)
-    return Internet.DownloadFile(url, Misc.episodePath()..folder, file, "")
+function smasUpdater.downloadFile(url, folder)
+    if folder == nil then
+        folder = ""
+    end
+    return Internet.downloadFile(url, Misc.episodePath()..folder)
 end
 
 function smasUpdater.checkFileSize(file)
-    return Misc.getFileSize(Misc.episodePath()..file)
+    return File.getSize(Misc.episodePath()..file)
 end
 
 function smasUpdater.readVersionUpdateList()
-    local f = io.open(Misc.episodePath().."version-latestfiles.txt", "r")
-    local contentsTable = {}
+    local f = io.open(Misc.episodePath().."manifest.json", "r")
+    local contentsTable
     if f ~= nil then
-        while (true) do
-            local line = f:read("*l")
-
-            if line == nil then
-                break
-            end
-            
-            local contents = line:split("=")
-            table.insert(contentsTable, {
-                folder = contents[1],
-                file = contents[2],
-                extension = contents[3],
-                size = contents[4]
-            })
-        end
+        contentsTable = json.parse(f:read())
         f:close()
     end
     return contentsTable
 end
 
-function smasUpdater.findLatestUpdateConfigFileSize(index, file)
-    local fileList = File.readFile("version-latestfiles.txt")
-    local foundSize = 0
-    
-    if file == smasUpdater.readVersionUpdateList()[index + 1].folder..smasUpdater.readVersionUpdateList()[index + 1].file..smasUpdater.readVersionUpdateList()[index + 1].extension then
-        foundSize = smasUpdater.readVersionUpdateList()[index + 1].size
-    else
-        foundSize = 0
-    end
-    
-    return foundSize
-end
-
-function smasUpdater.checkFileAmountUpdateConfig()
-    local fileList = File.readFile("version-latestfiles.txt")
-    return #fileList
-end
-
-function smasUpdater.compareFileSize(index, file)
-    local tempFolder = "data/temp/"
-    
-    local firstSize = smasUpdater.findLatestUpdateConfigFileSize(index, Misc.episodePath()..tempFolder..file)
-    local secondSize = smasUpdater.checkFileSize(Misc.episodePath()..file)
-    
-    if firstSize == secondSize then
-        return true
-    else
-        return false
-    end
-end
-
 function smasUpdater.downloadLatestUpdateConfig()
     if not Misc.inEditor() then
-        smasUpdater.downloadFile("https://raw.githubusercontent.com/SpencerEverly/smasplusplus/main/versionlist-commit.txt", "", "versionlist-commit-temp.txt")
+        smasUpdater.downloadFile("https://raw.githubusercontent.com/SpencerEverly/smasplusplus/main/manifest.json", Misc.episodePath().."manifest.json")
     end
-end
-
-function smasUpdater.checkVersionStatus()
-    local version = File.readSpecificAreaFromFile("version-latestfiles.txt", 1)
-    if version == VersionOfEpisode then
-        return true
-    else
-        return false
-    end
-end
-
-function smasUpdater.versionNumber()
-    local version = File.readSpecificAreaFromFile("versionlist-commit-temp.txt", 1)
-    return version
-end
-
-function smasUpdater.checkForInternet()
-    smasUpdater.downloadFile("https://raw.githubusercontent.com/SpencerEverly/smasplusplus/main/version-latestfiles.txt", "/data/temp/", "version-latestfiles-temp.txt")
-    if io.exists(Misc.episodePath().."data/temp/version-latestfiles-temp.txt") then
-        os.remove(Misc.episodePath().."data/temp/version-latestfiles-temp.txt")
-        return true
-    else
-        return false
-    end
-end
-
-function smasUpdater.checkForGitFolder()
-    local fileExists = false
-    local f = io.open(Misc.episodePath()..".git/HEAD")
-    if f ~= nil then
-        fileExists = true
-        f:close()
-    end
-    return fileExists
-end
-
-function smasUpdater.getLatestHash()
-    local line = File.readSpecificAreaFromFile("versionlist-commit-temp.txt", 1)
-    return line
 end
 
 function smasUpdater.restartAfterUpdating()
-    if SMBX_VERSION == VER_SEE_MOD then
-        if Misc.isSetToRunWhenUnfocused() then
-            Misc.runWhenUnfocused(false)
-        end
+    if Misc.isRunningWhenUnfocused() then
+        Misc.runWhenUnfocused(false)
     end
     if not Misc.loadEpisode("Super Mario All-Stars++") then
         error("SMAS++ is not found. How is that even possible? Reinstall the game using the SMASUpdater, since something has gone terribly wrong.")
@@ -167,152 +88,131 @@ function smasUpdater.restartAfterUpdating()
 end
 
 function smasUpdater.launchAfterNoUpdate()
-    if SMBX_VERSION == VER_SEE_MOD then
-        if Misc.isSetToRunWhenUnfocused() then
-            Misc.runWhenUnfocused(false)
-        end
+    if Misc.isRunningWhenUnfocused() then
+        Misc.runWhenUnfocused(false)
     end
     SysManager.loadIntroTheme()
 end
 
 local internetCheck = false
 
-function smasUpdater.onStart()
-    internetCheck = smasUpdater.checkForInternet()
+function smasUpdater.onDownloadComplete(bufferData)
+    if bufferData ~= "" then
+        smasUpdater.updateTimer = 0
+        smasUpdater.updateStage = 2
+        smasUpdater.manifestJSON = smasUpdater.readVersionUpdateList()
+    end
 end
 
-if not Misc.inEditor() then
-    function smasUpdater.onDraw()
-        if smasUpdater.doUpdate then
-            if smasUpdater.drawUpdateText then
-                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = 400, y = 290, priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 500}
-                if smasUpdater.drawVersionText then
-                    textplus.print{text = smasUpdater.versionNumber(), pivot = vector.v2(0.5,0.5), x = 400, y = 250, priority = 10, color = Color.white, font = statusFont, xscale = 1.5, yscale = 1.5}
-                end
+function smasUpdater.onDraw()
+    if smasUpdater.doUpdate and not Misc.inEditor() and not io.exists(Misc.episodePath().."dontupdate") then
+        if smasUpdater.drawUpdateText then
+            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = 400, y = 290, priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 500}
+            if smasUpdater.drawVersionText then
+                textplus.print{text = smasUpdater.versionNumber(), pivot = vector.v2(0.5,0.5), x = 400, y = 250, priority = 10, color = Color.white, font = statusFont, xscale = 1.5, yscale = 1.5}
+            end
+        end
+        
+        if not smasUpdater.doneUpdating then
+            if smasUpdater.updateStage == 0 then
+                smasUpdater.updateStage = 1
             end
             
-            if not smasUpdater.doneUpdating and internetCheck then
-                if smasUpdater.updateStage == 0 then
-                    smasUpdater.updateStage = 1
+            if smasUpdater.updateStage == 1 then
+                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
+                if smasUpdater.updateTimer == 1 then
+                    UpdateMessageForUpdater = "Checking for updates..."
                 end
-                
-                if smasUpdater.updateStage == 1 then
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer == 1 then
-                        Internet.GitStart()
+                if smasUpdater.updateTimer == 5 then
+                    smasUpdater.downloadLatestUpdateConfig()
+                end
+                if smasUpdater.updateTimer == 6 then
+                    if Internet.downloadProgress() ~= 0 then
+                        internetCheck = true
                     end
-                    if smasUpdater.updateTimer == 5 then
-                        smasUpdater.downloadLatestUpdateConfig()
-                    end
-                    if smasUpdater.updateTimer == 10 then
-                        smasUpdater.drawVersionText = true
-                    end
-                    if smasUpdater.updateTimer >= 35 then
-                        smasUpdater.updateTimer = 0
+                end
+                if smasUpdater.updateTimer >= 7 then
+                    if Internet.downloadProgress() == 0 and smasUpdater.manifestJSON ~= nil and smasUpdater.manifestJSON.files ~= nil then
                         smasUpdater.updateStage = 2
                     end
                 end
+            end
+            if internetCheck then
                 if smasUpdater.updateStage == 2 then
-                    UpdateMessageForUpdater = "Checking for .git..."
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer == 5 then
-                        if not smasUpdater.checkForGitFolder() then
-                            smasUpdater.updateTimer = 0
-                            smasUpdater.updateStage = 4
+                    local file = smasUpdater.manifestJSON.files[smasUpdater.currentFileIndex]
+                    if file then
+                        if not Internet.isDownloading() then
+                            local localMD5 = File.getMD5Hash(Misc.episodePath()..file.path)
+                            if localMD5 ~= file.md5 then
+                                smasUpdater.downloadFile(file.url, file.path)
+                            else
+                                -- File matches, move to next
+                                smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
+                            end
                         end
-                    end
-                    if smasUpdater.updateTimer >= 10 then
-                        smasUpdater.updateTimer = 0
+                        -- If downloading, just wait for next frame
+                    else
+                        -- No more files, done
+                        smasUpdater.doneUpdating = true
                         smasUpdater.updateStage = 3
                     end
-                end
-                if smasUpdater.updateStage == 3 then
-                    UpdateMessageForUpdater = "Updating to the latest commit. This may freeze the game for a while, so please be patient..."
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer == 5 then
-                        Internet.GitPull(smasUpdater.getLatestHash(), getSMBXPath().."/worlds/Super Mario All-Stars++")
-                    end
-                    if smasUpdater.updateTimer >= 10 then
-                        smasUpdater.updateTimer = 0
-                        smasUpdater.updateStage = 5
-                    end
-                end
-                if smasUpdater.updateStage == 4 then
-                    UpdateMessageForUpdater = "Downloading episode from the Internet. This will freeze the game for a while, please be patient..."
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer == 5 then
-                        Internet.GitClone("https://github.com/SpencerEverly/smasplusplus/", getSMBXPath().."/worlds/Super Mario All-Stars++")
-                    end
-                    if smasUpdater.updateTimer >= 10 then
-                        smasUpdater.updateTimer = 0
-                        smasUpdater.updateStage = 5
-                    end
-                end
-                if smasUpdater.updateStage == 5 then
-                    smasUpdater.drawVersionText = false
-                    UpdateMessageForUpdater = "Update complete! Starting episode..."
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer >= lunatime.toTicks(5) then
-                        Internet.GitEnd()
-                        if io.exists(Misc.episodePath().."versionlist-commit-temp.txt") then
-                            os.remove(Misc.episodePath().."versionlist-commit-temp.txt")
-                        end
-                        smasUpdater.fadeToBlack = true
-                        smasUpdater.launchAfterNoUpdate()
-                    end
-                end
-                if smasUpdater.updateStage == 6 then
-                    smasUpdater.drawVersionText = false
-                    UpdateMessageForUpdater = "You are on the latest version!"
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer >= lunatime.toTicks(5) then
-                        smasUpdater.launchAfterNoUpdate()
-                    end
+                    smasUpdater.updateStage = 3
                 end
             else
-                if not internetCheck then
-                    smasUpdater.drawVersionText = false
-                    UpdateMessageForUpdater = "No internet! Skipping update..."
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer >= lunatime.toTicks(5) then
-                        smasUpdater.launchAfterNoUpdate()
-                    end
+                smasUpdater.drawVersionText = false
+                UpdateMessageForUpdater = "No internet! Skipping update..."
+                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
+                if smasUpdater.updateTimer >= lunatime.toTicks(4) then
+                    smasUpdater.launchAfterNoUpdate()
                 end
-                if smasUpdater.updateStage == 5 then
-                    smasUpdater.drawVersionText = false
-                    smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                    if smasUpdater.updateTimer >= lunatime.toTicks(5) then
-                        Internet.EndGit()
-                        if io.exists(Misc.episodePath().."versionlist-commit-temp.txt") then
-                            os.remove(Misc.episodePath().."versionlist-commit-temp.txt")
-                        end
-                        smasUpdater.fadeToBlack = true
-                        smasUpdater.restartAfterUpdating()
-                    end
+            end
+        else
+            if smasUpdater.updateStage == 3 then
+                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
+                if smasUpdater.updateTimer >= lunatime.toTicks(5) then
+                    smasUpdater.fadeToBlack = true
+                    smasUpdater.restartAfterUpdating()
                 end
             end
         end
-        if smasUpdater.fadeToBlack then
-            Graphics.drawScreen{color = Color.black, priority = 10}
-        end
-    end
-else
-    function smasUpdater.onDraw()
+    elseif Misc.inEditor() then
         if smasUpdater.doUpdate then
-            
-            UpdateMessageForUpdater = "On the editor, skipping update..."
+            UpdateMessageForUpdater = "On the editor. Skipping update..."
             
             if smasUpdater.drawUpdateText then
-                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = 400, y = 290, priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                if Internet.downloadFilename() ~= "" then
+                    textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                    textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                    textplus.print{text = tostring(Internet.downloadProgress()), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(520, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                end
             end
             
             if not smasUpdater.doneUpdating then
                 smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                if smasUpdater.updateTimer >= lunatime.toTicks(5) then
+                if smasUpdater.updateTimer >= lunatime.toTicks(4) then
                     smasUpdater.launchAfterNoUpdate()
                 end
             end
         end
+    else
+        if smasUpdater.doUpdate then
+            UpdateMessageForUpdater = "Skipping update..."
+            
+            if smasUpdater.drawUpdateText then
+                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 10, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+            end
+            
+            if not smasUpdater.doneUpdating then
+                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
+                if smasUpdater.updateTimer >= lunatime.toTicks(4) then
+                    smasUpdater.launchAfterNoUpdate()
+                end
+            end
+        end
+    end
+    if smasUpdater.fadeToBlack then
+        Graphics.drawScreen{color = Color.black, priority = 10}
     end
 end
 

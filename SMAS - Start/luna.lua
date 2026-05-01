@@ -51,19 +51,16 @@ local statusFont = textplus.loadFont("littleDialogue/font/6.ini")
 local function startupdater()
     bootshow = false
     blackscreen = true
-    if SMBX_VERSION == VER_SEE_MOD then
-        if not Misc.isSetToRunWhenUnfocused() then
-            Misc.runWhenUnfocused(true)
-        end
+    if not Misc.isRunningWhenUnfocused() then
+        Misc.runWhenUnfocused(true)
+    end
     end
     updateractive = true
     Routine.wait(1, true)
     Sound.changeMusic("_OST/All Stars Menu/Updater.ogg", 0)
-    if SMBX_VERSION == VER_SEE_MOD then
-        smasUpdater.doUpdate = true
-        smasUpdater.doneUpdating = false
-        smasUpdater.drawUpdateText = true
-    end
+    smasUpdater.doUpdate = true
+    smasUpdater.doneUpdating = false
+    smasUpdater.drawUpdateText = true
 end
 
 function onKeyboardPress(k, v)
@@ -272,14 +269,10 @@ function onTick()
     timer = timer - 1
     
     if timer <= 0 then
-        if SMBX_VERSION ~= VER_SEE_MOD then
+        if not smasBooleans.skipUpdater or not io.exists(Misc.episodePath().."dontupdate") then
+            Routine.run(startupdater)
+        else
             SysManager.loadIntroTheme()
-        elseif SMBX_VERSION == VER_SEE_MOD then
-            if not smasBooleans.skipUpdater then
-                Routine.run(startupdater)
-            else
-                SysManager.loadIntroTheme()
-            end
         end
     end
     
