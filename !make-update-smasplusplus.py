@@ -15,6 +15,22 @@ else:
 
 files = []
 
+# Load previous manifest if it exists
+old_manifest_path = "manifest.json"
+deleted_files = []
+
+if os.path.exists(old_manifest_path):
+    with open(old_manifest_path, "r") as f:
+        old_manifest = json.load(f)
+    
+    old_paths = {entry["path"] for entry in old_manifest.get("files", [])}
+    new_paths = {entry["path"] for entry in files}
+    
+    # Files in old manifest but not in new = deleted
+    deleted_files = list(old_paths - new_paths)
+
+manifest = {"version": "1.0.0", "files": files, "deleted": deleted_files}
+
 for dirpath, dirnames, filenames in os.walk(root_dir):
     # Skip .git folder entirely
     dirnames[:] = [d for d in dirnames if d != ".git"]

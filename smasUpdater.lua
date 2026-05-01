@@ -66,7 +66,7 @@ function smasUpdater.readVersionUpdateList()
     local f = io.open(Misc.episodePath().."manifest.json", "r")
     local contentsTable
     if f ~= nil then
-        contentsTable = json.parse(f:read())
+        contentsTable = json.decode(f:read())
         f:close()
     end
     return contentsTable
@@ -139,6 +139,18 @@ function smasUpdater.onDraw()
             end
             if internetCheck then
                 if smasUpdater.updateStage == 2 then
+                    -- Handle deleted files first
+                    if smasUpdater.manifestJSON.deleted then
+                        for _, path in ipairs(smasUpdater.manifestJSON.deleted) do
+                            local fullPath = Misc.episodePath()..path
+                            if io.exists(fullPath) then
+                                os.remove(fullPath)
+                            end
+                        end
+                        smasUpdater.updateStage = 3
+                    end
+                end
+                if smasUpdater.updateStage == 3 then
                     local file = smasUpdater.manifestJSON.files[smasUpdater.currentFileIndex]
                     if file then
                         if not Internet.isDownloading() then
@@ -154,9 +166,8 @@ function smasUpdater.onDraw()
                     else
                         -- No more files, done
                         smasUpdater.doneUpdating = true
-                        smasUpdater.updateStage = 3
+                        smasUpdater.updateStage = 4
                     end
-                    smasUpdater.updateStage = 3
                 end
             else
                 smasUpdater.drawVersionText = false
@@ -167,7 +178,7 @@ function smasUpdater.onDraw()
                 end
             end
         else
-            if smasUpdater.updateStage == 3 then
+            if smasUpdater.updateStage == 4 then
                 smasUpdater.updateTimer = smasUpdater.updateTimer + 1
                 if smasUpdater.updateTimer >= lunatime.toTicks(5) then
                     smasUpdater.fadeToBlack = true
