@@ -52,7 +52,7 @@ local function startupdater()
     bootshow = false
     blackscreen = true
     if not Misc.isRunningWhenUnfocused() then
-        Misc.runWhenUnfocused(true)
+        Misc.setRunWhenUnfocused(true)
     end
     updateractive = true
     Routine.wait(1, true)
@@ -146,7 +146,7 @@ end
 function restartAfterUpdating()
     if SMBX_VERSION == VER_SEE_MOD then
         if Misc.isSetToRunWhenUnfocused() then
-            Misc.runWhenUnfocused(false)
+            Misc.setRunWhenUnfocused(false)
         end
     end
     if not Misc.loadEpisode("Super Mario All-Stars++") then
@@ -157,7 +157,7 @@ end
 function launchAfterNoUpdate()
     if SMBX_VERSION == VER_SEE_MOD then
         if Misc.isSetToRunWhenUnfocused() then
-            Misc.runWhenUnfocused(false)
+            Misc.setRunWhenUnfocused(false)
         end
     end
     SysManager.loadIntroTheme()

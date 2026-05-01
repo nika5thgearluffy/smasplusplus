@@ -80,7 +80,7 @@ end
 
 function smasUpdater.restartAfterUpdating()
     if Misc.isRunningWhenUnfocused() then
-        Misc.runWhenUnfocused(false)
+        Misc.setRunWhenUnfocused(false)
     end
     if not Misc.loadEpisode("Super Mario All-Stars++") then
         error("SMAS++ is not found. How is that even possible? Reinstall the game using the SMASUpdater, since something has gone terribly wrong.")
@@ -89,7 +89,7 @@ end
 
 function smasUpdater.launchAfterNoUpdate()
     if Misc.isRunningWhenUnfocused() then
-        Misc.runWhenUnfocused(false)
+        Misc.setRunWhenUnfocused(false)
     end
     SysManager.loadIntroTheme()
 end
