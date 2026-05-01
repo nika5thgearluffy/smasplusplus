@@ -35,7 +35,7 @@ local currentSfx = nil
 
 malcmusic.holiday = false
 -- Weather is set to get info from Los Angeles, CA (And no, asking the user where they live for accurate location weather is a huge flag, since this is a game, so no way am I implementing that)
-malcmusic.weatherJsonURL = "https://api.accuweather.com/currentconditions/v1/2626754?apikey=6e30dc9ea2aa4d3eb99ad8f6630174cd&details=true"
+malcmusic.weatherJsonURL = "https://api.weather.gov/gridpoints/LOX/155,45/forecast"
 malcmusic.weatherJsonParsed = nil
 
 local sec0 = Section(0)
@@ -429,10 +429,10 @@ function malcmusic.updateWeatherAndMusic()
             -- Just in case, poll to download the weather again
             Internet.downloadFile(malcmusic.weatherJsonURL, "")
             hourChanger[Time.hour()] = Time.hour()
-            if malcmusic.weatherJsonParsed and weatherIconList[malcmusic.weatherJsonParsed.WeatherIcon] then
-                SaveData.dateplayedweather = weatherIconList[malcmusic.weatherJsonParsed.WeatherIcon]
+            if malcmusic.weatherJsonParsed then
+                SaveData.SMASPlusPlus.misc.weatherForecast = malcmusic.weatherJsonParsed.properties.peroids[1].shortForecast
             end
-            if SaveData.dateplayedweather == "snow" then
+            if SaveData.SMASPlusPlus.misc.weatherForecast == "Snowy" then
                 if not malcmusic.holiday then
                     for k,v in ipairs(malcmusic.outsideSections) do
                         if not smasBooleans.musicMuted or not smasBooleans.musicMutedTemporary then
@@ -440,7 +440,7 @@ function malcmusic.updateWeatherAndMusic()
                         end
                     end
                 end
-            elseif SaveData.dateplayedweather == "rain" then
+            elseif SaveData.SMASPlusPlus.misc.weatherForecast == "Rainy" then
                 if not malcmusic.holiday then
                     for k,v in ipairs(malcmusic.outsideSections) do
                         if not smasBooleans.musicMuted or not smasBooleans.musicMutedTemporary then
@@ -461,16 +461,16 @@ function malcmusic.updateWeatherAndMusic()
         
         
         if Time.month() == 12 and Time.day() == 25 then --Christmas
-            if malcmusic.holiday and not (SaveData.dateplayedweather == "snow") then
+            if malcmusic.holiday and not (SaveData.SMASPlusPlus.misc.weatherForecast == "Snowy") then
                 malcmusic.doSnowWeather()
             end
         end
         
-        if SaveData.dateplayedweather == "snow" then
+        if SaveData.SMASPlusPlus.misc.weatherForecast == "Snowy" then
             malcmusic.doSnowWeather()
             
         end
-        if SaveData.dateplayedweather == "rain" then
+        if SaveData.SMASPlusPlus.misc.weatherForecast == "Rainy" then
             malcmusic.doRainWeather()
         end
     end

@@ -177,6 +177,10 @@ if SaveData.SMASPlusPlus.game.username == nil then
     SaveData.SMASPlusPlus.game.username = "Player"
 end
 
+if SaveData.SMASPlusPlus.misc.weatherForecast == nil then
+    SaveData.SMASPlusPlus.misc.weatherForecast = "Sunny"
+end
+
 
 
 
@@ -318,6 +322,10 @@ end
 if SaveData.playerName ~= nil then
     SaveData.SMASPlusPlus.game.username = SaveData.playerName
     SaveData.playerName = nil
+end
+
+if SaveData.dateplayedweather ~= nil then
+    SaveData.SMASPlusPlus.misc.weatherForecast = SaveData.dateplayedweather
 end
 
 

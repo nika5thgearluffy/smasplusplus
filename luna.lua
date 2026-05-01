@@ -246,8 +246,8 @@ function onStart() --Now do onStart...
     --Below will start the star door system
     warpstaractive = true
     --Do the weather SaveData additions
-    if SaveData.dateplayedweather == nil then
-        SaveData.dateplayedweather = weatherControl
+    if SaveData.SMASPlusPlus.misc.weatherForecast == nil then
+        SaveData.SMASPlusPlus.misc.weatherForecast = weatherControl
     end
     --Calculate Easter Sunday
     Time.easterYear(os.date("*t").year)
