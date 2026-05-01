@@ -22,7 +22,7 @@ smasUpdater.checkFileDownloadIndicator = 0
 smasUpdater.tableOfFilesToCheckSizes = {}
 smasUpdater.tableOfFilesToDownload = {}
 
-smasUpdater.manifestJSON = {}
+smasUpdater.manifestJSON = nil
 smasUpdater.currentFileIndex = 1
 
 local manifestRetrieved = false
@@ -97,7 +97,7 @@ end
 local internetCheck = false
 
 function smasUpdater.onDownloadComplete(bufferData)
-    if bufferData ~= "" then
+    if Internet.downloadFilename() == "manifest.json" then
         smasUpdater.updateTimer = 0
         smasUpdater.updateStage = 2
         smasUpdater.manifestJSON = smasUpdater.readVersionUpdateList()
