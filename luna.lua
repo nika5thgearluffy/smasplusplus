@@ -330,8 +330,12 @@ end
 
 function onDraw()
     -- Do this so that the PFP would need to be removed if non-existant
-    local pfpFileSize = File.getSize(SaveData.SMASPlusPlus.game.pfp)
-    if pfpFileSize == -1 then
+    if SaveData.SMASPlusPlus.game.pfp ~= nil and Misc.resolveFile(SaveData.SMASPlusPlus.game.pfp) ~= nil then
+        local pfpFileSize = File.getSize(SaveData.SMASPlusPlus.game.pfp)
+        if pfpFileSize == -1 then
+            SaveData.SMASPlusPlus.game.pfp = Img.load("graphics/default_pfp.png")
+        end
+    else
         SaveData.SMASPlusPlus.game.pfp = Img.load("graphics/default_pfp.png")
     end
 
