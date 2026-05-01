@@ -54,7 +54,6 @@ local function startupdater()
     if not Misc.isRunningWhenUnfocused() then
         Misc.runWhenUnfocused(true)
     end
-    end
     updateractive = true
     Routine.wait(1, true)
     Sound.changeMusic("_OST/All Stars Menu/Updater.ogg", 0)
