@@ -6,12 +6,12 @@
 
     -- Total Stars --
     SMB1 = 43 (Done!)
-    SMB2 = 22 (Done! Still need code for several things though)
-    SMB3 = TBD (Done! Still need World e finished though)
+    SMB2 = 22 (Done!)
+    SMB3 = TBD (Done! World e is a wip though)
     SMBLL (Optional) = 52 (Done!)
     SMW = TBD (WIP)
-    SML1 = TBD (WIP)
-    SML2 = TBD (WIP)
+    SML1 (Optional) = TBD (WIP)
+    SML2 (Optional) = TBD (WIP)
     Lava Lands = 5 (WIP)
     Side Quest (Optional) = TBD (WIP)
     True Ending = 1 (WIP)
