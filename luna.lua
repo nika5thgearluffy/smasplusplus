@@ -337,7 +337,7 @@ function onDraw()
         end
     else
         SaveData.SMASPlusPlus.game.pfp = Misc.episodePath().."graphics/default_pfp.png"
-    end]]
+    end
 
     if Misc.inEditor() then
         player.keys.pause = false
