@@ -123,6 +123,9 @@ function smasUpdater.onDraw()
             if smasUpdater.updateStage == 3 then
                 textplus.print{text = tostring(smasUpdater.currentFileIndex).."/"..tostring(#smasUpdater.manifestJSON.files), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(540, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
+            if smasUpdater.updateStage == 4 then
+                textplus.print{text = tostring(smasUpdater.currentFileIndex).."/"..tostring(#smasUpdater.filesToDownload), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(540, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+            end
         end
 
         smasUpdater.updateTimer = smasUpdater.updateTimer + 1
@@ -180,7 +183,7 @@ function smasUpdater.onDraw()
                     end
 
                     -- Only proceed when ALL files have been checked
-                    if smasUpdater.checkedFileCount >= totalFiles then
+                    if smasUpdater.currentFileIndex >= totalFiles then
                         if #smasUpdater.filesToDownload > 0 then
                             smasUpdater.updateStage = 4
                             smasUpdater.currentFileIndex = 1
