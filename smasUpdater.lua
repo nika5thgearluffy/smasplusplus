@@ -101,11 +101,13 @@ function smasUpdater.onDownloadComplete(bufferData, url, filename)
     if filename == "manifest.json" then
         internetCheck = true
         smasUpdater.updateTimer = 0
-        smasUpdater.updateStage = 2
+        smasUpdater.updateStage = 3  -- changed from 2
+        smasUpdater.checkedFileCount = 0  -- reset here once
+        smasUpdater.filesToDownload = {}  -- reset here once
         smasUpdater.manifestJSON = smasUpdater.readVersionUpdateList()
-    end
-    if smasUpdater.updateStage == 3 then
-        smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
+        for i, file in ipairs(smasUpdater.manifestJSON.files) do
+            BackgroundWorker.startMD5Check(Misc.episodePath()..file.path)
+        end
     end
 end
 
@@ -115,7 +117,7 @@ function smasUpdater.onDraw()
             textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 800}
             if Internet.downloadFilename() ~= "" then
                 textplus.print{text = "Downloading:", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(420, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+                textplus.print{text = Internet.downloadFilename(), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(450, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 800}
                 textplus.print{text = tostring(Internet.downloadProgress()).."%", pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(480, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
             if smasUpdater.updateStage == 3 then
@@ -151,31 +153,64 @@ function smasUpdater.onDraw()
                             end
                         end
                         smasUpdater.updateStage = 3
+                        smasUpdater.checkedFileCount = 0
+                        smasUpdater.filesToDownload = {}
                     else
                         smasUpdater.updateStage = 3
+                        smasUpdater.checkedFileCount = 0
+                        smasUpdater.filesToDownload = {}
                     end
                 end
                 if smasUpdater.updateStage == 3 then
-                    UpdateMessageForUpdater = "Downloading the latest update... this will take a while."
-                    local file = smasUpdater.manifestJSON.files[smasUpdater.currentFileIndex]
+                    UpdateMessageForUpdater = "Checking for updates..."
+
+                    local totalFiles = #smasUpdater.manifestJSON.files
+
+                    for i, file in ipairs(smasUpdater.manifestJSON.files) do
+                        local fullPath = Misc.episodePath()..file.path
+                        if BackgroundWorker.hasResult(fullPath) then
+                            local localMD5 = BackgroundWorker.getResult(fullPath)
+                            BackgroundWorker.clearResult(fullPath)
+                            
+                            if localMD5 ~= file.md5 then
+                                table.insert(smasUpdater.filesToDownload, file)
+                            end
+                            smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
+                        end
+                    end
+
+                    -- Only proceed when ALL files have been checked
+                    if smasUpdater.checkedFileCount >= totalFiles then
+                        if #smasUpdater.filesToDownload > 0 then
+                            smasUpdater.updateStage = 4
+                            smasUpdater.currentFileIndex = 1
+                            UpdateMessageForUpdater = "Downloading the latest update..."
+                        else
+                            smasUpdater.updateStage = 5
+                            smasUpdater.doneUpdating = true
+                            UpdateMessageForUpdater = "Update complete! Restarting game..."
+                            GameData.SMASPlusPlus.game.updateDownloaded = true
+                            Routine.run(smasUpdater.restartAfterUpdating)
+                        end
+                    end
+                end
+
+                if smasUpdater.updateStage == 4 then
+                    local file = smasUpdater.filesToDownload[smasUpdater.currentFileIndex]
                     if file then
                         if not Internet.isDownloading() then
-                            local localMD5 = File.getMD5Hash(Misc.episodePath()..file.path)
-                            if localMD5 ~= file.md5 then
-                                smasUpdater.downloadFile(file.url, Misc.episodePath()..file.path)
-                            else
-                                -- File matches, move to next
-                                smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
-                            end
+                            UpdateMessageForUpdater = "Downloading the latest update..."
+                            smasUpdater.downloadFile(file.url, Misc.episodePath()..file.path)
+                            smasUpdater.currentFileIndex = smasUpdater.currentFileIndex + 1
                         end
-                        -- If downloading, just wait for next frame
                     else
-                        -- No more files, done
+                        -- All downloads done
+                        smasUpdater.updateStage = 5
+                        smasUpdater.doneUpdating = true
                         UpdateMessageForUpdater = "Update complete! Restarting game..."
                         GameData.SMASPlusPlus.game.updateDownloaded = true
+                        Routine.run(smasUpdater.restartAfterUpdating)
                         smasUpdater.updateTimer = 0
-                        smasUpdater.updateStage = 4
-                        smasUpdater.doneUpdating = true
                     end
                 end
             elseif not internetCheck and smasUpdater.updateStage == 1 and not Internet.isDownloading() then
@@ -186,10 +221,8 @@ function smasUpdater.onDraw()
                 end
             end
         else
-            if smasUpdater.updateStage == 4 then
-                if smasUpdater.updateTimer == 1 then
-                    Routine.run(smasUpdater.restartAfterUpdating)
-                end
+            if smasUpdater.updateStage == 5 then
+                
             end
         end
     elseif Misc.inEditor() then
