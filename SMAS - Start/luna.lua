@@ -269,7 +269,7 @@ function onTick()
     timer = timer - 1
     
     if timer <= 0 then
-        if (not smasBooleans.skipUpdater or not io.exists(Misc.episodePath().."dontupdate")) and not Misc.inEditor() then
+        if (not smasBooleans.skipUpdater or not io.exists(Misc.episodePath().."dontupdate")) and not Misc.inEditor() and not GameData.SMASPlusPlus.game.updateDownloaded then
             Routine.run(startupdater)
         else
             SysManager.loadIntroTheme()
