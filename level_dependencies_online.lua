@@ -66,7 +66,6 @@ function dependencies.onStart()
         mm.playIntro = false;
         pausemenu = require("pausemenu")
         warpTransition = require("warpTransition")
-        anotherPowerDownLibrary = require("anotherPowerDownLibrary")
         playerphysicspatch = require("playerphysicspatch")
         kindHurtBlock = require("kindHurtBlock")
         furyinventory = require("furyinventory")

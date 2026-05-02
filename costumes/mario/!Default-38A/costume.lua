@@ -573,7 +573,7 @@ function costume.onTick()
             p.forcedState = smasCharacterGlobals.miscellaneousSettings.smbx38APowerdownSmallForcedStateID
         elseif p.forcedState == FORCEDSTATE_POWERDOWN_ICE then
             p.forcedState = smasCharacterGlobals.miscellaneousSettings.smbx38APowerdownSmallForcedStateID
-        elseif p.forcedState == 751 then --anotherPowerDownLibrary
+        elseif p.forcedState == FORCEDSTATE_POWERDOWN_BIG then
             if p.forcedTimer >= 30 then
                 p.BlinkTimer = 150
                 p.BlinkState = true

@@ -90,7 +90,6 @@ end
 function dependencies2.onStart()
     smasBooleans.isInHub = true
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        anotherPowerDownLibrary = require("anotherPowerDownLibrary")
         playerphysicspatch = require("playerphysicspatch")
         kindHurtBlock = require("kindHurtBlock")
         if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then

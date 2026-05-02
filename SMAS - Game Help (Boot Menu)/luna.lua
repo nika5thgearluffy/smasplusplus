@@ -73,7 +73,6 @@ function dependencies.onStart()
         mm = require("Characters/megaman");
         mm.playIntro = false;
         undertaledepends = require("level_dependencies_undertale")
-        anotherPowerDownLibrary = require("anotherPowerDownLibrary")
         playerphysicspatch = require("playerphysicspatch")
         kindHurtBlock = require("kindHurtBlock")
         comboSounds = require("comboSounds")

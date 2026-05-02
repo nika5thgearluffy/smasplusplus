@@ -74,7 +74,6 @@ function dependencies.onStart()
     
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
         warpTransition = require("warpTransition")
-        anotherPowerDownLibrary = require("anotherPowerDownLibrary")
         playerphysicspatch = require("playerphysicspatch")
         kindHurtBlock = require("kindHurtBlock")
         if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
