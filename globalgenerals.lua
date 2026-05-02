@@ -13,7 +13,7 @@ local hearthover = require("hearthover")
 local steve = require("steve")
 local yoshi = require("yiYoshi/yiYoshi")
 local inputconfigurator = require("inputconfig")
-local musicalchairs = require("musicalchairs")
+_G.musicalChairs = require("musicalchairs")
 local customCamera = require("scripts/customCamera")
 
 if GameData.enableBattleMode then
