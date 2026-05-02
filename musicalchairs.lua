@@ -115,14 +115,22 @@ end
 
 function musicalChairs.onDraw()
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated and musicalChairs.enabled then
-        for i = 0,20 do
-            for _,p in ipairs(Player.get()) do
+        for i = 0, 20 do
+            for _, p in ipairs(Player.get()) do
                 local music = Audio.MusicGet(false)
-                if (musicalChairs.musicList[music] ~= nil and p.section == i) then
-                    if p.mount == MOUNT_YOSHI then
-                        Sound.unmuteChannel(musicalChairs.musicList[music].yoshiTrack)
-                    else
-                        Sound.muteChannel(musicalChairs.musicList[music].yoshiTrack)
+                if music ~= nil and music ~= "" then
+                    local episodePath = Misc.episodePath()
+                    local musicNoPathPos = string.find(music, episodePath, 1, true)
+                    if musicNoPathPos ~= nil then
+                        local musicNoPath = string.sub(music, musicNoPathPos + #episodePath)
+                        local trackInfo = musicalChairs.musicList[musicNoPath]
+                        if trackInfo ~= nil and p.section == i then
+                            if p.mount == MOUNT_YOSHI then
+                                Sound.unmuteChannel(trackInfo.yoshiTrack)
+                            else
+                                Sound.muteChannel(trackInfo.yoshiTrack)
+                            end
+                        end
                     end
                 end
             end

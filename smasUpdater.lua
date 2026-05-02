@@ -80,15 +80,15 @@ function smasUpdater.downloadLatestUpdateConfig()
 end
 
 function smasUpdater.restartAfterUpdating()
+    Routine.wait(5, true)
     if Misc.isRunningWhenUnfocused() then
         Misc.setRunWhenUnfocused(false)
     end
-    if not Misc.loadEpisode("Super Mario All-Stars++") then
-        error("SMAS++ is not found. How is that even possible? Reinstall the game using the SMASUpdater, since something has gone terribly wrong.")
-    end
+    Level.load("SMAS - Start.lvlx")
 end
 
 function smasUpdater.launchAfterNoUpdate()
+    Routine.wait(5, true)
     if Misc.isRunningWhenUnfocused() then
         Misc.setRunWhenUnfocused(false)
     end
@@ -122,6 +122,8 @@ function smasUpdater.onDraw()
                 textplus.print{text = tostring(smasUpdater.currentFileIndex).."/"..tostring(#smasUpdater.manifestJSON.files), pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(540, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
         end
+
+        smasUpdater.updateTimer = smasUpdater.updateTimer + 1
         
         if not smasUpdater.doneUpdating then
             if smasUpdater.updateStage == 0 then
@@ -129,7 +131,6 @@ function smasUpdater.onDraw()
             end
             
             if smasUpdater.updateStage == 1 then
-                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
                 if smasUpdater.updateTimer == 1 then
                     UpdateMessageForUpdater = "Checking for updates..."
                     smasUpdater.downloadLatestUpdateConfig()
@@ -170,56 +171,52 @@ function smasUpdater.onDraw()
                         -- If downloading, just wait for next frame
                     else
                         -- No more files, done
-                        smasUpdater.doneUpdating = true
                         UpdateMessageForUpdater = "Update complete! Restarting game..."
                         GameData.SMASPlusPlus.game.updateDownloaded = true
+                        smasUpdater.updateTimer = 0
                         smasUpdater.updateStage = 4
+                        smasUpdater.doneUpdating = true
                     end
                 end
             elseif not internetCheck and smasUpdater.updateStage == 1 and not Internet.isDownloading() then
                 smasUpdater.drawVersionText = false
                 UpdateMessageForUpdater = "No internet! Skipping update..."
-                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                if smasUpdater.updateTimer >= lunatime.toTicks(4) then
-                    smasUpdater.launchAfterNoUpdate()
+                if smasUpdater.updateTimer == 1 then
+                    Routine.run(smasUpdater.launchAfterNoUpdate)
                 end
             end
         else
             if smasUpdater.updateStage == 4 then
-                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                if smasUpdater.updateTimer >= lunatime.toTicks(5) then
-                    smasUpdater.fadeToBlack = true
-                    smasUpdater.restartAfterUpdating()
+                if smasUpdater.updateTimer == 1 then
+                    Routine.run(smasUpdater.restartAfterUpdating)
                 end
             end
         end
     elseif Misc.inEditor() then
-        if smasUpdater.doUpdate then
-            UpdateMessageForUpdater = "On the editor. Skipping update..."
-            
-            if smasUpdater.drawUpdateText then
-                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-            end
-            
-            if not smasUpdater.doneUpdating then
-                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                if smasUpdater.updateTimer >= lunatime.toTicks(4) then
-                    smasUpdater.launchAfterNoUpdate()
-                end
+        UpdateMessageForUpdater = "On the editor. Skipping update..."
+        
+        if smasUpdater.drawUpdateText then
+            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
+        end
+        
+        if not smasUpdater.doneUpdating then
+            if smasUpdater.updateTimer == 1 then
+                Routine.run(smasUpdater.launchAfterNoUpdate)
             end
         end
     else
         if smasUpdater.doUpdate then
             UpdateMessageForUpdater = "Skipping update..."
-            
+
             if smasUpdater.drawUpdateText then
                 textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
             end
+
+            smasUpdater.updateTimer = smasUpdater.updateTimer + 1
             
             if not smasUpdater.doneUpdating then
-                smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-                if smasUpdater.updateTimer >= lunatime.toTicks(4) then
-                    smasUpdater.launchAfterNoUpdate()
+                if smasUpdater.updateTimer == 1 then
+                    Routine.run(smasUpdater.launchAfterNoUpdate)
                 end
             end
         end
