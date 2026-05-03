@@ -75,15 +75,17 @@ local function getData(v)
         -- Parse tags
         data.tagsList = {}
 
-        for _,tag in ipairs(settings.tags:split(",")) do
-            -- Remove spaces around
-            tag = tag:match("%s*(.+)%s*")
-            
-            if tag ~= nil then
-                table.insert(data.tagsList,tag)
+        if settings.tags ~= nil then
+            for _,tag in ipairs(settings.tags:split(",")) do
+                -- Remove spaces around
+                tag = tag:match("%s*(.+)%s*")
+                
+                if tag ~= nil then
+                    table.insert(data.tagsList,tag)
 
-                taggedMap[tag] = taggedMap[tag] or {}
-                table.insert(taggedMap[tag],v)
+                    taggedMap[tag] = taggedMap[tag] or {}
+                    table.insert(taggedMap[tag],v)
+                end
             end
         end
 

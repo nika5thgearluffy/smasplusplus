@@ -13,9 +13,6 @@ smasUpdater.doneUpdating = true --Toggled false when updating is active.
 smasUpdater.updateStage = 0
 smasUpdater.updateTimer = 0
 
-smasUpdater.fadeToBlackOpacity = 0
-smasUpdater.fadeToBlack = false
-
 smasUpdater.checkFileIndicator = 1
 smasUpdater.checkFileDownloadIndicator = 0
 
@@ -112,7 +109,7 @@ function smasUpdater.onDownloadComplete(bufferData, url, filename)
 end
 
 function smasUpdater.onDraw()
-    if smasUpdater.doUpdate and not Misc.inEditor() and not io.exists(Misc.episodePath().."dontupdate") then
+    if smasUpdater.doUpdate then
         if smasUpdater.drawUpdateText then
             textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2, maxWidth = 800}
             if Internet.downloadFilename() ~= "" then
@@ -223,42 +220,7 @@ function smasUpdater.onDraw()
                     Routine.run(smasUpdater.launchAfterNoUpdate)
                 end
             end
-        else
-            if smasUpdater.updateStage == 5 then
-                
-            end
         end
-    elseif Misc.inEditor() then
-        UpdateMessageForUpdater = "On the editor. Skipping update..."
-        
-        if smasUpdater.drawUpdateText then
-            textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-        end
-        
-        if not smasUpdater.doneUpdating then
-            if smasUpdater.updateTimer == 1 then
-                Routine.run(smasUpdater.launchAfterNoUpdate)
-            end
-        end
-    else
-        if smasUpdater.doUpdate then
-            UpdateMessageForUpdater = "Skipping update..."
-
-            if smasUpdater.drawUpdateText then
-                textplus.print{text = UpdateMessageForUpdater, pivot = vector.v2(0.5,0.5), x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(290, 2), priority = 5, color = Color.white, font = statusFont, xscale = 2, yscale = 2}
-            end
-
-            smasUpdater.updateTimer = smasUpdater.updateTimer + 1
-            
-            if not smasUpdater.doneUpdating then
-                if smasUpdater.updateTimer == 1 then
-                    Routine.run(smasUpdater.launchAfterNoUpdate)
-                end
-            end
-        end
-    end
-    if smasUpdater.fadeToBlack then
-        Graphics.drawScreen{color = Color.black, priority = 10}
     end
 end
 
