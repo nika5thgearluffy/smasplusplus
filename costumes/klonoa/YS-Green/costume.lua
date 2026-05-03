@@ -6,8 +6,10 @@ local smasExtraSounds = require("smasExtraSounds")
 local smasFunctions = require("smasFunctions")
 
 costume.loaded = false
+local plr
 
-function costume.onInit()
+function costume.onInit(p)
+    plr = p
     registerEvent(costume, "onDraw")
     registerEvent(costume, "onTick")
     klonoa.flapAnimSpeed=3
@@ -19,7 +21,7 @@ function costume.onInit()
 end
 
 function costume.onTick()
-    ringbox.y = player.y + 0
+    ringbox.y = plr.y + 0
 end
 
 function costume.onDraw()
@@ -27,9 +29,9 @@ function costume.onDraw()
         v.height = 64
     end
     
-    if(player.holdingNPC) then
-        player.holdingNPC.x = player.x-65536
-        player.holdingNPC.y = player.y-65536
+    if(plr.holdingNPC) then
+        plr.holdingNPC.x = plr.x-65536
+        plr.holdingNPC.y = plr.y-65536
     end
 end
 
@@ -38,7 +40,7 @@ function costume.onCleanup(playerObject)
     
     klonoa.flapAnimSpeed = 6
     ringbox = colliders.Box(0, 0, 32, 32)
-    ringbox.y = player.y + 16
+    ringbox.y = playerObject.y + 16
 end
 
 Misc.storeLatestCostumeData(costume)

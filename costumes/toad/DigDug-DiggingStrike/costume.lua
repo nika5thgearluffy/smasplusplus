@@ -32,7 +32,7 @@ end
 
 function costume.onDrawEnd()
     if smasCharacterGlobals.abilitySettings.taizoMuteMusicWhenNotMoving then
-        if table.icontains(smasTables._noLevelPlaces,Level.filename()) == false then
+        if not table.icontains(smasTables._noLevelPlaces,Level.filename()) then
             if Level.endState() == 0 and plr.deathTimer == 0 and not Misc.isPaused() then
                 if plr.speedX == 0 and plr.speedY == 0 then
                     Audio.MusicSetPos(musicTimer)

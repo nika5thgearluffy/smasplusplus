@@ -21,11 +21,6 @@ function smasCharacterChanger.onInitAPI()
     registerEvent(smasCharacterChanger,"onDraw")
     registerEvent(smasCharacterChanger,"onInputUpdate")
     registerEvent(smasCharacterChanger,"onKeyboardPressDirect")
-    
-    if SMBX_VERSION == VER_SEE_MOD then
-        registerEvent(smasCharacterChanger,"onWindowFocus")
-        registerEvent(smasCharacterChanger,"onWindowUnfocus")
-    end
 end
 
 if SaveData.currentCharacter == nil then
@@ -186,6 +181,8 @@ local menuBGMObject --Used for the menu BGM
 local started = false
 local ending = false
 
+local colorIncrease = 0
+
 local function textPrintCentered(t, x, y, color) --Taken from the input config menu from the editor and edited slightly. Thanks Hoeloe lol
     textplus.print{text=t, x=x, y=y, plaintext=true, pivot=vector.v2(0.5,0.5), xscale=1.5, yscale=1.5, color=color, priority = 7.4, font = smbx13font}
 end
@@ -324,18 +321,6 @@ function smasCharacterChanger.onInputUpdate()
     end
 end
 
-function smasCharacterChanger.onWindowUnfocus()
-    if smasCharacterChanger.menuActive and started then
-        --menuBGMObject:pause()
-    end
-end
-
-function smasCharacterChanger.onWindowFocus()
-    if smasCharacterChanger.menuActive and started then
-        --menuBGMObject:resume()
-    end
-end
-
 function smasCharacterChanger.onDraw()
     SaveData.currentCharacter = player.character
     if Player.count() >= 2 then
@@ -358,10 +343,21 @@ function smasCharacterChanger.onDraw()
                 Misc.pause()
                 smasCharacterChanger.tvScrollNumber = smasCharacterChanger.tvScrollNumber + 9.2
                 Graphics.drawImageWP(smasCharacterChanger.tvImage, Screen.calculateCameraDimensions(-20, 1), Screen.calculateCameraDimensions(smasCharacterChanger.tvScrollNumber, 2), 7.5)
+                local tvOffColor = Color(0, 0, 0)
+                Graphics.drawBox{x = Screen.calculateCameraDimensions(0, 1), y = Screen.calculateCameraDimensions(smasCharacterChanger.tvScrollNumber, 2), width = 800, height = 600, color = tvOffColor .. 1, priority = 7.3}
             end
             if smasCharacterChanger.animationTimer >= 65 then
                 smasCharacterChanger.tvScrollNumber = 0
                 Graphics.drawImageWP(smasCharacterChanger.tvImage, Screen.calculateCameraDimensions(-20, 1), Screen.calculateCameraDimensions(-28, 2), 7.5)
+                local tvOffColor = Color(0, 0, 0)
+                Graphics.drawBox{x = Screen.calculateCameraDimensions(0, 1), y = Screen.calculateCameraDimensions(0, 2), width = 800, height = 600, color = tvOffColor .. 1, priority = 7.3}
+            end
+            if smasCharacterChanger.animationTimer >= 80 then
+                if colorIncrease < 1 then
+                    colorIncrease = colorIncrease + 0.025
+                end
+                local tvOffColor = Color(colorIncrease, colorIncrease, colorIncrease)
+                Graphics.drawBox{x = Screen.calculateCameraDimensions(0, 1), y = Screen.calculateCameraDimensions(0, 2), width = 800, height = 600, color = tvOffColor .. 1, priority = 7.3}
             end
         end
         if started then
@@ -432,6 +428,7 @@ function smasCharacterChanger.onDraw()
         if not smasCharacterChanger.animationActive and started then
             Graphics.drawImageWP(smasCharacterChanger.tvImage, Screen.calculateCameraDimensions(-20, 1), Screen.calculateCameraDimensions(-28, 2), 7.5)
             smasCharacterChanger.animationTimer = 0
+            colorIncrease = 0
         end
     elseif not smasCharacterChanger.menuActive and started then
         if menuBGMObject ~= nil then
@@ -448,6 +445,8 @@ function smasCharacterChanger.onDraw()
             if smasCharacterChanger.animationTimer >= 1 and smasCharacterChanger.animationTimer <= 34 then
                 smasCharacterChanger.tvScrollNumber = smasCharacterChanger.tvScrollNumber - 20
                 Graphics.drawImageWP(smasCharacterChanger.tvImage, Screen.calculateCameraDimensions(-20, 1), Screen.calculateCameraDimensions(smasCharacterChanger.tvScrollNumber, 2), 7.5)
+                local tvOffColor = Color(0, 0, 0)
+                Graphics.drawBox{x = Screen.calculateCameraDimensions(0, 1), y = Screen.calculateCameraDimensions(smasCharacterChanger.tvScrollNumber, 2), width = 800, height = 600, color = tvOffColor .. 1, priority = 7.3}
             end
         end
     end

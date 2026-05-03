@@ -34,13 +34,17 @@ function costume.onInit(p)
 end
 
 function costume.onDraw()
-    if plr.powerup >= 3 then
-        plr.powerup = 2
+    for _,p in ipairs(Player.get()) do
+        if p.powerup >= 3 then
+            p.powerup = 2
+        end
     end
 end
 
-function costume.onPostPlayerKill()
-    Sound.playSFX("mario/GO-10SecondRun/fanfares/go-game-over.ogg")
+function costume.onPostPlayerKill(pl)
+    if pl.idx == plr.idx then
+        Sound.playSFX("mario/GO-10SecondRun/fanfares/go-game-over.ogg")
+    end
 end
 
 function costume.onCleanup(p)

@@ -2,7 +2,10 @@ local costume = {}
 local klonoa = API.load("characters/klonoaa");
 local smasFunctions = require("smasFunctions")
 
-function costume.onInit()
+local plr
+
+function costume.onInit(p)
+    plr = p
     registerEvent(costume, "onDraw");
     klonoa.flapAnimSpeed=3;
     if not costume.loaded then
@@ -16,9 +19,9 @@ function costume.onDraw()
         v.height = 64;
     end
     
-    if(player.holdingNPC) then
-        player.holdingNPC.x = player.x-65536;
-        player.holdingNPC.y = player.y-65536;
+    if(plr.holdingNPC) then
+        plr.holdingNPC.x = plr.x-65536;
+        plr.holdingNPC.y = plr.y-65536;
     end
 end
 

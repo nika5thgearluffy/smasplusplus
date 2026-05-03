@@ -13,8 +13,8 @@ local jumpingactive = false
 local cooldown = 0
 local timer = 50
 local timer2 = 5
-local p = player
 local hasJumped = false
+local plr
 
 local leafPowerups = table.map{PLAYER_LEAF,PLAYER_TANOOKI}
 
@@ -66,7 +66,9 @@ local function isOnGround(p)
     )
 end
 
-local atPSpeed = p:mem(0x16C,FIELD_BOOL) or p:mem(0x16E,FIELD_BOOL)
+local function atPSpeed(p)
+    return p:mem(0x16C,FIELD_BOOL) or p:mem(0x16E,FIELD_BOOL)
+end
 
 local function isSlowFalling(p)
     return (leafPowerups[p.powerup] and p.speedY > 0 and (p.keys.jump or p.keys.altJump))
@@ -88,13 +90,13 @@ local function canFall(p)
 end
 
 function costume.onStart()
-    if SaveData.toggleCostumeAbilities == true then
+    if SaveData.toggleCostumeAbilities then
         --Audio.playSFX("costumes/mario/SpongeBobSquarePants/start-level.ogg")
     end
 end
 
 function costume.onPostNPCKill(npc, harmType)
-    if SaveData.toggleCostumeAbilities == true then
+    if SaveData.toggleCostumeAbilities then
         local items = table.map{9,184,185,249,14,182,183,34,169,170,277,264,996,994}
         local rngkey = rng.randomInt(1,12)
         if items[npc.id] and Colliders.collide(plr, npc) then
@@ -106,37 +108,37 @@ function costume.onPostNPCKill(npc, harmType)
 end
 
 function costume.onTickEnd()
-    if SaveData.toggleCostumeAbilities == true then
-        if canFall(p) then
-            costume.useFallingFrame = player.speedY > 0
+    if SaveData.toggleCostumeAbilities then
+        if canFall(plr) then
+            costume.useFallingFrame = plr.speedY > 0
         else
             costume.useFallingFrame = false
         end
     end
 end
 
-local function isSlidingOnIce(plr)
-    return (plr:mem(0x0A,FIELD_BOOL) and (not plr.keys.left and not plr.keys.right))
+local function isSlidingOnIce(p)
+    return (p:mem(0x0A,FIELD_BOOL) and (not p.keys.left and not p.keys.right))
 end
 
 function costume.onTick(repeated)
     if SaveData.toggleCostumeAbilities then
-        if player.speedX ~= 0 and not isSlidingOnIce(plr) then
-            --if player.frame == 3 or player.frame == 9 then
+        if plr.speedX ~= 0 and not isSlidingOnIce(plr) then
+            --if plr.frame == 3 or plr.frame == 9 then
                 --SFX.play("costumes/SpongeBobSquarePants/spongebob-footsteps.ogg", 0.4, 1, 40)
             --end
         end
-        if leafPowerups[p.powerup] then
-            if p.holdingNPC == nil then
-                if isSlowFalling(p) then
+        if leafPowerups[plr.powerup] then
+            if plr.holdingNPC == nil then
+                if isSlowFalling(plr) then
                     plr:setFrame(27)
                     timer2 = timer2 - 1
                     if timer2 == 4 then
-                        if table.icontains(smasTables._noLevelPlaces,Level.filename()) == false then
+                        if not table.icontains(smasTables._noLevelPlaces,Level.filename()) then
                             SFX.play(smasCharacterGlobals.soundSettings.spongeBobFlyBeginSFX, 1, 1, 10)
                         end
                     elseif timer2 <= 3 then
-                        if table.icontains(smasTables._noLevelPlaces,Level.filename()) == false then
+                        if not table.icontains(smasTables._noLevelPlaces,Level.filename()) then
                             if smasCharacterGlobals.soundSettings.spongeBobFlyBeginSFX.playing then
                                 smasCharacterGlobals.soundSettings.spongeBobFlyBeginSFX:stop()
                             end
@@ -144,17 +146,17 @@ function costume.onTick(repeated)
                     end
                 end
             end
-            if player:isGroundTouching() == true or player:isClimbing() == true then
+            if plr:isGroundTouching() or plr:isClimbing() then
                 timer2 = 5
             end
         end
-        if player:isOnGround() or player:isClimbing() then --Checks to see if the player is on the ground, is climbing, is not underwater (smasFunctions), the death timer is at least 0, the end state is none, or the mount is a clown car
+        if plr:isOnGround() or plr:isClimbing() then --Checks to see if the player is on the ground, is climbing, is not underwater (smasFunctions), the death timer is at least 0, the end state is none, or the mount is a clown car
             hasJumped = false
-        elseif (not hasJumped) and player.keys.jump == KEYS_PRESSED and player.deathTimer == 0 and Level.endState() == 0 and player.mount == 0 and not Playur.underwater(player) then
+        elseif (not hasJumped) and plr.keys.jump == KEYS_PRESSED and plr.deathTimer == 0 and Level.endState() == 0 and plr.mount == 0 and not Playur.underwater(plr) then
             if smasCharacterGlobals.abilitySettings.spongeBobCanDoubleJump then
                 hasJumped = true
-                player:mem(0x11C, FIELD_WORD, 16)
-                if table.icontains(smasTables._noLevelPlaces,Level.filename()) == false then
+                plr:mem(0x11C, FIELD_WORD, 16)
+                if not table.icontains(smasTables._noLevelPlaces,Level.filename()) then
                     Sound.playSFX(smasCharacterGlobals.soundSettings.spongeBobDoubleJumpSFX)
                 end
             end

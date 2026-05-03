@@ -6,8 +6,10 @@ local smasFunctions = require("smasFunctions")
 local costume = {}
 
 costume.loaded = false
+local plr
 
 function costume.onInit(p)
+    plr = p
     registerEvent(costume,"onTick")
     registerEvent(costume,"onPostPlayerHarm")
     registerEvent(costume,"onPostNPCKill")
@@ -27,10 +29,10 @@ function costume.onPostNPCKill(npc, harmType)
     local healitems = table.map{9,184,185,249,14,182,183,34,169,170,277,264}
     local specialitems = table.map{34,169,170}
     local rngkey
-    if items[npc.id] and Colliders.collide(player, npc) then
+    if items[npc.id] and Colliders.collide(plr, npc) then
         Sound.playSFX(smasCharacterGlobals.soundSettings.kaylooPowerupVoiceSFX, 1, 1, smasCharacterGlobals.soundSettings.kaylooPowerupVoiceSFXDelay)
     end
-    if specialitems[npc.id] and Colliders.collide(player, npc) then
+    if specialitems[npc.id] and Colliders.collide(plr, npc) then
         Sound.playSFX(smasCharacterGlobals.soundSettings.kaylooSpecialPowerupVoiceSFX, 1, 1, smasCharacterGlobals.soundSettings.kaylooSpecialPowerupVoiceSFXDelay)
     end
 end

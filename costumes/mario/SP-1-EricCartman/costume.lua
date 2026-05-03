@@ -12,6 +12,7 @@ local snowballymove = 0
 local killed = false
 
 local snowballImg = Graphics.loadImageResolved("costumes/mario/SP-1-EricCartman/snowball.png")
+local plr
 
 function costume.onInit(p)
     plr = p
@@ -61,11 +62,11 @@ local function harmNPC(npc,...) -- npc:harm but it returns if it actually did an
 end
 
 function costume.onKeyboardPress(keyCode, repeated)
-    if SaveData.toggleCostumeAbilities == true then
-        local specialKey = SaveData.SMASPlusPlus.player[1].controls.specialKey
+    if SaveData.toggleCostumeAbilities then
+        local specialKey = SaveData.SMASPlusPlus.player[plr.idx].controls.specialKey
         if keyCode == smasTables.keyboardMap[specialKey] and not repeated then
             if smasCharacterGlobals.abilitySettings.southParkEricCanThrowSnowballs then
-                costume.throwSnowball()
+                costume.throwSnowball(plr)
             end
         end
     end
@@ -74,29 +75,29 @@ end
 function costume.onControllerButtonPress(button, playerIdx)
     if SaveData.toggleCostumeAbilities == true then
         if playerIdx == 1 then
-            if button == SaveData.SMASPlusPlus.player[1].controls.specialButton then
+            if button == SaveData.SMASPlusPlus.player[playerIdx].controls.specialButton then
                 if smasCharacterGlobals.abilitySettings.southParkEricCanThrowSnowballs then
-                    costume.throwSnowball()
+                    costume.throwSnowball(Player(playerIdx))
                 end
             end
         end
     end
 end
 
-function costume.throwSnowball()
-    if not (plr.powerup == 5) then
-        plr:mem(0x120, FIELD_BOOL, false) --Making sure Alt Jump isn't pressed until after the attack
-        plr:mem(0x172, FIELD_BOOL, false) --No run either, in case
-        local x = plr.x
-        local y = plr.y + plr.height/2 - 5
-        if (plr.direction == 1) then
-            x = x + plr.width
+function costume.throwSnowball(p)
+    if not (p.powerup == 5) then
+        p:mem(0x120, FIELD_BOOL, false) --Making sure Alt Jump isn't pressed until after the attack
+        p:mem(0x172, FIELD_BOOL, false) --No run either, in case
+        local x = p.x
+        local y = p.y + p.height/2 - 5
+        if (p.direction == 1) then
+            x = x + p.width
         end
         local snowballid = 266
-        local snowballNpc = NPC.spawn(snowballid, x, y, player.section, false, true)
+        local snowballNpc = NPC.spawn(snowballid, x, y, p.section, false, true)
         costume.usesnowball = true
         snowballNpc.frames = 1
-        if (plr.direction == 1) then
+        if (p.direction == 1) then
             snowballNpc.speedX = 8.5
             snowballNpc.speedY = 1
         else
@@ -109,8 +110,8 @@ function costume.throwSnowball()
         costume.usesnowball = false
         cooldown = 35
         if cooldown <= 0 then
-            plr:mem(0x120, FIELD_BOOL, true)
-            plr:mem(0x172, FIELD_BOOL, true)
+            p:mem(0x120, FIELD_BOOL, true)
+            p:mem(0x172, FIELD_BOOL, true)
         end
     end
 end

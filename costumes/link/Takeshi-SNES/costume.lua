@@ -5,6 +5,7 @@ local smasFunctions = require("smasFunctions")
 local costume = {}
 
 costume.loaded = false
+local plr
 
 function costume.onInit(p)
     plr = p
@@ -25,8 +26,8 @@ function costume.onInit(p)
 end
 
 function costume.onInputUpdate()
-    if SaveData.toggleCostumeAbilities == true then
-        if player.keys.run == KEYS_DOWN then
+    if SaveData.toggleCostumeAbilities then
+        if plr.keys.run == KEYS_DOWN then
             plr:mem(0x168, FIELD_FLOAT, 10)
         else
             plr:mem(0x168, FIELD_FLOAT, 0)

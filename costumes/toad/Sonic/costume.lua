@@ -40,6 +40,7 @@ local cooldown = 0
 
 function costume.onInit(p)
     plr = p
+    homingCollider = Colliders.Circle(plr.x + 1 * plr.width, plr.y + 1 * plr.height, 160)
     registerEvent(costume,"onStart")
     registerEvent(costume,"onDraw")
     registerEvent(costume,"onPlayerHarm")
@@ -67,16 +68,16 @@ function costume.onInit(p)
     smasHud.visible.itemBox = false
 end
 
-local function isSlidingOnIce()
-    return (player:mem(0x0A,FIELD_BOOL) and (not player.keys.left and not player.keys.right))
+local function isSlidingOnIce(p)
+    return (p:mem(0x0A,FIELD_BOOL) and (not p.keys.left and not p.keys.right))
 end
 
 -- Detects if the player is on the ground, the redigit way. Sometimes more reliable than just p:isOnGround().
 local function isOnGround(p)
     return (
-        player.speedY == 0 -- "on a block"
-        or player:mem(0x176,FIELD_WORD) ~= 0 -- on an NPC
-        or player:mem(0x48,FIELD_WORD) ~= 0 -- on a slope
+        p.speedY == 0 -- "on a block"
+        or p:mem(0x176,FIELD_WORD) ~= 0 -- on an NPC
+        or p:mem(0x48,FIELD_WORD) ~= 0 -- on a slope
     )
 end
 
@@ -103,25 +104,25 @@ local function harmNPC(npc,...) -- npc:harm but it returns if it actually did an
 end
 
 function costume.onStart()
-    lefthomingtrail:attach(player)
-    righthomingtrail:attach(player)
+    lefthomingtrail:attach(plr)
+    righthomingtrail:attach(plr)
 end
 
 local exclusionNPCs = table.map{13,263,265}
 
 function costume.onTick()
-    if SaveData.toggleCostumeAbilities == true then
-        local isJumping = player:mem(0x11C, FIELD_WORD) and not isOnGround(p) and not player:mem(0x50,FIELD_BOOL) --Jumping detection
+    if SaveData.toggleCostumeAbilities then
+        local isJumping = plr:mem(0x11C, FIELD_WORD) and not isOnGround(plr) and not plr:mem(0x50,FIELD_BOOL) --Jumping detection
         if isJumping then
             balled = true
         elseif not isJumping then
             balled = false
         end
         --plr.powerup = PLAYER_BIG
-        player:mem(0x160, FIELD_WORD, 0) --Fireballs are now less delayed!
-        local hitNPCs = Colliders.getColliding{a = player, b = hitNPCs, btype = Colliders.NPC}
+        plr:mem(0x160, FIELD_WORD, 0) --Fireballs are now less delayed!
+        local hitNPCs = Colliders.getColliding{a = plr, b = hitNPCs, btype = Colliders.NPC}
         
-        if balled and player.holdingNPC == nil and player.standingNPC == nil and not hit then
+        if balled and plr.holdingNPC == nil and plr.standingNPC == nil and not hit then
             for _,npc in ipairs(hitNPCs) do
                 if exclusionNPCs[npc.id] then
                     return
@@ -139,7 +140,7 @@ function costume.onTick()
             end
         end
         
-        if spinballed and player.speedX ~= 0 and player:mem(0x26, FIELD_WORD) == 0 and isOnGround(p) and not hit then
+        if spinballed and plr.speedX ~= 0 and plr:mem(0x26, FIELD_WORD) == 0 and isOnGround(p) and not hit then
             for _,npc in ipairs(hitNPCs) do
                 if npc ~= v and npc.id > 0 then
                     -- Hurt the NPC, and make sure to not give the automatic score
@@ -177,15 +178,15 @@ function costume.onTick()
                 Defines.gravity = Defines.gravity * 2
             end
         end
-        if (player.powerup == 5) == false then
-            if not (isOnGround(p)) and (player.keys.altRun == KEYS_PRESSED) and not homing then
+        if (plr.powerup == 5) == false then
+            if not (isOnGround(p)) and (plr.keys.altRun == KEYS_PRESSED) and not homing then
                 homing = true
             end
         end
 
         if (flipstate) or balled and not hit and not GameData.winStateActive then
             --Rotate Toad
-            player:setFrame(-50) -- Make player invisible
+            plr:setFrame(-50) -- Make player invisible
             rotation = rotation + 36
             gravtimer = gravtimer + 1
             spintimer = spintimer + 1
@@ -196,11 +197,11 @@ function costume.onTick()
             Graphics.drawBox{
                 texture      = toadspins,
                 sceneCoords  = true,
-                x            = player.x + (player.width / 2),
-                y            = player.y + (player.height / 2),
+                x            = plr.x + (plr.width / 2),
+                y            = plr.y + (plr.height / 2),
                 width        = 150,
                 height       = 150,
-                sourceX      = 150 * (player.powerup - 1),
+                sourceX      = 150 * (plr.powerup - 1),
                 sourceY      = 150 * corksframe,
                 sourceWidth  = 150,
                 sourceHeight = 150,
@@ -222,18 +223,18 @@ end
 
 function costume.onInputUpdate()
     if SaveData.toggleCostumeAbilities then
-        if player.speedX ~= 0 and player.keys.down == KEYS_DOWN and isOnGround(p) then
+        if plr.speedX ~= 0 and plr.keys.down == KEYS_DOWN and isOnGround(p) then
             spinballed = true
             flipstate = true
-        elseif player.speedX == 0 and player.keys.down == KEYS_UP or not isOnGround(p) then
+        elseif plr.speedX == 0 and plr.keys.down == KEYS_UP or not isOnGround(p) then
             spinballed = false
             flipstate = false
         end
-        if player.speedX ~= 0 and player.keys.down == KEYS_PRESSED and isOnGround(p) then
+        if plr.speedX ~= 0 and plr.keys.down == KEYS_PRESSED and isOnGround(p) then
             SFX.play("costumes/toad/Sonic/sonic-charge.ogg")
         end
-        if player.keys.altRun == KEYS_PRESSED then
-            player:mem(0x172,FIELD_BOOL,false) --Disables alt running
+        if plr.keys.altRun == KEYS_PRESSED then
+            plr:mem(0x172,FIELD_BOOL,false) --Disables alt running
         end
         if (homing) then
             if collidersize < 160 then
@@ -249,52 +250,52 @@ function costume.onInputUpdate()
                 end
             end
         }) do
-                    if ((n.x > player.x) and player.direction > 0) or ((n.x < player.x) and player.direction < 0) then
+                    if ((n.x > plr.x) and plr.direction > 0) or ((n.x < plr.x) and plr.direction < 0) then
                         connected = true                    -- Toad connects a Homing Attack
                         Sound.playSFX("toad/Sonic/homing.ogg")
                         n.speedY = 0
                         n.speedX = 0                        -- you should hit the target, so it stops just for you!
-                        player:mem(0x3A,FIELD_WORD,40)        -- you don't need things like... GRAVITY
+                        plr:mem(0x3A,FIELD_WORD,40)        -- you don't need things like... GRAVITY
                         Defines.player_runspeed = 12
-                        player:mem(0x11E,FIELD_BOOL,false)    -- disables jumping midair
-                        player:mem(0x120,FIELD_BOOL,false)    -- disables spinjumping midair
-                        if math.abs(n.x - player.x) > 48 then     -- if Toad is further away, make him faster
-                            player.speedX = player.direction * 10
-                        elseif math.abs(n.x - player.x) < 48 then -- if Toad is near the enemy, make him slower (to not overshoot the goal)
-                            player.speedX = player.direction * 5
+                        plr:mem(0x11E,FIELD_BOOL,false)    -- disables jumping midair
+                        plr:mem(0x120,FIELD_BOOL,false)    -- disables spinjumping midair
+                        if math.abs(n.x - plr.x) > 48 then     -- if Toad is further away, make him faster
+                            plr.speedX = plr.direction * 10
+                        elseif math.abs(n.x - plr.x) < 48 then -- if Toad is near the enemy, make him slower (to not overshoot the goal)
+                            plr.speedX = plr.direction * 5
                         end
-                        player.speedY = (n.y - player.y - 20)    -- the vertical speed you need homing in on your enemy
-                        if player.speedY < -10 then
-                            player.speedY = -10                    -- making this the maximum speed they can get vertically
+                        plr.speedY = (n.y - plr.y - 20)    -- the vertical speed you need homing in on your enemy
+                        if plr.speedY < -10 then
+                            plr.speedY = -10                    -- making this the maximum speed they can get vertically
                         end
                         gravtimer = gravtimer + 1
-                        player:mem(0x140, FIELD_WORD,40)        -- makes you invincible for 40 frames
-                        if (player.direction > 0) and (gravtimer > 1) then
+                        plr:mem(0x140, FIELD_WORD,40)        -- makes you invincible for 40 frames
+                        if (plr.direction > 0) and (gravtimer > 1) then
                             --righthomingtrail:Emit(1)
                             gravtimer = 0
-                        elseif (player.direction < 0) and (gravtimer > 1) then
+                        elseif (plr.direction < 0) and (gravtimer > 1) then
                             --lefthomingtrail:Emit(1)
                             gravtimer = 0
                         end
                     end
             end
 
-        if (player.character == CHARACTER_TOAD and isOnGround(p)) then
+        if (plr.character == CHARACTER_TOAD and isOnGround(p)) then
             homing = false
             connected = false
             collidersize = 0
-        elseif (player.character == CHARACTER_TOAD) and (connected and homing) then
+        elseif (plr.character == CHARACTER_TOAD) and (connected and homing) then
             for p, n in ipairs(Colliders.getColliding{a = hominghitCollider, btype = Colliders.NPC, filter = function(o) if NPC.HITTABLE_MAP[o.id] and not o.friendly and not o.isHidden then return true end end}) do
-                n.speedX = player.direction * 4
+                n.speedX = plr.direction * 4
                 n.speedY = -6                    -- bounce them away, if they aren't ded
                 n:harm(3)                        -- hit the enemy
-                player.speedY = -12                -- bounce Toad up a bit
+                plr.speedY = -12                -- bounce Toad up a bit
                 Defines.player_runspeed = 6
-                player.speedX = 0
+                plr.speedX = 0
                 collidersize = 0
                 homing = false                    -- reset homing attack checks
                 connected = false
-                spinDirection = player.direction
+                spinDirection = plr.direction
                 flipstate = true
                 gravtimer = 0
             end
@@ -310,7 +311,7 @@ function costume.onDraw()
         if balled and not hit then
             plr.frame = 4
         end
-        if spinballed and player.speedX ~= 0 and player.keys.down == KEYS_DOWN and not hit then
+        if spinballed and plr.speedX ~= 0 and plr.keys.down == KEYS_DOWN and not hit then
             plr.frame = 4
         end
         lefthomingtrail:draw(-30)
@@ -320,13 +321,13 @@ end
 
 function costume.onTickEnd()
     homingCollider.radius = collidersize
-    homingCollider.x = player.x + (player.width / 2)
-    homingCollider.y = player.y + (player.width / 2)
+    homingCollider.x = plr.x + (plr.width / 2)
+    homingCollider.y = plr.y + (plr.width / 2)
 
-    hominghitCollider.width = player.width + 22
-    hominghitCollider.height = player.height + 22
-    hominghitCollider.x = player.x + (player.width / 2)
-    hominghitCollider.y = player.y + (player.height / 2)
+    hominghitCollider.width = plr.width + 22
+    hominghitCollider.height = plr.height + 22
+    hominghitCollider.x = plr.x + (plr.width / 2)
+    hominghitCollider.y = plr.y + (plr.height / 2)
 end    
 
 function costume.onPlayerHarm(e, p)
