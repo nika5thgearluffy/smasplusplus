@@ -1476,9 +1476,6 @@ function smasExtraSounds.onPostBlockHit(block, fromUpper, playerornil) --Let's s
                 
                 
                 --**CONTENT ID DETECTION**
-                if block.contentID == nil then --For blocks that are already used
-                    
-                end
                 if block.contentID == 1225 or block.contentID == 1226 or block.contentID == 1227 then --Add 1000 to get an actual content ID number. The first three are vine blocks.
                     if not smasExtraSounds.useOriginalBlockSproutInstead then
                         smasExtraSounds.playSFX(92)
@@ -1491,13 +1488,9 @@ function smasExtraSounds.onPostBlockHit(block, fromUpper, playerornil) --Let's s
                     elseif smasExtraSounds.useOriginalBlockSproutInstead then
                         smasExtraSounds.playSFX(7)
                     end
-                elseif block.contentID == 0 then --This is to prevent a coin sound from playing when hitting an nonexistant block
-                    
-                elseif block.contentID == 1000 then --Same as last
-                    
-                elseif block.contentID >= 1001 then --Greater than blocks, exceptional to vine blocks, will play a mushroom spawn sound
+                elseif block.contentID >= 1001 and not block.contentID == 1000 then --Greater than blocks, exceptional to vine blocks, will play a mushroom spawn sound
                     smasExtraSounds.playSFX(7)
-                elseif block.contentID <= 99 then --Elseif, we'll play a coin sound with things less than 99, the coin block limit
+                elseif block.contentID <= 99 and block.contentID >= 1 then --Elseif, we'll play a coin sound with things less than 99, the coin block limit
                     if playerornil then
                         if normalCharacters[playerornil.character] then
                             if smasExtraSounds.enableBlockCoinCollecting then
