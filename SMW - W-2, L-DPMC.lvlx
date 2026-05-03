@@ -5029,7 +5029,7 @@ ID:410;X:-139744;Y:-140096;W:32;H:32;LR:"Non-Moving Platforms";
 ID:411;X:-139232;Y:-143424;W:32;H:32;LR:"Non-Moving Platforms";
 ID:432;X:-139232;Y:-144000;W:32;H:32;LR:"Non-Moving Platforms";
 ID:413;X:-139904;Y:-141216;W:32;H:32;LR:"Non-Moving Platforms";
-ID:88;X:-139552;Y:-140768;W:32;H:32;CN:34;LR:"Non-Moving Platforms";
+ID:88;X:-139552;Y:-140768;W:32;H:32;CN:943;LR:"Non-Moving Platforms";
 ID:414;X:-139776;Y:-143488;W:32;H:32;LR:"Non-Moving Platforms";
 ID:413;X:-139968;Y:-143616;W:32;H:32;LR:"Non-Moving Platforms";
 ID:413;X:-139808;Y:-140576;W:32;H:32;LR:"Non-Moving Platforms";

@@ -55,11 +55,6 @@ if not table.icontains(smasTables._noLevelPlaces, Level.filename()) then
             aw = require("anotherwalljump")
             aw.registerAllPlayersDefault()
         end
-        if SaveData.SMASPlusPlus.accessibility.enableGroundPound then
-            SysManager.sendToConsole("Ground pounding activated! Loading the GroundPound library...")
-            GP = require("GroundPound")
-            GP.enabled = true
-        end
     end
 end
 
@@ -88,22 +83,6 @@ if (table.icontains(smasTables._noTransitionLevels,Level.filename())) or (GameDa
     warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
     warpTransition.crossSectionTransition = warpTransition.TRANSITION_NONE
     warpTransition.activateOnInstantWarps = false
-end
-
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    SysManager.sendToConsole("1.3 Mode active! Changing some settings...")
-    warpTransition.musicFadeOut = false
-    warpTransition.levelStartTransition = warpTransition.TRANSITION_NONE
-    warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
-    warpTransition.crossSectionTransition = warpTransition.TRANSITION_NONE
-    warpTransition.activateOnInstantWarps = false
-    local keyhole = require("tweaks/keyhole") --Disable X2 keyhole effect
-    keyhole.onCameraDraw = function() end
-    --mega2.sfxFile = Misc.resolveSoundFile("_OST/_Sound Effects/1.3Mode/megashroom13.ogg")
-    --mega2.megagrowsfx = Misc.resolveSoundFile("_OST/_Sound Effects/1.3Mode/megashroom-grow-1.3.ogg")
-    --mega2.megashrinksfx = Misc.resolveSoundFile("_OST/_Sound Effects/1.3Mode/megashroom-shrink-1.3.ogg")
-    --mega2.megarunningoutsfx = Misc.resolveSoundFile("_OST/_Sound Effects/1.3Mode/megashroom-runningout-1.3.ogg")
-    --starman.sfxFile = Misc.resolveSoundFile("_OST/_Sound Effects/1.3Mode/starman.ogg")
 end
 
 local killed = false

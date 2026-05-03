@@ -124,6 +124,7 @@ _G.extraNPCProperties = require("extraNPCProperties")
 _G.cursor = require("cursor")
 _G.Timer = require("timer-mod")
 _G.autoscrolla = require("autoscrolla")
+_G.customPowerups = require("customPowerups")
 
 -- Create the user files directory if it doesn't exist yet...
 if not File.folderExists(SysManager.getUserFilesSMASPlusPlusDirectory()) then

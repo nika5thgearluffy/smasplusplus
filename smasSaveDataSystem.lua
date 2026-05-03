@@ -185,6 +185,10 @@ if GameData.SMASPlusPlus.game.updateDownloaded == nil then
     GameData.SMASPlusPlus.game.updateDownloaded = false
 end
 
+if SaveData.SMASPlusPlus.game.customPowerups == nil then
+    SaveData.SMASPlusPlus.game.customPowerups = {}
+end
+
 
 
 

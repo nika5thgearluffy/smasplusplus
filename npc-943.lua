@@ -1,154 +1,142 @@
---NPCManager is required for setting basic NPC properties
-local npcManager = require("npcManager")
-local smasFunctions = require("smasFunctions")
+--[[
 
---Create the library table
-local sampleNPC = {}
---NPC_ID is dynamic based on the name of the library file
+    Cape for anotherpowerup.lua
+    by MrDoubleA
+
+    Credit to JDaster64 for the SMW physics guide
+    Graphics from AwesomeZackC
+
+]]
+
+local npcManager = require("npcManager")
+local powerupLib = require("powerups/cp_cape")
+
+local powerup = {}
 local npcID = NPC_ID
 
---Defines NPC config for our NPC. You can remove superfluous definitions.
-local sampleNPCSettings = {
-	id = npcID,
-	--Sprite size
-    gfxwidth = 96,
-	gfxheight = 32,
-	--Hitbox size. Bottom-center-bound to sprite size.
-	width = 96,
-	height = 32,
-	--Sprite offset from hitbox for adjusting hitbox anchor on sprite.
-	gfxoffsetx = 0,
-	gfxoffsety = 0,
-	--Frameloop-related
-	frames = 1,
-	framestyle = 0,
-	framespeed = 8, --# frames between frame change
-	--Movement speed. Only affects speedX by default.
-	speed = 1,
-	--Collision-related
-	npcblock = false,
-	npcblocktop = false, --Misnomer, affects whether thrown NPCs bounce off the NPC.
-	playerblock = false,
-	playerblocktop = true, --Also handles other NPCs walking atop this NPC.
+local cp = require("customPowerups")
+local capefeather = cp.addPowerup("Cape Feather", "powerups/cp_cape", npcID, true)
+cp.transformWhenSmall(npcID, 185)
 
-	nohurt=true,
+local powerupSettings = {
+	id = npcID,
+	
+	gfxheight = 32,
+	gfxwidth = 32,
+	
+	width = 32,
+	height = 32,
+	
+	gfxoffsetx = 0,
+	gfxoffsety = 2,
+	
+	frames = 1,
+	framestyle = 1,
+	framespeed = 8,
+	
+	speed = 1,
+	
+	npcblock = false,
+	npcblocktop = false,
+	playerblock = false,
+	playerblocktop = false,
+
+	powerup = true,
+	nohurt = true,
 	nogravity = true,
-	noblockcollision = true,
+	noblockcollision = false,
 	nofireball = true,
 	noiceball = true,
-	noyoshi= true,
-	nowaterphysics = true,
-	--Various interactions
-	jumphurt = false, --If true, spiny-like
-	spinjumpsafe = false, --If true, prevents player hurt when spinjumping
-	harmlessgrab = false, --Held NPC hurts other NPCs if false
-	harmlessthrown = false, --Thrown NPC hurts other NPCs if false
+	noyoshi = false,
+	nowaterphysics = false,
+	
+	jumphurt = false,
+	spinjumpsafe = false,
+	harmlessgrab = true,
+	harmlessthrown = true,
 
-	grabside=false,
-	grabtop=false,
-
-	--Identity-related flags. Apply various vanilla AI based on the flag:
-	--iswalker = false,
-	--isbot = false,
-	--isvegetable = false,
-	--isshoe = false,
-	--isyoshi = false,
-	--isinteractable = false,
-	--iscoin = false,
-	--isvine = false,
-	--iscollectablegoal = false,
-	--isflying = false,
-	--iswaternpc = false,
-	--isshell = false,
-
-	--Emits light if the Darkness feature is active:
-	--lightradius = 100,
-	--lightbrightness = 1,
-	--lightoffsetx = 0,
-	--lightoffsety = 0,
-	--lightcolor = Color.white,
-
-	--Define custom properties below
+	isinteractable = true,
+	score = SCORE_1000,
 }
 
---Applies NPC settings
-npcManager.setNpcSettings(sampleNPCSettings)
+npcManager.setNpcSettings(powerupSettings)
+npcManager.registerHarmTypes(npcID,{HARM_TYPE_OFFSCREEN},{})
 
---Register the vulnerable harm types for this NPC. The first table defines the harm types the NPC should be affected by, while the second maps an effect to each, if desired.
-npcManager.registerHarmTypes(npcID,
-	{
-		--HARM_TYPE_JUMP,
-		--HARM_TYPE_FROMBELOW,
-		--HARM_TYPE_NPC,
-		--HARM_TYPE_PROJECTILE_USED,
-		--HARM_TYPE_LAVA,
-		--HARM_TYPE_HELD,
-		--HARM_TYPE_TAIL,
-		--HARM_TYPE_SPINJUMP,
-		--HARM_TYPE_OFFSCREEN,
-		--HARM_TYPE_SWORD
-	}, 
-	{
-		--[HARM_TYPE_JUMP]=10,
-		--[HARM_TYPE_FROMBELOW]=10,
-		--[HARM_TYPE_NPC]=10,
-		--[HARM_TYPE_PROJECTILE_USED]=10,
-		--[HARM_TYPE_LAVA]={id=13, xoffset=0.5, xoffsetBack = 0, yoffset=1, yoffsetBack = 1.5},
-		--[HARM_TYPE_HELD]=10,
-		--[HARM_TYPE_TAIL]=10,
-		--[HARM_TYPE_SPINJUMP]=10,
-		--[HARM_TYPE_OFFSCREEN]=10,
-		--[HARM_TYPE_SWORD]=10,
-	}
-);
+-- Fix for redigit? I guess?
+local stateProperties = {
+	[1] = {speedChange = vector(0.3  ,-0.25),changeStateRequirement = (function(v) return v.speedY <= 0 end),changeDirection = false},
+	[2] = {speedChange = vector(-0.3 ,-0.02),changeStateRequirement = (function(v) return v.speedX <= 0 end),changeDirection = true },
+	[3] = {speedChange = vector(-0.1 ,0.4  ),changeStateRequirement = (function(v) return v.speedY >= 3 end),changeDirection = false},
+	[4] = {speedChange = vector(-0.3 ,-0.25),changeStateRequirement = (function(v) return v.speedY <= 0 end),changeDirection = false},
+	[5] = {speedChange = vector(0.3  ,-0.02),changeStateRequirement = (function(v) return v.speedX >= 0 end),changeDirection = true },
+	[6] = {speedChange = vector(0.1  ,0.4  ),changeStateRequirement = (function(v) return v.speedY >= 3 end),changeDirection = false},
+}
 
---Custom local definitions below
-
-
---Register events
-function sampleNPC.onInitAPI()
-	npcManager.registerEvent(npcID, sampleNPC, "onTickNPC")
-	--npcManager.registerEvent(npcID, sampleNPC, "onTickEndNPC")
-	--npcManager.registerEvent(npcID, sampleNPC, "onDrawNPC")
-	--registerEvent(sampleNPC, "onNPCKill")
+function powerup.onInitAPI()
+	npcManager.registerEvent(npcID,powerup,"onTickNPC")
+	npcManager.registerEvent(npcID,powerup,"onTickEndNPC")
 end
 
-function sampleNPC.onTickNPC(v)
-	--Don't act during time freeze
+function powerup.onTickNPC(v)
 	if Defines.levelFreeze then return end
 	
+	local config = NPC.config[v.id]
 	local data = v.data
 	
-	--If despawned
 	if v.despawnTimer <= 0 then
-		--Reset our properties, if necessary
-		data.initialized = false
+		data.fallingState = nil
 		return
 	end
 
-	--Initialize
-	if not data.initialized then
-		--Initialize necessary data.
-		data.initialized = true
+	if not data.fallingState then
+		data.fallingState = 0
+		data.currentDirection = ((v.direction + 1) * 0.5)
 	end
 
-	--Depending on the NPC, these checks must be handled differently
-	if v:mem(0x12C, FIELD_WORD) > 0    --Grabbed
-	or v:mem(0x136, FIELD_BOOL)        --Thrown
-	or v:mem(0x138, FIELD_WORD) > 0    --Contained within
-	then
-		--Handling
+
+	if v.dontMove then
+		return
+	elseif v:mem(0x138,FIELD_WORD) == 1 then -- Coming out of the top of a block
+		v:mem(0x138,FIELD_WORD,0)
+		
+		v.height = config.height
+		v.y = v.y - v.height
+
+		v.speedY = -6
+	elseif v:mem(0x12C,FIELD_WORD) > 0 or v:mem(0x136,FIELD_BOOL) or v:mem(0x138,FIELD_WORD) > 0 then -- Grabbed/thrown/in a 'forced state'
+		return
 	end
+
+
+	v.noblockcollision = true
 	
-	--Execute main AI. This template just jumps when it touches the ground.
-    for _,p in ipairs(Player.get()) do
-        if Collisionz.CheckCollision(p, v) and Collisionz.EasyModeCollision(p, v, true) == Collisionz.CollisionSpot.COLLISION_TOP then
-            v.speedY = 4
-        else
-            v.speedY = 0
-        end
-    end
+	if data.fallingState == 0 then
+		v.speedY = v.speedY+Defines.npc_grav
+
+		if v.speedY > 0 then
+			data.fallingState = #stateProperties
+			v.speedY = 0
+		end
+	else
+		local properties = stateProperties[data.fallingState]
+
+		v.speedX = v.speedX + properties.speedChange.x
+		v.speedY = v.speedY + properties.speedChange.y
+
+		if properties.changeStateRequirement(v) then
+			if properties.changeDirection then
+				v.speedX = 0
+			end
+
+			data.fallingState = (data.fallingState%#stateProperties)+1
+		end
+	end
 end
 
---Gotta return the library table!
-return sampleNPC
+function powerup.onTickEndNPC(v)
+	if Defines.levelFreeze or not v.data.currentDirection then return end
+	if v.dontMove then v.animationFrame = v.data.currentDirection end
+end
+
+
+return powerup
