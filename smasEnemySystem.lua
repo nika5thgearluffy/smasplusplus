@@ -86,7 +86,7 @@ function smasEnemySystem.onTick()
                         Effectx.spawnScoreEffect(1, l.x, l.y) --Spawns 10 score effect
                         SaveData.SMASPlusPlus.hud.coinsClassic = SaveData.SMASPlusPlus.hud.coinsClassic + 1
                         if smasExtraSounds.enableCoinCollecting then
-                            smasExtraSounds.playSFX(14)
+                            Sound.playSFX(14)
                         end
                     end
                 end
@@ -100,7 +100,7 @@ function smasEnemySystem.onTick()
                         Effectx.spawnScoreEffect(1, l.x, l.y) --Spawns 10 score effect
                         SaveData.SMASPlusPlus.hud.coinsClassic = SaveData.SMASPlusPlus.hud.coinsClassic + 1
                         if smasExtraSounds.enableRupeeCollecting then
-                            smasExtraSounds.playSFX(81)
+                            Sound.playSFX(81)
                         end
                     end
                 end
