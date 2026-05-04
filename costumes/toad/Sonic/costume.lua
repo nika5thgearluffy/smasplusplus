@@ -140,7 +140,7 @@ function costume.onTick()
             end
         end
         
-        if spinballed and plr.speedX ~= 0 and plr:mem(0x26, FIELD_WORD) == 0 and isOnGround(p) and not hit then
+        if spinballed and plr.speedX ~= 0 and plr:mem(0x26, FIELD_WORD) == 0 and isOnGround(plr) and not hit then
             for _,npc in ipairs(hitNPCs) do
                 if npc ~= v and npc.id > 0 then
                     -- Hurt the NPC, and make sure to not give the automatic score
@@ -179,7 +179,7 @@ function costume.onTick()
             end
         end
         if (plr.powerup == 5) == false then
-            if not (isOnGround(p)) and (plr.keys.altRun == KEYS_PRESSED) and not homing then
+            if not (isOnGround(plr)) and (plr.keys.altRun == KEYS_PRESSED) and not homing then
                 homing = true
             end
         end
@@ -223,14 +223,14 @@ end
 
 function costume.onInputUpdate()
     if SaveData.toggleCostumeAbilities then
-        if plr.speedX ~= 0 and plr.keys.down == KEYS_DOWN and isOnGround(p) then
+        if plr.speedX ~= 0 and plr.keys.down == KEYS_DOWN and isOnGround(plr) then
             spinballed = true
             flipstate = true
-        elseif plr.speedX == 0 and plr.keys.down == KEYS_UP or not isOnGround(p) then
+        elseif plr.speedX == 0 and plr.keys.down == KEYS_UP or not isOnGround(plr) then
             spinballed = false
             flipstate = false
         end
-        if plr.speedX ~= 0 and plr.keys.down == KEYS_PRESSED and isOnGround(p) then
+        if plr.speedX ~= 0 and plr.keys.down == KEYS_PRESSED and isOnGround(plr) then
             SFX.play("costumes/toad/Sonic/sonic-charge.ogg")
         end
         if plr.keys.altRun == KEYS_PRESSED then
@@ -280,7 +280,7 @@ function costume.onInputUpdate()
                     end
             end
 
-        if (plr.character == CHARACTER_TOAD and isOnGround(p)) then
+        if (plr.character == CHARACTER_TOAD and isOnGround(plr)) then
             homing = false
             connected = false
             collidersize = 0

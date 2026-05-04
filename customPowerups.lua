@@ -172,7 +172,7 @@ end
 
 local function SFXPlay(lib, name)
     if lib and lib.collectSounds and lib.collectSounds[name] then
-        SFX.play(lib.collectSounds[name])
+        Sound.playSFX(lib.collectSounds[name])
     end
 end
 
@@ -956,9 +956,9 @@ function cp.onNPCCollect(e, v, p)
 
         if vanillaPower == currentPowerup.basePowerup then
             if vanillaPower == PLAYER_LEAF or vanillaPower == PLAYER_TANOOKIE then
-                SFX.play(34)
+                Sound.playSFX(34)
             else
-                SFX.play(6)
+                Sound.playSFX(6)
             end
         end
 

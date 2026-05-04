@@ -20,7 +20,6 @@ local plr
 
 function costume.onInit(p)
     plr = p
-
     registerEvent(costume,"onStart")
     registerEvent(costume,"onTick")
     registerEvent(costume,"onTickEnd")
@@ -149,18 +148,18 @@ function costume.onControllerButtonPress(button, playerIdx)
     end
 end
 
-function costume.shootGun1(plr)
-    --plr:mem(0x172, FIELD_BOOL, false) --Make sure run isn't pressed again until cooldown is over, in case
-    local x = plr.x
-    local y = plr.y + plr.height/2 - 5
-    if (plr.direction == 1) then
-        x = x + plr.width
+function costume.shootGun1(p)
+    --p:mem(0x172, FIELD_BOOL, false) --Make sure run isn't pressed again until cooldown is over, in case
+    local x = p.x
+    local y = p.y + p.height/2 - 5
+    if (p.direction == 1) then
+        x = x + p.width
     end
     local gunid = 266
-    local gunNpc = NPC.spawn(gunid, x, y, player.section, false, true)
+    local gunNpc = NPC.spawn(gunid, x, y, p.section, false, true)
     costume.useGun1 = true
     gunNpc.frames = 1
-    if (plr.direction == 1) then
+    if (p.direction == 1) then
         gunNpc.speedX = 14.5
         gunNpc.speedY = 0
     else
@@ -170,22 +169,22 @@ function costume.shootGun1(plr)
     costume.useGun1 = false
     cooldown = 10
     if cooldown <= 0 then
-        --plr:mem(0x172, FIELD_BOOL, true)
+        --p:mem(0x172, FIELD_BOOL, true)
     end
 end
 
-function costume.shootGrenade2(plr)
-    plr:mem(0x160, FIELD_WORD, 5)
-    local x = plr.x
-    local y = plr.y + plr.height/2 - 5
-    if (plr.direction == 1) then
-        x = x + plr.width
+function costume.shootGrenade2(p)
+    p:mem(0x160, FIELD_WORD, 5)
+    local x = p.x
+    local y = p.y + p.height/2 - 5
+    if (p.direction == 1) then
+        x = x + p.width
     end
     local grenadeid = 291
-    local grenadeNpc = NPC.spawn(291, x, y, player.section, false, true)
+    local grenadeNpc = NPC.spawn(291, x, y, plr.section, false, true)
     costume.useGrenade2 = true
     grenadeNpc.frames = 1
-    if (plr.direction == 1) then
+    if (p.direction == 1) then
         grenadeNpc.speedX = 7.5
         grenadeNpc.speedY = 0.2
     else
@@ -195,18 +194,18 @@ function costume.shootGrenade2(plr)
     costume.useGrenade2 = false
 end
 
-function costume.shootGrenade2Upwards(plr)
-    plr:mem(0x160, FIELD_WORD, 5)
-    local x = plr.x
-    local y = plr.y + plr.height/2 - 5
-    if (plr.direction == 1) then
-        x = x + plr.width
+function costume.shootGrenade2Upwards(p)
+    p:mem(0x160, FIELD_WORD, 5)
+    local x = p.x
+    local y = p.y + p.height/2 - 5
+    if (p.direction == 1) then
+        x = x + p.width
     end
     local grenadeid = 291
-    local grenadeNpc = NPC.spawn(291, x, y, player.section, false, true)
+    local grenadeNpc = NPC.spawn(291, x, y, plr.section, false, true)
     costume.useGrenade2 = true
     grenadeNpc.frames = 1
-    if (plr.direction == 1) then
+    if (p.direction == 1) then
         grenadeNpc.speedX = 0
         grenadeNpc.speedY = -7.5
     else
@@ -239,7 +238,7 @@ function costume.onPostNPCKill(npc, harmType)
     end
     if npc.id == 291 then
         for _,v in ipairs(NPC.get(291)) do
-            local explosion = Effect.spawn(998, v.x, v.y + 35, player.section, false, true)
+            local explosion = Effect.spawn(998, v.x, v.y + 35, plr.section, false, true)
             SFX.play(smasCharacterGlobals.soundSettings.borisGrenadeExplodeSFX)
         end
     end
@@ -249,7 +248,7 @@ function costume.onDraw()
     if SaveData.toggleCostumeAbilities then
         if smasCharacterGlobals.abilitySettings.borisCanDrawGun then
             --Gun states
-            if smasCharacterHealthSystem.health[plr.idx] == 1 or smasCharacterHealthSystem.health == 2 and (plr.powerup == 3) == false and (plr.powerup == 7) == false and plr.powerup == 2 then
+            if smasCharacterHealthSystem.health[plr.idx] == 1 or smasCharacterHealthSystem.health == 2 and (not (plr.powerup == 3) and not (plr.powerup == 7)) then
                 Graphics.sprites.npc[266].img = Graphics.loadImageResolved("costumes/luigi/GA-Boris/gunbullet-1.png")
                 local gun1 = Graphics.loadImageResolved("costumes/luigi/GA-Boris/gun-1.png")
                 if plr.direction == -1 then
@@ -259,7 +258,7 @@ function costume.onDraw()
                     Graphics.drawImageWP(gun1, plr.x - camera.x + 4,  plr.y - camera.y + 10, 0, 28, 35, 28, -24)
                 end
             end
-            if smasCharacterHealthSystem.health[plr.idx] == 3 and (plr.powerup == 3) == false and (plr.powerup == 7) == false and plr.powerup == 2 then
+            if smasCharacterHealthSystem.health[plr.idx] == 3 and not (plr.powerup == 3) and not (plr.powerup == 7) and plr.powerup == 2 then
                 Graphics.sprites.npc[266].img = Graphics.loadImageResolved("costumes/luigi/GA-Boris/gunbullet-1.png")
                 local gun2 = Graphics.loadImageResolved("costumes/luigi/GA-Boris/gun-2.png")
                 if plr.direction == -1 then
@@ -290,7 +289,7 @@ function costume.onDraw()
                     Graphics.drawImageWP(gun3, plr.x - camera.x - 15,  plr.y - camera.y + 10, 0, 25, 91, 25, -24)
                 end
             end
-            if smasCharacterHealthSystem.health[plr.idx] == 3 and plr.powerup == 5 and plr:mem(0x4A, FIELD_BOOL) == false then
+            if smasCharacterHealthSystem.health[plr.idx] == 3 and plr.powerup == 5 and not plr:mem(0x4A, FIELD_BOOL) then
                 Graphics.sprites.npc[266].img = Graphics.loadImageResolved("costumes/luigi/GA-Boris/gunbullet-2.png")
                 local gun5 = Graphics.loadImageResolved("costumes/luigi/GA-Boris/gun-5.png")
                 if plr.direction == -1 then
@@ -311,32 +310,32 @@ function costume.onInputUpdate()
     if SaveData.toggleCostumeAbilities and not Misc.isPaused() then
         if smasCharacterGlobals.abilitySettings.borisCanUseGun then
             if smasCharacterHealthSystem.health[plr.idx] == 1 or smasCharacterHealthSystem.health[plr.idx] == 2 and not (plr.powerup == 3) and not (plr.powerup == 7) and not (plr.powerup == 6) then
-                if plr.keys.run == KEYS_PRESSED and (plr.keys.altRun == KEYS_PRESSED) == false then
-                    if plr:mem(0x26, FIELD_WORD) <= 1 and (plr.keys.down == KEYS_PRESSED) == false then
+                if plr.keys.run == KEYS_PRESSED and not (plr.keys.altRun == KEYS_PRESSED) then
+                    if plr:mem(0x26, FIELD_WORD) <= 1 and not (plr.keys.down == KEYS_PRESSED) then
                         Sound.playSFX("costumes/luigi/GA-Boris/gunshot-1.ogg", 1, 1, 35)
                         costume.shootGun1(plr)
                     end
                 end
             end
-            if smasCharacterHealthSystem.health[plr.idx] == 3 and (plr.powerup == 3) == false and (plr.powerup == 7) == false and (plr.powerup == 6) == false then
-                if plr.keys.run == KEYS_PRESSED and (plr.keys.altRun == KEYS_PRESSED) == false then
-                    if plr:mem(0x26, FIELD_WORD) <= 1 and (plr.keys.down == KEYS_PRESSED) == false then
+            if smasCharacterHealthSystem.health[plr.idx] == 3 and not (plr.powerup == 3) and not (plr.powerup == 7) and not (plr.powerup == 6) then
+                if plr.keys.run == KEYS_PRESSED and not (plr.keys.altRun == KEYS_PRESSED) then
+                    if plr:mem(0x26, FIELD_WORD) <= 1 and not (plr.keys.down == KEYS_PRESSED) then
                         Sound.playSFX("costumes/luigi/GA-Boris/gunshot-2.ogg", 1, 1, 35)
                         costume.shootGun1(plr)
                     end
                 end
             end
             if plr.powerup == 4 then
-                if plr.keys.run == KEYS_PRESSED and (plr.keys.altRun == KEYS_PRESSED) == false then
-                    if plr:mem(0x26, FIELD_WORD) <= 1 and (plr.keys.down == KEYS_PRESSED) == false then
+                if plr.keys.run == KEYS_PRESSED and not (plr.keys.altRun == KEYS_PRESSED) then
+                    if plr:mem(0x26, FIELD_WORD) <= 1 and not (plr.keys.down == KEYS_PRESSED) then
                         Sound.playSFX("costumes/luigi/GA-Boris/gunshot-3.ogg", 1, 1, 35)
                         costume.shootGun1(plr)
                     end
                 end
             end
             if plr.powerup == 5 then
-                if plr.keys.run == KEYS_PRESSED and (plr.keys.altRun == KEYS_PRESSED) == false then
-                    if plr:mem(0x26, FIELD_WORD) <= 1 and (plr.keys.down == KEYS_PRESSED) == false then
+                if plr.keys.run == KEYS_PRESSED and not (plr.keys.altRun == KEYS_PRESSED) then
+                    if plr:mem(0x26, FIELD_WORD) <= 1 and not (plr.keys.down == KEYS_PRESSED) then
                         Sound.playSFX("costumes/luigi/GA-Boris/gunshot-4.ogg", 1, 1, 35)
                         costume.shootGun1(plr)
                     end
@@ -345,11 +344,11 @@ function costume.onInputUpdate()
         end
         if plr.powerup == 6 then
             if smasCharacterGlobals.abilitySettings.borisCanUseGrenade then
-                if plr.keys.run == KEYS_PRESSED and (plr.keys.altRun == KEYS_PRESSED) == false and (plr.keys.up == KEYS_DOWN) == false then
+                if plr.keys.run == KEYS_PRESSED and not (plr.keys.altRun == KEYS_PRESSED) and not (plr.keys.up == KEYS_DOWN) then
                     Sound.playSFX(smasCharacterGlobals.soundSettings.borisGrenadeLaunchSFX, 1, 1, 35)
                     costume.shootGrenade2(plr)
                 end
-                if plr.keys.run == KEYS_PRESSED and (plr.keys.altRun == KEYS_PRESSED) == false and plr.keys.up == KEYS_DOWN then
+                if plr.keys.run == KEYS_PRESSED and not (plr.keys.altRun == KEYS_PRESSED) and plr.keys.up == KEYS_DOWN then
                     Sound.playSFX(smasCharacterGlobals.soundSettings.borisGrenadeLaunchSFX, 1, 1, 35)
                     costume.shootGrenade2Upwards(plr)
                 end
@@ -379,7 +378,7 @@ end
 function costume.onTick()
     if SaveData.toggleCostumeAbilities then
         --Switching frames when shooting fireballs as Boris
-        if isShooting then
+        if isShooting(plr) then
             plr:setFrame(27)
         end
         

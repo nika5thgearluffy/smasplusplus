@@ -4,6 +4,7 @@
 
 local rng = require("rng")
 local colliders = require("colliders")
+local smasFunctions = require("smasFunctions")
 
 local costume = {}
 GameData.friendlyArea = false
@@ -40,7 +41,7 @@ function costume.onTick()
                     displayText = not displayText
                 end
                 if displayText then
-                    Text.printWP("RINKA INCOMING", 274, 295,-4)
+                    Text.printWP("RINKA INCOMING", Screen.calculateCameraDimensions(274, 1), Screen.calculateCameraDimensions(295, 2), 4)
                 end                
             elseif rinkaCounter == nextRinka then
                 for i = 0, rng.randomInt(1, 6), 1 do

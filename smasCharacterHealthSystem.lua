@@ -38,11 +38,7 @@ local hit = false
 function smasCharacterHealthSystem.hpHit(p)
     if smasCharacterHealthSystem.enabled then
         if not p.hasStarman and not p.isMega then
-            hit = true
-            if hit then
-                smasCharacterHealthSystem.health[p.idx] = smasCharacterHealthSystem.health[p.idx] - 1
-                hit = false
-            end
+            smasCharacterHealthSystem.health[p.idx] = smasCharacterHealthSystem.health[p.idx] - 1
             if smasCharacterHealthSystem.health[p.idx] < 1 then
                 p:kill()
             end
@@ -50,9 +46,9 @@ function smasCharacterHealthSystem.hpHit(p)
     end
 end
 
-function smasCharacterHealthSystem.onPlayerHarm(plr)
-    if smasCharacterHealthSystem.enabled then
-        smasCharacterHealthSystem.hpHit(plr)
+function smasCharacterHealthSystem.onPlayerHarm(evt, p)
+    if smasCharacterHealthSystem.enabled and not evt.cancelled then
+        smasCharacterHealthSystem.hpHit(p)
     end
 end
 

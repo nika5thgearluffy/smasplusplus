@@ -18,7 +18,7 @@ local smasExtraSounds = require("smasExtraSounds")
 local apt = {}
 
 apt.apSounds = {
-    upgrade = smasExtraSounds.sounds[133].sfx,
+    upgrade = 133,
     reserve = 12
 }
 
