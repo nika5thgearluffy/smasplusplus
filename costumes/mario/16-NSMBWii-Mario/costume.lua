@@ -1,7 +1,7 @@
 --[[
 
     NSMBWii Mario
-    By Spencer Everly (Sprites from Mario Multiverse, originally by Keira, and Racoon poses by me)
+    By "The Sun God: Nika" (Sprites from Mario Multiverse, originally by Keira, and Racoon poses by me)
     Original code by MrDoubleA + Cpt. Mono
 
 ]]

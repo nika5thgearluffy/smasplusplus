@@ -1,7 +1,7 @@
 --[[
 
     Super Mario Advance 2: Super Mario World (Mario)
-    by MrDoubleA and Spencer Everly
+    by MrDoubleA and "The Sun God: Nika"
 
 
     Mario sprites by: Nintendo, GlacialSiren484, AwesomeZack

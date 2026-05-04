@@ -269,15 +269,6 @@ end
     flashPlayer = true,activateSFX = 67,
 })]]
 
-Cheats.register("ilikespencereverly",{ --Turns all music into the future S!TS! new reboot theme song
-    onActivate = (function()
-        Defines.player_hasCheated = false
-        Sound.changeMusic("_OST/Spencer Everly/Spencer! The Show!/Theme Song/Theme Song (Looped Version).ogg", -1)
-        return true -- this makes the cheat not toggleable
-    end),
-    flashPlayer = true,activateSFX = "_OST/Spencer Everly/Spencer! The Show!/Theme Song/sts vocals ending correct timing final (smbx2).wav",
-})
-
 Cheats.register("fuckthisshitgimmiethetrueending",{ --Teleports to the inside of the True Ending building
     onActivate = (function()
         Defines.player_hasCheated = false

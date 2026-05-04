@@ -304,15 +304,7 @@ function runHubUpdate()
                 HolidayStPatricksDay()
             end
         end
-        
-        
-        if Time.month() == 4 and Time.day() == 4 then --Spencer Everly Day
-            malcmusic.holiday = true
-            if malcmusic.holiday then
-                SectionAll.musicPath = "_OST/Nintendo Land/BGM_TTL_MAIN_EVENING (channels 0 and 1).ogg"
-                HolidaySEDay()
-            end
-        end
+
         
         
         if Time.month() == SaveData.eastermonth and Time.day() == SaveData.easterday then --Easter Sunday

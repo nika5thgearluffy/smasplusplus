@@ -1,7 +1,7 @@
 -- megaluavania.lua 2.1
 -- By Spinda
 -- drawImageRotated by Rednaxela
--- Ported to Beta 4 by Spencer Everly
+-- Ported to Beta 4 by "The Sun God: Nika"
 
 local megaluavania = {}
 local colliders = API.load("colliders")
