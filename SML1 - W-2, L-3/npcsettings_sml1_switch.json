@@ -1,0 +1,13 @@
+{
+	"style" : "groupbox",
+	"title" : "Switch Settings",
+	"layout": [
+		{
+			"control": "lineEdit",
+			"name": "eventName",
+			"title": "Event",
+			"tooltip": "The event to execute.",
+            "value-default": "(None)"
+		}
+    ]
+}

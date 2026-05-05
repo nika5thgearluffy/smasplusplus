@@ -805,15 +805,15 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
                     eventObj.cancelled = true
                     if p.powerup == 3 then --Fireball sound
                         if smasExtraSounds.enableFireFlowerSFX then
-                            Sound.playSFX(18)
+                            --Sound.playSFX(18)
                         end
                     end
                     if p.powerup == 7 then --Iceball sound
                         if smasExtraSounds.enableIceFlowerSFX then
                             if not smasExtraSounds.useFireSoundForIce then
-                                Sound.playSFX(93)
+                                --Sound.playSFX(93)
                             else
-                                Sound.playSFX(18)
+                                --Sound.playSFX(18)
                             end
                         end
                     end
@@ -923,9 +923,10 @@ end
 function smasExtraSounds.onTick() --This is a list of sounds that'll need to be replaced within each costume. They're muted here for obivious reasons.
     if smasExtraSounds.active then --Only mute when active
         smasExtraSounds.disableSoundMarker = false --Make sure, when disabled, it only unmutes once when disabled
-        Audio.sounds[4].muted = true --block-smash.ogg
+        --Audio.sounds[4].muted = true --block-smash.ogg
         Audio.sounds[7].muted = true --mushroom.ogg
         Audio.sounds[8].muted = true --player-dead.ogg
+        Audio.sounds[9].muted = true --shell-hit.ogg
         Audio.sounds[14].muted = true --coin.ogg
         Audio.sounds[15].muted = true --1up.ogg
         --Audio.sounds[17].muted = true --warp.ogg
@@ -1125,7 +1126,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             
             --**1UPS**
             if not isOverworld then
-                for index,scoreboard in ipairs(Animation.get(79)) do --Score values!
+                for index,scoreboard in ipairs(Effect.get(79)) do --Score values!
                     if scoreboard.animationFrame == 9 and scoreboard.speedY == -1.94 then --1UP
                         if isSMASPlusPlus then
                             if SaveData.SMASPlusPlus.accessibility.enableLives then
@@ -1262,7 +1263,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
                 end
                 
                 --**KOOAPLING SHELL FLY AWAY EFFECTS**
-                --(Yes, bettereffects doesn't do proper for loops for a table, so it'll have to be duplicated until this probnlem is fixed for Beta 5)
                 for index,shell in ipairs(Animation.get(140)) do
                     if shell.speedY == 0 then --Good enough
                         if smasExtraSounds.enableBoomerangBroBoomerangSFX then
@@ -1271,14 +1271,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
                     end
                 end
                 if Misc.inSuperMarioAllStarsPlusPlus ~= nil and Misc.inSuperMarioAllStarsPlusPlus() then
-                    for index2,shell2 in ipairs(bettereffects.getEffectObjects(988)) do
-                        if shell2.speedY == 0 then
-                            if smasExtraSounds.enableBoomerangBroBoomerangSFX then
-                                Sound.playSFX(116, smasExtraSounds.volume, 1, smasExtraSounds.boomerangDelay)
-                            end
-                        end
-                    end
-                    for index2,shell2 in ipairs(bettereffects.getEffectObjects(986)) do
+                    for index2,shell2 in ipairs(bettereffects.getEffectObjects({988,986})) do
                         if shell2.speedY == 0 then
                             if smasExtraSounds.enableBoomerangBroBoomerangSFX then
                                 Sound.playSFX(116, smasExtraSounds.volume, 1, smasExtraSounds.boomerangDelay)
@@ -1332,8 +1325,9 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
     end
     if not smasExtraSounds.active then --Unmute when not active
         if not smasExtraSounds.disableSoundMarker then
-            Audio.sounds[4].muted = false --block-smash.ogg
+            --Audio.sounds[4].muted = false --block-smash.ogg
             Audio.sounds[7].muted = false --mushroom.ogg
+            Audio.sounds[9].muted = false --shell-hit.ogg
             Audio.sounds[8].muted = false --player-dead.ogg
             Audio.sounds[14].muted = false --coin.ogg
             Audio.sounds[15].muted = false --1up.ogg
@@ -1468,7 +1462,7 @@ function smasExtraSounds.onPostBlockHit(block, fromUpper, playerornil) --Let's s
                 
                 --**BRICK SMASHING**
                 if bricksnormal[block.id] or block.id == 186 then
-                    Routine.run(bricksmashsound, block, fromUpper, playerornil)
+                    --Routine.run(bricksmashsound, block, fromUpper, playerornil)
                 end
                 
                 
@@ -1536,36 +1530,36 @@ end
 
 function smasExtraSounds.comboSoundRoutine()
     Routine.waitFrames(1, true)
-    for index,scoreboard in ipairs(Animation.get(79)) do --Score values!
+    for index,scoreboard in ipairs(Effect.get(79)) do --Score values!
         if scoreboard.animationFrame == 0 and scoreboard.speedY == -1.94 then --10 Points
-            Sound.playSFX(9)
+            Sound.playSFX(9, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 1 and scoreboard.speedY == -1.94 then --100 Points
-            Sound.playSFX(9)
+            Sound.playSFX(9, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 2 and scoreboard.speedY == -1.94 then --200 Points
-            Sound.playSFX(106)
+            Sound.playSFX(106, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 3 and scoreboard.speedY == -1.94 then --400 Points
-            Sound.playSFX(107)
+            Sound.playSFX(107, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 4 and scoreboard.speedY == -1.94 then --800 Points
-            Sound.playSFX(108)
+            Sound.playSFX(108, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 5 and scoreboard.speedY == -1.94 then --1000 Points
-            Sound.playSFX(109)
+            Sound.playSFX(109, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 6 and scoreboard.speedY == -1.94 then --2000 Points
-            Sound.playSFX(110)
+            Sound.playSFX(110, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 7 and scoreboard.speedY == -1.94 then --4000 Points
-            Sound.playSFX(111)
+            Sound.playSFX(111, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame == 8 and scoreboard.speedY == -1.94 then --8000 Points
-            Sound.playSFX(112)
+            Sound.playSFX(112, smasExtraSounds.volume, 1, 4)
         end
         if scoreboard.animationFrame >= 9 and scoreboard.speedY == -1.94 then --1UP -> 5UP
-            Sound.playSFX(112)
+            Sound.playSFX(112, smasExtraSounds.volume, 1, 4)
         end
     end
 end
