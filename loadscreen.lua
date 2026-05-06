@@ -259,10 +259,11 @@ local function loadtextfile()
     end
 
     -- Set the window size and center it on first boot
-    --if not Misc.hasFirstBooted() then
-        --Window.setSize(Window.getWidthFromResolution(frameBufferWidth), Window.getHeightFromResolution(frameBufferHeight))
-        --Window.center(Window.findMonitor())
-    --end
+    if Misc.hasFirstBooted() then
+        Graphics.setMainFramebufferSize(frameBufferWidth, frameBufferHeight)
+        Window.setSize(Window.getWidthFromResolution(frameBufferWidth), Window.getHeightFromResolution(frameBufferHeight))
+        Window.center(Window.findMonitor())
+    end
 end
 
 loadtextfile()

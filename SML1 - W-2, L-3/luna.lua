@@ -14,6 +14,9 @@ function onTick()
         if p.deathTimer == 0 and p:mem(0x148, FIELD_WORD) > 0 and p:mem(0x14C, FIELD_WORD) > 0 and p:mem(0x164, FIELD_WORD) ~= -1 then
             p:kill()
         end
+        if not autoscroll.isSectionScrolling(p.section) then
+            smlPop.autoscrollXSpeed(0)
+        end
     end
 end
 
@@ -22,6 +25,11 @@ function onEvent(eventName)
         Sound.changeMusic("_OST/Super Mario Land/Boss Battle.spc|0;g=2.5;e0", 0)
     end
     if eventName == "Boss End" then
+        for k,v in ipairs(NPC.get(743)) do
+            if v and v.isValid then
+                v:kill()
+            end
+        end
         Sound.playSFX(170)
         Sound.changeMusic(0, 0)
     end
