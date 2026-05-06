@@ -26,6 +26,8 @@ for i = 1,200 do
     Playur.isVisibleOverride[i] = true
 end
 
+local MAX_POWERUP = 8
+
 local starman = require("starman/star")
 local megashroom = require("mega/megashroom")
 
@@ -1081,6 +1083,27 @@ function Playur.setHeldNPCPosition(p, x, y)
 
                 toothy.y = holdingNPC.y
             end
+        end
+    end
+end
+
+function Playur.powerup(p, id)
+    if p == nil then
+        p = player
+    end
+    if id == nil then
+        error("Must set ID for powerup!")
+        return
+    end
+    if id < 1 and id > MAX_POWERUP then
+        error("You must set a valid powerup!")
+        return
+    end
+    if id >= 1 and id <= 7 then
+        p.powerup = id
+    else
+        if id == 8 then
+            customPowerups.setPowerup("Cape Feather", p, true)
         end
     end
 end

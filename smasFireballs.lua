@@ -9,6 +9,8 @@ fastFireballs.lua code was also based off of, so credits goes to MegoZ_ for that
 
 local smasFireballs = {}
 
+local pop = require("npcs/ai/SMLPop")
+
 function smasFireballs.onInitAPI()
     registerEvent(smasFireballs,"onTick")
     registerEvent(smasFireballs,"onNPCKill")
@@ -30,10 +32,19 @@ smasFireballs.fireballLimit = 2
 local fireballtimer = 0
 local iceballtimer = 0
 
+function smasFireballs.canShootFireballs(p)
+    return (
+        not p:mem(0x50, FIELD_BOOL)
+        and (p.powerup == 3)
+        and customPowerups.getCurrentPowerup(p) == nil
+        and not pop.isRidingPop(p)
+    )
+end
+
 function smasFireballs.onTick()
-    if smasFireballs.enableClassicShooting and not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+    if smasFireballs.enableClassicShooting then
         for k,p in ipairs(Player.get()) do
-            if not p:mem(0x50, FIELD_BOOL) and (p.powerup == 3) and customPowerups.getCurrentPowerup(p) == nil then
+            if smasFireballs.canShootFireballs(p) then
                 --Assosiate Fireball to Player
                 for kn, n in ipairs(NPC.getIntersecting(p.x-6, p.y-6, p.x+p.width+6, p.y+p.height+6)) do
                     if n.id == 13 and n.ai3 == 0 then --This checks if ai3 is 0, which means it's ownerless.
