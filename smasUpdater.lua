@@ -95,7 +95,7 @@ end
 local internetCheck = false
 
 function smasUpdater.onDownloadComplete(bufferData, url, filename)
-    if filename == "manifest.json" then
+    if filename == "manifest.json" and Internet.isDownloading() then
         internetCheck = true
         smasUpdater.updateTimer = 0
         smasUpdater.updateStage = 3  -- changed from 2
