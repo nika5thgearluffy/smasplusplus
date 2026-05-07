@@ -95,7 +95,7 @@ local plr
 function starget(v)
     Misc.npcToCoins()
     for _,o in ipairs(Player.get()) do
-        if o.idx ~= plr.idx then
+        if _ >= 2 and o.idx ~= plr.idx then
             o.section = plr.section
             o.x = (plr.x+(plr.width/2)-(o.width/2))
             o.y = (plr.y+plr.height-o.height)

@@ -468,8 +468,8 @@ do
     end
     
     function repll.clearLog()
-        repll.log = {"History cleared!"}
-        GameData._repll.log = {"History cleared!"}
+        GameData._repll.log = {}
+        GameData._repll.history = {}
         Misc.cheatBuffer("")
     end
     

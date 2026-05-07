@@ -178,7 +178,6 @@ local playerManager = require("base/playermanager")
 
 local npcToCoinTimer = 0 --This is used for the NPC to Coin sound.
 local holdingTimer = 0 --To count a timer on how long a player has held an item.
-local comboMuteTally = 0 --To enable combo sounds
 
 smasExtraSounds.harmableComboTypes = {
     HARM_TYPE_JUMP,
@@ -912,12 +911,7 @@ function smasExtraSounds.onDraw()
 end
 
 function smasExtraSounds.onDrawEnd()
-    if comboMuteTally > 0 then
-        comboMuteTally = comboMuteTally - 1
-        if comboMuteTally == 0 then
-            Audio.sounds[9].muted = false
-        end
-    end
+    
 end
 
 function smasExtraSounds.onTick() --This is a list of sounds that'll need to be replaced within each costume. They're muted here for obivious reasons.
@@ -1611,8 +1605,6 @@ function smasExtraSounds.onPostNPCHarm(npc, harmtype, player)
                 --**COMBO SOUNDS**
                 if not isOverworld then
                     if smasExtraSounds.harmableComboTypes[harmtype] then
-                        Audio.sounds[9].muted = true
-                        comboMuteTally = 2
                         Routine.run(smasExtraSounds.comboSoundRoutine)
                     end
                 end
@@ -1816,8 +1808,6 @@ function smasExtraSounds.onPostNPCKill(npc, harmtype) --NPC Kill stuff, for cust
                 --**SLIDING COMBO KILLS**
                 if not isOverworld then
                     if p:mem(0x3C, FIELD_BOOL) and smasExtraSounds.harmableComboTypes[harmtype] then
-                        Audio.sounds[9].muted = true
-                        comboMuteTally = 2
                         Routine.run(smasExtraSounds.comboSoundRoutine)
                     end
                 end

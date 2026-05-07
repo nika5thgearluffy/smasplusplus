@@ -99,6 +99,7 @@ function starget(v)
     end
     oldboundary = plr.sectionObj.origBoundary
     GameData.winStateActive = true
+    collectactive = true
     inactivekeysonly = true
     playervuln = true
     playerwon = true
@@ -184,8 +185,6 @@ function roulettestar.onPostNPCKill(v,reason)
     end
     if roulettestar.collectableIDMap[v.id] and npcManager.collected(v,reason) then
         Routine.run(starget, v)
-        GameData.winStateActive = true
-        collectactive = true
         Levul.markComplete(v.data._settings.incrementStarCount, v.data._settings.useOptionalTable, v.data._settings.addToTable)
     end
 end

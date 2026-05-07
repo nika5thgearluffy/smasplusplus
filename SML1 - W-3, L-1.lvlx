@@ -2,7 +2,7 @@ HEAD
 TL:"Super Mario Land\: World 3-1";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-199200;T:-200600;B:-200000;MZ:0;MF:"";BG:0;
+SC:0;L:-200000;R:-199200;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Land/Birabuto Kingdom.spc|0\;g=2.5\;e0";BG:0;
 SECTION_END
 LAYERS
 LR:"Default";

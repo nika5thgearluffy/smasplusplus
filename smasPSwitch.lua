@@ -14,14 +14,7 @@ local deathTimerPSwitch = 0
 
 function smasPSwitch.startPSwitchMusic() --Starts the P-Switch music.
     if not smasPSwitch.pSwitchMusicStarted then
-        for _,p in ipairs(Player.get()) do
-            if smasPSwitch.inNoPSwitchMusicPlayingSituations(p) then
-                shouldntPlayPSwitchMusic = true
-            else
-                shouldntPlayPSwitchMusic = false
-            end
-        end
-        if not shouldntPlayPSwitchMusic then
+        if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
             SysManager.sendToConsole("P-Switch music activated!")
             Sound.muteMusic(-1)
             smasBooleans.musicMuted = true
@@ -44,14 +37,7 @@ function smasPSwitch.stopPSwitchMusic(resetLevelMusic) --Stops the P-Switch musi
     
     smasPSwitch.pSwitchMusicStarted = false
 
-    for _,p in ipairs(Player.get()) do
-        if smasPSwitch.inNoPSwitchMusicPlayingSituations(p) then
-            shouldntPlayPSwitchMusic = true
-        else
-            shouldntPlayPSwitchMusic = false
-        end
-    end
-    if not shouldntPlayPSwitchMusic then
+    if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
         if resetLevelMusic then
             SysManager.sendToConsole("P-Switch music deactivated!")
             smasBooleans.musicMuted = false
@@ -63,6 +49,9 @@ end
 
 
 function smasPSwitch.inNoPSwitchMusicPlayingSituations(p)
+    if p == nil then
+        p = player
+    end
     return (p.hasStarman
         or p.isMega
         or GameData.winStateActive
@@ -88,14 +77,7 @@ function smasPSwitch.onDraw()
     
     
     --Make sure the music stops when collecting a starman, a megashroom, or winning a level if active
-    for _,p in ipairs(Player.get()) do
-        if smasPSwitch.inNoPSwitchMusicPlayingSituations(p) then
-            shouldntPlayPSwitchMusic = true
-        else
-            shouldntPlayPSwitchMusic = false
-        end
-    end
-    if not shouldntPlayPSwitchMusic then
+    if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
         if pSwitchMusic ~= nil then
             smasBooleans.musicMuted = false
             pSwitchMusic:Stop()
