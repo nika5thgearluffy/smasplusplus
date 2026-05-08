@@ -11,6 +11,8 @@
 local npcManager = require("npcManager")
 local npcutils = require("npcs/npcutils")
 
+local smasFunctions = require("smasFunctions")
+
 local extendedKoopas = {}
 
 --local shellKickKoopas = {}
@@ -393,7 +395,7 @@ do
             dropCoin(v,data,config,culprit)
             
 
-            SFX.play(2)
+            Sound.playSFX(2)
         elseif reason == HARM_TYPE_FROMBELOW or (reason == HARM_TYPE_TAIL and v:mem(0x26,FIELD_WORD) == 0) then
             if config.shellID > 0 then
                 turnIntoShell(v)
@@ -403,9 +405,9 @@ do
 
             if reason == HARM_TYPE_TAIL then
                 v:mem(0x26,FIELD_WORD,8)
-                SFX.play(9)
+                Sound.playSFX(9)
             else
-                SFX.play(2)
+                Sound.playSFX(2)
             end      
         elseif reason == HARM_TYPE_SPINJUMP and (config.isflying and config.spinjumpsafe) then -- isflying is hardcoded to always let spin jumps work! for some reason!
             eventObj.cancelled = true      
@@ -704,9 +706,9 @@ do
             data.wakeUpTimer = 0
 
             if reason == HARM_TYPE_TAIL then
-                SFX.play(9)
+                Sound.playSFX(9)
             else
-                SFX.play(2)
+                Sound.playSFX(2)
             end
 
             eventObj.cancelled = true
@@ -746,7 +748,7 @@ do
                 
                 if v.speedX == 0 and not playerIsCantHurtPlayer then
                     -- Kick it
-                    SFX.play(9)
+                    Sound.playSFX(9)
 
                     if culpritIsPlayer then
                         v.direction = culprit.direction
@@ -762,7 +764,7 @@ do
                     v:mem(0x136,FIELD_BOOL,true) -- set projectile flag
                 elseif not playerIsCantHurtPlayer or (culpritIsPlayer and v:mem(0x22,FIELD_WORD) == 0 and not culprit.climbing) then
                     -- Stop it
-                    SFX.play(2)
+                    Sound.playSFX(2)
 
                     v.speedX = 0
                     v.speedY = 0
@@ -1007,7 +1009,7 @@ do
             e.x = v.x + v.width*0.5 + v.width*0.5*v.direction - e.width*0.5
             e.y = v.y + v.height - e.height
 
-            SFX.play(9)
+            Sound.playSFX(9)
         elseif data.kickTimer >= (config.beforeKickTime + config.afterKickTime) then
             data.kickNPC = nil
             return

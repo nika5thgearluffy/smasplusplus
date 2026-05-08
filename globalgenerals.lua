@@ -189,16 +189,14 @@ function globalgenerals.onTick()
     if lunatime.tick() == 1 then --Failsafe in case
         Sound.loadCostumeSounds()
         smasAlterationSystem.characterAlterationChange(1)
-    end
-    if smasBooleans.compatibilityMode13Mode then --Makes shells a little slower
-        mem(0x00B2C860, FIELD_FLOAT, 7.0999999046326)
-    else
-        mem(0x00B2C860, FIELD_FLOAT, 6.2)
+        if smasBooleans.compatibilityMode13Mode then --Makes shells a little slower
+            Defines.projectilespeedx = 7.1
+        else
+            Defines.projectilespeedx = 6.2
+        end
     end
     if table.icontains(smasTables.__wsmbaLevels,Level.filename()) then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            littleDialogue.defaultStyleName = "smbx13"
-        end
+        littleDialogue.defaultStyleName = "smbx13"
         warpTransition.musicFadeOut = false
         warpTransition.levelStartTransition = warpTransition.TRANSITION_NONE
         warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
