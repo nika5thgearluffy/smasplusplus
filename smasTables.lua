@@ -1092,9 +1092,9 @@ smasTables.soundNamesInOrder = {
     "smb1-exit", --136
     "smb2-clear", --137
     "smb1-world-clear", --138
-    "smb1-underground-overworld", --139
-    "smb1-underground-desert", --140
-    "smb1-underground-sky", --141
+    "dialog", --139
+    "dialog-confirm", --140
+    "nothing", --141, Reserved
     "goaltape-countdown-start", --142
     "goaltape-countdown-loop", --143
     "goaltape-countdown-end", --144

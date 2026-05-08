@@ -176,6 +176,10 @@ local rng = require("base/rng")
 local bettereffects = require("base/game/bettereffects")
 local playerManager = require("base/playermanager")
 
+if smasTables == nil then
+    smasTables = require("smasTables")
+end
+
 local npcToCoinTimer = 0 --This is used for the NPC to Coin sound.
 local holdingTimer = 0 --To count a timer on how long a player has held an item.
 
@@ -192,183 +196,8 @@ local ready = false --This library isn't ready until onInit is finished
 smasExtraSounds.sounds = {}
 smasExtraSounds.disableSoundMarker = false
 
-smasExtraSounds.soundNamesInOrder = {
-    "player-jump", --1
-    "stomped", --2
-    "block-hit", --3
-    "block-smash", --4
-    "player-shrink", --5
-    "player-grow", --6
-    "mushroom", --7
-    "player-died", --8
-    "shell-hit", --9
-    "player-slide", --10
-    "item-dropped", --11
-    "has-item", --12
-    "camera-change", --13
-    "coin", --14
-    "1up", --15
-    "lava", --16
-    "warp", --17
-    "fireball", --18
-    "level-win", --19
-    "boss-beat", --20
-    "dungeon-win", --21
-    "bullet-bill", --22
-    "grab", --23
-    "spring", --24
-    "hammer", --25
-    "slide", --26
-    "newpath", --27
-    "level-select", --28
-    "do", --29
-    "pause", --30
-    "key", --31
-    "pswitch", --32
-    "tail", --33
-    "racoon", --34
-    "boot", --35
-    "smash", --36
-    "thwomp", --37
-    "birdo-spit", --38
-    "birdo-hit", --39
-    "smb2-exit", --40
-    "birdo-beat", --41
-    "npc-fireball", --42
-    "fireworks", --43
-    "bowser-killed", --44
-    "game-beat", --45
-    "door", --46
-    "message", --47
-    "yoshi", --48
-    "yoshi-hurt", --49
-    "yoshi-tongue", --50
-    "yoshi-egg", --51
-    "got-star", --52
-    "zelda-kill", --53
-    "player-died2", --54
-    "yoshi-swallow", --55
-    "ring", --56
-    "dry-bones", --57
-    "smw-checkpoint", --58
-    "dragon-coin", --59
-    "smw-exit", --60
-    "smw-blaarg", --61
-    "wart-bubble", --62
-    "wart-die", --63
-    "sm-block-hit", --64
-    "sm-killed", --65
-    "sm-glass", --66
-    "sm-hurt", --67
-    "sm-boss-hit", --68
-    "sm-cry", --69
-    "sm-explosion", --70
-    "climbing", --71
-    "swim", --72
-    "grab2", --73
-    "smw-saw", --74
-    "smb2-throw", --75
-    "smb2-hit", --76
-    "zelda-stab", --77
-    "zelda-hurt", --78
-    "zelda-heart", --79
-    "zelda-died", --80
-    "zelda-rupee", --81
-    "zelda-fire", --82
-    "zelda-item", --83
-    "zelda-key", --84
-    "zelda-shield", --85
-    "zelda-dash", --86
-    "zelda-fairy", --87
-    "zelda-grass", --88
-    "zelda-hit", --89
-    "zelda-sword-beam", --90
-    "bubble", --91
-    "sprout-vine", --92
-    "iceball", --93
-    "yi-freeze", --94
-    "yi-icebreak", --95
-    "2up", --96
-    "3up", --97
-    "5up", --98
-    "dragon-coin-get2", --99
-    "dragon-coin-get3", --100
-    "dragon-coin-get4", --101
-    "dragon-coin-get5", --102
-    "cherry", --103
-    "explode", --104
-    "hammerthrow", --105
-    "combo1", --106
-    "combo2", --107
-    "combo3", --108
-    "combo4", --109
-    "combo5", --110
-    "combo6", --111
-    "combo7", --112
-    "score-tally", --113
-    "score-tally-end", --114
-    "bowser-fire", --115
-    "boomerang", --116
-    "smb2-charge", --117
-    "stopwatch", --118
-    "whale-spout", --119
-    "door-reveal", --120
-    "p-wing", --121
-    "wand-moving", --122
-    "wand-whoosh", --123
-    "hop", --124
-    "smash-big", --125
-    "smb2-hitenemy", --126
-    "boss-fall", --127
-    "boss-lava", --128
-    "boss-shrink", --129
-    "boss-shrink-done", --130
-    "hp-get", --131
-    "hp-max", --132
-    "cape-feather", --133
-    "cape-fly", --134
-    "flag-slide", --135
-    "smb1-exit", --136
-    "smb2-clear", --137
-    "smb1-world-clear", --138
-    "smb1-underground-overworld", --139
-    "smb1-underground-desert", --140
-    "smb1-underground-sky", --141
-    "goaltape-countdown-start", --142
-    "goaltape-countdown-loop", --143
-    "goaltape-countdown-end", --144
-    "goaltape-irisout", --145
-    "smw-exit-orb", --146
-    "ace-coins-5", --147
-    "door-close", --148
-    "sprout-megashroom", --149
-    "0up", --150
-    "correct", --151
-    "wrong", --152
-    "castle-destroy", --153
-    "twirl", --154
-    "fireball-hit", --155
-    "shell-grab", --156
-    "ice-melt", --157
-    "player-jump2", --158
-    "ground-pound", --159
-    "ground-pound-hit", --160
-    "zelda-fireball", --161
-    "zelda-iceball", --162
-    "pballoon", --163
-    "peach-cry", --164
-    "timeout", --165
-    "flyinghammer-throw", --166
-    "fireball2", --167
-    "fireball3", --168
-    "fireball-hit-hammershield", --169
-    "sml1-exit", --170
-}
-
-smasExtraSounds.stockSoundNumbersInOrder = table.map{2,3,5,6,9,11,12,13,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34,35,37,38,40,41,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,78,79,80,82,83,84,85,86,87,88,89,90,91}
-
-for k,v in ipairs(smasExtraSounds.soundNamesInOrder) do
-    if not smasExtraSounds.stockSoundNumbersInOrder[k] then --Will decrease sound RAM since we're only using what's replaceable via smasExtraSounds
+for k,v in ipairs(smasTables.soundNamesInOrder) do
+    if not smasTables.stockSoundNumbersInOrder[k] then --Will decrease sound RAM since we're only using what's replaceable via smasExtraSounds
         smasExtraSounds.sounds[k] = {}
         smasExtraSounds.sounds[k].sfx = Audio.SfxOpen(Misc.resolveSoundFile(v)) --Sound effect file
         smasExtraSounds.sounds[k].muted = false --SFX muting, will replace the variables that mute SFX
@@ -901,8 +730,8 @@ end
 
 
 function smasExtraSounds.onDraw()
-    for k,v in ipairs(smasExtraSounds.soundNamesInOrder) do
-        if not smasExtraSounds.stockSoundNumbersInOrder[k] then
+    for k,v in ipairs(smasTables.soundNamesInOrder) do
+        if not smasTables.stockSoundNumbersInOrder[k] then
             if smasExtraSounds.sounds[k].sfx == nil then --If nil, roll back to the original sound...
                 smasExtraSounds.sounds[k].sfx = Audio.SfxOpen(Misc.resolveSoundFile(v))
             end
@@ -1845,7 +1674,7 @@ end
 
 function smasExtraSounds.onEvent(eventName)
     if eventName then --Fixes vanilla events from not playing smasExtraSounds sounds
-        if smasExtraSounds.getSoundID(eventName) >= 1 and not smasExtraSounds.stockSoundNumbersInOrder[smasExtraSounds.getSoundID(eventName)] then
+        if smasExtraSounds.getSoundID(eventName) >= 1 and not smasTables.stockSoundNumbersInOrder[smasExtraSounds.getSoundID(eventName)] then
             Sound.playSFX(smasExtraSounds.getSoundID(eventName))
         end
     end
