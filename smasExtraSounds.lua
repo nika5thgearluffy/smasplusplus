@@ -204,14 +204,6 @@ for k,v in ipairs(smasTables.soundNamesInOrder) do
     end
 end
 
---Non-Changable Sounds (Specific to SMAS++, which doesn't necessarily use any character utilizing to use these sounds)
-smasExtraSounds.sounds[1000] = {}
-smasExtraSounds.sounds[1000].sfx = Audio.SfxOpen(Misc.resolveSoundFile("menu/dialog.ogg")) --Dialog Menu Picker
-smasExtraSounds.sounds[1000].muted = false
-smasExtraSounds.sounds[1001] = {}
-smasExtraSounds.sounds[1001].sfx = Audio.SfxOpen(Misc.resolveSoundFile("menu/dialog-confirm.ogg")) --Dialog Menu Choosing Confirmed
-smasExtraSounds.sounds[1001].muted = false
-
 local normalCharacters = {
     [CHARACTER_MARIO] = true,
     [CHARACTER_LUIGI] = true,
