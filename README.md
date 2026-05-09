@@ -11,11 +11,13 @@
     A project that recreates Super Mario All-Stars, with many more games, new features, and surprises
     <br />
     <br />
+    This DOESN'T WORK WITH SMBX2! Please use SMBX2R instead! Download it <a href="https://github.com/nika5thgearluffy/SMBX2R">here</a>.
+    <br />
+    <br />
     <a href="https://github.com/nika5thgearluffy/smasplusplus/issues">Report Bugs</a>
     ·
     <a href="https://github.com/nika5thgearluffy/smasplusplus/wiki">How to Install & Other Info</a>
     <br />
-    This DOESN'T WORK WITH SMBX2! Please use SMBX2R instead! Download it <a href="https://github.com/nika5thgearluffy/SMBX2R">here</a>.
   </p>
 </div>
 
