@@ -11,9 +11,9 @@ end
 
 smasFunctions.sendToConsole("Loading SMASFunctions...")
 
-if SMBX_VERSION == VER_SEE_MOD then
-    smasFunctions.sendToConsole("SEE MOD DETECTED! Loading LunaDLL.dll...")
-    _G.LunaDLL = ffi.load("LunaDll.dll")
+if Misc.inEditor() and not Misc.hasFirstBooted() and SaveData.SMASPlusPlus == nil then
+    Text.windowDebugSimple("Before testing SMAS++, you'll need close SMBX2R since there's important save data to make the game work.\n\nYou got this message because you tested a level from another episode and are now testing here, so this is important to not reset testing save data by accident!\n\nPlease click \"OK\" to close the engine automatically. You can from there rerun testing and the game will work just fine.")
+    Misc.exitEngine()
 end
 
 _G.smasSaveDataSystem = require("smasSaveDataSystem") --Load smasSaveDataSystem as early as smasFunctions because we're wanting this to be a low-level library, when costumes are officially loaded

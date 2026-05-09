@@ -52,7 +52,7 @@ if mem(0x00B251E0, FIELD_WORD) >= 1 then
         GameData.warnUserAboutOldStars = true
     end
     if GameData.warnUserAboutOldStars then
-        Misc.dialogSimple("It looks like your using a legacy save file from before Demo 3 (Or before April 10th, 2022). You'll need to migrate your save data as soon as you boot the game! That way your data can still be used in the future. Please migrate your save while you can!")
+        Misc.dialogSimple("It looks like your using a legacy save file from before Demo 3 (Or before April 10th, 2022).\n\nYou'll need to migrate your save data as soon as you boot the game! That way the data you have can still be used.\n\nPlease migrate your save while you can!")
         GameData.warnUserAboutOldStars = false
     end
 end
@@ -63,14 +63,11 @@ if Misc.score() > 0 then
 end
 
 -- Set the window title and icon
-if Misc.setWindowTitle ~= nil then
-    SysManager.sendToConsole("Window title set.")
-    Misc.setWindowTitle("Super Mario All-Stars++")
-end
-if Misc.setWindowIcon ~= nil then
-    SysManager.sendToConsole("Window icon set.")
-    Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon.png"))
-end
+Misc.setWindowTitle("Super Mario All-Stars++")
+SysManager.sendToConsole("Window title set.")
+
+Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon.png"))
+SysManager.sendToConsole("Window icon set.")
 
 --Register some custom global event handlers...
 SysManager.sendToConsole("Registering global event handlers...")
