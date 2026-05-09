@@ -87,6 +87,67 @@ function dependencies2.onCameraUpdate(c, camIdx)
     end
 end
 
+function dependencies2.onDraw()
+    -- There will be section bounaries that are above the resolution set, so let's draw a dark color around the outside areas
+    local camX = camera.x
+    local camY = camera.y
+    local screenW = Screen.width()
+    local screenH = Screen.height()
+    
+    -- Get level boundary
+    local sec = Section(player.section)
+    local boundLeft = sec.boundary.left
+    local boundRight = sec.boundary.right
+    local boundTop = sec.boundary.top
+    local boundBottom = sec.boundary.bottom
+    
+    local blackColor = Color(0.1, 0.1, 0.1)
+    
+    -- Left bar
+    Graphics.drawBox{
+        x = boundLeft - screenW,
+        y = boundTop - screenH,
+        width = screenW,
+        height = screenH * 3,
+        color = blackColor,
+        sceneCoords = true,
+        priority = -0.1
+    }
+    
+    -- Right bar
+    Graphics.drawBox{
+        x = boundRight,
+        y = boundTop - screenH,
+        width = screenW,
+        height = screenH * 3,
+        color = blackColor,
+        sceneCoords = true,
+        priority = -0.1
+    }
+    
+    -- Top bar
+    Graphics.drawBox{
+        x = boundLeft,
+        y = boundTop - screenH,
+        width = boundRight - boundLeft,
+        height = screenH,
+        color = blackColor,
+        sceneCoords = true,
+        priority = -0.1
+    }
+    
+    -- Bottom bar
+    Graphics.drawBox{
+        x = boundLeft,
+        y = boundBottom,
+        width = boundRight - boundLeft,
+        height = screenH,
+        color = blackColor,
+        sceneCoords = true,
+        priority = -0.1
+    }
+end
+
 function dependencies2.onStart()
     smasBooleans.isInHub = true
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then

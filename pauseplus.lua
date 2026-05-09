@@ -891,7 +891,10 @@ do
             elseif tempNavigator > #submenuObj.options then
                 pauseplus.currentOption = 1
             end
-            playSFX(pauseplus.moveSFX)
+            -- Don't play the SFX if there's only one option available
+            if #submenuObj.options > 1 then
+                playSFX(pauseplus.moveSFX)
+            end
         elseif optionObj.selectionType ~= nil and optionObj.selectionType ~= pauseplus.SELECTION_CHECKBOX then
             local min,max
             if optionObj.selectionType == pauseplus.SELECTION_NUMBERS then

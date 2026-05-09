@@ -78,3 +78,31 @@ function onInputUpdate()
         end
     end
 end
+
+-- Special handling for the SMB2 Castle music
+function onSectionChange(sectionIdx)
+    if sectionIdx == 5 or sectionIdx == 6 then
+        Sound.unmuteChannel(1)
+        Sound.unmuteChannel(2)
+        Sound.muteChannel(3)
+        Sound.muteChannel(4)
+    end
+    if sectionIdx == 7 then
+        Sound.unmuteChannel(1)
+        Sound.muteChannel(2)
+        Sound.muteChannel(3)
+        Sound.muteChannel(4)
+    end
+    if sectionIdx == 8 or sectionIdx == 9 then
+        Sound.unmuteChannel(1)
+        Sound.unmuteChannel(2)
+        Sound.unmuteChannel(3)
+        Sound.muteChannel(4)
+    end
+    if sectionIdx == 10 or sectionIdx == 11 or sectionIdx == 12 or sectionIdx == 13 then
+        Sound.unmuteChannel(1)
+        Sound.unmuteChannel(2)
+        Sound.unmuteChannel(3)
+        Sound.unmuteChannel(4)
+    end
+end

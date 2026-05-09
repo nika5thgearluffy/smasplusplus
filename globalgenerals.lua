@@ -368,17 +368,9 @@ local frametimer = 0
 local actualframecount
 
 function globalgenerals.onDraw()
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if player.character <= 5 then
-            if SaveData.SMASPlusPlus.player[1].currentCostume == "N/A" then
-                player:setCostume(playerManager.getCostumes(player.character)[1])
-            end
-        end
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if player.character <= 5 then
-            if SaveData.SMASPlusPlus.player[1].currentCostume ~= "N/A" then
-                player:setCostume(nil)
-            end
+    if player.character <= 5 then
+        if SaveData.SMASPlusPlus.player[1].currentCostume == "N/A" then
+            player:setCostume(playerManager.getCostumes(player.character)[1])
         end
     end
     if SaveData._basegame.hud.score >= 9999900 then --Fixing combo sounds when score is set as it's max

@@ -2,8 +2,8 @@ HEAD
 TL:"Where SMB Attacks\: World 2-4";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-198336;T:-200600;B:-197824;MZ:24;MF:"_OST/Super Smash Bros. Brawl/F06 - Meta Knight's Revenge - Kirby Super Star (Composer - Jun Ishikawa and Dan Miyakawa - Artist - Noriyuki Iwadare).ogg";BG:33;
-SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Smash Bros. Brawl/F06 - Meta Knight's Revenge - Kirby Super Star (Composer - Jun Ishikawa and Dan Miyakawa - Artist - Noriyuki Iwadare).ogg";BG:39;
+SC:0;L:-200000;R:-198336;T:-200600;B:-197824;MZ:24;MF:"_OST/Super Smash Bros. Brawl/F06 - Meta Knight's Revenge - Kirby Super Star.ogg";BG:33;
+SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Smash Bros. Brawl/F06 - Meta Knight's Revenge - Kirby Super Star.ogg";BG:39;
 SC:2;L:-160000;R:-159200;T:-160600;B:-160000;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT

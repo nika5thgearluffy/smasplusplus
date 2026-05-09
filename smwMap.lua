@@ -611,7 +611,7 @@ do
                     unlockLoopObj = nil
                 end
 
-                Sound.playSFX(smwMap.pathSettings.unlockFinishSound)
+                SFX.play(smwMap.pathSettings.unlockFinishSound)
 
 
                 -- Find any levels that should be unlocked and unlock them
