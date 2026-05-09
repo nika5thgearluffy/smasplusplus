@@ -207,6 +207,7 @@ local ending = false
 local colorIncrease = 0
 
 local function textPrintCentered(t, x, y, color) --Taken from the input config menu from the editor and edited slightly.
+    textplus.print{text=t, x=x + 2, y=y + 2, plaintext=true, pivot=vector.v2(0.5,0.5), xscale=1.5, yscale=1.5, color=Color.black, priority = 7.4, font = smbx13font}
     textplus.print{text=t, x=x, y=y, plaintext=true, pivot=vector.v2(0.5,0.5), xscale=1.5, yscale=1.5, color=color, priority = 7.4, font = smbx13font}
 end
 

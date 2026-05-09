@@ -32,7 +32,7 @@ function costumechange()
     end
     yoshi.generalSettings.hurtSound = SFX.open(Misc.resolveSoundFile("costumes/ninjabomberman/SMA3/SFX/hurt"))
     yoshi.generalSettings.deathSound = SFX.open(Misc.resolveSoundFile("costumes/ninjabomberman/SMA3/SFX/dieswithmusic"))
-    yoshi.generalSettings.coinSound = SFX.open(Misc.resolveSoundFile("costumes/ninjabomberman/SMA3/SFX/coin"))
+    yoshi.generalSettings.coinSound = SFX.open(Misc.resolveSoundFile("costumes/ninjabomberman/SMA3/coin"))
     
     Audio.sounds[5].sfx  = yoshi.generalSettings.hurtSound
     smasExtraSounds.sounds[8].sfx  = yoshi.generalSettings.deathSound
