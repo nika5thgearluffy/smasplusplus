@@ -8,7 +8,7 @@ costume.loaded = false
 costume.loadedGraphics = false
 
 function costume.onInit(p)
-    if not costume.loadedGraphics then
+    --[[if not costume.loadedGraphics then
         Graphics.sprites.bgo[48].img = Graphics.loadImageResolved("costumes/mario/00-SMASPlusPlus-Beta/smb1flagbeta.png")
         Graphics.sprites.bgo[57].img = Graphics.loadImageResolved("costumes/mario/00-SMASPlusPlus-Beta/smb1flaglinebeta.png")
         Graphics.sprites.block[207].img = Graphics.loadImageResolved("costumes/mario/00-SMASPlusPlus-Beta/smb2underbeta.png")
@@ -30,7 +30,7 @@ function costume.onInit(p)
         Graphics.sprites.block[1221].img = Graphics.loadImageResolved("costumes/mario/00-SMASPlusPlus-Beta/smb2underbeta.png")
         Graphics.sprites.npc[14].img = Graphics.loadImageResolved("costumes/mario/00-SMASPlusPlus-Beta/fireflowerbeta.png")
         costume.loadedGraphics = true
-    end
+    end]]
     if not costume.loaded then
         Sound.loadCostumeSounds()
         costume.loaded = true
@@ -39,7 +39,7 @@ end
 
 function costume.onCleanup(p)
     Sound.cleanupCostumeSounds()
-    Graphics.sprites.bgo[48].img = nil
+    --[[Graphics.sprites.bgo[48].img = nil
     Graphics.sprites.bgo[57].img = nil
     Graphics.sprites.block[207].img = nil
     Graphics.sprites.block[201].img = nil
@@ -58,7 +58,7 @@ function costume.onCleanup(p)
     Graphics.sprites.block[216].img = nil
     Graphics.sprites.block[1220].img = nil
     Graphics.sprites.block[1221].img = nil
-    Graphics.sprites.npc[14].img = nil
+    Graphics.sprites.npc[14].img = nil]]
 end
 
 Misc.storeLatestCostumeData(costume)

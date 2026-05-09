@@ -48,7 +48,7 @@ function smasAudioVolumeSystem.onDraw()
             end
         end
     end
-    for i = 1,91 do
+    for i = 1, Audio.SfxCount() do
         if smasAudioVolumeSystem.setVolumeNow then
             pcall(function() Audio.sounds[i].sfx.volume = math.floor(GameData.SMASPlusPlus.audio.sfxVolume * 128 + 0.5) end)
         end

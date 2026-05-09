@@ -191,8 +191,6 @@ smasExtraSounds.harmableComboTypes = {
     HARM_TYPE_HELD,
 }
 
-local ready = false --This library isn't ready until onInit is finished
-
 smasExtraSounds.sounds = {}
 smasExtraSounds.disableSoundMarker = false
 
@@ -263,34 +261,20 @@ local extrasoundsBlock90 = {}
 local extrasoundsBlock668 = {}
 
 function smasExtraSounds.onInitAPI() --This'll require a bunch of events to start
-    registerEvent(smasExtraSounds, "onKeyboardPress")
     registerEvent(smasExtraSounds, "onDraw")
-    registerEvent(smasExtraSounds, "onDrawEnd")
-    registerEvent(smasExtraSounds, "onLevelExit")
     registerEvent(smasExtraSounds, "onTick")
-    registerEvent(smasExtraSounds, "onTickEnd")
     registerEvent(smasExtraSounds, "onInputUpdate")
-    registerEvent(smasExtraSounds, "onStart")
     registerEvent(smasExtraSounds, "onPostNPCKill")
     registerEvent(smasExtraSounds, "onNPCKill")
     registerEvent(smasExtraSounds, "onPostNPCHarm")
     registerEvent(smasExtraSounds, "onNPCHarm")
-    registerEvent(smasExtraSounds, "onPostPlayerHarm")
     registerEvent(smasExtraSounds, "onPostPlayerKill")
-    registerEvent(smasExtraSounds, "onPostExplosion")
-    registerEvent(smasExtraSounds, "onExplosion")
     registerEvent(smasExtraSounds, "onPostBlockHit")
-    registerEvent(smasExtraSounds, "onPlayerKill")
     registerEvent(smasExtraSounds, "onEvent")
-    
-    blockManager.registerEvent(90, extrasoundsBlock90, "onCollideBlock")
-    blockManager.registerEvent(668, extrasoundsBlock668, "onCollideBlock")
-    
-    local Routine = require("routine")
-
     registerEvent(smasExtraSounds, "onSFXStart")
 
-    ready = true --We're ready, so we can begin
+    blockManager.registerEvent(90, extrasoundsBlock90, "onCollideBlock")
+    blockManager.registerEvent(668, extrasoundsBlock668, "onCollideBlock")
 end
 
 local function harmNPC(npc,...) -- npc:harm but it returns if it actually did anything
@@ -731,11 +715,7 @@ function smasExtraSounds.onDraw()
     end
 end
 
-function smasExtraSounds.onDrawEnd()
-    
-end
-
-function smasExtraSounds.onTick() --This is a list of sounds that'll need to be replaced within each costume. They're muted here for obivious reasons.
+function smasExtraSounds.onTick() --This is a list of sounds that'll need to be replaced within each costume. They're muted here for obvious reasons.
     if smasExtraSounds.active then --Only mute when active
         smasExtraSounds.disableSoundMarker = false --Make sure, when disabled, it only unmutes once when disabled
         --Audio.sounds[4].muted = true --block-smash.ogg

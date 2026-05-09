@@ -1022,7 +1022,7 @@ function smasMainMenu.onTick()
             SaveData.failsafeMessageOne = true
             Level.load(Level.filename())
         end
-        for i = 1,91 do
+        for i = 1, Audio.SfxCount() do
             Audio.sounds[i].muted = true
         end
     end

@@ -50,11 +50,28 @@ smasCharacterChanger.iniFile = SysManager.loadDefaultCharacterIni() --Used to up
 smasCharacterChanger.characterPreviewImagesCostume = {} --Will be used to add character preview images throughout the menu
 smasCharacterChanger.characterPreviewImagesCharacter = {} --Will be used to add character preview images throughout the menu
 
-local colorChange1 = 0
-local colorChange2 = 0
-local colorChange3 = 0
-
+local rainbowHue = 0
 local reserveChange = 0
+
+local function hsvToRgb(h, s, v)
+    local r, g, b
+    local i = math.floor(h * 6)
+    local f = h * 6 - i
+    local p = v * (1 - s)
+    local q = v * (1 - f * s)
+    local t = v * (1 - (1 - f) * s)
+    i = i % 6
+
+    if i == 0 then r, g, b = v, t, p
+    elseif i == 1 then r, g, b = q, v, p
+    elseif i == 2 then r, g, b = p, v, t
+    elseif i == 3 then r, g, b = p, q, v
+    elseif i == 4 then r, g, b = t, p, v
+    elseif i == 5 then r, g, b = v, p, q
+    end
+
+    return r, g, b
+end
 
 --These tables below will be used for the system.
 smasCharacterChanger.names = {}
@@ -62,6 +79,7 @@ smasCharacterChanger.namesGame = {}
 smasCharacterChanger.namesCharacter = {}
 smasCharacterChanger.namesCostume = {}
 smasCharacterChanger.namesAlteration = {}
+smasCharacterChanger.namesAltID = {}
 
 function smasCharacterChanger.addCharacter(name,game,character,costume) --Adds a character to the tables above. Example: smasCharacterChanger.addCharacter("My Character","Game Information",CHARACTER_NUMBERGOESHERE,"COSTUMEGOESHERE, else nil")
     if name == nil then
@@ -86,10 +104,11 @@ function smasCharacterChanger.addCharacter(name,game,character,costume) --Adds a
         table.insert(smasCharacterChanger.namesGame, {game})
         table.insert(smasCharacterChanger.namesCharacter, character)
         table.insert(smasCharacterChanger.namesCostume, {costume})
+        table.insert(smasCharacterChanger.namesAltID, 0)
     end
 end
 
-function smasCharacterChanger.addVariant(nameToFind,game,costume) --Adds a variant to the character table. Example: smasCharacterChanger.addVariant("My Character","Game Information of the 2nd character","COSTUMEGOESHERE of the 2nd character variant")
+function smasCharacterChanger.addVariant(nameToFind,game,costume,altID) --Adds a variant to the character table. Example: smasCharacterChanger.addVariant("My Character","Game Information of the 2nd character","COSTUMEGOESHERE of the 2nd character variant",alternativeCharacterIDIfNeeded)
     if nameToFind == nil then
         error("You must add a name to find who to add this to.")
         return
@@ -101,6 +120,10 @@ function smasCharacterChanger.addVariant(nameToFind,game,costume) --Adds a varia
     if costume == nil then
         error("You must add a costume as a string to this character (All caps). If specifying nil, make sure that nil is a string.")
         return
+    end
+    if altID == nil then
+        -- 0 to not use another character ID instead
+        altID = 0
     end
     if nameToFind ~= nil then --If not nil...
         local foundName = table.ifind(smasCharacterChanger.names, nameToFind) --The name ID will then be added here.
@@ -183,7 +206,7 @@ local ending = false
 
 local colorIncrease = 0
 
-local function textPrintCentered(t, x, y, color) --Taken from the input config menu from the editor and edited slightly. Thanks Hoeloe lol
+local function textPrintCentered(t, x, y, color) --Taken from the input config menu from the editor and edited slightly.
     textplus.print{text=t, x=x, y=y, plaintext=true, pivot=vector.v2(0.5,0.5), xscale=1.5, yscale=1.5, color=color, priority = 7.4, font = smbx13font}
 end
 
@@ -228,7 +251,7 @@ function smasCharacterChanger.shutdownChanger() --The animation that shuts the m
     started = false
     ending = true
     smasCharacterChanger.animationActive = true
-    Sound.playSFX("menu/dialog-confirm.ogg")
+    Sound.playSFX(140)
     Routine.waitFrames(35, true)
     smasCharacterChanger.selectionNumberUpDown = 1
     smasCharacterChanger.selectionNumberAlteration = 0
@@ -406,20 +429,15 @@ function smasCharacterChanger.onDraw()
                     textPrintCentered(smasCharacterChanger.namesAlteration[smasCharacterChanger.selectionNumber][smasCharacterChanger.selectionNumberUpDown][smasCharacterChanger.selectionNumberAlteration].game, Screen.calculateCameraDimensions(410, 1), Screen.calculateCameraDimensions(210, 2))
                 end
             end
-            colorChange1 = colorChange1 + 0.001
-            colorChange2 = colorChange2 + 0.0005
-            colorChange3 = colorChange3 + 0.0001
-            if colorChange1 > 1 then
-                colorChange1 = 0
+            -- Increment hue each frame, wrapping at 1
+            rainbowHue = rainbowHue + 0.0001
+            if rainbowHue > 1 then
+                rainbowHue = rainbowHue - 1
             end
-            if colorChange2 > 1 then
-                colorChange2 = 0
-            end
-            if colorChange3 > 1 then
-                colorChange3 = 0
-            end
-            local rainbowyColor = Color(colorChange1, colorChange2, colorChange3)
-            Graphics.drawBox{x = Screen.calculateCameraDimensions(0, 1), y = Screen.calculateCameraDimensions(0, 2), width = 800, height = 600, color = rainbowyColor .. 1, priority = 7.3}
+
+            local r, g, b = hsvToRgb(rainbowHue, 1, 1)
+            local rainbowColor = Color(r, g, b)
+            Graphics.drawBox{x = Screen.calculateCameraDimensions(0, 1), y = Screen.calculateCameraDimensions(0, 2), width = 800, height = 600, color = rainbowColor .. 1, priority = 7.3}
             
             Graphics.drawImageWP(smasCharacterChanger.drawPreviewImage(), Screen.calculateCameraDimensions(360, 1), Screen.calculateCameraDimensions(290, 2), 7.4)
             

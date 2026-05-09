@@ -611,7 +611,7 @@ do
                     unlockLoopObj = nil
                 end
 
-                SFX.play(smwMap.pathSettings.unlockFinishSound)
+                Sound.playSFX(smwMap.pathSettings.unlockFinishSound)
 
 
                 -- Find any levels that should be unlocked and unlock them
@@ -662,7 +662,7 @@ do
         if eventObj.timer == 1 then
             setLevelDestroyed(eventObj.levelObj.settings.levelFilename)
 
-            SFX.play(smwMap.playerSettings.levelDestroyedSound)
+            Sound.playSFX(smwMap.playerSettings.levelDestroyedSound)
 
 
             if smwMap.levelDestroyedSmokeEffectID ~= nil then
@@ -1091,7 +1091,7 @@ do
 
                 data.savedData.killed = true
 
-                SFX.play(9)
+                Sound.playSFX(9)
             elseif data.timer > 32 then
                 if smwMap.smokeCloudEffectID ~= nil then
                     smwMap.createObject(smwMap.smokeCloudEffectID,v.x + v.graphicsOffsetX,v.y + v.graphicsOffsetY)
@@ -1814,7 +1814,7 @@ do
         smwMap.startTransition(middleFunction,nil, smwMap.transitionSettings.enterEncounterSettings)
 
         if smwMap.encounterSettings.enterSound ~= nil then
-            SFX.play(smwMap.encounterSettings.enterSound)
+            Sound.playSFX(smwMap.encounterSettings.enterSound)
         end
     end
 
@@ -2012,7 +2012,7 @@ do
                         smwMap.startSelectLayouts = nil
                     end
                     
-                    SFX.play(smwMap.playerSettings.levelSelectedSound)
+                    Sound.playSFX(smwMap.playerSettings.levelSelectedSound)
                 end
             elseif Misc.GetKeyState(VK_SHIFT) and v.levelObj ~= nil and Misc.inEditor() then -- unlock one thing (only works from in editor)
                 gameData.winType = 7
@@ -2097,7 +2097,7 @@ do
                     if encounterObj ~= nil then
                         enterEncounter(v,encounterObj)
                     else
-                        SFX.play(26)
+                        Sound.playSFX(26)
                     end
                 end
             else
@@ -2354,7 +2354,7 @@ do
                 setLevel(p,v.levelObj)
             end
             
-            SFX.play(26)
+            Sound.playSFX(26)
 
             return
         elseif Misc.GetKeyState(VK_BACK) and Misc.inEditor() then
@@ -2420,10 +2420,10 @@ do
 
         if player.keys.up == KEYS_PRESSED and smwMap.startPointSelectedOption > 1 then
             smwMap.startPointSelectedOption = smwMap.startPointSelectedOption - 1
-            SFX.play(26)
+            Sound.playSFX(26)
         elseif player.keys.down == KEYS_PRESSED and smwMap.startPointSelectedOption < #smwMap.startPointSelectOptions then
             smwMap.startPointSelectedOption = smwMap.startPointSelectedOption + 1
-            SFX.play(26)
+            Sound.playSFX(26)
         end
 
         if player.keys.jump == KEYS_PRESSED then
@@ -2433,7 +2433,7 @@ do
 
             smwMap.startPointSelectOptions[smwMap.startPointSelectedOption][2]()
 
-            SFX.play(smwMap.playerSettings.levelSelectedSound)
+            Sound.playSFX(smwMap.playerSettings.levelSelectedSound)
         end
     end)
 
@@ -4876,7 +4876,7 @@ do
                 smwMap.mainPlayer.timer = 0
                 smwMap.mainPlayer.timer2 = 0
 
-                SFX.play(13)
+                Sound.playSFX(13)
             end
 
             return true
