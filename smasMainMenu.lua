@@ -383,103 +383,6 @@ function themeMenu1() --Intro theme menu
     littleDialogue.create({text = transplate.getTranslation("0x0000000000000017"), speakerName = "Themes", pauses = false, updatesInPause = true})
 end
 
-function ResolutionChange1() --Resolution changed.
-    Sound.playSFX("resolution-set.ogg")
-    Routine.waitFrames(1, true)
-    smasResolutions.changeResolution()
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000023"), pauses = false, updatesInPause = true})
-end
-
-function ResolutionChangeBorder2() --Border toggled on/off.
-    if SaveData.borderEnabled then
-        Sound.playSFX("resolutionborder-disable.ogg")
-        SaveData.borderEnabled = false
-        Routine.waitFrames(1, true)
-        smasResolutions.changeResolution()
-    elseif not SaveData.borderEnabled then
-        Sound.playSFX("resolutionborder-enable.ogg")
-        SaveData.borderEnabled = true
-        Routine.waitFrames(1, true)
-        smasResolutions.changeResolution()
-    end
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000024"), pauses = false, updatesInPause = true})
-end
-
-function ResolutionChangeScale3()
-    if SaveData.letterbox then
-        Sound.playSFX("letterbox-disable.ogg")
-        SaveData.letterbox = false
-        Routine.waitFrames(1, true)
-        smasResolutions.changeResolution()
-    elseif not SaveData.letterbox then
-        Sound.playSFX("letterbox-enable.ogg")
-        SaveData.letterbox = true
-        Routine.waitFrames(1, true)
-        smasResolutions.changeResolution()
-    end
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000025"), pauses = false, updatesInPause = true})
-end
-
-function AccessibilityOptions1() --Accessibility Options
-    smasMainMenuSystem.menuOpen = false
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000026"), speakerName = "Accessibility Options", pauses = false, updatesInPause = true})
-end
-
-function AccessibilityOptionToggle1() --Accessibility turned on/off
-    SaveData.SMASPlusPlus.accessibility.enableTwirl = not SaveData.SMASPlusPlus.accessibility.enableTwirl
-    if SaveData.SMASPlusPlus.accessibility.enableTwirl then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000027"), pauses = false, updatesInPause = true})
-    else
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000028"), pauses = false, updatesInPause = true})
-    end
-end
-
-function AccessibilityOptionToggle2() --Accessibility turned on/off
-    SaveData.SMASPlusPlus.accessibility.enableWallJump = not SaveData.SMASPlusPlus.accessibility.enableWallJump
-    if SaveData.SMASPlusPlus.accessibility.enableWallJump then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000027"), pauses = false, updatesInPause = true})
-    else
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000028"), pauses = false, updatesInPause = true})
-    end
-end
-
-function AccessibilityOptionToggle3() --Accessibility turned on/off
-    SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory = not SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory
-    if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000027"), pauses = false, updatesInPause = true})
-    else
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000028"), pauses = false, updatesInPause = true})
-    end
-end
-
-function AccessibilityOptionToggle4() --Accessibility turned on/off
-    SaveData.SMASPlusPlus.accessibility.enableLives = not SaveData.SMASPlusPlus.accessibility.enableLives
-    if SaveData.SMASPlusPlus.accessibility.enableLives then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000027"), pauses = false, updatesInPause = true})
-    else
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000028"), pauses = false, updatesInPause = true})
-    end
-end
-
-function AccessibilityOptionToggle5() --Accessibility turned on/off
-    SaveData.SMASPlusPlus.accessibility.enableGroundPound = not SaveData.SMASPlusPlus.accessibility.enableGroundPound
-    if SaveData.SMASPlusPlus.accessibility.enableGroundPound then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000027"), pauses = false, updatesInPause = true})
-    else
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000028"), pauses = false, updatesInPause = true})
-    end
-end
-
-function ClockChange1() --Clock theme changed.
-    Sound.playSFX("hour-change.ogg")
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000029"), pauses = false, updatesInPause = true})
-end
-
-function credits1() --Credits
-    smasMainMenuSystem.menuOpen = false
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000030"), speakerName = "Credits", pauses = false, updatesInPause = true})
-end
-
 function X2Char() --Game settings applied
     if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
         Sound.playSFX("1.3Mode/bowser-killed.ogg")
@@ -766,6 +669,8 @@ function BootCredits() --The credits lvl will probably be scrapped or not, depen
 end
 
 function smasMainMenu.restartSMASPlusPlus(clearSave) --This restarts SMAS++ entirely
+    -- If that's open, then close it
+    smasMainMenuSystem.menuOpen = false
     if clearSave == nil then
         clearSave = false
     end
@@ -776,7 +681,7 @@ function smasMainMenu.restartSMASPlusPlus(clearSave) --This restarts SMAS++ enti
         SysManager.clearSaveDataAndGameDataAndRestart()
     else
         if not Misc.loadEpisode("Super Mario All-Stars++") then
-            error("SMAS++ is not found. How is that even possible? Reinstall the game using the SMASUpdater, since something has gone terribly wrong.")
+            error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
         end
     end
 end
@@ -1555,12 +1460,12 @@ smasMainMenuSystem.addMenuItem{name = "Exit", section = smasMainMenuSystem.menuS
 
 --SMAS++ MAIN MENU: Main Menu Selection (Resolution Settings)
 smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, title = "Change Resolution", menuBackTo = smasMainMenuSystem.menuSections.SECTION_SETTINGS_MAIN, xCenter = 170, yCenter = 310}
-smasMainMenuSystem.addMenuItem{name = "Fullscreen", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "fullscreen", isSaveData = true, isGameData = false, saveDataArgs = 1}
-smasMainMenuSystem.addMenuItem{name = "Widescreen", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "widescreen", isSaveData = true, isGameData = false, saveDataArgs = 1}
-smasMainMenuSystem.addMenuItem{name = "Ultrawide", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "ultrawide", isSaveData = true, isGameData = false, saveDataArgs = 1}
-smasMainMenuSystem.addMenuItem{name = "Steam Deck", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "steamdeck", isSaveData = true, isGameData = false, saveDataArgs = 1}
-smasMainMenuSystem.addMenuItem{name = "Dynamic Widescreen", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "dynamicwidescreen", isSaveData = true, isGameData = false, saveDataArgs = 1}
-smasMainMenuSystem.addMenuItem{name = "SNES", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "snes", isSaveData = true, isGameData = false, saveDataArgs = 1}
+smasMainMenuSystem.addMenuItem{name = "Fullscreen", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true, true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "fullscreen", isSaveData = true, isGameData = false, saveDataArgs = 1}
+smasMainMenuSystem.addMenuItem{name = "Widescreen", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true, true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "widescreen", isSaveData = true, isGameData = false, saveDataArgs = 1}
+smasMainMenuSystem.addMenuItem{name = "Ultrawide", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true, true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "ultrawide", isSaveData = true, isGameData = false, saveDataArgs = 1}
+smasMainMenuSystem.addMenuItem{name = "Steam Deck", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true, true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "steamdeck", isSaveData = true, isGameData = false, saveDataArgs = 1}
+smasMainMenuSystem.addMenuItem{name = "Dynamic Widescreen", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true, true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "dynamicwidescreen", isSaveData = true, isGameData = false, saveDataArgs = 1}
+smasMainMenuSystem.addMenuItem{name = "SNES", section = smasMainMenuSystem.menuSections.SECTION_SETTINGS_CHANGERESOLUTION, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_MULTISELECT, isFunction = true, functionToRun = function() smasResolutions.changeResolution(true, true) end, multiSelectValueToUse = "resolution", multiSelectValueToSet = "snes", isSaveData = true, isGameData = false, saveDataArgs = 1}
 
 
 

@@ -25,9 +25,12 @@ function smasResolutions.changeCRTSetting(onMainMenu)
     end)
 end
 
-function smasResolutions.changeResolution(onMainMenu)
+function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
     if onMainMenu == nil then
         onMainMenu = false
+    end
+    if shouldResizeWindow == nil then
+        shouldResizeWindow = false
     end
     Routine.run(function()
         -- Wait one frame, since it won't update unless we do so
@@ -71,17 +74,18 @@ function smasResolutions.changeResolution(onMainMenu)
             end
         end
 
-        -- And set the window size when first starting the game.
-        if not GameData.SMASPlusPlus.firstLaunched then
+        -- And set the window size after changing the resolution if set to do so.
+        if shouldResizeWindow then
             Window.setSize(Window.getWidthFromResolution(Screen.width()), Window.getHeightFromResolution(Screen.height()))
-            Window.center(Window.findMonitor())
-            GameData.SMASPlusPlus.firstLaunched = true
         end
     end)
 end
 
 function smasResolutions.onStart()
-    smasResolutions.changeResolution(false)
+    local width,height = Graphics.getMainFramebufferSize()
+    if camera.width ~= width and camera.height ~= height then
+        smasResolutions.changeResolution(false, false)
+    end
 end
 
 function smasResolutions.onDraw()

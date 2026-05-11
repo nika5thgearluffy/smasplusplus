@@ -151,7 +151,7 @@ function restartAfterUpdating()
         end
     end
     if not Misc.loadEpisode("Super Mario All-Stars++") then
-        error("SMAS++ is not found. How is that even possible? Reinstall the game using the SMASUpdater, since something has gone terribly wrong.")
+        error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
     end
 end
 

@@ -217,7 +217,7 @@ local function changeResolutionSettings()
         SaveData.SMASPlusPlus.options.resolution = "snes"
     end
     Routine.waitFrames(1, false)
-    smasResolutions.changeResolution()
+    smasResolutions.changeResolution(false, true)
 end
 
 local function togglepwingsfx()
@@ -1096,7 +1096,7 @@ local function purgesavedata()
     SaveData.flush()
     if Misc.loadEpisode("Super Mario All-Stars++") == false then
         SFX.play("wrong.ogg")
-        error("SMAS++ is not found. How is that even possible? Reinstall the game using the SMASUpdater, since something has gone terribly wrong.")
+        error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
     end
 end
 
