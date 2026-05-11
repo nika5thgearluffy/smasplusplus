@@ -1162,25 +1162,25 @@ function smasMainMenu.onDraw()
         
         if smasMainMenu.showPFPImageOnScreen then
             if SaveData.SMASPlusPlus.game.pfp == nil or SaveData.SMASPlusPlus.game.pfp == "" then
-                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = 555, priority = -7}
+                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = Screen.height() - 45, priority = 1}
             elseif SaveData.SMASPlusPlus.game.pfp then
-                sprite.draw{texture = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp), width = 40, height = 40, x = 10, y = 555, priority = -7}
+                sprite.draw{texture = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp), width = 40, height = 40, x = 10, y = Screen.height() - 45, priority = 1}
             elseif unexpected_condition then
-                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = 555, priority = -7}
+                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = Screen.height() - 45, priority = 1}
             end
         end
         if smasMainMenu.showPlayerNameOnScreen then
             if SaveData.SMASPlusPlus.game.username == nil then
-                textplus.print{x = 60, y = 569, text = "<color rainbow>"..SysManager.getDefaultPlayerUsername().."</color>", font = smasMainMenu.sonicManiaFont, priority = -7, xscale = 1, yscale = 1}
+                textplus.print{x = 60, y = Screen.height() - 31, text = "<color rainbow>"..SysManager.getDefaultPlayerUsername().."</color>", font = smasMainMenu.sonicManiaFont, priority = 1, xscale = 1, yscale = 1}
             else
-                textplus.print{x = 60, y = 569, text = "<color rainbow>"..SaveData.SMASPlusPlus.game.username.."</color>", font = smasMainMenu.sonicManiaFont, priority = -7, xscale = 1, yscale = 1}
+                textplus.print{x = 60, y = Screen.height() - 31, text = "<color rainbow>"..SaveData.SMASPlusPlus.game.username.."</color>", font = smasMainMenu.sonicManiaFont, priority = 1, xscale = 1, yscale = 1}
             end
         end
         if Level.filename() == "intro_8bit.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_theeditedboss.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_S!TS!.lvlx" then
             --No curtains
@@ -1189,43 +1189,43 @@ function smasMainMenu.onDraw()
             --No curtains
         end
         if Level.filename() == "intro_SMBX1.0.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.redCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.redCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_SMBX1.1.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_SMBX1.2.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_SMBX1.3.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.orangeCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.orangeCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_SMBX1.3og.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_SMBX2.lvlx" then
             --No curtains
         end
         if Level.filename() == "intro_SMBX2b3.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.orangeCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.orangeCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_WSMBA.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_sunsetbeach.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_scrollingheights.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_jakebrito1.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_jakebrito2.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         if Level.filename() == "intro_circuitcity.lvlx" then
-            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, -12)
+            Graphics.drawImageWP(smasMainMenu.blueCurtainsImage, 0, 0, 1)
         end
         
         if smasMainMenu.enableMouseEnemyKilling then
@@ -1269,18 +1269,18 @@ function smasMainMenu.onDraw()
             end
         end
         if smasMainMenu.showVersionNumber then
-            Graphics.drawBox{x = camera.width - 90, y=5, width=84, height=28, color=Color.black..0.5, priority=-7}
-            textplus.print{x = camera.width - 82, y=10, text = VersionOfEpisode, priority=-6, color=Color.white, font=smasMainMenu.sonicManiaFont, xscale = 1.6, yscale = 1.6} --Version number of the episode
+            Graphics.drawBox{x = Screen.width() - 90, y = 5, width=84, height=28, color=Color.black..0.5, priority=-7}
+            textplus.print{x = Screen.width() - 82, y = 10, text = VersionOfEpisode, priority=-6, color=Color.white, font=smasMainMenu.sonicManiaFont, xscale = 1.6, yscale = 1.6} --Version number of the episode
         end
         if smasMainMenu.showEscapeToQuitMessage then
-            textplus.print{x=12, y=12, text = "Press pause to quit.", priority=-6, color=Color.yellow, xscale = 1.6, yscale = 1.6}
-            Graphics.drawBox{x=5, y=5, width=148, height=28, color=Color.red..0.5, priority=-7}
+            textplus.print{x = 12, y = 12, text = "Press pause to quit.", priority=-6, color=Color.yellow, xscale = 1.6, yscale = 1.6}
+            Graphics.drawBox{x = 5, y = 5, width=148, height=28, color=Color.red..0.5, priority=-7}
         end
         if smasMainMenu.showPressJumpText then
-            textplus.print{x = (camera.width / 2) - 200, y=390, text = "Press jump to start", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFont}
+            textplus.print{x = (Screen.width() / 2) - 200, y = Screen.height() - 210, text = "Press jump to start", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFont}
         end
         if smasMainMenu.showWebsiteTextOnScreen then
-            textplus.print{x=(camera.width / 2) - 398, y=522, text = "github.com/nika5thgearluffy/smasplusplus", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFontWebsite}
+            textplus.print{x=(camera.width / 2) - 398, y=Screen.height() - 78, text = "github.com/nika5thgearluffy/smasplusplus", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFontWebsite}
         end
         if smasMainMenu.showLogoOnScreen then
             if SaveData.SMASPlusPlus.options.currentLanguage == "english" then
@@ -1309,20 +1309,21 @@ function smasMainMenu.onDraw()
             end
         end
         if not smasMainMenu.hideGameSMBXAndSMBX2Credits then
-            textplus.print{x=(camera.width / 2) - 200, y=480, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-7, color=Color.red, xscale = 2, yscale = 2}
-            textplus.print{x=(camera.width / 2) - 202, y=477, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
+            textplus.print{x=(camera.width / 2) - 200, y=Screen.height() - 120, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-7, color=Color.red, xscale = 2, yscale = 2}
+            textplus.print{x=(camera.width / 2) - 202, y=Screen.height() - 123, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-6, color=Color.yellow, xscale = 2, yscale = 2}
         end
         if smasMainMenu.showWorldMapSkipMessage then
-            textplus.print{x=(camera.width / 2) - 360, y=450, text = "Hold down NOW to instantly skip to the World Map (3 seconds).", priority=0, color=Color.red, font=statusFont, xscale = 1.5, yscale = 1.5}
+            --textplus.print{x=(camera.width / 2) - 360, y=450, text = "Hold down NOW to instantly skip to the World Map (3 seconds).", priority=0, color=Color.red, font=statusFont, xscale = 1.5, yscale = 1.5}
         end
         if smasMainMenu.showEasterEggMessage then
-            textplus.print{x=(camera.width / 2) - 250, y=550, text = "Welcome to Totaka's Song. Congrats, you found the easter egg ;)", priority=0, color=Color.yellow, font=statusFont}
+            textplus.print{x=(camera.width / 2) - 250, y=Screen.height() - 50, text = "Welcome to Totaka's Song. Congrats, you found the easter egg ;)", priority=0, color=Color.yellow, font=statusFont}
         end
         if smasMainMenu.aprilFools then    
-            Graphics.drawImageWP(aprilFoolsErrorImg, 0, 0, 0)
+            Graphics.drawImageWP(aprilFoolsErrorImg, Screen.calculateCameraDimensions(0, 1), Screen.calculateCameraDimensions(0, 2), 0)
+            Graphics.drawScreen{color = Color.fromHexRGB(0x001AFF), priority = -0.01}
         end
         if stpatricksday then
-            textplus.print{x=(camera.width / 2) - 100, y=460, text = "Happy St. Patricks Day!", priority=0, color=Color.green, font=statusFont}
+            textplus.print{x=(camera.width / 2) - 100, y=Screen.height() - 140, text = "Happy St. Patricks Day!", priority=0, color=Color.green, font=statusFont}
         end
     end
 end
