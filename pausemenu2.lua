@@ -211,6 +211,10 @@ local function changeResolutionSettings()
         SaveData.SMASPlusPlus.options.resolution = "ultrawide"
     elseif screenModes == "Steam Deck" then
         SaveData.SMASPlusPlus.options.resolution = "steamdeck"
+    elseif screenModes == "Dynamic Widescreen" then
+        SaveData.SMASPlusPlus.options.resolution = "dynamicwidescreen"
+    elseif screenModes == "SNES" then
+        SaveData.SMASPlusPlus.options.resolution = "snes"
     end
     Routine.waitFrames(1, false)
     smasResolutions.changeResolution()
@@ -1059,19 +1063,19 @@ function pausemenu2.onDraw()
     
     if pauseplus.currentSubmenu then
         if not isOverworld then
-            textplus.print{x = 20, y = 564, text = "<color red>Current costume: "..costtext.."</color>", font = pausefont3, priority = 7.4, xscale = 1.2, yscale = 1.2}
-            textplus.print{x = 20, y = 582, text = "<color yellow>"..Misc.getActualLevelName().."</color>", font = pausefont3, priority = 7.4, xscale = 1.2, yscale = 1.2}
+            textplus.print{x = 20, y = Screen.height() - 36, text = "<color red>Current costume: "..costtext.."</color>", font = pausefont3, priority = 7.4, xscale = 1.2, yscale = 1.2}
+            textplus.print{x = 20, y = Screen.height() - 18, text = "<color yellow>"..Misc.getActualLevelName().."</color>", font = pausefont3, priority = 7.4, xscale = 1.2, yscale = 1.2}
             if SaveData.SMASPlusPlus.game.pfp == nil or SaveData.SMASPlusPlus.game.pfp == "" then
-                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 70, height = 70, x = 20, y = 490, priority = 7.7}
+                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 70, height = 70, x = 20, y = Screen.height() - 110, priority = 7.7}
             elseif SaveData.SMASPlusPlus.game.pfp then
-                sprite.draw{texture = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp), width = 70, height = 70, x = 20, y = 490, priority = 7.7}
+                sprite.draw{texture = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp), width = 70, height = 70, x = 20, y = Screen.height() - 110, priority = 7.7}
             elseif unexpected_condition then
-                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 70, height = 70, x = 20, y = 490, priority = 7.7}
+                sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 70, height = 70, x = 20, y = Screen.height() - 110, priority = 7.7}
             end
             if SaveData.SMASPlusPlus.game.username == nil then
-                textplus.print{x = 105, y = 518, text = "<color rainbow>"..SysManager.getDefaultPlayerUsername().."</color>", font = pausefont3, priority = 7.4, xscale = 1.5, yscale = 1.5}
+                textplus.print{x = 105, y = Screen.height() - 82, text = "<color rainbow>"..SysManager.getDefaultPlayerUsername().."</color>", font = pausefont3, priority = 7.4, xscale = 1.5, yscale = 1.5}
             else
-                textplus.print{x = 105, y = 518, text = "<color rainbow>"..SaveData.SMASPlusPlus.game.username.."</color>", font = pausefont3, priority = 7.4, xscale = 1.5, yscale = 1.5}
+                textplus.print{x = 105, y = Screen.height() - 82, text = "<color rainbow>"..SaveData.SMASPlusPlus.game.username.."</color>", font = pausefont3, priority = 7.4, xscale = 1.5, yscale = 1.5}
             end
         end
     end
@@ -1525,7 +1529,7 @@ function pauseSpecifics()
         
         --Screen Settings
         pauseplus.createOption("screensettings",{text = "Enable CRT Display",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable a CRT display when playing the game! Great for TV nostalgia.", action =  function() crtChangeSettings() end})
-        pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck"}, action = function() Routine.run(changeResolutionSettings) end})
+        pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck","Dynamic Widescreen","SNES"}, action = function() Routine.run(changeResolutionSettings) end})
         
         --Character Menu
         if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then

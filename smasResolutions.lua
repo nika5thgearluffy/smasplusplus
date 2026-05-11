@@ -54,6 +54,16 @@ function smasResolutions.changeResolution(onMainMenu)
             if onMainMenu then
                 SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 4
             end
+        elseif SaveData.SMASPlusPlus.options.resolution == "dynamicwidescreen" then
+            Screen.changeResolution(1280,720)
+            if onMainMenu then
+                SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 5
+            end
+        elseif SaveData.SMASPlusPlus.options.resolution == "snes" then
+            Screen.changeResolution(512,448)
+            if onMainMenu then
+                SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 6
+            end
         else
             Screen.changeResolution(800,600)
             if onMainMenu then

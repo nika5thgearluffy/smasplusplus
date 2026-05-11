@@ -113,6 +113,7 @@ _G.smasPWing = require("smasPWing")
 _G.smasExtraSounds = require("smasExtraSounds")
 _G.smasMapInventorySystem = require("smasMapInventorySystem")
 _G.smasWarpSystem = require("smasWarpSystem")
+_G.smasBorderSystem = require("smasBorderSystem")
 
 --Then we do everything else.
 _G.smwMap = require("smwMap")
