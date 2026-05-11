@@ -36,6 +36,7 @@ function onStart()
     Misc.saveGame()
     player.setCostume(1, nil)
     player:transform(1, false)
+    Misc.setWindowTitle("Super Mario All-Stars++: The True Final Battle")
 end
 
 function onDraw()

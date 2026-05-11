@@ -1,7 +1,6 @@
 local smasResolutions = {}
 
-local CRTShader = Shader()
-CRTShader:compileFromFile(nil, "shaders/crt.frag")
+local CRTShader = Shader.fromFile(nil, "shaders/crt.frag")
 local filterBuffer = Graphics.CaptureBuffer(800,600)
 
 registerEvent(smasResolutions,"onStart")
@@ -91,10 +90,8 @@ end
 function smasResolutions.onDraw()
     --CRT Filter
     if SaveData.SMASPlusPlus.options.enableCRTFilter then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            filterBuffer:captureAt(10)
-            Graphics.drawScreen{texture = filterBuffer, shader = CRTShader, uniforms = {iResolution = vector.v3(Screen.getScreenSize()[1],Screen.getScreenSize()[2])}, priority = 10}
-        end
+        filterBuffer:captureAt(10)
+        Graphics.drawScreen{texture = filterBuffer, shader = CRTShader, uniforms = {iResolution = vector.v3(Screen.getScreenSize()[1],Screen.getScreenSize()[2])}, priority = 10}
     end
 end
 

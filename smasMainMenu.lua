@@ -37,6 +37,9 @@ smasMainMenu.battleModeLevel = 0
 smasMainMenu.themeSelected = 0
 smasMainMenu.enableMouseEnemyKilling = true
 
+local glitchBuffer = Graphics.CaptureBuffer(800, 600)
+local GlitchShader = Shader.fromFile(nil, "shaders/glitch_screen.frag")
+
 if smasMainMenu.active then
     smasBooleans.isOnMainMenu = true
     aw.enabled = false
@@ -73,12 +76,13 @@ smasMainMenu.showPFPImageOnScreen = false
 smasMainMenu.showWebsiteTextOnScreen = true
 smasMainMenu.hideGameSMBXAndSMBX2Credits = false
 
+smasMainMenu.showGlitchScreen = false
+local glitchScreenTime = 0
+
 smasMainMenu.showLogoOnScreen = true
 smasMainMenu.showPressJumpText = true
 
 smasMainMenu.showEasterEggMessage = false
-smasMainMenu.showStatusOf13ModeOnScreen = true
-smasMainMenu.showStatusOfMultiplayerOnScreen = true
 
 smasMainMenu.showWorldMapSkipMessage = false
 
@@ -719,6 +723,7 @@ function PigeonRaca1() --This executes the True Final Battle
         player.keys.jump = KEYS_UNPRESSED
         Routine.wait(4.5) --Wait until loading the True Final Battle cutscene...
         smasMainMenu.startedmenu = 0
+        Misc.setWindowTitle(" ")
         Level.load("SMAS - Raca's World (Part 0).lvlx")
     end
 end
@@ -769,17 +774,21 @@ function smasMainMenu.onInitAPI() --This requires some libraries to start
     registerEvent(smasMainMenu,"onExit")
     registerEvent(smasMainMenu,"onStart")
     registerEvent(smasMainMenu,"onTick")
-    registerEvent(smasMainMenu,"onTickEnd")
     registerEvent(smasMainMenu,"onInputUpdate")
-    registerEvent(smasMainMenu,"onEvent")
     registerEvent(smasMainMenu,"onDraw")
-    registerEvent(smasMainMenu,"onEvent")
     registerEvent(smasMainMenu,"onPlayerHarm")
     registerEvent(smasMainMenu,"onPlayerKill")
+
+    registerEvent(smasMainMenu,"onFramebufferResize")
     
     local Routine = require("routine")
     
     ready = true --We're ready, so we can begin
+end
+
+function smasMainMenu.onFramebufferResize(fbWidth, fbHeight)
+    -- Recapture the glitch buffer
+    glitchBuffer = Graphics.CaptureBuffer(fbWidth, fbHeight)
 end
 
 function smasMainMenu.onStart()
@@ -968,17 +977,9 @@ function smasMainMenu.onInputUpdate()
             if player.keys.jump == KEYS_PRESSED then
                 Sound.changeMusic("_OST/All Stars Menu/Boot Menu (Crash SFX).ogg", 0)
                 Section(player.section).effects.weather = WEATHER_NONE
-                x2noticecheck = false
-                x2noticecheckactive = false
-                x2noticecheck = false
-                twoplayercheck = false
-                twoplayercheckactive = false
-                smasMainMenu.showVersionNumber = false
-                smasMainMenu.showLogoOnScreen = false
-                smasDateAndTime.enabled = false
-                smasMainMenu.hideGameSMBXAndSMBX2Credits = true
                 smasMainMenu.showPressJumpText = false
-                Section(0).backgroundID = 6
+                smasMainMenu.showGlitchScreen = true
+                Misc.setWindowTitle("SuPeR mArIo AlL sTaRs++")
                 Routine.run(PigeonRaca1)
             end
         end
@@ -1065,7 +1066,13 @@ function smasMainMenu.onDraw()
         
         local stpatricksday = false
         local hitNPCs = Colliders.getColliding{a = cursor.scenepos, b = hitNPCs, btype = Colliders.NPC}
-        
+
+        if smasMainMenu.showGlitchScreen then
+            glitchScreenTime = glitchScreenTime + (1 / Misc.GetEngineTPS())
+            glitchBuffer:captureAt(10)
+            Graphics.drawScreen{texture = glitchBuffer, shader = GlitchShader, priority = 10, uniforms = {iTime = glitchScreenTime, iResolution = vector.v3(Screen.getScreenSize()[1],Screen.getScreenSize()[2])}}
+        end
+
         if smasMainMenu.showPFPImageOnScreen then
             if SaveData.SMASPlusPlus.game.pfp == nil or SaveData.SMASPlusPlus.game.pfp == "" then
                 sprite.draw{texture = Img.load("graphics/default_pfp.png"), width = 40, height = 40, x = 10, y = Screen.height() - 45, priority = 1}
@@ -1199,20 +1206,6 @@ function smasMainMenu.onDraw()
         end
         if smasMainMenu.showBlackScreen then
             Graphics.drawScreen{color = Color.black, priority = 10}
-        end
-        if smasMainMenu.showStatusOfMultiplayerOnScreen then
-            if Player.count() == 1 then
-                --textplus.print{x=(camera.width / 2) - 157, y=10, text = "2 player mode is DISABLED", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
-            elseif Player.count() >= 2 then
-                --textplus.print{x=(camera.width / 2) - 162, y=10, text = "2 player mode is ENABLED", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
-            end
-        end
-        if smasMainMenu.showStatusOf13ModeOnScreen then
-            if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                --textplus.print{x=(camera.width / 2) - 157, y=26, text = "SMBX 1.3 mode is DISABLED", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
-            elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                --textplus.print{x=(camera.width / 2) - 162, y=26, text = "SMBX 1.3 mode is ENABLED", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
-            end
         end
         if not smasMainMenu.hideGameSMBXAndSMBX2Credits then
             textplus.print{x=(camera.width / 2) - 200, y=Screen.height() - 120, text = "Game by \"The Sun God: Nika\", SMBX by redigit.", priority=-7, color=Color.red, xscale = 2, yscale = 2}

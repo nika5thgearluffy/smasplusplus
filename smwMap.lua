@@ -24,12 +24,7 @@ local smasFunctions = require("smasFunctions")
 local inspect = require("ext/inspect")
 
 --In case if first time boot recieves an weird error message with ipairs, I put every SaveData generation from luna.lua into here.
---[[if SaveData.letterbox == nil then
-    SaveData.letterbox = true
-end
-if SaveData.borderEnabled == nil then
-    SaveData.borderEnabled = true
-end
+--[[
 if SaveData.SMASPlusPlus.levels.starCount == nil then --This will make a new star count system that won't corrupt save files
     SaveData.SMASPlusPlus.levels.starCount = 0
 end
@@ -54,7 +49,8 @@ if SaveData.SMASPlusPlus.hud.coinsClassic == nil then
 end
 if SaveData.SMASPlusPlus.hud.score == nil then
     SaveData.SMASPlusPlus.hud.score = 0
-end]]
+end
+]]
 
 --This is the name of the level file that the map is on.
 smwMap.levelFilename = "map.lvlx"

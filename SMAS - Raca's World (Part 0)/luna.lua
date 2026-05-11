@@ -3,9 +3,6 @@ local littleDialogue = require("littleDialogue")
 
 SaveData.SMASPlusPlus.options.resolution = "fullscreen"
 SaveData.SMASPlusPlus.options.enableCRTFilter = false
-SaveData.letterbox = true
-SaveData.borderEnabled = true
-SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
 
 local blacklayer = true
 local whitelayer = false
@@ -151,20 +148,29 @@ function onEvent(eventName)
     end
     if eventName == "6" then
         Defines.earthquake = 10
+        Misc.setWindowTitle("YOU")
         Sound.playSFX("mus_sfx_gigapunch.ogg")
+        Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon_fade1.png"))
     end
     if eventName == "7" then
         Defines.earthquake = 15
+        Misc.setWindowTitle("ARE")
         Sound.playSFX("mus_sfx_gigapunch_2.ogg")
+        Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon_fade2.png"))
     end
     if eventName == "8" then
         Defines.earthquake = 25
+        Misc.setWindowTitle("IN")
         Sound.playSFX("mus_sfx_gigapunch_3.ogg")
+        Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon_nothing.png"))
     end
     if eventName == "9" then
         Defines.earthquake = 35
+        Misc.setWindowTitle("RACA'S WORLD!")
         blacklayer = false
         Sound.playSFX("mus_explosion.ogg")
+        Misc.shakeWindow(50)
+        Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon_raca.png"))
     end
     if eventName == "13" then
         Audio.MusicChange(0, "_OST/All Stars Secrets/Raca Has Had It.ogg")
@@ -178,6 +184,7 @@ function onEvent(eventName)
         Defines.earthquake = 35
         Sound.playSFX("mus_explosion.ogg")
         Sound.playSFX("mario-screaming1.ogg")
+        Misc.setWindowTitle("YOU READY?")
     end
     if eventName == "18" then
         whitelayer = false

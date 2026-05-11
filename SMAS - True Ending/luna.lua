@@ -1,6 +1,10 @@
 local level_dependencies_normal= require("level_dependencies_normal")
 local Routine = require("routine")
-local furyinventory = require("furyinventory")
+if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
+    furyinventory = require("furyinventory")
+else
+    modernReserveItems = require("modernReserveItems")
+end
 
 local stars = SaveData.SMASPlusPlus.levels.starCount
 
@@ -19,18 +23,13 @@ local middle = math.floor(timer1*numberup)
 local function Crash()
     Misc.saveGame()
     Routine.wait(0.1, true)
+    -- This would actually crash SMBX2R, but I don't wanna bug the user *that* much...
     --mem(0x00B257F0, FIELD_FLOAT, 245353464654)
     Misc.exitEngine()
 end
 
 local function WhiteFadeInSlow()
     whiteflashpre1 = true
-end
-
-function onLoad()
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-    end
 end
 
 function onStart()
@@ -58,7 +57,9 @@ function onEvent(eventName)
     end
     if eventName == "NormalCutsceneBegin" then
         pauseplus.canPause = false
-        furyinventory.activated = false
+        if furyinventory and furyinventory ~= nil then
+            furyinventory.activated = false
+        end
         player:teleport(-78784, -80128)
         triggerEvent("NormalCutsceneBegin2")
         player.keys.left = false
@@ -73,9 +74,7 @@ function onEvent(eventName)
         Graphics.activateHud(false)
         smasBooleans.toggleOffInventory = true
         Sound.playSFX("mus_explosion.ogg")
-        if SMBX_VERSION == VER_SEE_MOD then
-            Misc.shakeWindow(35, false, false)
-        end
+        Misc.shakeWindow(35)
         whiteflash = true
         player.setCostume(1, nil)
         player:transform(1, false)
@@ -101,15 +100,11 @@ function onEvent(eventName)
         Sound.muteMusic(-1)
     end
     if eventName == "NormalCutscene6" then
-        if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil then
-            SaveData.SMASPlusPlus.game.trueFinalBattleActive = true
-        end
         SaveData.SMASPlusPlus.game.trueFinalBattleActive = true
         SaveData.introselect = 1
         SaveData.SMASPlusPlus.options.resolution = "fullscreen"
+        smasResolutions.changeResolution(false, true)
         SaveData.SMASPlusPlus.options.enableCRTFilter = false
-        SaveData.letterbox = true
-        SaveData.borderEnabled = false
         SaveData.SMASPlusPlus.options.clockTheme = "normal"
         Misc.saveGame()
         Routine.run(WhiteFadeInSlow)

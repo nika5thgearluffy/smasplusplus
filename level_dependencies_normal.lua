@@ -9,10 +9,6 @@ local anothercurrency = require("ShopSystem/anothercurrency")
 _G.pausemenu2 = require("pausemenu2")
 _G.undertaleDepends = require("level_dependencies_undertale")
 
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    pausemenu13 = require("pausemenu13/pausemenu13")
-end
-
 if table.icontains(smasTables.__smb2Levels,Level.filename()) then
     rooms = require("rooms")
 end

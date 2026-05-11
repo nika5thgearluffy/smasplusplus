@@ -1,10 +1,10 @@
 // Loosely based on postprocessing shader by inigo quilez, License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
-// Original shader by Mattias, ported to SMBX2 by SpencerlyEverly
+// Original shader by Mattias, ported to SMBX2 by Nika
 
 #version 120
 
 uniform vec3      iResolution;           // viewport resolution (in pixels)
-uniform float     iTime;                 // shader playback time (in seconds)
+uniform float     iTime = 0;             // shader playback time (in seconds)
 uniform float     iTimeDelta;            // render time (in seconds)
 uniform float     iFrameRate;            // shader frame rate
 uniform int       iFrame;                // shader playback frame
