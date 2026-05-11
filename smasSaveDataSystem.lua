@@ -189,6 +189,10 @@ if SaveData.SMASPlusPlus.game.customPowerups == nil then
     SaveData.SMASPlusPlus.game.customPowerups = {}
 end
 
+if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil then
+    SaveData.SMASPlusPlus.game.trueFinalBattleActive = false
+end
+
 
 
 
@@ -334,6 +338,12 @@ end
 
 if SaveData.dateplayedweather ~= nil then
     SaveData.SMASPlusPlus.misc.weatherForecast = SaveData.dateplayedweather
+    SaveData.dateplayedweather = nil
+end
+
+if SaveData.racaActivated ~= nil then
+    SaveData.SMASPlusPlus.game.trueFinalBattleActive = SaveData.racaActivated
+    SaveData.racaActivated = nil
 end
 
 

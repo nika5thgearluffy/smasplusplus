@@ -335,12 +335,8 @@ function SysManager.exitLevelToWarpPoint(warp)
     end
 end
 
-function SysManager.clearSaveDataAndGameDataAndRestart()
-    Text.windowDebugSimple("There WILL be a few errors before restarting. This is normal. Just click okay (Or press ENTER) on all dialog boxes that pop up, and the episode will restart.")
-    SaveData.clear()
-    GameData.clear()
-    SaveData.flush()
-    SysManager.sendToConsole("All SaveData/GameData values are cleared. Initating game restart...")
+function SysManager.restartGame()
+    SysManager.sendToConsole("Initating game restart...")
     if not Misc.loadEpisode("Super Mario All-Stars++") then
         error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
     end

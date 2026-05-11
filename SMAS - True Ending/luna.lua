@@ -101,10 +101,10 @@ function onEvent(eventName)
         Sound.muteMusic(-1)
     end
     if eventName == "NormalCutscene6" then
-        if SaveData.racaActivated == nil then
-            SaveData.racaActivated = true
+        if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil then
+            SaveData.SMASPlusPlus.game.trueFinalBattleActive = true
         end
-        SaveData.racaActivated = true
+        SaveData.SMASPlusPlus.game.trueFinalBattleActive = true
         SaveData.introselect = 1
         SaveData.SMASPlusPlus.options.resolution = "fullscreen"
         SaveData.SMASPlusPlus.options.enableCRTFilter = false

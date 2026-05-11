@@ -717,6 +717,9 @@ function Misc.moveSaveSlot(slot, destination)
 end
 
 function Misc.eraseMainSaveSlot(slot) --This only erases the main save in the save slot.
+    if slot == nil then
+        slot = Misc.saveSlot()
+    end
     if slot < 0 then
         error("You can't erase a save slot that's less than 0.")
         return
@@ -731,6 +734,9 @@ function Misc.eraseMainSaveSlot(slot) --This only erases the main save in the sa
 end
 
 function Misc.eraseSaveSlot(slot) --This erases all the save data in a specific slot.
+    if slot == nil then
+        slot = Misc.saveSlot()
+    end
     if slot < 0 then
         error("You can't erase a save slot that's less than 0.")
         return

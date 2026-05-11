@@ -678,7 +678,8 @@ function smasMainMenu.restartSMASPlusPlus(clearSave) --This restarts SMAS++ enti
     smasMainMenu.showBlackScreen = true
     Routine.wait(0.5)
     if clearSave then
-        SysManager.clearSaveDataAndGameDataAndRestart()
+        Misc.eraseSaveSlot()
+        SysManager.restartGame()
     else
         if not Misc.loadEpisode("Super Mario All-Stars++") then
             error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
@@ -1012,7 +1013,7 @@ function smasMainMenu.onInputUpdate()
                 Level.load("SMAS - Start.lvlx")
             end
         end
-        if SaveData.racaActivated then
+        if SaveData.SMASPlusPlus.game.trueFinalBattleActive then
             smasMainMenu.startedmenu = 2
         end
     end

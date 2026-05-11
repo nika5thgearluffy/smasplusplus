@@ -16,9 +16,9 @@ local timer = 128
 local activeselected = 1
 local activeselecty = 32
 
-if SaveData.racaActivated == nil or not SaveData.racaActivated then
+if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil or not SaveData.SMASPlusPlus.game.trueFinalBattleActive then
     activeselecty = 32
-elseif SaveData.racaActivated then
+elseif SaveData.SMASPlusPlus.game.trueFinalBattleActive then
     activeselecty = 44
 end
 
@@ -91,7 +91,7 @@ function onDraw()
         Graphics.drawScreen{color = Color.black, priority = 6}
     end
     if active then
-        if SaveData.racaActivated == nil or not SaveData.racaActivated then
+        if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil or not SaveData.SMASPlusPlus.game.trueFinalBattleActive then
             if cooldown > 0 then
                 cooldown = cooldown - 1
             end
@@ -114,7 +114,7 @@ function onDraw()
                 activeselecty = 32
                 activeselected = 1
             end
-        elseif SaveData.racaActivated then
+        elseif SaveData.SMASPlusPlus.game.trueFinalBattleActive then
             if cooldown > 0 then
                 cooldown = cooldown - 1
             end
@@ -122,7 +122,8 @@ function onDraw()
             textplus.print{x=40, y=10, text = "Super Mario All-Stars++ Temporary Boot Option List", priority=-1, color=Color.white}
             textplus.print{x=40, y=32, text = "(Options are limited during the True Final Battle)", priority=-1, color=Color.white}
             textplus.print{x=40, y=44, text = "1) Continue booting", priority=-1, color=Color.white}
-            textplus.print{x=40, y=56, text = "2) Reset save data (NO WARNING WILL SHOW UP!)", priority=-1, color=Color.white}
+            textplus.print{x=40, y=56, text = "2) Exit the True Final Battle", priority=-1, color=Color.white}
+            textplus.print{x=40, y=68, text = "3) Reset save data (NO WARNING WILL SHOW UP!)", priority=-1, color=Color.white}
             
             textplus.print{x=20, y=activeselecty, plaintext = true, text = "->", priority=-1, color=Color.white}
             
@@ -145,10 +146,8 @@ function onDraw()
 end
 
 function restartAfterUpdating()
-    if SMBX_VERSION == VER_SEE_MOD then
-        if Misc.isSetToRunWhenUnfocused() then
-            Misc.setRunWhenUnfocused(false)
-        end
+    if Misc.isSetToRunWhenUnfocused() then
+        Misc.setRunWhenUnfocused(false)
     end
     if not Misc.loadEpisode("Super Mario All-Stars++") then
         error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
@@ -156,11 +155,15 @@ function restartAfterUpdating()
 end
 
 function launchAfterNoUpdate()
-    if SMBX_VERSION == VER_SEE_MOD then
-        if Misc.isSetToRunWhenUnfocused() then
-            Misc.setRunWhenUnfocused(false)
-        end
+    if Misc.isSetToRunWhenUnfocused() then
+        Misc.setRunWhenUnfocused(false)
     end
+    SysManager.loadIntroTheme()
+end
+
+-- Loser lmao
+function exitTrueFinalBattle()
+    SaveData.SMASPlusPlus.game.trueFinalBattleActive = false
     SysManager.loadIntroTheme()
 end
 
@@ -196,7 +199,7 @@ function onInputUpdate()
             activeselecty = activeselecty - 12
         end
         if cooldown == 0 then
-            if SaveData.racaActivated == nil or not SaveData.racaActivated then
+            if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil or not SaveData.SMASPlusPlus.game.trueFinalBattleActive then
                 if player.keys.jump == KEYS_PRESSED then
                     if activeselected == 1 then
                         SysManager.loadIntroTheme()
@@ -247,17 +250,20 @@ function onInputUpdate()
                     end
                     if activeselected == 7 then
                         Misc.eraseSaveSlot(Misc.saveSlot())
-                        SysManager.clearSaveDataAndGameDataAndRestart()
+                        SysManager.restartGame()
                     end
                 end
-            elseif SaveData.racaActivated then
+            elseif SaveData.SMASPlusPlus.game.trueFinalBattleActive then
                 if player.keys.jump == KEYS_PRESSED then
                     if activeselected == 1 then
                         SysManager.loadIntroTheme()
                     end
                     if activeselected == 2 then
+                        exitTrueFinalBattle()
+                    end
+                    if activeselected == 3 then
                         Misc.eraseSaveSlot(Misc.saveSlot())
-                        SysManager.clearSaveDataAndGameDataAndRestart()
+                        SysManager.restartGame()
                     end
                 end
             end
