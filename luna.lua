@@ -35,9 +35,9 @@ if GameData.gameFirstLoaded == nil then
     end
 end
 
---Make sure we aren't running Beta 3 and below before we actually start...
-if (SMBX_VERSION < VER_BETA4_PATCH_3) then
-    Text.windowDebugSimple("Hey wait a minute! At least SMBX2 Beta 4 Patch 3 is required to play this game. Please download it from the official site by going to https://codehaus.wohlsoft.ru/. Until then, you can't run this episode. Sorry about that!")
+--Make sure we aren't running SMBX2 (The original engine) before we actually start...
+if SMBX_VERSION < VER_SMBX2R_PATCH_1 or VER_SMBX2R_PATCH_1 == nil then
+    Text.windowDebugSimple("You are using the original SMBX2, which is unsupported. Also, how did you load this game without wldx support?\n\nPlease download SMBX2R to play this game: https://github.com/nika5thgearluffy/SMBX2 \n\nThe engine will now close after pressing \"OK\".")
     Misc.exitEngine()
 end
 
