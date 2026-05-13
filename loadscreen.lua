@@ -246,7 +246,11 @@ local function calculateCameraDimensions(value, isWidthOrHeight)
 end
 
 local function loadtextfile()
-    local file = io.open(episodePath .. "loadscreeninfo.txt", "r")
+    if not io.exists(episodePath.."loadscreeninfo.txt") then
+        -- If the info file doesn't exist, create the file with defaults
+        File.create(episodePath.."loadscreeninfo.txt", "normal,800,600")
+    end
+    local file = io.open(episodePath.."loadscreeninfo.txt", "r")
     loadinfo = file:read("*line")
     file:close()
     
