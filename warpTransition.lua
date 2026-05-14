@@ -349,11 +349,16 @@ function warpTransition.onInitAPI()
     registerEvent(warpTransition,"onCameraDraw")
 
     registerEvent(warpTransition,"onCameraUpdate")
+    registerEvent(warpTransition,"onFramebufferResize")
     
     if SMBX_VERSION == VER_SEE_MOD then
         registerEvent(warpTransition,"onWarp")
         registerEvent(warpTransition,"onWarpEnter")
     end
+end
+
+function warpTransition.onFramebufferResize(width, height)
+    buffer = Graphics.CaptureBuffer(width,height)
 end
 
 function warpTransition.onStart()

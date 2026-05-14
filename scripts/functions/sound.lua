@@ -3,7 +3,6 @@ local Sound = {}
 local smasExtraSounds = require("smasExtraSounds")
 local playerManager = require("playermanager")
 local smasTables = require("smasTables")
-local audiomasterSMAS = require("scripts/audiomasterSMAS")
 
 if GameData.SMASPlusPlus.audio.levelMusicTemp == nil then
     GameData.SMASPlusPlus.audio.levelMusicTemp = {}
@@ -29,7 +28,7 @@ Sound.resolvePaths = {
     Misc.episodePath().."\\costumes\\",
     Misc.episodePath().."\\scripts\\",
     Misc.episodePath().."\\sound\\",
-    Misc.episodePath().."\\___MainUserDirectory\\",
+    Misc.userFilesDirectory(),
 }
 
 function Sound.multiResolveFile(...)
@@ -89,7 +88,12 @@ end
 
 function Sound.openSFX(name) --Opening SFXs
     SysManager.sendToConsole("Opening '"..name.."'...")
-    return Audio.SfxOpen(Sound.resolveSoundFile(name))
+    local resolvedSound = Sound.resolveSoundFile(name)
+    if resolvedSound ~= nil then
+        return Audio.SfxOpen(resolvedSound)
+    else
+        return nil
+    end
 end
 
 function Sound.playSFX(name, volume, loops, delay, pan) --If you want to play any sound, you can use Sound.playSFX(id), or you can use a string (You can also optionally play the sound with a volume, loop, and/or delay). This is similar to SFX.play, but with smasExtraSounds support!
@@ -119,34 +123,32 @@ function Sound.playSFX(name, volume, loops, delay, pan) --If you want to play an
         pan = 0
     end
     
-    local eventObj = {cancelled = false}
-    EventManager.callEvent("onPlaySFX", eventObj, name, volume, loops, delay, pan)
-    
-    if not eventObj.cancelled then
-        if Sound.isExtraSoundsActive() then
-            if name == nil then
-                audiomasterSMAS.PlaySound({sound = "nothing.ogg", volume = volume, loops = loops, delay = delay, pan = pan})
-            elseif not smasTables.stockSoundNumbersInOrder[name] and smasExtraSounds.sounds[name] then
-                if not smasExtraSounds.sounds[name].muted then
-                    audiomasterSMAS.PlaySound({sound = smasExtraSounds.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
-                end
-            elseif smasTables.stockSoundNumbersInOrder[name] then
-                audiomasterSMAS.PlaySound({sound = Audio.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
-            elseif name then
-                local file = Sound.resolveSoundFile(name) --Common sound directories, see above for the entire list
-                audiomasterSMAS.PlaySound({sound = file, volume = volume, loops = loops, delay = delay, pan = pan}) --Play it afterward
+    if Sound.isExtraSoundsActive() then
+        if name == nil then
+            return SFX.play({sound = "nothing.ogg", volume = volume, loops = loops, delay = delay, pan = pan})
+        elseif not smasTables.stockSoundNumbersInOrder[name] and smasExtraSounds.sounds[name] then
+            if not smasExtraSounds.sounds[name].muted then
+                return SFX.play({sound = smasExtraSounds.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
             end
-        elseif not Sound.isExtraSoundsActive() then
-            if name == nil then
-                audiomasterSMAS.PlaySound({sound = "nothing.ogg", volume = volume, loops = loops, delay = delay, pan = pan})
-            elseif smasTables.allVanillaSoundNumbersInOrder[name] then
-                audiomasterSMAS.PlaySound({sound = Audio.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
-            elseif name then
-                local file = Sound.resolveSoundFile(name) --Common sound directories, see above for the entire list
-                audiomasterSMAS.PlaySound({sound = file, volume = volume, loops = loops, delay = delay, pan = pan}) --Play it afterward
+        elseif smasTables.stockSoundNumbersInOrder[name] then
+            return SFX.play({sound = Audio.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
+        elseif name then
+            local file = Sound.resolveSoundFile(name) --Common sound directories, see above for the entire list
+            if file ~= nil then
+                return SFX.play({sound = file, volume = volume, loops = loops, delay = delay, pan = pan}) --Play it afterward
             end
         end
-        EventManager.callEvent("onPostPlaySFX", name, volume, loops, delay, pan)
+    elseif not Sound.isExtraSoundsActive() then
+        if name == nil then
+            return SFX.play({sound = "nothing.ogg", volume = volume, loops = loops, delay = delay, pan = pan})
+        elseif smasTables.allVanillaSoundNumbersInOrder[name] then
+            return SFX.play({sound = Audio.sounds[name].sfx, volume = volume, loops = loops, delay = delay, pan = pan})
+        elseif name then
+            local file = Sound.resolveSoundFile(name) --Common sound directories, see above for the entire list
+            if file ~= nil then
+                return SFX.play({sound = file, volume = volume, loops = loops, delay = delay, pan = pan}) --Play it afterward
+            end
+        end
     end
 end
 

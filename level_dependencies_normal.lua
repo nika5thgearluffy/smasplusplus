@@ -79,7 +79,7 @@ function dependencies.onStart()
         end
         warpTransition.musicFadeOut = false
         warpTransition.levelStartTransition = warpTransition.TRANSITION_FADE
-        warpTransition.sameSectionTransition = warpTransition.TRANSITION_PAN
+        warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
         warpTransition.crossSectionTransition = warpTransition.TRANSITION_FADE
         warpTransition.activateOnInstantWarps = false
         warpTransition.TRANSITION_FADE = 1
