@@ -311,27 +311,24 @@ function SysManager.exitLevel(winType) --Exits a level with the win type specifi
                 SysManager.loadMap()
             end
         else
-            if Warp.get()[p:mem(0x15E, FIELD_WORD) - 1] and Warp.get()[p:mem(0x15E, FIELD_WORD) - 1].levelFilename ~= nil then
-                SysManager.sendToConsole("This warp has a level warp point. Warping to "..Warp.get()[p:mem(0x15E, FIELD_WORD) - 1].levelFilename.."...")
+            local warp = p:mem(0x15E, FIELD_WORD) - 1
+            if Warp.get()[warp] and Warp.get()[warp].levelFilename ~= nil then
+                SysManager.sendToConsole("This warp has a level warp point. Warping to "..Warp.get()[warp].levelFilename.."...")
             else
                 SysManager.sendToConsole("This warp has a level warp point, but there's no filename detected. Warping anyway...")
             end
-            local warp = p:mem(0x15E, FIELD_WORD) - 1
             EventManager.callEvent("onWarpToOtherLevel", warp, p)
+            p:mem(0x15E, FIELD_WORD, 0)
             SysManager.exitLevelToWarpPoint(warp)
         end
     end
 end
 
 function SysManager.exitLevelToWarpPoint(warp)
-    for _,p in ipairs(Player.get()) do
-        if p:mem(0x15E, FIELD_WORD) >= warp and p.forcedState == FORCEDSTATE_INVISIBLE then
-            if Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil) then
-                SysManager.loadMap()
-            else
-                Level.load(Warp.get()[warp].levelFilename)
-            end
-        end
+    if Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil) then
+        SysManager.loadMap()
+    else
+        Level.load(Warp.get()[warp].levelFilename)
     end
 end
 

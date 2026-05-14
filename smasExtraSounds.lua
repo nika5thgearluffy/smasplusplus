@@ -182,6 +182,7 @@ end
 
 local npcToCoinTimer = 0 --This is used for the NPC to Coin sound.
 local holdingTimer = 0 --To count a timer on how long a player has held an item.
+local comboSoundShouldPlay = false -- If the combo sound should play or not.
 
 smasExtraSounds.harmableComboTypes = {
     HARM_TYPE_JUMP,
@@ -699,7 +700,11 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
 
 
 
-            
+            --**COMBO SOUNDS**
+            if (soundID == -1 and SysManager.getFilenameFromFilepath(soundPath) == "shell-hit.ogg") or soundID == 9 and comboSoundShouldPlay then
+                eventObj.cancelled = true
+                Routine.run(smasExtraSounds.comboSoundRoutine)
+            end
         end
     end
 end
@@ -721,7 +726,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
         --Audio.sounds[4].muted = true --block-smash.ogg
         Audio.sounds[7].muted = true --mushroom.ogg
         Audio.sounds[8].muted = true --player-dead.ogg
-        Audio.sounds[9].muted = true --shell-hit.ogg
         Audio.sounds[14].muted = true --coin.ogg
         Audio.sounds[15].muted = true --1up.ogg
         --Audio.sounds[17].muted = true --warp.ogg
@@ -1122,7 +1126,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
         if not smasExtraSounds.disableSoundMarker then
             --Audio.sounds[4].muted = false --block-smash.ogg
             Audio.sounds[7].muted = false --mushroom.ogg
-            Audio.sounds[9].muted = false --shell-hit.ogg
             Audio.sounds[8].muted = false --player-dead.ogg
             Audio.sounds[14].muted = false --coin.ogg
             Audio.sounds[15].muted = false --1up.ogg
@@ -1326,34 +1329,34 @@ end
 function smasExtraSounds.comboSoundRoutine()
     Routine.waitFrames(1, true)
     for index,scoreboard in ipairs(Effect.get(79)) do --Score values!
-        if scoreboard.animationFrame == 0 and scoreboard.speedY == -1.94 then --10 Points
+        if scoreboard.animationFrame == 0 and scoreboard.speedY <= -1.94 then --10 Points
             Sound.playSFX(9, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 1 and scoreboard.speedY == -1.94 then --100 Points
+        if scoreboard.animationFrame == 1 and scoreboard.speedY <= -1.94 then --100 Points
             Sound.playSFX(9, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 2 and scoreboard.speedY == -1.94 then --200 Points
+        if scoreboard.animationFrame == 2 and scoreboard.speedY <= -1.94 then --200 Points
             Sound.playSFX(106, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 3 and scoreboard.speedY == -1.94 then --400 Points
+        if scoreboard.animationFrame == 3 and scoreboard.speedY <= -1.94 then --400 Points
             Sound.playSFX(107, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 4 and scoreboard.speedY == -1.94 then --800 Points
+        if scoreboard.animationFrame == 4 and scoreboard.speedY <= -1.94 then --800 Points
             Sound.playSFX(108, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 5 and scoreboard.speedY == -1.94 then --1000 Points
+        if scoreboard.animationFrame == 5 and scoreboard.speedY <= -1.94 then --1000 Points
             Sound.playSFX(109, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 6 and scoreboard.speedY == -1.94 then --2000 Points
+        if scoreboard.animationFrame == 6 and scoreboard.speedY <= -1.94 then --2000 Points
             Sound.playSFX(110, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 7 and scoreboard.speedY == -1.94 then --4000 Points
+        if scoreboard.animationFrame == 7 and scoreboard.speedY <= -1.94 then --4000 Points
             Sound.playSFX(111, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame == 8 and scoreboard.speedY == -1.94 then --8000 Points
+        if scoreboard.animationFrame == 8 and scoreboard.speedY <= -1.94 then --8000 Points
             Sound.playSFX(112, smasExtraSounds.volume, 1, 4)
         end
-        if scoreboard.animationFrame >= 9 and scoreboard.speedY == -1.94 then --1UP -> 5UP
+        if scoreboard.animationFrame >= 9 and scoreboard.speedY <= -1.94 then --1UP -> 5UP
             Sound.playSFX(112, smasExtraSounds.volume, 1, 4)
         end
     end
@@ -1406,12 +1409,11 @@ function smasExtraSounds.onPostNPCHarm(npc, harmtype, player)
                 --**COMBO SOUNDS**
                 if not isOverworld then
                     if smasExtraSounds.harmableComboTypes[harmtype] then
-                        Routine.run(smasExtraSounds.comboSoundRoutine)
+                        comboSoundShouldPlay = true
                     end
                 end
-                
-                
-                
+
+
             end
         end
     end
@@ -1605,15 +1607,15 @@ function smasExtraSounds.onPostNPCKill(npc, harmtype) --NPC Kill stuff, for cust
                 end
                 
                 
-                
                 --**SLIDING COMBO KILLS**
                 if not isOverworld then
                     if p:mem(0x3C, FIELD_BOOL) and smasExtraSounds.harmableComboTypes[harmtype] then
-                        Routine.run(smasExtraSounds.comboSoundRoutine)
+                        comboSoundShouldPlay = true
                     end
                 end
-                
-                
+
+
+
             end
         end
     end
