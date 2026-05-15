@@ -273,18 +273,25 @@ function repll.onInputUpdate()
             player.keys.dropItem = KEYS_UNPRESSED
         end
     end
-    if GameData.toggleoffkeys == true then
+    if GameData.toggleoffkeys then
         for k,v in pairs(player.keys) do
             player.keys[k] = false
         end
     end
-    if GameData.toggleoffkeys == false or GameData.toggleoffkeys == nil then
+    if GameData.toggleoffkeys == nil or not GameData.toggleoffkeys then
         
     end
 end
 
+local consoleToggleCooldown = 0
+
 function repll.onKeyboardPressDirect(vk, repeated, char)
     if not (repll.activeInEpisode or Misc.inEditor()) then return end
+
+    -- Debounce: ignore TAB for 1 frame after toggling
+    if consoleToggleCooldown > 0 then
+        return
+    end
 
     if not repll.active then
         if (vk == VK_TAB) and (not repeated) then
@@ -296,6 +303,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
             Misc.cheatBuffer("")
             repll.active = true
             smasBooleans.toggleOffInventory = true
+            consoleToggleCooldown = 2  -- block for 2 frames
         end
         return
     end
@@ -318,6 +326,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
                 end
                 repll.active = false
                 smasBooleans.toggleOffInventory = false
+                consoleToggleCooldown = 2  -- block for 2 frames
             end
         elseif vk == VK_RETURN then
             if repll.enableSounds then
@@ -490,6 +499,10 @@ do
     end
     
     function repll.onDraw()
+        if consoleToggleCooldown > 0 then
+            consoleToggleCooldown = consoleToggleCooldown - 1
+        end
+
         if baseY ~= Screen.getScreenSize()[2] then
             baseY = Screen.getScreenSize()[2]
         end

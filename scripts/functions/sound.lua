@@ -52,6 +52,7 @@ function Sound.multiResolveFile(...)
 end
 
 local validAudioFiles = {".ogg", ".mp3", ".wav", ".voc", ".flac", ".spc"}
+local resolvedCache = {}
 	
 --table.map doesn't exist yet
 local validFilesMap = {};
@@ -82,15 +83,21 @@ function Sound.resolveSoundFile(path)
         t[idx+2*#typeslist] = "sound/extended/"..path..typ
         idx = idx+1
     end
+
+    if resolvedCache[path] then
+        return resolvedCache[path]
+    end
     
-    return Sound.multiResolveFile(table.unpack(t))
+    local result = Sound.multiResolveFile(table.unpack(t))
+    resolvedCache[path] = result
+    return result
 end
 
 function Sound.openSFX(name) --Opening SFXs
     SysManager.sendToConsole("Opening '"..name.."'...")
     local resolvedSound = Sound.resolveSoundFile(name)
     if resolvedSound ~= nil then
-        return Audio.SfxOpen(resolvedSound)
+        return SFX.open(resolvedSound)
     else
         return nil
     end
@@ -98,9 +105,7 @@ end
 
 function Sound.playSFX(name, volume, loops, delay, pan) --If you want to play any sound, you can use Sound.playSFX(id), or you can use a string (You can also optionally play the sound with a volume, loop, and/or delay). This is similar to SFX.play, but with smasExtraSounds support!
     SysManager.sendToConsole("Playing sound '"..name.."'...")
-    
-    if unexpected_condition then error("That sound doesn't exist. Play something else.") end
-    
+
     if name == nil then
         error("That sound doesn't exist. Play something else.")
         return
