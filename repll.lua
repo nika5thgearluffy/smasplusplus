@@ -1,7 +1,7 @@
 local repll = {}
 
 --Whether to enable sounds by default. Toggle it false on the actual console if it gets annoying to you.
-repll.enableSounds = true
+repll.enableSounds = false
 
 -- TODO: Handle unicode better. Textplus renders utf-8 fine, but repll for cursor management
 --       purposes repll is not respecting multi-byte characters properly.
