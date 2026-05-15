@@ -1700,20 +1700,26 @@ ID:725;X:-191656;Y:-200336;D:-1;
 ID:724;X:-191182;Y:-200512;D:-1;
 ID:953;X:-190368;Y:-200480;D:-1;XTRA:"{\n    \"addToTable\"\: true\,\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
 ID:953;X:-190368;Y:-200064;D:-1;XTRA:"{\n    \"addToTable\"\: true\,\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
+ID:465;X:-179440;Y:-180144;D:-1;ED:"Warp Despawn 1";
+ID:465;X:-159440;Y:-160432;D:-1;ED:"Warp Despawn 2";
 NPC_END
 DOORS
-IX:-198704;IY:-200160;OX:-179856;OY:-180560;DT:1;ID:3;OD:1;
+IX:-198704;IY:-200160;OX:-179856;OY:-180560;DT:1;ID:3;OD:1;LR:"Warp 1";
 IX:-179440;IY:-180144;OX:-198704;OY:-200160;DT:1;ID:4;OD:3;
-IX:-195504;IY:-200160;OX:-159856;OY:-160560;DT:1;ID:3;OD:1;
+IX:-195504;IY:-200160;OX:-159856;OY:-160560;DT:1;ID:3;OD:1;LR:"Warp 2";
 IX:-159440;IY:-160432;OX:-195504;OY:-200160;DT:1;ID:4;OD:3;
 DOORS_END
 LAYERS
 LR:"Default";
 LR:"Destroyed Blocks";HD:1;
 LR:"Spawned NPCs";
+LR:"Warp 1";
+LR:"Warp 2";
 LAYERS_END
 EVENTS_CLASSIC
 ET:"Level - Start";AS:0;AX:0;AY:0;
 ET:"P Switch - Start";AS:0;AX:0;AY:0;
 ET:"P Switch - End";AS:0;AX:0;AY:0;
+ET:"Warp Despawn 1";LH:["Warp 1"];DS:1;AS:0;AX:0;AY:0;
+ET:"Warp Despawn 2";LH:["Warp 2"];DS:1;AS:0;AX:0;AY:0;
 EVENTS_CLASSIC_END
