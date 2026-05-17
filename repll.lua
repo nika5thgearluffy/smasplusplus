@@ -1,7 +1,7 @@
 local repll = {}
 
 --Whether to enable sounds by default. Toggle it false on the actual console if it gets annoying to you.
-repll.enableSounds = false
+repll.enableSounds = true
 
 -- TODO: Handle unicode better. Textplus renders utf-8 fine, but repll for cursor management
 --       purposes repll is not respecting multi-byte characters properly.
@@ -296,10 +296,10 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
     if not repll.active then
         if (vk == VK_TAB) and (not repeated) then
             repl.active = false
-            Misc.pause()
             if repll.enableSounds then
                 Sound.playSFX("console/console_open.ogg")
             end
+            Misc.pause()
             Misc.cheatBuffer("")
             repll.active = true
             smasBooleans.toggleOffInventory = true
@@ -320,10 +320,10 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
         repll.cursorOffsetY = 0
         if vk == VK_TAB or vk == VK_ESCAPE then
             if (not repeated) then
-                Misc.unpause()
                 if repll.enableSounds then
                     Sound.playSFX("console/console_close.ogg")
                 end
+                Misc.unpause()
                 repll.active = false
                 smasBooleans.toggleOffInventory = false
                 consoleToggleCooldown = 2  -- block for 2 frames

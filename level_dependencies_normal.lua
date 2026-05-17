@@ -1,13 +1,22 @@
 local littleDialogue = require("littleDialogue")
 local playerManager = require("playerManager")
 local textplus = require("textplus")
-local smasCharacterIntros = require("smasCharacterIntros")
+smasCharacterIntros = require("smasCharacterIntros")
 smasDateAndTime = require("smasDateAndTime")
 local Routine = require("routine")
 local anothercurrency = require("ShopSystem/anothercurrency")
 
+warpTransition = require("warpTransition")
+playerphysicspatch = require("playerphysicspatch")
+kindHurtBlock = require("kindHurtBlock")
+if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
+    furyinventory = require("furyinventory")
+else
+    modernReserveItems = require("modernReserveItems")
+end
+
 _G.pausemenu2 = require("pausemenu2")
-_G.undertaleDepends = require("level_dependencies_undertale")
+--_G.undertaleDepends = require("level_dependencies_undertale")
 
 if table.icontains(smasTables.__smb2Levels,Level.filename()) then
     rooms = require("rooms")
@@ -48,7 +57,7 @@ end
 
 function dependencies.onStart()
     smasBooleans.isInLevel = true
-    if table.icontains(smasTables.__smb1Levels,Level.filename()) == true then
+    if table.icontains(smasTables.__smb1Levels,Level.filename()) then
         for k,v in NPC.iterate{89,23,27,24,173,175,176,177,172,174,612} do
             if SaveData.SMB1HardModeActivated then
                 if v.id == 89 or v.id == 27 then
@@ -68,38 +77,16 @@ function dependencies.onStart()
         Defines.player_runspeed = 6
     end
     
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        warpTransition = require("warpTransition")
-        playerphysicspatch = require("playerphysicspatch")
-        kindHurtBlock = require("kindHurtBlock")
-        if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
-            furyinventory = require("furyinventory")
-        else
-            modernReserveItems = require("modernReserveItems")
-        end
-        warpTransition.musicFadeOut = false
-        warpTransition.levelStartTransition = warpTransition.TRANSITION_FADE
-        warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
-        warpTransition.crossSectionTransition = warpTransition.TRANSITION_FADE
-        warpTransition.activateOnInstantWarps = false
-        warpTransition.TRANSITION_FADE = 1
-        warpTransition.TRANSITION_SWIRL = 1
-        warpTransition.TRANSITION_IRIS_OUT = 1
-        warpTransition.TRANSITION_PAN = 6
-        littleDialogue.defaultStyleName = "smw"
-    end
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Cheats.deregister("dressmeup")
-        Cheats.deregister("undress")
-        Cheats.deregister("laundryday")
-        warpTransition = require("warpTransition")
-        warpTransition.musicFadeOut = false
-        warpTransition.levelStartTransition = warpTransition.TRANSITION_NONE
-        warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
-        warpTransition.crossSectionTransition = warpTransition.TRANSITION_NONE
-        warpTransition.activateOnInstantWarps = false
-        littleDialogue.defaultStyleName = "smbx13og"
-    end
+    warpTransition.musicFadeOut = false
+    warpTransition.levelStartTransition = warpTransition.TRANSITION_FADE
+    warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
+    warpTransition.crossSectionTransition = warpTransition.TRANSITION_FADE
+    warpTransition.activateOnInstantWarps = false
+    warpTransition.TRANSITION_FADE = 1
+    warpTransition.TRANSITION_SWIRL = 1
+    warpTransition.TRANSITION_IRIS_OUT = 1
+    warpTransition.TRANSITION_PAN = 6
+    littleDialogue.defaultStyleName = "smw"
 end
 
 function dependencies.onDraw()
@@ -109,7 +96,7 @@ end
 
 function dependencies.onTickEnd()
     if SaveData.SMB1LLAllNightNipponActivated then
-        if table.icontains(smasTables.__smb1Levels,Level.filename()) == true or table.icontains(smasTables.__smbllLevels,Level.filename()) == true then
+        if table.icontains(smasTables.__smb1Levels,Level.filename()) or table.icontains(smasTables.__smbllLevels,Level.filename()) then
             Graphics.sprites.background[21].img = Graphics.loadImageResolved("graphics/customs/AllNightNippon/background-21.png")
             Graphics.sprites.background[22].img = Graphics.loadImageResolved("graphics/customs/AllNightNippon/background-22.png")
             Graphics.sprites.effect[22].img = Graphics.loadImageResolved("graphics/customs/AllNightNippon/effect-22.png")

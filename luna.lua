@@ -62,6 +62,10 @@ if Misc.score() > 0 then
     Misc.score(-Misc.score()) 
 end
 
+-- Disable pauseMenu/messageBox13 (SMBX2R default libraries)
+pauseMenu13.enabled = false
+messageBox13.enabled = false
+
 -- Set the window title and icon
 Misc.setWindowTitle("Super Mario All-Stars++")
 SysManager.sendToConsole("Window title set.")
