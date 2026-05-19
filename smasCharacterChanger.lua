@@ -23,8 +23,8 @@ function smasCharacterChanger.onInitAPI()
     registerEvent(smasCharacterChanger,"onKeyboardPressDirect")
 end
 
-if SaveData.currentCharacter == nil then
-    SaveData.currentCharacter = player.character
+if SaveData.SMASPlusPlus.player[1].currentCharacter == nil then
+    SaveData.SMASPlusPlus.player[1].currentCharacter = player.character
 end
 if SaveData.currentCharacter2 == nil then
     if Player.count() >= 2 then
@@ -346,7 +346,7 @@ function smasCharacterChanger.onInputUpdate()
 end
 
 function smasCharacterChanger.onDraw()
-    SaveData.currentCharacter = player.character
+    SaveData.SMASPlusPlus.player[1].currentCharacter = player.character
     if Player.count() >= 2 then
         SaveData.currentCharacter2 = player2.character
     end

@@ -273,17 +273,6 @@ function smasCharacterInfo.setCostumeSpecifics()
     
     local currentCostume = SaveData.SMASPlusPlus.player[1].currentCostume
     
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        smasExtraSounds.sounds[148].sfx = Audio.SfxOpen(Misc.resolveSoundFile("_OST/_Sound Effects/nothing.ogg"))
-        for _,p in ipairs(Player.get()) do
-            p.setCostume(1, nil)
-            p.setCostume(2, nil)
-            p.setCostume(3, nil)
-            p.setCostume(4, nil)
-            p.setCostume(5, nil)
-        end
-    end
-    
     if (currentCostume == "N/A" or currentCostume == "!DEFAULT") then
         littleDialogue.characterNames[1] = "Mario"
         littleDialogue.characterNames[2] = "Luigi"
@@ -1077,8 +1066,8 @@ function smasCharacterInfo.setCostumeSpecifics()
     
     
     
-    --_OST/__Music/_Starman/Megashroom themes/default settings for default characters
-    if (currentCostume == "N/A" or currentCostume == "!DEFAULT") and not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+    -- Megashroom themes/default settings for default characters
+    if (currentCostume == "N/A" or currentCostume == "!DEFAULT") then
         steve.skinSettings.name = "steve"
         if not Cheats.get("waitinginthesky").active then
             if player.character == CHARACTER_YOSHI then

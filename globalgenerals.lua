@@ -44,20 +44,6 @@ end
 
 local numberfont = textplus.loadFont("littleDialogue/font/1.ini")
 
-if not table.icontains(smasTables._noLevelPlaces, Level.filename()) then
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if SaveData.SMASPlusPlus.accessibility.enableTwirl then
-            SysManager.sendToConsole("Twirling activated! Loading the twirl library...")
-            twirl = require("Twirl")
-        end
-        if SaveData.SMASPlusPlus.accessibility.enableWallJump then
-            SysManager.sendToConsole("Wall jumping activated! Loading the anotherwalljump library...")
-            aw = require("anotherwalljump")
-            aw.registerAllPlayersDefault()
-        end
-    end
-end
-
 if GameData.rushModeActive then
     SysManager.sendToConsole("Rush mode active! Loading rush mode dependencies...")
     level_dependencies_rushmode = require("level_dependencies_rushmode")
@@ -242,7 +228,7 @@ function globalgenerals.onTick()
         end
     end
     
-    if SaveData.SMASPlusPlus.player[1].currentCostume == "SMB3-WALUIGI" and SaveData.currentCharacter == CHARACTER_YOSHI then
+    if SaveData.SMASPlusPlus.player[1].currentCostume == "SMB3-WALUIGI" and SaveData.SMASPlusPlus.player[1].currentCharacter == CHARACTER_YOSHI then
         Player.setCostume(10, nil)
     end
     
@@ -374,7 +360,7 @@ function globalgenerals.onDraw()
         end
     end
     if SaveData._basegame.hud.score >= 9999900 then --Fixing combo sounds when score is set as it's max
-        SaveData._basegame.hud.score = 9990000
+        SaveData._basegame.hud.score = 9900000
     end
     
     --Framerate timer stuff

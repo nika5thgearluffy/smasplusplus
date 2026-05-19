@@ -430,21 +430,7 @@ function runHubUpdate()
 end
 
 function onStart()
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == nil then
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-    end
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        triggerEvent("ShowX2Stuff")
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        triggerEvent("HideX2Stuff")
-        for _,p in ipairs(Player.get()) do
-            p.setCostume(1, nil)
-            p.setCostume(2, nil)
-            p.setCostume(3, nil)
-            p.setCostume(4, nil)
-            p.setCostume(5, nil)
-        end
-    end
+    triggerEvent("ShowX2Stuff")
     Routine.run(runHubUpdate)
 end
 
@@ -493,25 +479,6 @@ function onEvent(eventName)
     --if eventName == "Stage6" then
         --Section(4).musicPath = "_OST/Me and Larry City/Story Mode Hub Theme 3, With Building Sounds (Super Mario Maker 2).ogg"
     --end
-    if eventName == ("DisEnabledX2Char") then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            triggerEvent("HUBDisableX2")
-            Level.load(Level.filename())
-        end
-        if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            triggerEvent("HUBEnableX2")
-            Level.load(Level.filename())
-        end
-    end
-    if eventName == "HUBEnableX2" then
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-    end
-    if eventName == "HUBDisableX2" then
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = true
-        Graphics.activateHud(false)
-        Cheats.trigger("1player")
-        Defines.player_hasCheated = false
-    end
     if eventName == "HourChange" then
         Sound.playSFX("hour-change.ogg")
     end

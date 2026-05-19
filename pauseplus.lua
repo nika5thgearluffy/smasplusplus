@@ -983,6 +983,8 @@ function pauseplus.onInitAPI()
     registerEvent(pauseplus,"onKeyboardPressDirect")
     registerEvent(pauseplus,"onTick")
     registerEvent(pauseplus,"onInputUpdate")
+
+    registerEvent(pauseplus,"onControllerButtonPress")
 end
 
 
@@ -1045,11 +1047,19 @@ function pauseplus.onStart()
     Audio.MusicVolume(64) -- reset music volume
 end
 
+function pauseplus.gameCanPause()
+    return (
+        pauseplus.canPause
+        and not smasBooleans.isOnMainMenu
+        and not smasBooleans.disablePauseMenu
+    )
+end
+
 
 function pauseplus.onPause(eventObj,playerObj)
     eventObj.cancelled = true
 
-    if pauseplus.canPause and (isOverworld or (Level.winState() == 0 and playerObj.deathTimer == 0 and not playerObj:mem(0x13C,FIELD_BOOL))) and not smasBooleans.isOnMainMenu and not smasBooleans.disablePauseMenu and not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+    if pauseplus.canPause and (isOverworld or (Level.winState() == 0 and playerObj.deathTimer == 0 and not playerObj:mem(0x13C,FIELD_BOOL))) and not smasBooleans.isOnMainMenu and not smasBooleans.disablePauseMenu then
         pauseplus.open(nil,nil,playerObj)
     end
 end
@@ -1057,8 +1067,22 @@ end
 function pauseplus.onKeyboardPressDirect(keycode,repeated,character) -- for shift+P shortcut
     if not Misc.inEditor() or pauseplus.currentSubmenu ~= nil then return end
     
-    if not repeated and ((keycode == VK_P) and Misc.GetKeyState(VK_RETURN)) or (keycode == VK_F1) and pauseplus.canPause and not smasBooleans.isOnMainMenu and not smasBooleans.disablePauseMenu and not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+    if not repeated and ((keycode == VK_P) and Misc.GetKeyState(VK_RETURN)) or (keycode == VK_F1) and pauseplus.gameCanPause() then
         pauseplus.open()
+    end
+end
+
+function pauseplus.onControllerButtonPress(button, playerIdx)
+    if pauseplus.gameCanPause() then
+        if playerIdx == 1 then
+            if button == inputConfig1.pause then
+                pauseplus.open()
+            end
+        else
+            if button == inputConfig2.pause then
+                pauseplus.open()
+            end
+        end
     end
 end
 

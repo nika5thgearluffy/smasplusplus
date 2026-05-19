@@ -61,43 +61,23 @@ function dependencies.onStart()
         Defines.player_runspeed = 6
     end
     
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        mm = require("megamann");
-        mm.playIntro = false;
-        pausemenu = require("pausemenu")
-        warpTransition = require("warpTransition")
-        playerphysicspatch = require("playerphysicspatch")
-        kindHurtBlock = require("kindHurtBlock")
-        furyinventory = require("furyinventory")
-        warpTransition.musicFadeOut = false
-        warpTransition.levelStartTransition = warpTransition.TRANSITION_FADE
-        warpTransition.sameSectionTransition = warpTransition.TRANSITION_PAN
-        warpTransition.crossSectionTransition = warpTransition.TRANSITION_FADE
-        warpTransition.activateOnInstantWarps = false
-        warpTransition.TRANSITION_FADE = 1
-        warpTransition.TRANSITION_SWIRL = 1
-        warpTransition.TRANSITION_IRIS_OUT = 1
-        warpTransition.TRANSITION_PAN = 6
-        littleDialogue.defaultStyleName = "smw"
-    end
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Cheats.deregister("dressmeup")
-        Cheats.deregister("undress")
-        Cheats.deregister("laundryday")
-        warpTransition = require("warpTransition")
-        warpTransition.musicFadeOut = false
-        warpTransition.levelStartTransition = warpTransition.TRANSITION_NONE
-        warpTransition.sameSectionTransition = warpTransition.TRANSITION_NONE
-        warpTransition.crossSectionTransition = warpTransition.TRANSITION_NONE
-        warpTransition.activateOnInstantWarps = false
-        pausemenu = require("pausemenu")
-        littleDialogue.defaultStyleName = "smbx13og"
-    end
-    if character == "CHARACTER_LUIGI" then
-        if currentCostume == "UNDERTALE-FRISK" then
-            level_dependencies_undertale = require("level_dependencies_undertale")
-        end
-    end
+    mm = require("megamann");
+    mm.playIntro = false;
+    pausemenu = require("pausemenu")
+    warpTransition = require("warpTransition")
+    playerphysicspatch = require("playerphysicspatch")
+    kindHurtBlock = require("kindHurtBlock")
+    furyinventory = require("furyinventory")
+    warpTransition.musicFadeOut = false
+    warpTransition.levelStartTransition = warpTransition.TRANSITION_FADE
+    warpTransition.sameSectionTransition = warpTransition.TRANSITION_PAN
+    warpTransition.crossSectionTransition = warpTransition.TRANSITION_FADE
+    warpTransition.activateOnInstantWarps = false
+    warpTransition.TRANSITION_FADE = 1
+    warpTransition.TRANSITION_SWIRL = 1
+    warpTransition.TRANSITION_IRIS_OUT = 1
+    warpTransition.TRANSITION_PAN = 6
+    littleDialogue.defaultStyleName = "smw"
 end
 
 function dependencies.onTick()

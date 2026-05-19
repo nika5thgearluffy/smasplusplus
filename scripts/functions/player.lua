@@ -766,9 +766,6 @@ function Playur.failsafeStartupPlayerCheck() --Checks to see if Player.count() i
     if Player.count() <= 0 then
         Playur.activate1stPlayer()
     end
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Playur.activate1stPlayer()
-    end
 end
 
 function Playur.inForcedState() --Returns true if the forced state is set to 0 on all players, else it's false.

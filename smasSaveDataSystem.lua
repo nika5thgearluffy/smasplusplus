@@ -193,6 +193,13 @@ if SaveData.SMASPlusPlus.game.trueFinalBattleActive == nil then
     SaveData.SMASPlusPlus.game.trueFinalBattleActive = false
 end
 
+if SaveData.SMASPlusPlus.player[1].currentCharacter == nil then
+    SaveData.SMASPlusPlus.player[1].currentCharacter = 1
+end
+if SaveData.SMASPlusPlus.player[2].currentCharacter == nil then
+    SaveData.SMASPlusPlus.player[2].currentCharacter = 2
+end
+
 
 
 
@@ -344,6 +351,11 @@ end
 if SaveData.racaActivated ~= nil then
     SaveData.SMASPlusPlus.game.trueFinalBattleActive = SaveData.racaActivated
     SaveData.racaActivated = nil
+end
+
+if SaveData.currentCharacter ~= nil then
+    SaveData.SMASPlusPlus.player[1].currentCharacter = SaveData.currentCharacter
+    SaveData.currentCharacter = nil
 end
 
 

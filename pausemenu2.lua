@@ -1223,28 +1223,16 @@ end
 
 function onethreemodeactivate()
     pauseplus.canControlMenu = false
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Sound.playSFX("1.3Mode/dragon-coin.ogg")
-        Sound.playSFX("1.3Mode/key.ogg")
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Sound.playSFX("dragon-coin.ogg")
-        Sound.playSFX("key.ogg")
-    end
     Audio.SeizeStream(-1)
     Audio.MusicStop()
     startFadeOut()
     Misc.saveGame()
     Routine.wait(2.3,true)
-    SaveData.SMASPlusPlus.player[playerID].currentAlteration = "N/A"
-    SaveData.SMASPlusPlus.game.onePointThreeModeActivated = not SaveData.SMASPlusPlus.game.onePointThreeModeActivated
     Misc.unpause()
     exitFadeActive = false
     exitFadeActiveDone = true
     Graphics.activateHud(false)
     Playur.activate1stPlayer()
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        player:transform(1, false)
-    end
     Level.load(Level.filename())
 end
 
@@ -1532,30 +1520,17 @@ function pauseSpecifics()
         pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck","Dynamic Widescreen","SNES"}, action = function() Routine.run(changeResolutionSettings) end})
         
         --Character Menu
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            pauseplus.createOption("charactermenu",{text = "Change Character",closeMenu = true,description = "Switch the player's character to anything of your choice!", action =  function() smasCharacterChanger.startChanger() end})
-            pauseplus.createSubmenu("costumeoptions",{headerText = "<size 1.5>Costume Specific Options</size>"})
-            pauseplus.createOption("charactermenu",{text = "Costume Specific Options",goToSubmenu = "costumeoptions",description = "Change settings regarding the costume that is currently being worn."})
-            --if not (Level.filename() == "map.lvlx") then
-                --pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "Toggle the status of multiplayer. This will only work on 1.3 Mode (If in Normal Mode this won't do anything).",action = function() checkingplayerstatus() end})
-            --end
-        end
-        if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            pauseplus.createOption("charactermenu",{text = "Change Character 1P (Previous)",description = "Switch the 1st Player's character to anything of your choice!",action =  function() characterchange13left() end})
-            pauseplus.createOption("charactermenu",{text = "Change Character 1P (Next)",description = "Switch the 1st Player's character to anything of your choice!",action =  function() characterchange13() end})
-            pauseplus.createOption("charactermenu",{text = "Change Character 2P (Previous)",description = "Switch the 2nd Player's character to anything of your choice!",action =  function() characterchange13_2pleft() end})
-            pauseplus.createOption("charactermenu",{text = "Change Character 2P (Next)",description = "Switch the 2nd Player's character to anything of your choice!",action =  function() characterchange13_2p() end})
-            --if not (Level.filename() == "map.lvlx") then
-                --pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "Toggle the status of multiplayer. This will only work on 1.3 Mode (If in Normal Mode this won't do anything).",action = function() checkingplayerstatus13() end})
-            --end
-        end
+        pauseplus.createOption("charactermenu",{text = "Change Character",closeMenu = true,description = "Switch the player's character to anything of your choice!", action =  function() smasCharacterChanger.startChanger() end})
+        pauseplus.createSubmenu("costumeoptions",{headerText = "<size 1.5>Costume Specific Options</size>"})
+        pauseplus.createOption("charactermenu",{text = "Costume Specific Options",goToSubmenu = "costumeoptions",description = "Change settings regarding the costume that is currently being worn."})
+        --if not (Level.filename() == "map.lvlx") then
+            --pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "Toggle the status of multiplayer. This will only work on 1.3 Mode (If in Normal Mode this won't do anything).",action = function() checkingplayerstatus() end})
+        --end
         
         --Costume Menu
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            pauseplus.createOption("costumeoptions",{text = "Disable Abilities",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to disable costume abilities or keep them enabled. Default option is enabled.", action =  function() Routine.run(toggleabilitiescost) end})
-            pauseplus.createOption("costumeoptions",{text = "Enable Profane Voices",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to enable specific character profanity or not. Default option is disabled.", action =  function() Routine.run(toggleprofanecostume) end})
-            pauseplus.createOption("costumeoptions",{text = "Skip Character Intros",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to enable character specific intros or not. Default option is enabled.", action =  function() Routine.run(toggleintroscostume) end})
-        end
+        pauseplus.createOption("costumeoptions",{text = "Disable Abilities",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to disable costume abilities or keep them enabled. Default option is enabled.", action =  function() Routine.run(toggleabilitiescost) end})
+        pauseplus.createOption("costumeoptions",{text = "Enable Profane Voices",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to enable specific character profanity or not. Default option is disabled.", action =  function() Routine.run(toggleprofanecostume) end})
+        pauseplus.createOption("costumeoptions",{text = "Skip Character Intros",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to enable character specific intros or not. Default option is enabled.", action =  function() Routine.run(toggleintroscostume) end})
 
         --Teleportation Menu
         if not isOverworld then

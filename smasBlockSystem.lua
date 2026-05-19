@@ -70,15 +70,6 @@ function smasBlockSystem.onStart()
             end
         end
     end
-    
-    --16 coin block to 10 coin block conversion when on 1.3 Mode
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        for k,v in ipairs(Block.get()) do
-            if v.contentID == 16 then --Set the coin count from each block to 10 if on 1.3 Mode on the start of the level
-                v.contentID = 10
-            end
-        end
-    end
 end
 
 local spawnedIDs = {}
@@ -160,57 +151,51 @@ function smasBlockSystem.onPostBlockHit(block, fromUpper, playerornil)
             end
         end
     end
+
+
+
+    if smasBlockSystem.enableMultiCoinBlockSystem then
+        --Block coin hit detection
+        if block.contentID >= 2 and block.contentID <= 99 and block.isValid and not activateBlockCountdown then
+            SysManager.sendToConsole("Activated multi-coin block system on block "..tostring(block.idx)..".")
+            activateBlockCountdown = true
+            table.insert(smasBlockSystem.blockListWithCoins, block)
+            block.data.multiCoinTimer = smasBlockSystem.countDownMarker
+        elseif block.contentID <= 1 or block.contentID == 1000 or not block.isValid then
+            activateBlockCountdown = false
+            blockCountdown = 0
+            subtractBlockContentID = false
+        end
+    end
     
     
-    
-    
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        
-        if smasBlockSystem.enableMultiCoinBlockSystem then
-            --Block coin hit detection
-            if block.contentID >= 2 and block.contentID <= 99 and block.isValid and not activateBlockCountdown then
-                SysManager.sendToConsole("Activated multi-coin block system on block "..tostring(block.idx)..".")
-                activateBlockCountdown = true
-                table.insert(smasBlockSystem.blockListWithCoins, block)
-                block.data.multiCoinTimer = smasBlockSystem.countDownMarker
-            elseif block.contentID <= 1 or block.contentID == 1000 or not block.isValid then
-                activateBlockCountdown = false
-                blockCountdown = 0
-                subtractBlockContentID = false
+    --Yoshi egg to 1UP conversion
+    if smasBlockSystem.enableYoshi1UPBlockSystem then
+        if playerornil ~= nil then
+            if playerornil.mount == MOUNT_YOSHI and smasBlockSystem.yoshiNPCs[block.contentID] then
+                SysManager.sendToConsole("Yoshi already mounted on Player "..tostring(playerornil.idx)..", changed to 1UP mushroom.")
+                Routine.run(eggOneUpChanger, block, 187)
+                --block.contentID = 1187
             end
         end
-        
-        
-        --Yoshi egg to 1UP conversion
-        if smasBlockSystem.enableYoshi1UPBlockSystem then
-            if playerornil ~= nil then
-                if playerornil.mount == MOUNT_YOSHI and smasBlockSystem.yoshiNPCs[block.contentID] then
-                    SysManager.sendToConsole("Yoshi already mounted on Player "..tostring(playerornil.idx)..", changed to 1UP mushroom.")
-                    Routine.run(eggOneUpChanger, block, 187)
-                    --block.contentID = 1187
+    end
+
+
+
+
+    --Multi-powerup sprouting on multiplayer (NSMBWii)
+    if smasBlockSystem.enableMultiplayerPowerupBlockSystem then
+        if playerornil ~= nil and not fromUpper then
+            for k,v in ipairs(smasTables.allPowerupNPCIDs) do
+                if Player.count() >= 2 and block.contentID == v + 1000 then
+                    Routine.run(smasBlockSystem.sproutMultiplayerBlockItem, playerornil.powerup, block, fromUpper, playerornil)
                 end
             end
         end
-        
-        
     end
-    
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        
-        
-        --Multi-powerup sprouting on multiplayer (NSMBWii)
-        if smasBlockSystem.enableMultiplayerPowerupBlockSystem then
-            if playerornil ~= nil and not fromUpper then
-                for k,v in ipairs(smasTables.allPowerupNPCIDs) do
-                    if Player.count() >= 2 and block.contentID == v + 1000 then
-                        Routine.run(smasBlockSystem.sproutMultiplayerBlockItem, playerornil.powerup, block, fromUpper, playerornil)
-                    end
-                end
-            end
-        end
-        
-        
-    end
+
+
+
 end
 
 function smasBlockSystem.onPostNPCKill(npc, harmType)

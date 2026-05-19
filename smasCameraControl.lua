@@ -2,7 +2,7 @@ local smasCameraControl = {}
 
 local autoscroll = require("autoscroll")
 
-smasCameraControl.enabled = true
+smasCameraControl.enabled = false
 smasCameraControl.ticksUntilYouCanPressLeftOrRight = lunatime.toTicks(1.5) --For holding alt-run + alt-jump
 smasCameraControl.timerUpdatable = 0
 smasCameraControl.canPanCamera = false
@@ -28,8 +28,8 @@ function smasCameraControl.onInitAPI()
 end
 
 function smasCameraControl.canDoCameraControlling()
-    return (not SaveData.SMASPlusPlus.game.onePointThreeModeActivated
-        and (
+    return (
+        (
             smasBooleans.isInLevel
             or smasBooleans.isInHub
         )

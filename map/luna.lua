@@ -8,10 +8,6 @@ end
 
 _G.pausemenu2 = require("pausemenu2")
 
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    pausemenu13 = require("pausemenu13/pausemenu13")
-end
-
 local playerManager = require("playermanager")
 smasDateAndTime = require("smasDateAndTime")
 

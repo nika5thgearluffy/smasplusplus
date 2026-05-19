@@ -57,10 +57,8 @@ local powerupSettings = {
 npcManager.setNpcSettings(powerupSettings)
 npcManager.registerHarmTypes(npcID,{HARM_TYPE_OFFSCREEN},{})
 
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    ap.registerPowerup("ap_cape")
-    ap.registerItemTier(npcID,true)
-end
+ap.registerPowerup("ap_cape")
+ap.registerItemTier(npcID,true)
 
 
 -- Fix for redigit? I guess?

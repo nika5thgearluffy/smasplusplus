@@ -104,16 +104,14 @@ function smas2PlayerSystem.onDraw()
         
     end
     
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if smas2PlayerSystem.enableSplitScreen then
-            if Player.count() == 2 then
-                Graphics.drawBox{width = 2, height = 600, x = 399, y = 0, color = Color.black, priority = 5}
-                
-                smas2PlayerSystem.player1CameraEdgeX = Screen.viewPortCoordinateX(player.x - camera.x + 40, player.width)
-                smas2PlayerSystem.player1CameraEdgeY = 0
-                smas2PlayerSystem.player2CameraEdgeX = Screen.viewPortCoordinateX(player2.x - camera.x, player2.width)
-                smas2PlayerSystem.player2CameraEdgeY = 0 --player2.y - camera.y - player2.height
-            end
+    if smas2PlayerSystem.enableSplitScreen then
+        if Player.count() == 2 then
+            Graphics.drawBox{width = 2, height = 600, x = 399, y = 0, color = Color.black, priority = 5}
+            
+            smas2PlayerSystem.player1CameraEdgeX = Screen.viewPortCoordinateX(player.x - camera.x + 40, player.width)
+            smas2PlayerSystem.player1CameraEdgeY = 0
+            smas2PlayerSystem.player2CameraEdgeX = Screen.viewPortCoordinateX(player2.x - camera.x, player2.width)
+            smas2PlayerSystem.player2CameraEdgeY = 0 --player2.y - camera.y - player2.height
         end
     end
 end
@@ -204,7 +202,7 @@ end]]
 
 function smas2PlayerSystem.onTick()
     for _,p in ipairs(Player.get()) do --Make sure all players are counted if i.e. using supermario128...
-        if Player.count() == 2 and SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+        if Player.count() == 2 then
             if SMBX_VERSION ~= VER_SEE_MOD then
                 if Player(1).forcedState == FORCEDSTATE_PIPE then
                     if Player(1).forcedTimer >= 70 and not Misc.isPaused() then
@@ -232,19 +230,19 @@ function smas2PlayerSystem.onTick()
                 end
             end
         end
-        if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+        --[[if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
             if smasBooleans.isInLevel or smasBooleans.isInHub then
                 if p.keys.dropItem == KEYS_PRESSED then
                     smas2PlayerSystem.dropClassicReserve(p.idx)
                 end
             end
-        end
+        end]]
     end
 end
 
 
 
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then --These will be 1.3 Mode specific
+--[[if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then --These will be 1.3 Mode specific
     function smas2PlayerSystem.doorTeleportP1toP2()
         Routine.waitFrames(30)
         player:mem(0x140,FIELD_WORD,100)
@@ -325,7 +323,7 @@ if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then --These will be 1.
             smas2PlayerSystem.teleport2PlayerModeController(button, playerIdx)
         end
     end
-end
+end]]
 
 
 

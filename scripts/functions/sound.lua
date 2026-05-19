@@ -170,31 +170,30 @@ function Sound.clearUnusedCostumeSounds()
     end
 end
 
-function Sound.resolveCostumeSound(name, stringOnly) --Resolve a sound for a costume being worn.
+function Sound.resolveCostumeSound(name, stringOnly, playerIdx) --Resolve a sound for a costume being worn.
     if stringOnly == nil then
         stringOnly = false
     end
+    if playerIdx == nil then
+        playerIdx = 1
+    end
     local costumeSoundDir
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if SaveData.SMASPlusPlus.player[1].currentCostume == "N/A" and SaveData.SMASPlusPlus.player[1].currentAlteration == "N/A" then
-            costumeSoundDir = Sound.resolveSoundFile(name)
-        elseif SaveData.SMASPlusPlus.player[1].currentCostume ~= "N/A" and SaveData.SMASPlusPlus.player[1].currentAlteration == "N/A" then
-            costumeSoundDir = Sound.resolveSoundFile("costumes/"..playerManager.getName(player.character).."/"..SaveData.SMASPlusPlus.player[1].currentCostume.."/"..name)
-        elseif SaveData.SMASPlusPlus.player[1].currentAlteration ~= "N/A" then
-            if SaveData.SMASPlusPlus.player[1].currentCostume ~= "N/A" then
-                costumeSoundDir = Sound.resolveSoundFile("alterations/"..playerManager.getName(player.character).."/!!!costumes/"..SaveData.SMASPlusPlus.player[1].currentCostume.."/"..SaveData.SMASPlusPlus.player[1].currentAlteration.."/"..name)
-                if costumeSoundDir == nil then
-                    costumeSoundDir = Sound.resolveSoundFile("costumes/"..playerManager.getName(player.character).."/"..SaveData.SMASPlusPlus.player[1].currentCostume.."/"..name)
-                end
-            else
-                costumeSoundDir = Sound.resolveSoundFile("alterations/"..playerManager.getName(player.character).."/"..SaveData.SMASPlusPlus.player[1].currentAlteration.."/"..name)
-                if costumeSoundDir == nil then
-                    costumeSoundDir = Sound.resolveSoundFile(name)
-                end
+    if SaveData.SMASPlusPlus.player[playerIdx].currentCostume == "N/A" and SaveData.SMASPlusPlus.player[playerIdx].currentAlteration == "N/A" then
+        costumeSoundDir = Sound.resolveSoundFile(name)
+    elseif SaveData.SMASPlusPlus.player[playerIdx].currentCostume ~= "N/A" and SaveData.SMASPlusPlus.player[playerIdx].currentAlteration == "N/A" then
+        costumeSoundDir = Sound.resolveSoundFile("costumes/"..playerManager.getName(player.character).."/"..SaveData.SMASPlusPlus.player[1].currentCostume.."/"..name)
+    elseif SaveData.SMASPlusPlus.player[playerIdx].currentAlteration ~= "N/A" then
+        if SaveData.SMASPlusPlus.player[playerIdx].currentCostume ~= "N/A" then
+            costumeSoundDir = Sound.resolveSoundFile("alterations/"..playerManager.getName(player.character).."/!!!costumes/"..SaveData.SMASPlusPlus.player[playerIdx].currentCostume.."/"..SaveData.SMASPlusPlus.player[playerIdx].currentAlteration.."/"..name)
+            if costumeSoundDir == nil then
+                costumeSoundDir = Sound.resolveSoundFile("costumes/"..playerManager.getName(Player(playerIdx).character).."/"..SaveData.SMASPlusPlus.player[playerIdx].currentCostume.."/"..name)
+            end
+        else
+            costumeSoundDir = Sound.resolveSoundFile("alterations/"..playerManager.getName(Player(playerIdx).character).."/"..SaveData.SMASPlusPlus.player[playerIdx].currentAlteration.."/"..name)
+            if costumeSoundDir == nil then
+                costumeSoundDir = Sound.resolveSoundFile(name)
             end
         end
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        costumeSoundDir = Sound.resolveSoundFile("_OST/_Sound Effects/1.3Mode/"..name)
     end
     if not stringOnly then
         if costumeSoundDir ~= nil then
@@ -235,9 +234,6 @@ end
 function Sound.cleanupCostumeSounds()
     for k,v in ipairs(smasTables.soundNamesInOrder) do
         if not smasTables.stockSoundNumbersInOrder[k] then
-            if SMBX_VERSION == VER_SEE_MOD then
-                Audio.SfxClearFromCache(smasExtraSounds.sounds[k].sfx)
-            end
             smasExtraSounds.sounds[k].sfx = nil
         elseif smasTables.stockSoundNumbersInOrder[k] then
             Audio.sounds[k].sfx = nil

@@ -12075,7 +12075,7 @@ ID:151;X:20144;Y:19888;D:-1;MG:"Welcome to the warp zone!<page>Left to right\:<p
 ID:151;X:20824;Y:19888;D:-1;MG:"Welcome to the warp zone!<page>Left to right\:<page>Downtown<page>Side Quest Levels 1-6<page>Side Quest Levels 7-10 and Mearian Ocean";FD:1;
 ID:602;X:-78752;Y:-80608;D:-1;XTRA:"{\n    \"power\"\: 20\n}\n";
 ID:602;X:1696;Y:-224;D:-1;XTRA:"{\n    \"power\"\: 20\n}\n";
-ID:151;X:40216;Y:39888;D:-1;MG:"Hi <characterName>. This is the Character Changer Room!<page>To change characters\, hit the block at the middle of the room to bring in a big TV to change.<page>Please note\: You are on Normal Mode currently. To change during multiplayer\, please enable 1.3 Mode before entering this room.<page>Have fun!";FD:1;LR:"X2Stuff";
+ID:151;X:40216;Y:39888;D:-1;MG:"Hi <characterName>. This is the Character Changer Room!<page>To change characters\, hit the block at the middle of the room to bring in a big TV to change.<page>Have fun!";FD:1;LR:"X2Stuff";
 ID:91;X:60672;Y:59936;D:-1;CN:147;GE:1;GT:1;GD:1;GM:20;LR:"Test Room Veggies";
 ID:91;X:60736;Y:59936;D:-1;CN:147;GE:1;GT:1;GD:1;GM:20;LR:"Test Room Veggies";
 ID:91;X:60800;Y:59936;D:-1;CN:147;GE:1;GT:1;GD:1;GM:20;LR:"Test Room Veggies";

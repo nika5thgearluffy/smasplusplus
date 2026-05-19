@@ -83,191 +83,125 @@ Cheats.register("sherbertsmiddlenameistoto",{ --Kills all/any player(s) after ty
     flashPlayer = true,
 })
 
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("huskiesareamazing",{ --Turns the player into Tangent (Spencer's dog)
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(4, false)
-            playerManager.setCostume(CHARACTER_TOAD, "SEE-Tangent")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then --Same as above
-    Cheats.register("itsametangent",{
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(4, false)
-            playerManager.setCostume(CHARACTER_TOAD, "SEE-Tangent")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then --Same as above
-    Cheats.register("itsamespencer",{
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(2, false)
-            playerManager.setCostume(CHARACTER_LUIGI, "00-SpencerEverly")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsametakeshi",{ --Turns the player into Takeshi (NES)
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(5, false)
-            playerManager.setCostume(CHARACTER_LINK, "Takeshi")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsamelarry",{ --Turns the player into Larry the Cucumber
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(2, false)
-            playerManager.setCostume(CHARACTER_LUIGI, "LarryTheCucumber")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsamepily",{ --Turns the player into Pily from A2XT
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(1, false)
-            playerManager.setCostume(CHARACTER_MARIO, "Demo-XmasPily")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsameeric",{ --Turns the player into Eric Cartman
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(1, false)
-            playerManager.setCostume(CHARACTER_MARIO, "SP-1-EricCartman")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsamejcfoster",{ --Turns the player into JC Foster
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(1, false)
-            playerManager.setCostume(CHARACTER_MARIO, "JCFosterTakesItToTheMoon")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsamefrisk",{ --Turns the player into Frisk
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(2, false)
-            playerManager.setCostume(CHARACTER_LUIGI, "Undertale-Frisk")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsamerebeltrooper",{ --Turns the player into the LEGO Star Wars II GBA Rebel Trooper
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(4, false)
-            playerManager.setCostume(CHARACTER_TOAD, "LEGOStarWars-RebelTrooper")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsameultimaterinka",{ --Turns the player into Ultimate Rinka. This was recoded.
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(4, false)
-            playerManager.setCostume(CHARACTER_TOAD, "UltimateRinka")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("densenuclearenergy",{ --Turns the player into Ultimate Rinka. This was recoded.
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(4, false)
-            playerManager.setCostume(CHARACTER_TOAD, "UltimateRinka")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("itsameninjabomberman",{ --Turns the player into Ninja Bomberman
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(3, false)
-            playerManager.setCostume(CHARACTER_PEACH, "NinjaBomberman")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("hardmode",{ --Turns the player into Mother Brain Rinka (This is actually a Beta 3 Cheat, which was brought back for this one)
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            player:transform(4, false)
-            playerManager.setCostume(CHARACTER_TOAD, "MotherBrainRinka")
-            return true -- this makes the cheat not toggleable
-        end),
-        flashPlayer = true,activateSFX = 12,
-    })
-end
-
---Cheats.register("jario",{ --Loads/requires the spartaremix library
-    --onActivate = (function()
-        --Defines.player_hasCheated = false
-        --spartaremix = require("spartaremix")
-        --return true -- this makes the cheat not toggleable
-    --end),
-    --flashPlayer = true,activateSFX = "_OST/_Sound Effects/HIT_4.ogg",
---})
-
---[[Cheats.register("fourwallsmas",{ --Unlocks the debugbox, useful for the editor
+Cheats.register("huskiesareamazing",{ --Turns the player into Tangent (Spencer's dog)
     onActivate = (function()
         Defines.player_hasCheated = false
-        debugbox = require("debugbox")
+        player:transform(4, false)
+        playerManager.setCostume(CHARACTER_TOAD, "SEE-Tangent")
         return true -- this makes the cheat not toggleable
     end),
-    flashPlayer = true,activateSFX = 67,
-})]]
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsametangent",{
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(4, false)
+        playerManager.setCostume(CHARACTER_TOAD, "SEE-Tangent")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsametakeshi",{ --Turns the player into Takeshi (NES)
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(5, false)
+        playerManager.setCostume(CHARACTER_LINK, "Takeshi")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsamelarry",{ --Turns the player into Larry the Cucumber
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(2, false)
+        playerManager.setCostume(CHARACTER_LUIGI, "LarryTheCucumber")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsameeric",{ --Turns the player into Eric Cartman
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(1, false)
+        playerManager.setCostume(CHARACTER_MARIO, "SP-1-EricCartman")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsamejcfoster",{ --Turns the player into JC Foster
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(1, false)
+        playerManager.setCostume(CHARACTER_MARIO, "JCFosterTakesItToTheMoon")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsamefrisk",{ --Turns the player into Frisk
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(2, false)
+        playerManager.setCostume(CHARACTER_LUIGI, "Undertale-Frisk")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsamerebeltrooper",{ --Turns the player into the LEGO Star Wars II GBA Rebel Trooper
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(4, false)
+        playerManager.setCostume(CHARACTER_TOAD, "LEGOStarWars-RebelTrooper")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsameultimaterinka",{ --Turns the player into Ultimate Rinka. This was recoded.
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(4, false)
+        playerManager.setCostume(CHARACTER_TOAD, "UltimateRinka")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("densenuclearenergy",{ --Turns the player into Ultimate Rinka. This was recoded.
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(4, false)
+        playerManager.setCostume(CHARACTER_TOAD, "UltimateRinka")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("itsameninjabomberman",{ --Turns the player into Ninja Bomberman
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(3, false)
+        playerManager.setCostume(CHARACTER_PEACH, "NinjaBomberman")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
+
+Cheats.register("hardmode",{ --Turns the player into Mother Brain Rinka (This is actually a Beta 3 Cheat, which was brought back for this one)
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        player:transform(4, false)
+        playerManager.setCostume(CHARACTER_TOAD, "MotherBrainRinka")
+        return true -- this makes the cheat not toggleable
+    end),
+    flashPlayer = true,activateSFX = 12,
+})
 
 Cheats.register("fuckthisshitgimmiethetrueending",{ --Teleports to the inside of the True Ending building
     onActivate = (function()

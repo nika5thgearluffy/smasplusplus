@@ -271,21 +271,13 @@ function onStart() --Now do onStart...
         end
         GameData.gameFirstLoaded = false --Because what if we load into a level instead of the boot menu?
     end
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == 0 then --Migrate old saves from pre-March 2022 if there are any.
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-    end
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == 1 then
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = true
-    end
-    if SaveData.firstBootCompleted == 0 then
-        SaveData.firstBootCompleted = false
-    end
-    if SaveData.firstBootCompleted == 1 then
-        SaveData.firstBootCompleted = true
-    end
-    if (not SaveData.SMASPlusPlus.game.onePointThreeModeActivated) and not Misc.inEditor() and (SaveData.currentCharacter ~= nil and SaveData.SMASPlusPlus.player[1].currentCostume ~= nil) then
-        player.character = SaveData.currentCharacter
-        player.setCostume(SaveData.currentCharacter, SaveData.SMASPlusPlus.player[1].currentCostume, false)
+    if not Misc.inEditor() and (SaveData.SMASPlusPlus.player[1].currentCharacter ~= nil and SaveData.SMASPlusPlus.player[1].currentCostume ~= nil) then
+        player.character = SaveData.SMASPlusPlus.player[1].currentCharacter
+        player.setCostume(SaveData.SMASPlusPlus.player[1].currentCharacter, SaveData.SMASPlusPlus.player[1].currentCostume, false)
+        if player2 and player2 ~= nil and (SaveData.SMASPlusPlus.player[2].currentCharacter ~= nil and SaveData.SMASPlusPlus.player[2].currentCostume ~= nil) then
+            player2.character = SaveData.SMASPlusPlus.player[2].currentCharacter
+            player2.setCostume(SaveData.SMASPlusPlus.player[2].currentCharacter, SaveData.SMASPlusPlus.player[2].currentCostume, false)
+        end
     end
     if Misc.inEditor() then
         if SysManager.isOutsideOfUnplayeredAreas() then
@@ -309,8 +301,8 @@ local runkey = Graphics.loadImageResolved("inputhud/run.png")
 local altrunkey = Graphics.loadImageResolved("inputhud/altrun.png")
 local bottomkeys = Graphics.loadImageResolved("inputhud/bottomkey.png")
 
-function onGIFRecord(noSFXs, isActive) -- This will replace the GIF sounds to custom ones
-    noSFXs.cancelled = true
+function onGIFRecord(SFXs, isActive) -- This will replace the GIF sounds to custom ones
+    SFXs.cancelled = true
     if Misc.isRecordingGIF() then
         Sound.playSFX("gif-start.ogg")
     else
@@ -318,8 +310,8 @@ function onGIFRecord(noSFXs, isActive) -- This will replace the GIF sounds to cu
     end
 end
 
-function onScreenCapture(noSFXs) -- This will replace the snapshot sound to a custom one
-    noSFXs.cancelled = true
+function onScreenCapture(SFXs) -- This will replace the snapshot sound to a custom one
+    SFXs.cancelled = true
     Sound.playSFX("snapshot.ogg")
 end
 

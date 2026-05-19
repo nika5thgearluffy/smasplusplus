@@ -297,7 +297,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
         if (vk == VK_TAB) and (not repeated) then
             repl.active = false
             if repll.enableSounds then
-                Sound.playSFX("console/console_open.ogg")
+                --Sound.playSFX("console/console_open.ogg")
             end
             Misc.pause()
             Misc.cheatBuffer("")
@@ -321,7 +321,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
         if vk == VK_TAB or vk == VK_ESCAPE then
             if (not repeated) then
                 if repll.enableSounds then
-                    Sound.playSFX("console/console_close.ogg")
+                    --Sound.playSFX("console/console_close.ogg")
                 end
                 Misc.unpause()
                 repll.active = false
