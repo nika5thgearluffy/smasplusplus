@@ -6,19 +6,3 @@ function onEvent(eventName)
         Sound.changeMusic(0, 2)
     end
 end
-
-function onLoadSection0()
-    smasNoTurnBack.overrideSection = false
-end
-
-function onLoadSection1()
-    smasNoTurnBack.overrideSection = true
-end
-
-function onLoadSection2()
-    smasNoTurnBack.overrideSection = true
-end
-
-function onLoadSection3()
-    smasNoTurnBack.overrideSection = true
-end

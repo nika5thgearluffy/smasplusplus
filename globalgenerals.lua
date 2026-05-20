@@ -385,7 +385,7 @@ function globalgenerals.onDraw()
     end
     
     for _,p in ipairs(Player.get()) do --Custom reserve storage
-        if p.reservePowerup ~= 0 then
+        if p.reservePowerup ~= nil and p.reservePowerup ~= 0 then
             SaveData.SMASPlusPlus.hud.reserve[_] = p.reservePowerup
             p.reservePowerup = 0
         end

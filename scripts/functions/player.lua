@@ -650,7 +650,6 @@ end
 function Playur.activateStarman(p) --Starts the starman as the specified player.
     if(starman) then
         starman.start(p)
-        
     end
 end
 
@@ -669,15 +668,16 @@ function Playur.activateMegashroom(p) --Starts or stops the megashroom as the sp
 end
 
 function Playur.jumpPose(p) --Gets the frame of the jump pose this specified character is using.
-    if p.character <= 2 or p.character == 7 or p.character == 8 or p.character == 13 or p.character == 15 then
+    local chars = playerManager.getCharacters()
+    if chars[p.character].base <= 2 then
         if p.powerup == 1 then
             return 3
         else
             return 4
         end
-    elseif p.character >= 3 or p.character <= 4 or p.character == 6 or p.character == 9 or p.character == 10 or p.character == 11 or p.character == 14 then
+    elseif chars[p.character].base >= 3 or chars[p.character].base <= 4 then
         return 4
-    elseif p.character == 5 or p.character == 12 or p.character == 16 then
+    elseif chars[p.character].base == 5 then
         return 5
     end
 end
@@ -707,8 +707,6 @@ function Playur.startPointCoordinateX(index) --Gets the X coordinate starting po
 
     local addr = PLAYER_START_POINT_ADDR + (index - 1)*48
     local x      = mem(addr       ,FIELD_DFLOAT)
-    local y      = mem(addr + 0x08,FIELD_DFLOAT)
-    local height = mem(addr + 0x10,FIELD_DFLOAT)
     local width  = mem(addr + 0x18,FIELD_DFLOAT)
 
     return x + width*0.5
@@ -720,10 +718,8 @@ function Playur.startPointCoordinateY(index) --Gets the Y coordinate starting po
     end
 
     local addr = PLAYER_START_POINT_ADDR + (index - 1)*48
-    local x      = mem(addr       ,FIELD_DFLOAT)
     local y      = mem(addr + 0x08,FIELD_DFLOAT)
     local height = mem(addr + 0x10,FIELD_DFLOAT)
-    local width  = mem(addr + 0x18,FIELD_DFLOAT)
 
     return y + height
 end
@@ -733,13 +729,7 @@ function Playur.startPointCoordinate(index) --Gets the coordinate starting point
         error("Invalid player start point")
     end
 
-    local addr = PLAYER_START_POINT_ADDR + (index - 1)*48
-    local x      = mem(addr       ,FIELD_DFLOAT)
-    local y      = mem(addr + 0x08,FIELD_DFLOAT)
-    local height = mem(addr + 0x10,FIELD_DFLOAT)
-    local width  = mem(addr + 0x18,FIELD_DFLOAT)
-
-    return vector(x + width, y + height)
+    return vector(Playur.startPointCoordinateX(index), Playur.startPointCoordinateY(index))
 end
 
 function Playur.sectionsWithNoPlayers() --Lists a table with sections with no players in them.
@@ -768,22 +758,19 @@ function Playur.failsafeStartupPlayerCheck() --Checks to see if Player.count() i
     end
 end
 
-function Playur.inForcedState() --Returns true if the forced state is set to 0 on all players, else it's false.
+function Playur.inForcedState() --Returns true if any forced state is active, else it's false.
     for _,p in ipairs(Player.get()) do
         if not smasBooleans.isOnMainMenu then
-            if p.forcedState == 0 then
-                return false
-            else
+            if p.forcedState ~= 0 then
                 return true
             end
         elseif smasBooleans.isOnMainMenu then
-            if p.forcedState == 0 or p.forcedState == 8 then
-                return false
-            else
+            if p.forcedState ~= 0 or p.forcedState ~= 8 then
                 return true
             end
         end
     end
+    return false
 end
 
 function Playur.getWalkAnimationSpeed(p)

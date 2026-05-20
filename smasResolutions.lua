@@ -81,10 +81,7 @@ function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
 end
 
 function smasResolutions.onStart()
-    local width,height = Graphics.getMainFramebufferSize()
-    if camera.width ~= width and camera.height ~= height then
-        smasResolutions.changeResolution(false, false)
-    end
+    smasResolutions.changeResolution(false, false)
 end
 
 function smasResolutions.onDraw()

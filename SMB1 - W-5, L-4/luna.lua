@@ -7,19 +7,3 @@ function onEvent(eventName)
         Sound.changeMusic("_OST/Super Mario Bros/Album.spc|0;g=2.5", 1)
     end
 end
-
-function onLoadSection0()
-    smasNoTurnBack.overrideSection = true
-end
-
-function onLoadSection1()
-    smasNoTurnBack.overrideSection = false
-end
-
-function onLoadSection2()
-    smasNoTurnBack.overrideSection = false
-end
-
-function onLoadSection3()
-    smasNoTurnBack.overrideSection = true
-end

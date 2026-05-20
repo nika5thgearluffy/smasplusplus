@@ -3,7 +3,7 @@ TL:"Super Mario Bros. 1\: World 1-4";XTRA:"{\n    \"timer\"\: {\n        \"enabl
 HEAD_END
 SECTION
 SC:0;L:-200000;R:-193920;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Castle.ogg";BG:41;
-SC:1;L:-180928;R:-178560;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Album.spc|0\;g=2.5";BG:10;
+SC:1;L:-180928;R:-178560;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Album.spc|0\;g=2.5";BG:10;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SC:2;L:-160000;R:-159200;T:-160600;B:-160000;MZ:44;MF:"";BG:54;
 SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:0;MF:"";BG:0;
 SC:4;L:-120000;R:-119200;T:-120600;B:-120000;MZ:0;MF:"";BG:0;
@@ -2791,7 +2791,7 @@ ID:770;X:-197120;Y:-200352;D:-1;LR:"SMB1 Hard Mode";XTRA:"{\n    \"speed\"\: 3\n
 ID:770;X:-196704;Y:-200192;D:-1;LR:"SMB1 Hard Mode";XTRA:"{\n    \"speed\"\: 3\n}\n";
 ID:589;X:-199102;Y:-200096;D:-1;LR:"SMB1 Hard Mode";
 ID:589;X:-198910;Y:-200096;D:-1;LR:"SMB1 Hard Mode";
-ID:947;X:-195072;Y:-200232;D:-1;EA:"Boss Start";ED:"Boss End";XTRA:"{\n    \"global\"\: {\n        \"spawningBehaviour\"\: 0\n    }\n}\n";
+ID:727;X:-195072;Y:-200232;D:-1;EA:"Boss Start";ED:"Boss End";XTRA:"{\n    \"global\"\: {\n        \"spawningBehaviour\"\: 0\n    }\n}\n";
 ID:178;X:-194816;Y:-200224;D:-1;LR:"Axe";ED:"Axe";
 NPC_END
 PHYSICS

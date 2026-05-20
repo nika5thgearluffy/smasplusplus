@@ -162,7 +162,7 @@ function smasSMB1System.onTick()
                     end
                     if Collisionz.CheckCollisionNoEntity(smasSMB1System.correctPathCoordinates[Level.filename()].wrongPath[i].x, smasSMB1System.correctPathCoordinates[Level.filename()].wrongPath[i].y, 32, smasSMB1System.correctPathCoordinates[Level.filename()].wrongPath[i].sizeY, p.x, p.y, p.width, p.height) then
                         Sound.playSFX(152)
-                        smasNoTurnBack.reviveOriginalBoundaries()
+                        smasNoTurnBack.resetPos(p.section)
                         p:teleport(smasSMB1System.correctPathCoordinates[Level.filename()].wrongPath[i].playerX, smasSMB1System.correctPathCoordinates[Level.filename()].wrongPath[i].playerY, true)
                     end
                 end

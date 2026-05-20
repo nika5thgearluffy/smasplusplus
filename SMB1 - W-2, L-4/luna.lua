@@ -24,15 +24,3 @@ function onEvent(eventName)
         end
     end
 end
-
-function onLoadSection0()
-    smasNoTurnBack.overrideSection = true
-end
-
-function onLoadSection1()
-    smasNoTurnBack.overrideSection = false
-end
-
-function onLoadSection2()
-    smasNoTurnBack.overrideSection = true
-end

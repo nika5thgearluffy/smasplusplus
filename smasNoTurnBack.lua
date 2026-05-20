@@ -1,177 +1,135 @@
---smasNoTurnBack.lua (v1.2)
---By "The Sun God: Nika"
---This script provides a remake of the noTurnBack option, but with additional things like going left but not turning back right, and other things!
+--[[
+	smasNoTurnBack.lua
 
-local smasNoTurnBack = {}
+	- allows you to go back using a warp pipe or a clear pipe
+	- allows to set movement direction in both the axes
+]]
 
-local autoscroll = require("autoscroll")
+local noTurnBack = {}
 
-smasNoTurnBack.enabled = false --Enable this to activate everything here
-smasNoTurnBack.overrideSection = false --Set to true to prevent the turn back on a certain area, useful for onLoadSection(number)
-smasNoTurnBack.turnBack = "left" --Set to 'right' for a no right turn back, or 'up' for a no top turn back, or even 'down' for a no bottom turn back. Anything else accidentally set will be automatically set to 'left'.
+noTurnBack.allowClearPipes = true
 
-function smasNoTurnBack.setSectionBounds(section, left, top, bottom, right)
-    local sectionObj = Section(section)
-    local bounds = sectionObj.boundary
-    bounds.left = left
-    bounds.top = top
-    bounds.bottom = bottom
-    bounds.right = right
-    sectionObj.boundary = bounds
-end
+local p = player
+local cameraPos = {}
 
-function smasNoTurnBack.onInitAPI()
-    registerEvent(smasNoTurnBack,"onStart")
-    registerEvent(smasNoTurnBack,"onCameraDraw")
-    registerEvent(smasNoTurnBack,"onCameraUpdate")
-    registerEvent(smasNoTurnBack,"onDraw")
-    registerEvent(smasNoTurnBack,"onTick")
-end
-
-smasNoTurnBack.originalBoundariesTop = {}
-smasNoTurnBack.originalBoundariesBottom = {}
-smasNoTurnBack.originalBoundariesLeft = {}
-smasNoTurnBack.originalBoundariesRight = {}
-
-smasNoTurnBack.failsafeTable = {
-    "left",
-    "right",
-    "up",
-    "down",
+local directionMap = {
+	[0] =  0, -- None
+	[1] =  1, -- Can Go Right/Down
+	[2] = -1, -- Can Go Left/Up
 }
 
-function smasNoTurnBack.onStart()
-    for i = 0,20 do
-        table.insert(smasNoTurnBack.originalBoundariesTop, Section(i).origBoundary.top)
-        table.insert(smasNoTurnBack.originalBoundariesBottom, Section(i).origBoundary.bottom)
-        table.insert(smasNoTurnBack.originalBoundariesLeft, Section(i).origBoundary.left)
-        table.insert(smasNoTurnBack.originalBoundariesRight, Section(i).origBoundary.right)
-    end
-end
-
-function smasNoTurnBack.onCameraUpdate()
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        for k,v in ipairs(Section.getActiveIndices()) do
-            if not autoscroll.isSectionScrolling(v) then
-                if smasNoTurnBack.enabled and not smasNoTurnBack.overrideSection then
-                    for itwo = 1,4 do
-                        if smasNoTurnBack.turnBack ~= smasNoTurnBack.failsafeTable[itwo] then --Failsafe if the turnBack argument is anything else but the things in this script
-                            smasNoTurnBack.turnBack = "left"
-                        end
-                    end
-                    if smasNoTurnBack.turnBack == "left" then
-                        local fullX = camera.x
-                        if camera.x >= player.sectionObj.boundary.left then
-                            local x1 = fullX
-                            smasNoTurnBack.setSectionBounds(player.section, x1, player.sectionObj.boundary.top, player.sectionObj.boundary.bottom, player.sectionObj.boundary.right)
-                        end
-                    elseif smasNoTurnBack.turnBack == "right" then
-                        local fullX = camera.x
-                        if camera.x <= player.sectionObj.boundary.right then
-                            local x1 = fullX + 800
-                            smasNoTurnBack.setSectionBounds(player.section, player.sectionObj.boundary.left, player.sectionObj.boundary.top, player.sectionObj.boundary.bottom, x1)
-                        end
-                    elseif smasNoTurnBack.turnBack == "up" then
-                        local fullY = camera.y
-                        if camera.y >= player.sectionObj.boundary.top then
-                            local x1 = fullY
-                            smasNoTurnBack.setSectionBounds(player.section, player.sectionObj.boundary.left, x1, player.sectionObj.boundary.bottom, player.sectionObj.boundary.right)
-                        end
-                    elseif smasNoTurnBack.turnBack == "down" then
-                        local fullY = camera.y
-                        if camera.y <= player.sectionObj.boundary.bottom then
-                            local x1 = fullY + 600
-                            smasNoTurnBack.setSectionBounds(player.section, player.sectionObj.boundary.left, player.sectionObj.boundary.top, x1, player.sectionObj.boundary.right)
-                        end
-                    end
-                end
-            else
-                smasNoTurnBack.enabled = false
-                smasNoTurnBack.overrideSection = true
-            end
-        end
-    end
-end
-
-local levelTablesWithNoTurnbacks = {
-    "levelsGoHere.lvlx",
-    "youCanPutAnything.lvlx",
-    "inThisTable.lvlx",
-    "thatCanHaveANoTurnBack.lvlx",
+local functionMap = {
+	[1]  = math.max,
+	[-1] = math.min,
 }
 
-function smasNoTurnBack.onTick() --If you want a certain level or more, make a table with level filenames on it. A sample table is included above.
-    --This is a sample table used for applying no-turn-backs on levels.
-    --if table.icontains(levelTablesWithNoTurnbacks,Level.filename()) and not smasNoTurnBack.overrideSection then
-        --smasNoTurnBack.enabled = true
-    --end
-    
-    
-    --These here are episode specific.
-    if table.icontains(smasTables.__smb1Levels,Level.filename()) and not smasNoTurnBack.overrideSection then
-        smasNoTurnBack.enabled = true
-    end
-    if table.icontains(smasTables.__smbllLevels,Level.filename()) and not smasNoTurnBack.overrideSection then
-        smasNoTurnBack.enabled = true
-    end
-    if table.icontains(smasTables.__smbspecialLevels,Level.filename()) and not smasNoTurnBack.overrideSection then
-        smasNoTurnBack.enabled = true
-    end
-    
-    
-    
-    if smasNoTurnBack.overrideSection then
-        smasNoTurnBack.enabled = false
-    end
+local axisSpecific = {
+	horizontal = {
+		axis = "x",
+		size = "width",
+		[1]  = "left",
+		[-1] = "right",
+	},
+
+	vertical = {
+		axis = "y",
+		size = "height",
+		[1]  = "top",
+		[-1] = "bottom",
+	},
+}
+
+local function getSectionTurnBack(secIdx)
+	local newTurnBack = Section(secIdx).settings.newTurnBack or {}
+
+	return directionMap[newTurnBack.horizontal or 0], directionMap[newTurnBack.vertical or 0]
 end
 
-function smasNoTurnBack.sectionsWithNoPlayers()
-    local nonPlayeredSections = {}
-    local playeredSections = Section.getActiveIndices()
-    for i = 0,20 do
-        if playeredSections[i] ~= i then
-            table.insert(nonPlayeredSections, i)
-        end
-    end
-    return nonPlayeredSections
+local function getCamPosFromPlayer()
+	local x = p.x + p.width/2 - camera.width/2
+	local y = p.y + p.height/2 - camera.height/2
+	local boundary = p.sectionObj.boundary
+
+	x = math.clamp(x, boundary.left, boundary.right - camera.width)
+	y = math.clamp(y, boundary.top, boundary.bottom - camera.bottom)
+
+	return x, y
 end
 
-function smasNoTurnBack.reviveOriginalBoundaries()
-    for k,v in ipairs(smasNoTurnBack.sectionsWithNoPlayers()) do
-        if not autoscroll.isSectionScrolling(v) then
-            if smasNoTurnBack.enabled and not smasNoTurnBack.overrideSection then
-                for _,p in ipairs(Player.get()) do
-                    local sectionObj = Section(v)
-                    local bounds = sectionObj.boundary
-                    bounds.left = smasNoTurnBack.originalBoundariesLeft[v + 1]
-                    bounds.top = smasNoTurnBack.originalBoundariesTop[v + 1]
-                    bounds.bottom = smasNoTurnBack.originalBoundariesBottom[v + 1]
-                    bounds.right = smasNoTurnBack.originalBoundariesRight[v + 1]
-                    sectionObj.boundary = bounds
-                end
-            end
-        end
-    end
+local function camLogic(dir, axisName)
+	local axisData = axisSpecific[axisName]
+	local func = functionMap[dir]
+	local boundary = p.sectionObj.boundary
+	local axis = axisData.axis
+
+	cameraPos[p.section][axis] = func(cameraPos[p.section][axis], camera[axis])
+	camera[axis] = cameraPos[p.section][axis]
+
+	boundary[axisData[dir]] = camera[axis]
+
+	if dir == -1 then
+		boundary[axisData[dir]] = boundary[axisData[dir]] + camera[axisData.size]
+	end
+
+	p.sectionObj.boundary = boundary
 end
 
-function smasNoTurnBack.onDraw()
-    for k,v in ipairs(smasNoTurnBack.sectionsWithNoPlayers()) do
-        if not autoscroll.isSectionScrolling(v) then
-            if smasNoTurnBack.enabled and not smasNoTurnBack.overrideSection then
-                for _,p in ipairs(Player.get()) do
-                    if p.sectionObj.idx ~= v then
-                        local sectionObj = Section(v)
-                        local bounds = sectionObj.boundary
-                        bounds.left = smasNoTurnBack.originalBoundariesLeft[v + 1]
-                        bounds.top = smasNoTurnBack.originalBoundariesTop[v + 1]
-                        bounds.bottom = smasNoTurnBack.originalBoundariesBottom[v + 1]
-                        bounds.right = smasNoTurnBack.originalBoundariesRight[v + 1]
-                        sectionObj.boundary = bounds
-                    end
-                end
-            end
-        end
-    end
+function noTurnBack.override(secIdx, value)
+	cameraPos[secIdx] = value
 end
 
-return smasNoTurnBack
+function noTurnBack.resetPos(secIdx)
+	local section = Section(secIdx)
+	local boundary = section.boundary
+	local origBoundary = section.origBoundary
+
+	for k, axis in ipairs{"horizontal", "vertical"} do
+		local axisData = axisSpecific[axis]
+
+		boundary[axisData[1]]  = origBoundary[axisData[1]]
+		boundary[axisData[-1]] = origBoundary[axisData[-1]]
+	end
+
+	section.boundary = boundary
+	cameraPos[p.section] = nil
+end
+
+function noTurnBack.onInitAPI()
+	registerEvent(noTurnBack, "onSectionChange")
+	registerEvent(noTurnBack, "onWarp")
+	registerEvent(noTurnBack, "onCameraUpdate")
+end
+
+function noTurnBack.onSectionChange(secIdx, pIdx)
+	noTurnBack.resetPos(secIdx)
+end
+
+function noTurnBack.onWarp(w, plyr)
+	noTurnBack.resetPos(p.section)
+end
+
+function noTurnBack.onCameraUpdate(camIdx)
+	if noTurnBack.allowClearPipes and p.inClearPipe then
+		if cameraPos[p.section] ~= nil then
+			noTurnBack.resetPos(p.section)
+		end
+
+		return
+	end
+
+	if cameraPos[p.section] == nil then
+		cameraPos[p.section] = vector(camera.x, camera.y)
+	end
+
+	local dirX, dirY = getSectionTurnBack(p.section)
+
+	if dirX ~= 0 then
+		camLogic(dirX, "horizontal")
+	end
+
+	if dirY ~= 0 then
+		camLogic(dirY, "vertical")
+	end
+end
+
+return noTurnBack
