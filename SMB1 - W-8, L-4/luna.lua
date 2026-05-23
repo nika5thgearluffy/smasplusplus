@@ -32,10 +32,8 @@ function onEvent(eventName)
         Sound.playSFX(138)
     end
     if eventName == ("Pigeon Cutscene") then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
-                smasBooleans.toggleOffInventory = true
-            end
+        if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
+            smasBooleans.toggleOffInventory = true
         end
         pauseplus.canPause = false
     end
@@ -43,10 +41,8 @@ function onEvent(eventName)
         Sound.playSFX("pigeon_attack.ogg")
     end
     if eventName == ("Pigeon Cutscene 5") then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
-                smasBooleans.toggleOffInventory = false
-            end
+        if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
+            smasBooleans.toggleOffInventory = false
         end
         pauseplus.canPause = true
         for k,p in ipairs(Player.get()) do
@@ -56,10 +52,8 @@ function onEvent(eventName)
     end
     if eventName == ("Pigeon Cutscene Sequel 0") then
         Sound.playSFX("is-the-pool-clean.ogg")
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
-                smasBooleans.toggleOffInventory = true
-            end
+        if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
+            smasBooleans.toggleOffInventory = true
         end
         pauseplus.canPause = false
         Timer.deactivate()
@@ -68,10 +62,8 @@ function onEvent(eventName)
         Sound.playSFX("pigeon_attack.ogg")
     end
     if eventName == ("Pigeon Cutscene Sequel 3") then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
-                smasBooleans.toggleOffInventory = false
-            end
+        if SaveData.SMASPlusPlus.accessibility.enableAdditionalInventory then
+            smasBooleans.toggleOffInventory = false
         end
         pauseplus.canPause = true
     end

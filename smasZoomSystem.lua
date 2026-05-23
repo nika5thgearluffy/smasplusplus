@@ -11,11 +11,9 @@ function smasZoomSystem.onInitAPI()
 end
 
 function smasZoomSystem.onDraw()
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if (smasBooleans.isInLevel and not table.icontains(smasTables.__smbspencerLevels,Level.filename()) and not table.icontains(smasTables.__wsmbaLevels,Level.filename())) and lunatime.tick() == 1 then
-            smasZoomSystem.isOnClassicLevel = true
-            --handycam[1].zoom = 1.5625 --SNES resolution
-        end
+    if (smasBooleans.isInLevel and not table.icontains(smasTables.__smbspencerLevels,Level.filename()) and not table.icontains(smasTables.__wsmbaLevels,Level.filename())) and lunatime.tick() == 1 then
+        smasZoomSystem.isOnClassicLevel = true
+        --handycam[1].zoom = 1.5625 --SNES resolution
     end
 end
 

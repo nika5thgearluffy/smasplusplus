@@ -6,23 +6,6 @@
 ----Edited for SMAS++ by "The Sun God: Nika"-----
 local smasHud = {}
 
-if SaveData.SMASPlusPlus == nil then
-    SaveData.SMASPlusPlus = {}
-end
-SaveData.SMASPlusPlus.options = SaveData.SMASPlusPlus.options or {}
-SaveData.SMASPlusPlus.accessibility = SaveData.SMASPlusPlus.accessibility or {}
-SaveData.SMASPlusPlus.hud = SaveData.SMASPlusPlus.hud or {}
-SaveData.SMASPlusPlus.keys = SaveData.SMASPlusPlus.keys or {}
-SaveData.SMASPlusPlus.audio = SaveData.SMASPlusPlus.audio or {}
-SaveData.SMASPlusPlus.game = SaveData.SMASPlusPlus.game or {}
-SaveData.SMASPlusPlus.player = SaveData.SMASPlusPlus.player or {}
-SaveData.SMASPlusPlus.misc = SaveData.SMASPlusPlus.misc or {}
-
---**1.3 Mode default setting**
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == nil then --This will make sure 1.3 Mode isn't enabled on first boot, which will also prevent errors
-    SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-end
-
 local pm
 local starcoin
 local timer
@@ -139,15 +122,7 @@ if SaveData.SMASPlusPlus.accessibility.enableLives then
 else
     smasHud.visible.lives = false
 end
-if SaveData.SMASPlusPlus ~= nil then
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        smasHud.visible.deathCount = true
-    else
-        smasHud.visible.deathCount = false
-    end
-else
-    smasHud.visible.deathCount = false
-end
+smasHud.visible.deathCount = true
 smasHud.visible.stars = true
 smasHud.visible.starcoins = true
 smasHud.visible.timer = true
@@ -166,74 +141,26 @@ smasHud.ALIGN_MID = 0.5
 smasHud.offsets = {}
 
 --TODO: Replace this with object-level offsets with named fields and alignments
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    smasHud.offsets.keys =         {x = 64,     y = 26, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.itembox =     {x = 0,     y = 16, item = {x = 28, y = 28, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.hearts =     {x = 5,     y = 16, align = smasHud.ALIGN_MID};
-    smasHud.offsets.score =     {x = 170,     y = 47, align = smasHud.ALIGN_RIGHT};
+smasHud.offsets.keys =         {x = -268,     y = 26, align = smasHud.ALIGN_LEFT};
+smasHud.offsets.itembox =     {x = 0,     y = 16, item = {x = 28, y = 28, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_MID};
+smasHud.offsets.hearts =     {x = 5,     y = 16, align = smasHud.ALIGN_MID};
+smasHud.offsets.score =     {x = 370,     y = 27, align = smasHud.ALIGN_RIGHT};
 
-    smasHud.offsets.bombs =     {x = 0,     y = 52, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.coins =     {x = 88,     y = 26, cross = {x = 24, y = 1}, value = {x = 82, y = 1, align = smasHud.ALIGN_RIGHT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.lives =     {x = -166,     y = 26, cross = {x = 40, y = 1}, value = {x = 62, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.deathcount = {x = -56, y = 26, cross = {x = 40, y = 1}, value = {x = 62, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.stars =     {x = -150,     y = 46, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.starcoins = {x = -384, y = 27, cross = {x = 24, y = 0},    value = {x = 45, y = 0, align = smasHud.ALIGN_LEFT}, grid = {x = 0, y = 40, width = 5, height = 3, offset = 0, table = {}, align = smasHud.ALIGN_LEFT},    align = smasHud.ALIGN_LEFT}
-    smasHud.offsets.timer = {x = 264, y = 25, cross = {x = 24, y = 2},    value = {x = 106, y = 2, align = smasHud.ALIGN_RIGHT}, align = smasHud.ALIGN_LEFT}
+smasHud.offsets.bombs =     {x = 0,     y = 52, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_MID};
+smasHud.offsets.coins =     {x = -368,     y = 26, cross = {x = 24, y = 1}, value = {x = 46, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
+smasHud.offsets.lives =     {x = -160,     y = 40, cross = {x = 42, y = 1}, value = {x = 88, y = 1, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_MID};
+smasHud.offsets.deathcount = {x = 102, y = 40, cross = {x = 25, y = 1}, value = {x = 78, y = 1, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_LEFT};
+smasHud.offsets.stars =     {x = -368,     y = 48, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
+smasHud.offsets.starcoins = {x = -384, y = 27, cross = {x = 24, y = 0},    value = {x = 45, y = 0, align = smasHud.ALIGN_LEFT}, grid = {x = 0, y = 40, width = 5, height = 3, offset = 0, table = {}, align = smasHud.ALIGN_LEFT},    align = smasHud.ALIGN_LEFT}
+smasHud.offsets.timer = {x = 264, y = 47, cross = {x = 24, y = 2},    value = {x = 106, y = 2, align = smasHud.ALIGN_RIGHT}, align = smasHud.ALIGN_LEFT}
 
-    smasHud.overworld = {offsets = {}};
-    smasHud.overworld.offsets.lives =         {x = -272,     y = 110, cross = {x = 40, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 62, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.coins =         {x = -256,     y = 88, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.stars =         {x = -256,     y = 66, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.levelname =     {x = -156,     y = 109, p2Offset = {x = 48, y = 0}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.player =        {x = -308, y = 124}
-    smasHud.overworld.offsets.player2 =        {x = -308+48, y = 124}
-end
-
-if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    smasHud.offsets.keys =         {x = -268,     y = 26, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.itembox =     {x = 0,     y = 16, item = {x = 28, y = 28, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.hearts =     {x = 5,     y = 16, align = smasHud.ALIGN_MID};
-    smasHud.offsets.score =     {x = 370,     y = 27, align = smasHud.ALIGN_RIGHT};
-
-    smasHud.offsets.bombs =     {x = 0,     y = 52, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.coins =     {x = -368,     y = 26, cross = {x = 24, y = 1}, value = {x = 46, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.lives =     {x = -160,     y = 40, cross = {x = 42, y = 1}, value = {x = 88, y = 1, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.deathcount = {x = 102, y = 40, cross = {x = 25, y = 1}, value = {x = 78, y = 1, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.stars =     {x = -368,     y = 48, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.starcoins = {x = -384, y = 27, cross = {x = 24, y = 0},    value = {x = 45, y = 0, align = smasHud.ALIGN_LEFT}, grid = {x = 0, y = 40, width = 5, height = 3, offset = 0, table = {}, align = smasHud.ALIGN_LEFT},    align = smasHud.ALIGN_LEFT}
-    smasHud.offsets.timer = {x = 264, y = 47, cross = {x = 24, y = 2},    value = {x = 106, y = 2, align = smasHud.ALIGN_RIGHT}, align = smasHud.ALIGN_LEFT}
-
-    smasHud.overworld = {offsets = {}};
-    smasHud.overworld.offsets.lives =         {x = -272,     y = 110, cross = {x = 40, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 62, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.coins =         {x = -256,     y = 88, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.stars =         {x = -256,     y = 66, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.levelname =     {x = -156,     y = 109, p2Offset = {x = 48, y = 0}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.player =        {x = -308, y = 124}
-    smasHud.overworld.offsets.player2 =        {x = -308+48, y = 124}
-end
-
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == nil then
-    smasHud.offsets.keys =         {x = -268,     y = 26, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.itembox =     {x = 0,     y = 16, item = {x = 28, y = 28, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.hearts =     {x = 5,     y = 16, align = smasHud.ALIGN_MID};
-    smasHud.offsets.score =     {x = 370,     y = 27, align = smasHud.ALIGN_RIGHT};
-
-    smasHud.offsets.bombs =     {x = 0,     y = 52, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_MID};
-    smasHud.offsets.coins =     {x = -368,     y = 26, cross = {x = 24, y = 1}, value = {x = 46, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.lives =     {x = -102,     y = 40, cross = {x = 42, y = 1}, value = {x = 88, y = 1, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_RIGHT};
-    smasHud.offsets.deathcount = {x = 102, y = 40, cross = {x = 25, y = 1}, value = {x = 78, y = 1, align = smasHud.ALIGN_MID}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.stars =     {x = -368,     y = 48, cross = {x = 24, y = 1}, value = {x = 45, y = 1, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.offsets.starcoins = {x = -384, y = 27, cross = {x = 24, y = 0},    value = {x = 45, y = 0, align = smasHud.ALIGN_LEFT}, grid = {x = 0, y = 40, width = 5, height = 3, offset = 0, table = {}, align = smasHud.ALIGN_LEFT},    align = smasHud.ALIGN_LEFT}
-    smasHud.offsets.timer = {x = 264, y = 47, cross = {x = 24, y = 2},    value = {x = 106, y = 2, align = smasHud.ALIGN_RIGHT}, align = smasHud.ALIGN_LEFT}
-
-    smasHud.overworld = {offsets = {}};
-    smasHud.overworld.offsets.lives =         {x = -272,     y = 110, cross = {x = 40, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 62, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.coins =         {x = -256,     y = 88, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.stars =         {x = -256,     y = 66, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.levelname =     {x = -156,     y = 109, p2Offset = {x = 48, y = 0}, align = smasHud.ALIGN_LEFT};
-    smasHud.overworld.offsets.player =        {x = -308, y = 124}
-    smasHud.overworld.offsets.player2 =        {x = -308+48, y = 124}
-end
+smasHud.overworld = {offsets = {}};
+smasHud.overworld.offsets.lives =         {x = -272,     y = 110, cross = {x = 40, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 62, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
+smasHud.overworld.offsets.coins =         {x = -256,     y = 88, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
+smasHud.overworld.offsets.stars =         {x = -256,     y = 66, cross = {x = 24, y = 2}, p2Offset = {x = 48, y = 0}, value = {x = 46, y = 2, align = smasHud.ALIGN_LEFT}, align = smasHud.ALIGN_LEFT};
+smasHud.overworld.offsets.levelname =     {x = -156,     y = 109, p2Offset = {x = 48, y = 0}, align = smasHud.ALIGN_LEFT};
+smasHud.overworld.offsets.player =        {x = -308, y = 124}
+smasHud.overworld.offsets.player2 =        {x = -308+48, y = 124}
 
 Graphics.HUD_NONE = 0;
 Graphics.HUD_HEARTS = 1;
@@ -617,18 +544,10 @@ function smasHud.lifeCrownCounter()
 end
 
 function smasHud.drawLives(splitOffset, thisCam, thisPlayer, priority)
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if SaveData.SMASPlusPlus.hud.lives <= 999 then
-            drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.lives, GetSprite("lives", thisPlayer.character), SaveData.SMASPlusPlus.hud.lives, priority);
-        elseif SaveData.SMASPlusPlus.hud.lives >= 1000 then
-            drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.lives, GetSprite("lives", thisPlayer.character), SysManager.lifeCountWithCrownsAndZeroFailsafe(), priority);
-        end
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if SaveData.SMASPlusPlus.hud.lives <= 999 then
-            drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.lives, GetSprite("livesClassic", thisPlayer.character), SaveData.SMASPlusPlus.hud.lives, priority);
-        elseif SaveData.SMASPlusPlus.hud.lives >= 1000 then
-            drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.lives, GetSprite("livesClassic", thisPlayer.character), SysManager.lifeCountWithCrownsAndZeroFailsafe(), priority);
-        end
+    if SaveData.SMASPlusPlus.hud.lives <= 999 then
+        drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.lives, GetSprite("lives", thisPlayer.character), SaveData.SMASPlusPlus.hud.lives, priority);
+    elseif SaveData.SMASPlusPlus.hud.lives >= 1000 then
+        drawCounter(splitOffset, thisCam, thisPlayer, smasHud.offsets.lives, GetSprite("lives", thisPlayer.character), SysManager.lifeCountWithCrownsAndZeroFailsafe(), priority);
     end
 end
 
@@ -767,13 +686,8 @@ function smasHud.drawItembox(splitOffset, thisCam, playerIdx, thisPlayer, isMult
 end
 
 function smasHud.drawScore(splitOffset, thisCam, priority)
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        local scoreDisplay13 = tostring(SysManager.scoreCount13())
-        Text.printWP(scoreDisplay13, 1, 0.5 * thisCam.width + smasHud.offsets.score.x + splitOffset - #scoreDisplay13 * 18 * smasHud.offsets.score.align, smasHud.offsets.score.y, priority)
-    elseif not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        local scoreDisplay = tostring(SysManager.scoreCountWithZeroes())
-        Text.printWP(scoreDisplay, 1, 0.5 * thisCam.width + smasHud.offsets.score.x + splitOffset - #scoreDisplay * 18 * smasHud.offsets.score.align, smasHud.offsets.score.y, priority)
-    end
+    local scoreDisplay = tostring(SysManager.scoreCountWithZeroes())
+    Text.printWP(scoreDisplay, 1, 0.5 * thisCam.width + smasHud.offsets.score.x + splitOffset - #scoreDisplay * 18 * smasHud.offsets.score.align, smasHud.offsets.score.y, priority)
 end
 
 function smasHud.drawCoins(splitOffset, thisCam, thisPlayer, priority)

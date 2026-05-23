@@ -27,11 +27,4 @@ function onEvent(eventName)
             Sound.playSFX("startsmasboot-executed.ogg")
         end
     end
-    if eventName == "Boss Start" then
-        if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            for _,p in ipairs(Player.get()) do
-                p:teleport(-139904, -140108)
-            end
-        end
-    end
 end

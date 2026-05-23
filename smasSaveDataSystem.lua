@@ -75,11 +75,6 @@ if SaveData.SMASPlusPlus.misc.totalCheatsExecuted == nil then --A tally number o
     SaveData.SMASPlusPlus.misc.totalCheatsExecuted = 0
 end
 
---**1.3 Mode default setting**
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == nil then --This will make sure 1.3 Mode isn't enabled on first boot, which will also prevent errors
-    SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-end
-
 
 
 --**This is for the upgrade save thing**
@@ -245,7 +240,6 @@ if SaveData.totalCheatCount ~= nil then
     SaveData.totalCheatCount = nil
 end
 if SaveData.disableX2char ~= nil then
-    SaveData.SMASPlusPlus.game.onePointThreeModeActivated = SaveData.disableX2char
     SaveData.disableX2char = nil
 end
 if SaveData.resolution ~= nil then
@@ -367,6 +361,9 @@ end
 -- Deprecate SaveData variables below
 if SaveData.SMASPlusPlus.game.openingComplete ~= nil then
     SaveData.SMASPlusPlus.game.openingComplete = nil
+end
+if SaveData.SMASPlusPlus.game.onePointThreeModeActivated ~= nil then
+    SaveData.SMASPlusPlus.game.onePointThreeModeActivated = nil
 end
 
 

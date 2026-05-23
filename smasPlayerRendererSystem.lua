@@ -291,25 +291,23 @@ function smasPlayerRendererSystem.getAnimation()
 end
 
 function smasPlayerRendererSystem.onDraw()
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        smasPlayerRendererSystem.playerInfo.animationFramed = math.floor((lunatime.tick() / smasPlayerRendererSystem.playerInfo.frameSpeed) % #smasPlayerRendererSystem.getAnimation() + 1)
-        
-        
-            --[[Graphics.drawBox{
-                texture             = smasPlayerRendererSystem.currentCharacterImages[player.idx][player.powerup],
-                sceneCoords         = true,
-                x                   = player.x - smasPlayerRendererSystem.convertPlayerFrameX(smasPlayerRendererSystem.getAnimation()[smasPlayerRendererSystem.animateFramed], 1),
-                y                   = player.y + smasPlayerRendererSystem.convertPlayerFrameY(smasPlayerRendererSystem.getAnimation()[smasPlayerRendererSystem.animateFramed], 1),
-                width               = smasPlayerRendererSystem.frameBoxMax,
-                height              = smasPlayerRendererSystem.frameBoxMax,
-                sourceX             = smasPlayerRendererSystem.playerSourceX,
-                sourceY             = smasPlayerRendererSystem.playerSourceY,
-                sourceWidth         = smasPlayerRendererSystem.frameBoxMax,
-                sourceHeight        = smasPlayerRendererSystem.frameBoxMax,
-                centered            = false,
-                priority            = smasPlayerRendererSystem.getPlayerPriority(),
-            }]]
-    end
+    smasPlayerRendererSystem.playerInfo.animationFramed = math.floor((lunatime.tick() / smasPlayerRendererSystem.playerInfo.frameSpeed) % #smasPlayerRendererSystem.getAnimation() + 1)
+    
+    
+    --[[Graphics.drawBox{
+        texture             = smasPlayerRendererSystem.currentCharacterImages[player.idx][player.powerup],
+        sceneCoords         = true,
+        x                   = player.x - smasPlayerRendererSystem.convertPlayerFrameX(smasPlayerRendererSystem.getAnimation()[smasPlayerRendererSystem.animateFramed], 1),
+        y                   = player.y + smasPlayerRendererSystem.convertPlayerFrameY(smasPlayerRendererSystem.getAnimation()[smasPlayerRendererSystem.animateFramed], 1),
+        width               = smasPlayerRendererSystem.frameBoxMax,
+        height              = smasPlayerRendererSystem.frameBoxMax,
+        sourceX             = smasPlayerRendererSystem.playerSourceX,
+        sourceY             = smasPlayerRendererSystem.playerSourceY,
+        sourceWidth         = smasPlayerRendererSystem.frameBoxMax,
+        sourceHeight        = smasPlayerRendererSystem.frameBoxMax,
+        centered            = false,
+        priority            = smasPlayerRendererSystem.getPlayerPriority(),
+    }]]
 end
 
 return smasPlayerRendererSystem

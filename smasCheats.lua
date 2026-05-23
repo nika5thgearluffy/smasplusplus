@@ -483,236 +483,229 @@ Cheats.register("framerate",{ --This needs to be reregistered because it uses a 
     flashPlayer = true,activateSFX = nil,
 })
 
-if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-    Cheats.register("supermario2",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-                Defines.player_hasCheated = false
-                Playur.toggleSingleCoOp(true)
-                local rngbomb = rng.randomEntry({69,71})
-                Effect.spawn(rngbomb, player.x, player.y, player.section)
-            else
-                Sound.playSFX(152)
-            end
-            return true -- this makes the cheat not toggleable
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            Playur.toggleSingleCoOp(false)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
-    
-    Cheats.register("supermario4",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(4)
-            if Player.count() >= 2 then
-                for i = 1,4 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
-                end
-            end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
+Cheats.register("supermario2",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.toggleSingleCoOp(true)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        Playur.toggleSingleCoOp(false)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
 
-    Cheats.register("supermario8",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(8)
-            if Player.count() >= 2 then
-                for i = 1,8 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
+Cheats.register("supermario4",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(4)
+        if Player.count() >= 2 then
+            for i = 1,4 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
                 end
             end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
 
-    Cheats.register("supermario16",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(16)
-            if Player.count() >= 2 then
-                for i = 1,16 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
+Cheats.register("supermario8",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(8)
+        if Player.count() >= 2 then
+            for i = 1,8 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
                 end
             end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
 
-    Cheats.register("supermario32",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(32)
-            if Player.count() >= 2 then
-                for i = 1,32 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
+Cheats.register("supermario16",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(16)
+        if Player.count() >= 2 then
+            for i = 1,16 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
                 end
             end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
 
-    Cheats.register("supermario64",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(64)
-            if Player.count() >= 2 then
-                for i = 1,64 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
+Cheats.register("supermario32",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(32)
+        if Player.count() >= 2 then
+            for i = 1,32 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
                 end
             end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
 
-    Cheats.register("supermario128",{ --Remaking this, for no reason at all...
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(128)
-            if Player.count() >= 2 then
-                for i = 1,128 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
+Cheats.register("supermario64",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(64)
+        if Player.count() >= 2 then
+            for i = 1,64 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
                 end
             end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
 
-    --[[Cheats.register("supermario200",{ --New cheat to comply with the supermario fad lol (This would crash when a player above 128 touches a moving block, don't use)
-        onActivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(200)
-            if Player.count() >= 2 then
-                for i = 1,200 do
-                    Player(i).x = player.x - player.width * 0.5
-                    Player(i).y = player.y - 10
-                    Player(i).character = player.character
-                    Player(i).speedY = rng.randomInt() * 24 - 12
-                    player.speedX = 3
-                    if Player(i).powerup == 0 then
-                        Player(i).powerup = player.powerup
-                    end
+Cheats.register("supermario128",{ --Remaking this, for no reason at all...
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(128)
+        if Player.count() >= 2 then
+            for i = 1,128 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
                 end
             end
-            smasBooleans.introModeActivated = false
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        onDeactivate = (function()
-            Defines.player_hasCheated = false
-            Playur.setCount(1)
-            local rngbomb = rng.randomEntry({69,71})
-            Effect.spawn(rngbomb, player.x, player.y, player.section)
-        end),
-        flashPlayer = true,activateSFX = nil,
-    })]]
-end
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})
+
+--[[Cheats.register("supermario200",{ --New cheat to comply with the supermario fad lol (This would crash when a player above 128 touches a moving block, don't use)
+    onActivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(200)
+        if Player.count() >= 2 then
+            for i = 1,200 do
+                Player(i).x = player.x - player.width * 0.5
+                Player(i).y = player.y - 10
+                Player(i).character = player.character
+                Player(i).speedY = rng.randomInt() * 24 - 12
+                player.speedX = 3
+                if Player(i).powerup == 0 then
+                    Player(i).powerup = player.powerup
+                end
+            end
+        end
+        smasBooleans.introModeActivated = false
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    onDeactivate = (function()
+        Defines.player_hasCheated = false
+        Playur.setCount(1)
+        local rngbomb = rng.randomEntry({69,71})
+        Effect.spawn(rngbomb, player.x, player.y, player.section)
+    end),
+    flashPlayer = true,activateSFX = nil,
+})]]
 
 local iscoolstrings = {
     "redigitiscool",
-    "spencereverlyiscool",
+    "thesungodnikaiscool",
 }
 
 for i = 1,#iscoolstrings do

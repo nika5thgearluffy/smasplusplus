@@ -387,20 +387,6 @@ function themeMenu1() --Intro theme menu
     littleDialogue.create({text = transplate.getTranslation("0x0000000000000017"), speakerName = "Themes", pauses = false, updatesInPause = true})
 end
 
-function X2Char() --Game settings applied
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Sound.playSFX("1.3Mode/bowser-killed.ogg")
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = true
-        Sound.loadCostumeSounds()
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000031"), pauses = false, updatesInPause = true})
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        Sound.playSFX("x2-mode-enabled.ogg")
-        SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-        Sound.loadCostumeSounds()
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000031"), pauses = false, updatesInPause = true})
-    end
-end
-
 function InputConfig1() --Config inputs
     smasMainMenuSystem.menuOpen = false
     littleDialogue.create({text = transplate.getTranslation("0x0000000000000032"), pauses = false, updatesInPause = true})
@@ -483,30 +469,6 @@ function X2DisableCheck1()
     end
 end
 
-function TwoPlayerDisEnable1()
-    smasMainMenuSystem.menuOpen = false
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000037"), pauses = false, updatesInPause = true})
-    elseif not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        littleDialogue.create({text = transplate.getTranslation("0x0000000000000038"), pauses = false, updatesInPause = true})
-    end
-end
-
-function BattleModeDisEnable1()
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if Player.count() == 1 then
-            smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_NEED2NDPLAYER, 0, false)
-        elseif Player.count() >= 2 then
-            if Player.count() >= 3 then
-                Playur.activate2ndPlayer()
-            end
-            smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE2NDPLAYER, 0, false)
-        end
-    elseif not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_BATTLEMODE_HAVE13MODEON, 0, false)
-    end
-end
-
 function RushModeMenu1()
     smasMainMenuSystem.menuOpen = false
     if Player.count() == 1 then
@@ -547,26 +509,8 @@ end
 
 function ChangeChar1()
     smasMainMenuSystem.menuOpen = false
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        smasCharacterChanger.menuActive = true
-        smasCharacterChanger.animationActive = true
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if Player.count() == 2 then
-            littleDialogue.create({text = transplate.getTranslation("0x0000000000000048"), pauses = false, updatesInPause = true})
-        elseif Player.count() == 1 then
-            littleDialogue.create({text = transplate.getTranslation("0x0000000000000049"), pauses = false, updatesInPause = true})
-        end
-    end
-end
-
-function ChangeChar1P()
-    smasMainMenuSystem.menuOpen = false
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000049"), pauses = false, updatesInPause = true})
-end
-
-function ChangeChar2P()
-    smasMainMenuSystem.menuOpen = false
-    littleDialogue.create({text = transplate.getTranslation("0x0000000000000050"), pauses = false, updatesInPause = true})
+    smasCharacterChanger.menuActive = true
+    smasCharacterChanger.animationActive = true
 end
 
 function ChangedCharacter()
@@ -917,21 +861,7 @@ function smasMainMenu.onTick()
         end
         Graphics.activateHud(false)
         littleDialogue.defaultStyleName = "bootmenudialog" --Change the text box to the SMBX 1.3 menu textbox format
-        if SaveData.SMASPlusPlus.game.onePointThreeModeActivated == nil then
-            SaveData.SMASPlusPlus.game.onePointThreeModeActivated = false
-        end
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            smasHud.visible.lives = false
-        elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            smasHud.visible.lives = false
-            for _,p in ipairs(Player.get()) do
-                p.setCostume(1, nil)
-                p.setCostume(2, nil)
-                p.setCostume(3, nil)
-                p.setCostume(4, nil)
-                p.setCostume(5, nil)
-            end
-        end
+        smasHud.visible.lives = false
         if (not killed and player:mem(0x13E,FIELD_BOOL)) then
             killed = true
             SaveData.failsafeMessageOne = true
@@ -1536,11 +1466,6 @@ littleDialogue.registerAnswer("InputConfigStart",{text = "Begin",chosenFunction 
 
 
 
-littleDialogue.registerAnswer("X2CharacterDisableOne",{text = "No",chosenFunction = function() Routine.run(optionsMenu1) end})
-littleDialogue.registerAnswer("X2CharacterDisableOne",{text = "Yes", chosenFunction = function() Routine.run(X2Char) end})
-
-
-
 
 littleDialogue.registerAnswer("BattleTwoPlayerCheckOne",{text = "Yes",chosenFunction = function() Routine.run(TwoPlayerCheckBattle) end})
 littleDialogue.registerAnswer("BattleTwoPlayerCheckOne",{text = "No",chosenFunction = function() Routine.run(ExitClassicBattle) end})
@@ -1592,14 +1517,6 @@ littleDialogue.registerAnswer("OkayToMenuTheme",{text = "Oh yeah, right.",chosen
 
 
 littleDialogue.registerAnswer("ToMenuResetTwo",{text = "Gotcha.",chosenFunction = function() smasMainMenuSystem.exitDialogue(true) end})
-
-
-
-
-
-littleDialogue.registerAnswer("PlayerChoosingOne",{text = "Return to Previous Menu",chosenFunction = function() Routine.run(smasMainMenu.bootDialogue) end})
-littleDialogue.registerAnswer("PlayerChoosingOne",{text = "Player 1",chosenFunction = function() Routine.run(ChangeChar1P) end})
-littleDialogue.registerAnswer("PlayerChoosingOne",{text = "Player 2",chosenFunction = function() Routine.run(ChangeChar2P) end})
 
 
 

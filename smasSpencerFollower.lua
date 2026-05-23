@@ -111,55 +111,53 @@ smasSpencerFollower.spencerDistance = 35
 
 function smasSpencerFollower.onDraw()
     if table.icontains(smasTables.__smbspencerLevels,Level.filename()) and smasSpencerFollower.enabled then
-        if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-            if not (SaveData.SMASPlusPlus.player[1].currentCostume == "00-SPENCEREVERLY") then
-                animationTable = smasSpencerFollower.getAnimation()
-                smasSpencerFollower.animateFramed = math.floor((lunatime.tick() / smasSpencerFollower.frameSpeed) % #smasSpencerFollower.getAnimation()) + 1
-                
-                smasSpencerFollower.playerYActualWidth = (player.screen.bottom + camera.y) - smasSpencerFollower.dimensions.height
-                
-                smasSpencerFollower.playerXActualWidth = player.x + (player.width / 2) - smasSpencerFollower.spencerCoordinateX
-                
-                if not smasSpencerFollower.dontMovePlayerDetection() then
-                    if player.direction == 1 then
-                        if player.x - smasSpencerFollower.spencerCoordinateX > player.x - smasSpencerFollower.spencerDistance then
-                            smasSpencerFollower.spencerCoordinateX = smasSpencerFollower.spencerCoordinateX + 2
-                        end
-                    else
-                        if player.x - smasSpencerFollower.spencerCoordinateX < player.x + smasSpencerFollower.spencerDistance then
-                            smasSpencerFollower.spencerCoordinateX = smasSpencerFollower.spencerCoordinateX - 2
-                        end
+        if not (SaveData.SMASPlusPlus.player[1].currentCostume == "00-SPENCEREVERLY") then
+            animationTable = smasSpencerFollower.getAnimation()
+            smasSpencerFollower.animateFramed = math.floor((lunatime.tick() / smasSpencerFollower.frameSpeed) % #smasSpencerFollower.getAnimation()) + 1
+            
+            smasSpencerFollower.playerYActualWidth = (player.screen.bottom + camera.y) - smasSpencerFollower.dimensions.height
+            
+            smasSpencerFollower.playerXActualWidth = player.x + (player.width / 2) - smasSpencerFollower.spencerCoordinateX
+            
+            if not smasSpencerFollower.dontMovePlayerDetection() then
+                if player.direction == 1 then
+                    if player.x - smasSpencerFollower.spencerCoordinateX > player.x - smasSpencerFollower.spencerDistance then
+                        smasSpencerFollower.spencerCoordinateX = smasSpencerFollower.spencerCoordinateX + 2
+                    end
+                else
+                    if player.x - smasSpencerFollower.spencerCoordinateX < player.x + smasSpencerFollower.spencerDistance then
+                        smasSpencerFollower.spencerCoordinateX = smasSpencerFollower.spencerCoordinateX - 2
                     end
                 end
-                if player.forcedState == FORCEDSTATE_PIPE then
-                    local warp = Warp(player:mem(0x15E,FIELD_WORD) - 1)
-                    local direction
-                    if player.forcedTimer == 0 then
-                        direction = warp.entranceDirection
-                    else
-                        direction = warp.exitDirection
-                    end
-                    if direction == 1 or direction == 3 then
-                        smasSpencerFollower.spencerCoordinateX = 0
-                    end
-                end
-                
-                Graphics.drawBox{
-                    texture      = smasSpencerFollower.spencerSprites,
-                    sceneCoords  = true,
-                    x            = smasSpencerFollower.playerXActualWidth,
-                    y            = smasSpencerFollower.playerYActualWidth,
-                    width        = smasSpencerFollower.dimensions.width * player.direction * 2,
-                    height       = smasSpencerFollower.dimensions.height * 2,
-                    sourceX      = 0,
-                    sourceY      = smasSpencerFollower.dimensions.height * smasSpencerFollower.getAnimation()[smasSpencerFollower.animateFramed] - smasSpencerFollower.dimensions.height,
-                    sourceWidth  = smasSpencerFollower.dimensions.width,
-                    sourceHeight = smasSpencerFollower.dimensions.height,
-                    centered     = true,
-                    priority     = smasSpencerFollower.getSpencerPriority(),
-                }
-                
             end
+            if player.forcedState == FORCEDSTATE_PIPE then
+                local warp = Warp(player:mem(0x15E,FIELD_WORD) - 1)
+                local direction
+                if player.forcedTimer == 0 then
+                    direction = warp.entranceDirection
+                else
+                    direction = warp.exitDirection
+                end
+                if direction == 1 or direction == 3 then
+                    smasSpencerFollower.spencerCoordinateX = 0
+                end
+            end
+            
+            Graphics.drawBox{
+                texture      = smasSpencerFollower.spencerSprites,
+                sceneCoords  = true,
+                x            = smasSpencerFollower.playerXActualWidth,
+                y            = smasSpencerFollower.playerYActualWidth,
+                width        = smasSpencerFollower.dimensions.width * player.direction * 2,
+                height       = smasSpencerFollower.dimensions.height * 2,
+                sourceX      = 0,
+                sourceY      = smasSpencerFollower.dimensions.height * smasSpencerFollower.getAnimation()[smasSpencerFollower.animateFramed] - smasSpencerFollower.dimensions.height,
+                sourceWidth  = smasSpencerFollower.dimensions.width,
+                sourceHeight = smasSpencerFollower.dimensions.height,
+                centered     = true,
+                priority     = smasSpencerFollower.getSpencerPriority(),
+            }
+            
         end
     end
 end

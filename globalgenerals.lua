@@ -335,7 +335,7 @@ function globalgenerals.onPostNPCKill(npc, harmType)
             SaveData.totaliceflowers = SaveData.totaliceflowers + 1
             SysManager.sendToConsole(tostring(SaveData.totaliceflowers).." Ice Flowers have been used in total.")
         end
-        if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
+        --[[if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
             if smasTables.allInteractableNPCIDs[npc.id] then
                 if blockIdx5000Check then
                     if harmType == HARM_TYPE_LAVA then
@@ -346,7 +346,7 @@ function globalgenerals.onPostNPCKill(npc, harmType)
                     end
                 end
             end
-        end
+        end]]
     end
 end
 

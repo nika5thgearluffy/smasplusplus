@@ -4048,209 +4048,81 @@ do
     end
 
 
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if SaveData.SMASPlusPlus.accessibility.enableLives then
-            smwMap.hudCounters = {
-                -- Lives
-                {
-                    icon = Graphics.loadImageResolved("map/smwMap/hud_lives.png"),
-                    getValue = (function()
-                        return smwMap.lifeCrownCounter()
-                    end),
-                },
-                -- Death Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.deathCount
-                    end),
-                },
-                -- Coins
-                {
-                    icon = Graphics.sprites.hardcoded["33-2"],
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coinsClassic
-                    end),
-                },
-                -- Total Coin Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-1.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coins
-                    end),
-                },
-                -- Stars
-                {
-                    icon = Graphics.sprites.hardcoded["33-5"],
-                    isEnabled = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount > 0
-                    end),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount
-                    end),
-                }
+    if SaveData.SMASPlusPlus.accessibility.enableLives then
+        smwMap.hudCounters = {
+            -- Lives
+            {
+                icon = Graphics.loadImageResolved("map/smwMap/hud_lives.png"),
+                getValue = (function()
+                    return smwMap.lifeCrownCounter()
+                end),
+            },
+            -- Death Count
+            {
+                icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.hud.deathCount
+                end),
+            },
+            -- Coins
+            {
+                icon = Graphics.sprites.hardcoded["33-2"],
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.hud.coinsClassic
+                end),
+            },
+            -- Total Coin Count
+            {
+                icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-1.png"),
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.hud.coins
+                end),
+            },
+            -- Stars
+            {
+                icon = Graphics.sprites.hardcoded["33-5"],
+                isEnabled = (function()
+                    return SaveData.SMASPlusPlus.levels.starCount > 0
+                end),
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.levels.starCount
+                end),
             }
-        else
-            smwMap.hudCounters = {
-                -- Death Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.deathCount
-                    end),
-                },
-                -- Coins
-                {
-                    icon = Graphics.sprites.hardcoded["33-2"],
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coinsClassic
-                    end),
-                },
-                -- Total Coin Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-1.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coins
-                    end),
-                },
-                -- Stars
-                {
-                    icon = Graphics.sprites.hardcoded["33-5"],
-                    isEnabled = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount > 0
-                    end),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount
-                    end),
-                }
-            }
-        end
-    elseif SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if SaveData.SMASPlusPlus.accessibility.enableLives then
-            smwMap.hudCounters = {
-                -- Lives
-                {
-                    icon = Graphics.loadImageResolved("map/smwMap/hud_lives.png"),
-                    getValue = (function()
-                        return smwMap.lifeCrownCounter()
-                    end),
-                },
-                -- Coins
-                {
-                    icon = Graphics.sprites.hardcoded["33-2"],
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coinsClassic
-                    end),
-                },
-                -- Stars
-                {
-                    icon = Graphics.sprites.hardcoded["33-5"],
-                    isEnabled = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount > 0
-                    end),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount
-                    end),
-                }
-            }
-        else
-            smwMap.hudCounters = {
-                -- Coins
-                {
-                    icon = Graphics.sprites.hardcoded["33-2"],
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coinsClassic
-                    end),
-                },
-                -- Stars
-                {
-                    icon = Graphics.sprites.hardcoded["33-5"],
-                    isEnabled = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount > 0
-                    end),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount
-                    end),
-                }
-            }
-        end
+        }
     else
-        if SaveData.SMASPlusPlus.accessibility.enableLives then
-            smwMap.hudCounters = {
-                -- Lives
-                {
-                    icon = Graphics.loadImageResolved("map/smwMap/hud_lives.png"),
-                    getValue = (function()
-                        return smwMap.lifeCrownCounter()
-                    end),
-                },
-                -- Death Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.deathCount
-                    end),
-                },
-                -- Coins
-                {
-                    icon = Graphics.sprites.hardcoded["33-2"],
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coinsClassic
-                    end),
-                },
-                -- Total Coin Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-1.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coins
-                    end),
-                },
-                -- Stars
-                {
-                    icon = Graphics.sprites.hardcoded["33-5"],
-                    isEnabled = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount > 0
-                    end),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount
-                    end),
-                }
+        smwMap.hudCounters = {
+            -- Death Count
+            {
+                icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.hud.deathCount
+                end),
+            },
+            -- Coins
+            {
+                icon = Graphics.sprites.hardcoded["33-2"],
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.hud.coinsClassic
+                end),
+            },
+            -- Total Coin Count
+            {
+                icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-1.png"),
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.hud.coins
+                end),
+            },
+            -- Stars
+            {
+                icon = Graphics.sprites.hardcoded["33-5"],
+                isEnabled = (function()
+                    return SaveData.SMASPlusPlus.levels.starCount > 0
+                end),
+                getValue = (function()
+                    return SaveData.SMASPlusPlus.levels.starCount
+                end),
             }
-        else
-            smwMap.hudCounters = {
-                -- Death Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.deathCount
-                    end),
-                },
-                -- Coins
-                {
-                    icon = Graphics.sprites.hardcoded["33-2"],
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coinsClassic
-                    end),
-                },
-                -- Total Coin Count
-                {
-                    icon = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-1.png"),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.hud.coins
-                    end),
-                },
-                -- Stars
-                {
-                    icon = Graphics.sprites.hardcoded["33-5"],
-                    isEnabled = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount > 0
-                    end),
-                    getValue = (function()
-                        return SaveData.SMASPlusPlus.levels.starCount
-                    end),
-                }
-            }
-        end
+        }
     end
 
 

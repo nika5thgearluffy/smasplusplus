@@ -177,10 +177,6 @@ function smasExtraActions.handleFastClimbing(p)
     end
     
     lastClimbed = {}
-    
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        return --let's get outta here quick
-    end
 
     if Misc.isPaused() then
         return --paused so nothing else matters anyway
@@ -205,37 +201,35 @@ function smasExtraActions.handleFastClimbing(p)
 end
 
 function smasExtraActions.onTick()
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        for _,p in ipairs(Player.get()) do
-            
-            
-            
-            --**LONG JUMP**
-            if smasExtraActions.enableLongJump then
-                smasExtraActions.handleLongJump(p)
-            end
-            
-            
-            
-            
-            
-            --**SPIN BOUNCE**
-            if smasExtraActions.enableSpinjumpBounce then
-                smasExtraActions.handleSpinBounce(p)
-            end
-            
-            
-            
-            
-            
-            if smasExtraActions.enableFastWarping then
-                smasExtraActions.handleFastWarp(p)
-            end
-            
-            
-            
-            
+    for _,p in ipairs(Player.get()) do
+        
+        
+        
+        --**LONG JUMP**
+        if smasExtraActions.enableLongJump then
+            smasExtraActions.handleLongJump(p)
         end
+        
+        
+        
+        
+        
+        --**SPIN BOUNCE**
+        if smasExtraActions.enableSpinjumpBounce then
+            smasExtraActions.handleSpinBounce(p)
+        end
+        
+        
+        
+        
+        
+        if smasExtraActions.enableFastWarping then
+            smasExtraActions.handleFastWarp(p)
+        end
+        
+        
+        
+        
     end
 end
 
@@ -254,10 +248,8 @@ function smasExtraActions.onInputUpdate() --More stable fast climbing code, writ
 end
 
 function smasExtraActions.onPostNPCHarm(npc, harmType, culprit)
-    if not SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if smasExtraActions.enableSpinjumpBounce then
-            smasExtraActions.handleMainSpinBounceCode(harmType, culprit)
-        end
+    if smasExtraActions.enableSpinjumpBounce then
+        smasExtraActions.handleMainSpinBounceCode(harmType, culprit)
     end
 end
 
