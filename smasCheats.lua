@@ -799,7 +799,7 @@ function smasCheats.onPlayerKill(evt)
 end
 
 function smasCheats.onDraw()
-    if Cheats.get("redigitiscool").active or Cheats.get("spencereverlyiscool").active then
+    if Cheats.get("redigitiscool").active or Cheats.get("thesungodnikaiscool").active then
         Misc.cheatBuffer("")
         for _,p in ipairs(Player.get()) do
             p.forcedState = FORCEDSTATE_INVISIBLE
