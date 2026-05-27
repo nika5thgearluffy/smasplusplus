@@ -241,6 +241,10 @@ smasTables.__smwLevels = {
     "SMW - W-2, L-DP3.lvlx",
     "SMW - W-2, L-DP4.lvlx",
     "SMW - W-2, L-DPMC.lvlx",
+    "SMW - W-3, L-VD1.lvlx",
+    "SMW - W-3, L-VD2.lvlx",
+    "SMW - W-3, L-VDGH.lvlx",
+    "SMW - W-3, L-VD3.lvlx",
     "SMW - W-8, L-BVLC.lvlx",
 }
 
@@ -302,6 +306,22 @@ smasTables.__wsmbaLevels = {
     "WSMBA - W-S, L-3.lvlx",
     "WSMBA - W-S, L-4.lvlx",
     "WSMBA - W-S, L-5.lvlx",
+}
+
+-- All SML1 levels
+smasTables.__sml1Levels = {
+    "SML1 - W-1, L-1.lvlx",
+    "SML1 - W-1, L-2.lvlx",
+    "SML1 - W-1, L-3.lvlx",
+    "SML1 - W-2, L-1.lvlx",
+    "SML1 - W-2, L-2.lvlx",
+    "SML1 - W-2, L-3.lvlx",
+    "SML1 - W-3, L-1.lvlx",
+    "SML1 - W-3, L-2.lvlx",
+    "SML1 - W-3, L-3.lvlx",
+    "SML1 - W-4, L-1.lvlx",
+    "SML1 - W-4, L-2.lvlx",
+    "SML1 - W-4, L-3.lvlx",
 }
 
 --All SMB Special levels

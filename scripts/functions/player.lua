@@ -178,6 +178,7 @@ function Playur.setupPlayers()
             end
             Player(i).direction = 1;
             Playur.resetVariables(Player(i))
+            Player(i).noplayerinteraction = true
         end
     end
 end
@@ -197,7 +198,7 @@ function Playur.execute(index, func) --Better player/player2 detection, for simp
         SysManager.sendToConsole("Next player function will be executed on player "..tostring(index)..".")
         local p = Player(index)
         if p.isValid then
-            func(plr)
+            func(p)
         end
     end
     SysManager.sendToConsole("Executed a player function with Playur.execute.")

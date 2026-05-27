@@ -154,6 +154,8 @@ function globalgenerals.onStart()
                 p.reservePowerup = GameData.tempReserve[p.idx]
             end
         end
+        -- Set this to true, so that the annoying interaction just... goes away
+        p.noplayerinteraction = true
     end
 end
 

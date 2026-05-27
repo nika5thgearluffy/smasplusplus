@@ -213,8 +213,6 @@ local function changeResolutionSettings()
         SaveData.SMASPlusPlus.options.resolution = "steamdeck"
     elseif screenModes == "Dynamic Widescreen" then
         SaveData.SMASPlusPlus.options.resolution = "dynamicwidescreen"
-    elseif screenModes == "SNES" then
-        SaveData.SMASPlusPlus.options.resolution = "snes"
     end
     Routine.waitFrames(1, false)
     smasResolutions.changeResolution(false, true)
@@ -711,7 +709,7 @@ function pausemenu2.onDraw()
         costtext = currentCostume
     end
     
-    
+    -- TO-DO: Port this over to smasCharacterInfo, it's not necessary to have this here
     if currentCostume == "!DEFAULT" then
         costtext = "Default (SMAS++)"
     end
@@ -1517,7 +1515,7 @@ function pauseSpecifics()
         
         --Screen Settings
         pauseplus.createOption("screensettings",{text = "Enable CRT Display",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable a CRT display when playing the game! Great for TV nostalgia.", action =  function() crtChangeSettings() end})
-        pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck","Dynamic Widescreen","SNES"}, action = function() Routine.run(changeResolutionSettings) end})
+        pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck","Dynamic Widescreen"}, action = function() Routine.run(changeResolutionSettings) end})
         
         --Character Menu
         pauseplus.createOption("charactermenu",{text = "Change Character",closeMenu = true,description = "Switch the player's character to anything of your choice!", action =  function() smasCharacterChanger.startChanger() end})

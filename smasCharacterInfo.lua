@@ -28,6 +28,7 @@ smasCharacterInfo.pSwitchMusic = "_OST/All Stars Secrets/P-Switch.ogg"
         characterID = 1,
         starmanTheme = "_OST/__Music/_Starman/starman_2012beta.ogg",
         DDPStarmanTheme = "_OST/__Music/_Starman/starman_2012beta_ddp.ogg",
+        SML1StarmanTheme = "_OST/__Music/_Starman/starman_sml1_snes.ogg",
         megashroomTheme = "_OST/__Music/_Mega Mushroom/megashroom_2012beta.ogg",
         starmanDuration = 12,
         doorCloseSFX = "door-close.ogg",
@@ -52,6 +53,9 @@ function smasCharacterInfo.registerCharacterInfo(args)
     end
     if args.DDPStarmanTheme == nil then
         args.DDPStarmanTheme = Misc.resolveSoundFile("starman")
+    end
+    if args.SML1StarmanTheme == nil then
+        args.SML1StarmanTheme = Misc.resolveSoundFile("starman")
     end
     if args.megashroomTheme == nil then
         args.megashroomTheme = Misc.resolveSoundFile("megashroom")
@@ -79,6 +83,7 @@ function smasCharacterInfo.registerCharacterInfo(args)
     smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].id = args.characterID
     smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].starmanTheme = args.starmanTheme
     smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].ddpStarmanTheme = args.DDPStarmanTheme
+    smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].sml1StarmanTheme = args.SML1StarmanTheme
     smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].megashroomTheme = args.megashroomTheme
     smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].starmanDuration = args.starmanDuration
     smasCharacterInfo.costumeSpecifics[args.costumeName][args.characterID].doorCloseSFX = args.doorCloseSFX
@@ -300,7 +305,9 @@ function smasCharacterInfo.setCostumeSpecifics()
                 mega2.sfxFile = Misc.resolveSoundFile(smasCharacterInfo.costumeSpecifics[currentCostume][player.character].megashroomTheme)
                 if table.icontains(smasTables.__smb2Levels,Level.filename()) then
                     starman.sfxFile = Misc.resolveSoundFile(smasCharacterInfo.costumeSpecifics[currentCostume][player.character].ddpStarmanTheme)
-                elseif Level.filename() then
+                elseif table.icontains(smasTables.__sml1Levels,Level.filename()) then
+                    starman.sfxFile = Misc.resolveSoundFile(smasCharacterInfo.costumeSpecifics[currentCostume][player.character].sml1StarmanTheme)
+                else
                     starman.sfxFile = Misc.resolveSoundFile(smasCharacterInfo.costumeSpecifics[currentCostume][player.character].starmanTheme)
                 end
                 starman.duration[996] = lunatime.toTicks(smasCharacterInfo.costumeSpecifics[currentCostume][player.character].starmanDuration)
@@ -1076,6 +1083,13 @@ function smasCharacterInfo.setCostumeSpecifics()
             else
                 mega2.sfxFile = Misc.resolveSoundFile("megashroom")
                 starman.sfxFile = Misc.resolveSoundFile("starman")
+                if table.icontains(smasTables.__smb2Levels,Level.filename()) then
+                    starman.sfxFile = Misc.resolveSoundFile("_OST/__Music/_Starman/starman_smas_smb2")
+                elseif table.icontains(smasTables.__sml1Levels,Level.filename()) then
+                    starman.sfxFile = Misc.resolveSoundFile("_OST/__Music/_Starman/starman_sml1_snes")
+                else
+                    starman.sfxFile = Misc.resolveSoundFile("_OST/__Music/_Starman/starman_smas")
+                end
             end
             starman.duration[996] = lunatime.toTicks(12)
             starman.duration[994] = lunatime.toTicks(12)

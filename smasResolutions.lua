@@ -61,11 +61,6 @@ function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
             if onMainMenu then
                 SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 5
             end
-        elseif SaveData.SMASPlusPlus.options.resolution == "snes" then
-            Screen.changeResolution(512,448)
-            if onMainMenu then
-                SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 6
-            end
         else
             Screen.changeResolution(800,600)
             if onMainMenu then
