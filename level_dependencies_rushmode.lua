@@ -65,7 +65,7 @@ function rushmode.onDraw()
     if Level.endState() >= 1 then
         GameData.rushModeWon = true
     end
-    if GameData.winStateActive == true then
+    if smasBooleans.winStateActive then
         GameData.rushModeWon = true
     end
     if GameData.rushModeWon == true then

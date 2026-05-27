@@ -20,7 +20,7 @@ function smasKeyholeSystem.onDraw()
         if smasKeyholeSystem.keyholeTimer < smasKeyholeSystem.keyholeTimerEnd then
             Misc.pause()
         end
-        GameData.winStateActive = true
+        smasBooleans.winStateActive = true
         smasKeyholeSystem.keyholeTimer = smasKeyholeSystem.keyholeTimer + 1
         if smasKeyholeSystem.keyholeTimer == 1 then
             Sound.muteMusic(-1)

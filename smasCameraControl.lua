@@ -34,10 +34,7 @@ function smasCameraControl.canDoCameraControlling()
             or smasBooleans.isInHub
         )
         and Level.endState() == 0
-        and (
-            not GameData.winStateActive
-            or GameData.winStateActive == nil
-        )
+        and not smasBooleans.winStateActive
     )
 end
 

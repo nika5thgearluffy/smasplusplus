@@ -86,7 +86,7 @@ local endRoomToScroll = 0
 local customFanfareCharacters = {}
 table.insert(customFanfareCharacters, "MODERN2")
 
-function starget(v)
+local function starget(v)
     Misc.npcToCoins()
     for _,o in ipairs(Player.get()) do
         if o.idx ~= plr.idx then
@@ -98,7 +98,7 @@ function starget(v)
         end
     end
     oldboundary = plr.sectionObj.origBoundary
-    GameData.winStateActive = true
+    smasBooleans.winStateActive = true
     collectactive = true
     inactivekeysonly = true
     playervuln = true
@@ -131,7 +131,7 @@ function starget(v)
         end
         Routine.wait(2, true)
     end
-    GameData.winStateActive = false
+    smasBooleans.winStateActive = false
     Level.exit(v.data._settings.winType)
 end
 
@@ -226,7 +226,7 @@ end
 
 function roulettestar.onExit()
     smasBooleans.musicMuted = false
-    GameData.winStateActive = false
+    smasBooleans.winStateActive = false
     if Level.endState() == LEVEL_END_STATE_ROULETTE then
         GameData.smwMap.winType = 6
         Level.exit(LEVEL_WIN_TYPE_STAR)

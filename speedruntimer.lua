@@ -74,7 +74,7 @@ function speedruntimer.onDraw()
                     tracker.bestTime = GameData.localTimer
                 end
             end
-            if GameData.winStateActive then -- Show Best Timer after Level Win
+            if smasBooleans.winStateActive then -- Show Best Timer after Level Win
                 hasWon = true
                 local tracker = SaveData.trackers.levels[Level.filename()]
                 if tracker.bestTime == -1 or tracker.bestTime > GameData.localTimer then -- Update Best Timer

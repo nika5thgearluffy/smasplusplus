@@ -129,7 +129,7 @@ function timer.toggle(newValue)
 end
 
 function timer.onTick()
-	if timer_deathTimer > 0 and not timer_paused and not Misc.isPaused() and player:mem(0x13E,FIELD_WORD) == 0 and winState() == 0 and not GameData.winStateActive then
+	if timer_deathTimer > 0 and not timer_paused and not Misc.isPaused() and player:mem(0x13E,FIELD_WORD) == 0 and winState() == 0 and not smasBooleans.winStateActive then
 		
 		if timer_deathTimer > 0 and player:mem(0x13E,FIELD_WORD) == 0 then
 			timer_deathTimer = timer_deathTimer - 1

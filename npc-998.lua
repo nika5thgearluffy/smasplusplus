@@ -52,7 +52,7 @@ function flagpoleSMAS.activateFlagpole(p, v)
     data.state = 1
     smasBooleans.musicMuted = true
     Audio.MusicVolume(0)
-    GameData.winStateActive = true
+    smasBooleans.winStateActive = true
     SFX.play(smasExtraSounds.sounds[135].sfx)
     exiting = true
     data.countTime = Timer.isActive()
@@ -216,7 +216,7 @@ function flagpoleSMAS.onTickNPC(v)
             
             if data.tick > 65 * 4.5 then --if data.tick > 65 * 2 then
                 smasBooleans.musicMuted = false
-                GameData.winStateActive = false
+                smasBooleans.winStateActive = false
                 if GameData.rushModeActive == false or GameData.rushModeActive == nil then
                     Level.exit(v.data._settings.winType)
                 elseif GameData.rushModeActive == true and GameData.rushModeWon == true then

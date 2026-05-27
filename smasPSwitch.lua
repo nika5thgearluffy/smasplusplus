@@ -54,7 +54,7 @@ function smasPSwitch.inNoPSwitchMusicPlayingSituations(p)
     end
     return (p.hasStarman
         or p.isMega
-        or GameData.winStateActive
+        or smasBooleans.winStateActive
         or Level.endState() > 0
     )
 end

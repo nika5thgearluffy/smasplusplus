@@ -303,10 +303,7 @@ end
 local function isShooting(p)
     return (
         Level.endState() == 0
-        and (
-            not GameData.winStateActive
-            or GameData.winStateActive == nil
-        )
+        and not smasBooleans.winStateActive
         and p.deathTimer == 0
         and p.forcedState == 0
         and p.holdingNPC == nil
@@ -354,10 +351,7 @@ local function isShootingLink(p)
     return (
         p:mem(0x162, FIELD_WORD) == 40
         and Level.endState() == 0
-        and (
-            not GameData.winStateActive
-            or GameData.winStateActive == nil
-        )
+        and not smasBooleans.winStateActive
         and p.deathTimer == 0
         and p.forcedState == 0
         and p.holdingNPC == nil
@@ -375,10 +369,7 @@ local function isShootingLinkHammer(p)
     return (
         p:mem(0x162, FIELD_WORD) == 25
         and Level.endState() == 0
-        and (
-            not GameData.winStateActive
-            or GameData.winStateActive == nil
-        )
+        and not smasBooleans.winStateActive
         and p.deathTimer == 0
         and p.forcedState == 0
         and p.holdingNPC == nil
@@ -396,10 +387,7 @@ local function isTailSwiping(p)
     return (p.keys.run == KEYS_PRESSED
         and p:mem(0x172, FIELD_BOOL)
         and Level.endState() == 0
-        and (
-            not GameData.winStateActive
-            or GameData.winStateActive == nil
-        )
+        and not smasBooleans.winStateActive
         and p.forcedState == FORCEDSTATE_NONE
         and not p.climbing
         and p.mount == 0
@@ -431,10 +419,7 @@ local function hasJumped(p, ahippinandahoppinactive)
     if not ahippinandahoppinactive then
         return (p.deathTimer == 0
             and Level.endState() == 0
-            and (
-                not GameData.winStateActive
-                or GameData.winStateActive == nil
-            )
+            and not smasBooleans.winStateActive
             and p.forcedState == 0
             and not isPlayerUnderwater(p)
             and (
@@ -450,10 +435,7 @@ local function hasJumped(p, ahippinandahoppinactive)
     elseif ahippinandahoppinactive then
         return (p.deathTimer == 0
             and Level.endState() == 0
-            and (
-                not GameData.winStateActive
-                or GameData.winStateActive == nil
-            )
+            and not smasBooleans.winStateActive
             and p.forcedState == 0
             and not isPlayerUnderwater(p)
             and (
@@ -579,7 +561,7 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
 
             --**SPINJUMPING**
             if normalCharacters[p.character] then
-                if (p:isOnGround() and not p.keys.down and p.mount == 0 and (not GameData.winStateActive or GameData.winStateActive == nil) and Level.endState() == 0) then --If on the ground, not holding down, and not on a mount...
+                if (p:isOnGround() and not p.keys.down and p.mount == 0 and (not smasBooleans.winStateActive) and Level.endState() == 0) then --If on the ground, not holding down, and not on a mount...
                     if (p:mem(0x120, FIELD_BOOL) and p.keys.altJump == KEYS_PRESSED) then --If alt jump is pressed and jump has been activated...
                         if not p:mem(0x50, FIELD_BOOL) and soundID == 33 then
                             eventObj.cancelled = true
@@ -772,7 +754,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             --**PSWITCH/STOPWATCH TIMER**
             if mem(0x00B2C62C, FIELD_WORD) >= 150 and mem(0x00B2C62C, FIELD_WORD) < mem(0x00B2C87C, FIELD_WORD) - 27 or mem(0x00B2C62E, FIELD_WORD) >= 150 and mem(0x00B2C62E, FIELD_WORD) < mem(0x00B2C87C, FIELD_WORD) - 27 then --Are the P-Switch/Stopwatch timers activate and on these number values?
                 if Level.endState() <= 0 then --Make sure to not activate when the endState is greater than 1
-                    if not GameData.winStateActive or GameData.winStateActive == nil then --SMAS++ episode specific, you don't need this for anything outside of SMAS++
+                    if not smasBooleans.winStateActive then --SMAS++ episode specific, you don't need this for anything outside of SMAS++
                         if smasExtraSounds.playPSwitchTimerSFX then
                             Sound.playSFX(118, smasExtraSounds.volume, 1, smasExtraSounds.pSwitchTimerDelay)
                         end
@@ -780,7 +762,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
                 end
             elseif mem(0x00B2C62C, FIELD_WORD) <= 150 and mem(0x00B2C62C, FIELD_WORD) >= 1 or mem(0x00B2C62E, FIELD_WORD) <= 150 and mem(0x00B2C62E, FIELD_WORD) >= 1 then --Are the P-Switch/Stopwatch timers activate and on these number values?
                 if Level.endState() <= 0 then --Make sure to not activate when the endState is greater than 1
-                    if not GameData.winStateActive or GameData.winStateActive == nil then --SMAS++ episode specific, you don't need this for anything outside of SMAS++
+                    if not smasBooleans.winStateActive then --SMAS++ episode specific, you don't need this for anything outside of SMAS++
                         if smasExtraSounds.playPSwitchTimerSFX then
                             Sound.playSFX(118, smasExtraSounds.volume, 1, smasExtraSounds.pSwitchTimerDelayFast)
                         end
@@ -793,7 +775,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             --**PSWITCH/STOPWATCH TIMEOUT**
             if mem(0x00B2C62C, FIELD_WORD) == 150 or mem(0x00B2C62E, FIELD_WORD) == 150 then --Time out sound effect
                 if Level.endState() <= 0 then --Make sure to not activate when the endState is greater than 1
-                    if not GameData.winStateActive or GameData.winStateActive == nil then --SMAS++ episode specific, you don't need this for anything outside of SMAS++
+                    if not smasBooleans.winStateActive then --SMAS++ episode specific, you don't need this for anything outside of SMAS++
                         if smasExtraSounds.enablePSwitchTimeOutSFX then
                             Sound.playSFX(165, smasExtraSounds.volume, 1)
                         end

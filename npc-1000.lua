@@ -108,7 +108,7 @@ function starget(v)
     Audio.SeizeStream(-1)
     Audio.MusicStop()
     smasBooleans.musicMuted = true
-    GameData.winStateActive = true
+    smasBooleans.winStateActive = true
     playervuln = true
     playerwon = true
     Routine.wait(3, true)
@@ -117,7 +117,7 @@ function starget(v)
     end
     Routine.wait(2, true)
     smasBooleans.musicMuted = false
-    GameData.winStateActive = false
+    smasBooleans.winStateActive = false
     Level.exit(v.data._settings.winType)
 end
 

@@ -3,6 +3,7 @@ local smasExtraSounds = require("smasExtraSounds")
 local smasHud = require("smasHud")
 local particles = require('particles')
 local smasFunctions = require("smasFunctions")
+local smasBooleans = requirE("smasBooleans")
 
 local costume = {}
 
@@ -184,7 +185,7 @@ function costume.onTick()
             end
         end
 
-        if (flipstate) or balled and not hit and not GameData.winStateActive then
+        if (flipstate) or balled and not hit and not smasBooleans.winStateActive then
             --Rotate Toad
             plr:setFrame(-50) -- Make player invisible
             rotation = rotation + 36

@@ -84,20 +84,11 @@ function globalgenerals.onInitAPI()
     registerEvent(globalgenerals,"onStart")
     registerEvent(globalgenerals,"onTick")
     registerEvent(globalgenerals,"onTickEnd")
-    registerEvent(globalgenerals,"onCameraUpdate")
     registerEvent(globalgenerals,"onInputUpdate")
     registerEvent(globalgenerals,"onEvent")
     registerEvent(globalgenerals,"onDraw")
-    registerEvent(globalgenerals,"onPlayerHarm")
     registerEvent(globalgenerals,"onPostNPCKill")
-    registerEvent(globalgenerals,"onPostBlockHit")
-    registerEvent(globalgenerals,"onBlockHit")
     registerEvent(globalgenerals,"onPause")
-    registerEvent(globalgenerals,"onExplosion")
-    registerEvent(globalgenerals,"onKeyboardPress")
-    registerEvent(globalgenerals,"onControllerButtonPress")
-    
-    local Routine = require("routine")
     
     ready = true
 end
@@ -388,6 +379,25 @@ function globalgenerals.onDraw()
         if p.reservePowerup ~= nil and p.reservePowerup ~= 0 then
             SaveData.SMASPlusPlus.hud.reserve[_] = p.reservePowerup
             p.reservePowerup = 0
+        end
+    end
+end
+
+function globalgenerals.onInputUpdate()
+    if smasBooleans.disablePlayerKeys then
+        for _,p in ipairs(Player.get()) do
+            if p.idx >= 1 and p.idx <= 2 then
+                -- Isn't there a better way to do this? I thought player.keys can be disabled but apparently not...
+                p.upKeyPressing = false
+                p.downKeyPressing = false
+                p.leftKeyPressing = false
+                p.rightKeyPressing = false
+                p.altJumpKeyPressing = false
+                p.runKeyPressing = false
+                p.altRunKeyPressing = false
+                p.dropItemKeyPressing = false
+                p.pauseKeyPressing = false
+            end
         end
     end
 end

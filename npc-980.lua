@@ -95,7 +95,7 @@ end
 
 local plr
 
-function starget()
+local function starget()
     Misc.npcToCoins()
     for _,o in ipairs(Player.get()) do
         if o.idx ~= plr.idx then
@@ -111,12 +111,12 @@ function starget()
     Audio.SeizeStream(-1)
     Audio.MusicStop()
     smasBooleans.musicMuted = true
-    GameData.winStateActive = true
+    smasBooleans.winStateActive = true
     playervuln = true
     playerwon = true
     Routine.wait(14, true)
     smasBooleans.musicMuted = false
-    GameData.winStateActive = false
+    smasBooleans.winStateActive = false
     Level.exit(LEVEL_END_STATE_GAMEEND)
 end
 

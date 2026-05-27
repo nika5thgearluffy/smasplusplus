@@ -475,14 +475,14 @@ function smasCharacterChanger.onDraw()
     --***CHARACTERS***
     
     --SMBX Defaults
-    smasCharacterChanger.addCharacter("Mario","Default (SMAS++)",1,"!DEFAULT")
+    smasCharacterChanger.addCharacter("Mario","Super Mario Bros. 3",1,"!DEFAULT")
     smasCharacterChanger.addCharacter("Luigi","Super Mario Bros. 3",2,"!DEFAULT")
     smasCharacterChanger.addCharacter("Peach","Super Mario Bros. 2",3,"!DEFAULT")
     smasCharacterChanger.addCharacter("Toad","Super Mario Bros. 2",4,"!DEFAULT")
     smasCharacterChanger.addCharacter("Link","Zelda II (SMBX)",5,"!DEFAULT")
     
     --SMBX2
-    smasCharacterChanger.addCharacter("Mega Man","Mega Man X7",6,"nil")
+    --[[smasCharacterChanger.addCharacter("Mega Man","Mega Man X7",6,"nil")
     smasCharacterChanger.addCharacter("Wario","Super Mario Bros. X2",7,"nil")
     smasCharacterChanger.addCharacter("Bowser","Super Mario Bros. X2",8,"nil")
     smasCharacterChanger.addCharacter("Klonoa","Klonoa 2 (GBA)",9,"nil")
@@ -731,7 +731,7 @@ function smasCharacterChanger.onDraw()
     
         --**Mario alterations**
         smasCharacterChanger.addAlteration("Mario","!DEFAULT","FlipnoteStudio","Mario","Flipnote Studio (DSi)")
-    end
+    end]]
 end
 
 return smasCharacterChanger

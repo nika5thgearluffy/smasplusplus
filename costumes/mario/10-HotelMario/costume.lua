@@ -2,6 +2,7 @@ local playerManager = require("playerManager")
 local smasExtraSounds = require("smasExtraSounds")
 local smasHud = require("smasHud")
 local smasFunctions = require("smasFunctions")
+local smasBooleans = require("smasBooleans")
 
 local costume = {}
 
@@ -28,7 +29,7 @@ local timeddelay = 0
 
 function costume.onDraw()
     if SaveData.toggleCostumeAbilities then
-        if Level.endState() == 0 and (not GameData.winStateActive or GameData.winStateActive == nil) then
+        if Level.endState() == 0 and (not smasBooleans.winStateActive) then
             if Timer.getValue() == 100 then
                 timeddelay = timeddelay + 1
                 if timeddelay == 1 then
