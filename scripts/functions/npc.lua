@@ -244,11 +244,11 @@ function NPC.harmSpecified(npcid,...) -- npc:harm but it harms all of a specific
     end
 end
 
-function NPC.saveClass(class) --Saves a specific class. Used for NPCs.
+function Npc.saveClass(class) --Saves a specific class. Used for NPCs.
     -- If no class is provided, save all classes
     if class == nil then
         for _,c in ipairs(Npc.classesToSave) do
-            NPC.saveClass(c.name)
+            Npc.saveClass(c.name)
         end
         return
     end
@@ -288,7 +288,7 @@ function NPC.saveClass(class) --Saves a specific class. Used for NPCs.
         table.insert(Npc.savedClasses[class.name],fields)
     end
     
-    SysManager.sendToConsole("Class "..tostring(class).." was saved.")
+    --SysManager.sendToConsole("Class "..tostring(class).." was saved.")
 end
 
 function NPC.restoreClass(class) --Restores a specific class. Used for NPCs.
@@ -473,7 +473,7 @@ end
 function Npc.onTickEnd()
     -- Save classes (this is done after onStart so custom stuff has already been initiated)
     if not Npc.hasSavedClasses then
-        NPC.saveClass()
+        Npc.saveClass()
         SysManager.sendToConsole("Initial classes saved and ready to go!")
         Npc.hasSavedClasses = true
     end

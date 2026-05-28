@@ -716,7 +716,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
         Audio.sounds[42].muted = true --npc-fireball.ogg
         Audio.sounds[43].muted = true --fireworks.ogg
         Audio.sounds[59].muted = true --dragon-coin.ogg
-        Audio.sounds[77].muted = true --zelda-stab.ogg
+        --Audio.sounds[77].muted = true --zelda-stab.ogg
         Audio.sounds[81].muted = true --zelda-rupee.ogg
         
         
@@ -1118,7 +1118,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             Audio.sounds[42].muted = false --npc-fireball.ogg
             Audio.sounds[43].muted = false --fireworks.ogg
             Audio.sounds[59].muted = false --dragon-coin.ogg
-            Audio.sounds[77].muted = false --zelda-stab.ogg
+            --Audio.sounds[77].muted = false --zelda-stab.ogg
             Audio.sounds[81].muted = false --zelda-rupee.ogg
             smasExtraSounds.disableSoundMarker = true
         end

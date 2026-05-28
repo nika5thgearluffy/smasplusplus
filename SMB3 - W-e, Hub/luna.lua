@@ -7,9 +7,14 @@ smasBooleans.isInHub = true
 
 _G.pausemenu2 = require("pausemenu2")
 
+function onDraw()
+    -- Draw the black borders
+    smasBorderSystem.drawBorder()
+end
+
 function onPostWarpEnter(warp, plr)
     -- Change back to the map if exiting the e-Reader hub
-    if warp.toOtherLevel and warp.levelFilename == "map.lvlx" then
+    if warp.levelFilename == "map.lvlx" then
         SysManager.changeMapHub("map.lvlx")
     end
 end

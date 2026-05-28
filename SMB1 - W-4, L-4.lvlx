@@ -2,7 +2,7 @@ HEAD
 TL:"Super Mario Bros. 1\: World 4-4";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-197184;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Album.spc|0\;g=2.5";BG:10;
+SC:0;L:-200000;R:-197184;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Album.spc|0\;g=2.5";BG:10;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SC:1;L:-180000;R:-172896;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Castle.ogg";BG:41;
 SC:2;L:-160000;R:-159200;T:-160600;B:-160000;MZ:24;MF:"_OST/Super Mario Bros/Bowser.spc|0\;g=2.5";BG:41;
 SC:3;L:-143168;R:-139200;T:-141120;B:-140000;MZ:24;MF:"_OST/All Stars Secrets/Lineland.ogg";BG:62;
@@ -4005,7 +4005,7 @@ BGO_END
 NPC
 ID:15;X:-159438;Y:-160182;D:-1;ED:"Boss End";
 ID:94;X:-173504;Y:-180118;D:-1;MG:"Thank you\, <characterName>! But our princess is in another castle!";FD:1;
-ID:93;X:-178704;Y:-180208;D:-1;
+ID:522;X:-178704;Y:-180208;D:-1;
 ID:177;X:-139776;Y:-140352;D:1;S1:3;
 ID:177;X:-139968;Y:-140352;D:1;S1:3;
 ID:177;X:-140160;Y:-140352;D:1;S1:3;
@@ -4024,15 +4024,15 @@ ID:177;X:-140096;Y:-140544;D:1;S1:3;
 ID:177;X:-139936;Y:-140480;D:1;S1:3;
 ID:177;X:-139648;Y:-140512;D:1;S1:3;
 ID:151;X:-139720;Y:-139952;D:-1;MG:"You're not supposed to read this! lol";FD:1;
-ID:770;X:-176192;Y:-180288;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-175904;Y:-180160;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-178304;Y:-180288;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-178048;Y:-180192;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-176192;Y:-180288;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-175904;Y:-180160;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-178304;Y:-180288;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-178048;Y:-180192;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
 ID:175;X:-141504;Y:-140320;D:-1;
 ID:175;X:-141216;Y:-140256;D:1;
 ID:175;X:-140736;Y:-140352;D:1;
 ID:998;X:-197856;Y:-200384;D:-1;
-ID:770;X:-159744;Y:-160128;D:-1;LR:"SMB1 Hard Mode";XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-159744;Y:-160128;D:-1;LR:"SMB1 Hard Mode";XTRA:"{\n    \"speed\"\: 3\n}\n";
 ID:589;X:-159582;Y:-160096;D:-1;LR:"SMB1 Hard Mode";XTRA:"{\n    \"useFixed\"\: true\n}\n";
 ID:177;X:-139840;Y:-140256;D:1;S1:3;
 ID:177;X:-140128;Y:-140192;D:1;S1:3;

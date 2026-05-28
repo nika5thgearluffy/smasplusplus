@@ -325,15 +325,17 @@ function SysManager.exitLevel(winType) --Exits a level with the win type specifi
 end
 
 function SysManager.exitLevelToWarpPoint(warp)
-    if Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil) then
-        SysManager.loadMap()
-    else
-        Level.load(Warp.get()[warp].levelFilename)
+    for _,p in ipairs(Player.get()) do
+        if (Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil)) or p:mem(0x15E, FIELD_WORD) <= 0 then
+            SysManager.loadMap()
+        else
+            Level.load(Warp.get()[warp].levelFilename)
+        end
     end
 end
 
 function SysManager.restartGame()
-    SysManager.sendToConsole("Initating game restart...")
+    SysManager.sendToConsole("Initiating game restart...")
     if not Misc.loadEpisode("Super Mario All-Stars++") then
         error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
     end
