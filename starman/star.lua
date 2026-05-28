@@ -30,6 +30,8 @@ local starSparkleObjects = {};
 local starlights = {};
 local sparklesize = {};
 local activeStarIDs = {}
+local starDrawOpacity = {}
+local starScoreboard = {}
 
 local musicvolcache;
 local scorecounter = 1
@@ -137,7 +139,9 @@ function starman.start(p, id)
     startMusic();
     local idx = p.idx;
     activeStarIDs[idx] = id
-    starTimers[idx] = starman.duration[id];        
+    starTimers[idx] = starman.duration[id];   
+    starDrawOpacity[idx] = 1;
+    starScoreboard[idx] = 1;
     
     if(starlights[idx] == nil) then
         starlights[idx] = darkness.addLight(darkness.light(0,0,300,-5,Color.white));
@@ -176,7 +180,7 @@ local function checkStarStatus(p)
                     --scorecounter = 10
                 --end
             --end
-            v:harm(HARM_TYPE_NPC);
+            --v:harm(HARM_TYPE_NPC);
         end
         starTimers[idx] = starTimers[idx] - 1;
         if(starTimers[idx] == math.min(starman.duration[activeStarIDs[idx]]-1, math.floor(lunatime.toTicks(2.6)))) then
@@ -225,16 +229,6 @@ local function drawStar(p)
     end
     
     local idx = p.idx;
-
-    if(starSoundObject ~= nil) then
-        if SMBX_VERSION == VER_SEE_MOD then
-            if not Misc.isWindowFocused() then
-                starSoundObject:Pause()
-            else
-                starSoundObject:Resume()
-            end
-        end
-    end
     
     if(starSparkleObjects[idx] ~= nil and p:mem(0x13E, FIELD_WORD) == 0) then
         if(sparklesize[idx] == nil or p.width ~= sparklesize[idx].w or p.height ~= sparklesize[idx].h) then
@@ -247,21 +241,25 @@ local function drawStar(p)
         
         
         if(starActivePlayers[idx] and starman.animationCheck(p)) then
+            local priority = -24.9;
+            if(p.forcedState == 3) then
+                priority = -69.9;
+            end
+            if(starTimers[idx] <= math.min(starman.duration[activeStarIDs[idx]]-1, math.floor(lunatime.toTicks(1)))) then
+                starDrawOpacity[idx] = starDrawOpacity[idx] - (1 / Misc.GetEngineTPS())
+            end
             p:render{
                         shader = shader, 
                         uniforms =
                                 {
                                     time = lunatime.tick()*2;
                                 },
-                        drawmounts = (player:mem(0x108, FIELD_WORD) ~= 3)
+                        drawmounts = (player:mem(0x108, FIELD_WORD) ~= 3),
+                        priority = priority,
+                        color = Color(1,1,1) .. starDrawOpacity[idx],
                     };
                     
-            local priority = -25;
-            if(p.forcedState == 3) then
-                priority = -70;
-            end
             starSparkleObjects[idx]:Draw(priority);
-        
         end
     end
 end
@@ -305,6 +303,11 @@ function starman.onPostNPCKill(npc, harmType)
     end
 end
 
+local function restoreOldScoreRoutine(npcID, oldScore)
+    Routine.waitFrames(5, true)
+    NPC.config[npcID].score = oldScore
+end
+
 function starman.onTick()
     if(not isOverworld) then
         for _,v in ipairs(Player.get()) do
@@ -312,6 +315,20 @@ function starman.onTick()
         end
     end
     if starman.active() then
+        for k,v in ipairs(NPC.get(NPC.HITTABLE)) do
+            for _,p in ipairs(Player.get()) do
+                if(v and v.isValid and starActivePlayers[p.idx] and Collisionz.CheckCollisionNoEntity(p.x - 2, p.y + 2, p.width + 4, p.height + 4, v.x, v.y, v.width, v.height)) then
+                    local oldScore = NPC.config[v.id].score
+                    if starScoreboard[p.idx] < 10 then
+                        starScoreboard[p.idx] = starScoreboard[p.idx] + 1
+                    end
+                    NPC.config[v.id].score = 0
+                    Misc.givePoints(starScoreboard[p.idx],{x = v.x+v.width*0.5,y = v.y+v.height*0.5},true)
+                    Routine.run(restoreOldScoreRoutine, v.id, oldScore)
+                    v:harm(HARM_TYPE_NPC)
+                end
+            end
+        end
         GameData.stopStarman = false
         if(not killed and player:mem(0x13E,FIELD_BOOL)) then
             killed = true

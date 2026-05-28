@@ -249,7 +249,7 @@ repll.maxScreenLength = 3200
 
 function repll.onInitAPI()
     registerEvent(repll, "onKeyboardPressDirect")
-    registerEvent(repll, "onDraw")
+    registerEvent(repll, "onCameraDraw")
     registerEvent(repll, "onPasteText")
     registerEvent(repll, "onInputUpdate")
     
@@ -498,13 +498,9 @@ do
         listidx = listidx + 1
     end
     
-    function repll.onDraw()
+    function repll.onCameraDraw(camIdx)
         if consoleToggleCooldown > 0 then
             consoleToggleCooldown = consoleToggleCooldown - 1
-        end
-
-        if baseY ~= Screen.getScreenSize()[2] then
-            baseY = Screen.getScreenSize()[2]
         end
         
         if not repll.active then
@@ -514,6 +510,7 @@ do
         if repll.active then
             GameData.toggleoffkeys = true
         end
+        local cam = Camera(camIdx)
         Graphics.drawScreen({color = repll.background, priority = 9.8})
         local buffer
         if find(repll.buffer, "\n") then
@@ -521,6 +518,9 @@ do
         else
             buffer = {repll.buffer}
         end
+
+        local baseX = -cam.renderX
+		local baseY = Screen.getScreenSize()[2] - cam.renderY
 
         local y = baseY
         local y2 = repll.maxScreenLength

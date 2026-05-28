@@ -160,7 +160,7 @@ function globalgenerals.onStart()
 end
 
 function globalgenerals.onTickEnd()
-    -- Fix blinking when starting the level/changing sections (Thanks MDA!)
+    -- Fix blinking when starting the level/changing sections
     mem(0x00B250D4,FIELD_BOOL,false)
 end
 
@@ -368,7 +368,7 @@ function globalgenerals.onDraw()
         end
     end
     if SaveData.SMASPlusPlus.options.enableFramerateCounter then
-        textplus.print{x = 8, y = 8, text = actualframecount, font = numberfont, priority = 10, xscale = 1, yscale = 1}
+        textplus.print{x = 8, y = 8, text = tostring(mem(0x00B2C670, FIELD_DWORD)), font = numberfont, priority = 10, xscale = 1, yscale = 1}
     end
     
     if easterCrashMsg then

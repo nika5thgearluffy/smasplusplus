@@ -18,13 +18,20 @@ function smasPSwitch.startPSwitchMusic() --Starts the P-Switch music.
             SysManager.sendToConsole("P-Switch music activated!")
             Sound.muteMusic(-1)
             smasBooleans.musicMuted = true
-            pSwitchMusic = SFX.play(smasCharacterInfo.pSwitchMusic, Audio.MusicVolume() / 100, 0)
+            pSwitchMusic = Sound.playSFX(smasCharacterInfo.pSwitchMusic, Audio.MusicVolume() / 100, 0)
             smasPSwitch.pSwitchMusicStarted = true
         end
     end
 end
 
 
+
+local function replayLevelMusicRoutine()
+    Routine.waitFrames(5, true)
+    if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
+        Audio.MusicPlay()
+    end
+end
 
 function smasPSwitch.stopPSwitchMusic(resetLevelMusic) --Stops the P-Switch music.
     if resetLevelMusic == nil then
@@ -42,6 +49,8 @@ function smasPSwitch.stopPSwitchMusic(resetLevelMusic) --Stops the P-Switch musi
             SysManager.sendToConsole("P-Switch music deactivated!")
             smasBooleans.musicMuted = false
             Sound.restoreMusic(-1)
+            smasAudioVolumeSystem.setVolumeNow = true
+            Routine.run(replayLevelMusicRoutine)
         end
     end
 end
@@ -77,7 +86,7 @@ function smasPSwitch.onDraw()
     
     
     --Make sure the music stops when collecting a starman, a megashroom, or winning a level if active
-    if not smasPSwitch.inNoPSwitchMusicPlayingSituations() then
+    if smasPSwitch.inNoPSwitchMusicPlayingSituations() then
         if pSwitchMusic ~= nil then
             smasBooleans.musicMuted = false
             pSwitchMusic:Stop()
@@ -89,11 +98,11 @@ function smasPSwitch.onDraw()
     --Stop P-Switch/Stopwatch codes
     if mem(0x00B2C62C, FIELD_WORD) == 1 then --P-Switch
         smasBooleans.pSwitchActive = false
-        smasPSwitch.stopPSwitchMusic(true)
+        smasPSwitch.stopPSwitchMusic()
     end
     if mem(0x00B2C62E, FIELD_WORD) == 1 then --Stopwatch
         smasBooleans.stopWatchActive = false
-        smasPSwitch.stopPSwitchMusic(true)
+        smasPSwitch.stopPSwitchMusic()
     end
     
     

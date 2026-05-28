@@ -1082,7 +1082,6 @@ function smasCharacterInfo.setCostumeSpecifics()
                 starman.sfxFile = Misc.resolveSoundFile("_OST/__Music/_Starman/starman_smw2")
             else
                 mega2.sfxFile = Misc.resolveSoundFile("megashroom")
-                starman.sfxFile = Misc.resolveSoundFile("starman")
                 if table.icontains(smasTables.__smb2Levels,Level.filename()) then
                     starman.sfxFile = Misc.resolveSoundFile("_OST/__Music/_Starman/starman_smas_smb2")
                 elseif table.icontains(smasTables.__sml1Levels,Level.filename()) then
@@ -1093,6 +1092,13 @@ function smasCharacterInfo.setCostumeSpecifics()
             end
             starman.duration[996] = lunatime.toTicks(12)
             starman.duration[994] = lunatime.toTicks(12)
+            if table.icontains(smasTables.__smb3Levels,Level.filename()) then
+                smasCharacterInfo.pSwitchMusic = "_OST/__Music/_P-Switch/pswitch_smas.ogg"
+            elseif table.icontains(smasTables.__smwLevels,Level.filename()) then
+                smasCharacterInfo.pSwitchMusic = "_OST/__Music/_P-Switch/pswitch_smw.ogg"
+            else
+                smasCharacterInfo.pSwitchMusic = "_OST/All Stars Secrets/P-Switch.ogg"
+            end
         end
         smasExtraSounds.sounds[148].sfx = Audio.SfxOpen(Misc.resolveSoundFile("door-close.ogg"))
     end
