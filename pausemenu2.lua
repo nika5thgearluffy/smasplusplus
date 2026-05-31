@@ -1088,27 +1088,22 @@ local function purgesavedata()
     exitFadeActive = false
     exitFadeActiveDone = true
     Misc.eraseSaveSlot(Misc.saveSlot())
-    Misc.dialog("There WILL be a few errors before restarting. This is normal. Just click okay (Or press ENTER) on all dialog boxes that pop up, and the episode will restart.")
-    SaveData.clear()
-    GameData.clear()
-    SaveData.flush()
-    if Misc.loadEpisode("Super Mario All-Stars++") == false then
+    if not Misc.loadEpisode("Super Mario All-Stars++") then
         SFX.play("wrong.ogg")
         error("Super Mario All-Stars++ is not found. How is that even possible? Reinstall the game, since something has gone terribly wrong.")
     end
 end
 
 local function checkingplayerstatus()
-    if player.count() == 1 then
-        Sound.playSFX(1001)
-        Sound.playSFX(152)
-    elseif player.count() >= 2 then
-        Sound.playSFX(1001)
+    if Player.count() == 1 then
+        Sound.playSFX(140)
+        Playur.activate2ndPlayer()
+        player:mem(0x11E,FIELD_BOOL,false)
+        player2:mem(0x11E,FIELD_BOOL,false)
+    elseif Player.count() >= 2 then
+        Sound.playSFX(140)
         Playur.activate1stPlayer()
         player:mem(0x11E,FIELD_BOOL,false)
-        if cooldown <= 0 then
-            player:mem(0x11E,FIELD_BOOL,true)
-        end
     end
 end
 
@@ -1521,9 +1516,9 @@ function pauseSpecifics()
         pauseplus.createOption("charactermenu",{text = "Change Character",closeMenu = true,description = "Switch the player's character to anything of your choice!", action =  function() smasCharacterChanger.startChanger() end})
         pauseplus.createSubmenu("costumeoptions",{headerText = "<size 1.5>Costume Specific Options</size>"})
         pauseplus.createOption("charactermenu",{text = "Costume Specific Options",goToSubmenu = "costumeoptions",description = "Change settings regarding the costume that is currently being worn."})
-        --if not (Level.filename() == "map.lvlx") then
-            --pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "Toggle the status of multiplayer. This will only work on 1.3 Mode (If in Normal Mode this won't do anything).",action = function() checkingplayerstatus() end})
-        --end
+        if not (Level.filename() == "map.lvlx") then
+            pauseplus.createOption("charactermenu",{text = "Enable/Disable Multiplayer",closeMenu = true,description = "This is for if you want to play with a friend!",action = function() checkingplayerstatus() end})
+        end
         
         --Costume Menu
         pauseplus.createOption("costumeoptions",{text = "Disable Abilities",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Whenever to disable costume abilities or keep them enabled. Default option is enabled.", action =  function() Routine.run(toggleabilitiescost) end})

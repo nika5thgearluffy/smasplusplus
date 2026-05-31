@@ -17,7 +17,7 @@ local rng = require("rng")
 local pm = require("playerManager")
 local imagic = require("imagic")
 local smasFunctions = require("smasFunctions")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local smasTables = require("smasTables")
 
 -- Load events

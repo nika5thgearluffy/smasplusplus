@@ -1008,12 +1008,15 @@ function Misc.doEarthquake(shakeNumber, eventName) --This is a replacement of De
     end
 end
 
-function Misc.storeLatestCostumeData(costumeLibrary)
-    if smasCharacterCostumes.currentCostume == {} then
-        smasCharacterCostumes.currentCostume = costumeLibrary
+function Misc.storeLatestCostumeData(costumeLibrary, idx)
+    if idx == nil then
+        idx = 1
+    end
+    if smasCharacterCostumes.currentCostume[idx] == {} then
+        smasCharacterCostumes.currentCostume[idx] = costumeLibrary
     else
-        smasCharacterCostumes.currentCostume = {}
-        smasCharacterCostumes.currentCostume = costumeLibrary
+        smasCharacterCostumes.currentCostume[idx] = {}
+        smasCharacterCostumes.currentCostume[idx] = costumeLibrary
     end
 end
 

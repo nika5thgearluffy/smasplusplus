@@ -91,7 +91,7 @@ function smasCharacterHealthSystem.onDraw()
             end
             
             if Graphics.isHudActivated() then
-                if smasHud.visible.customItemBox then
+                if smasHud.elements.show.customItemBox then
                     if smasCharacterHealthSystem.drawHearts then
                         if smasCharacterHealthSystem.health[p.idx] <= 0 then
                             Graphics.drawImageWP(smasCharacterHealthSystem.heartEmptyGFX, Screen.calculateCameraDimensions(357, 1), smasCharacterHealthSystem.heartYPosition, smasCharacterHealthSystem.drawingPriority)

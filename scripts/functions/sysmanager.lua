@@ -296,11 +296,7 @@ end
 
 function SysManager.loadMap() --Loads the map, or the editor-specified area.
     SysManager.sendToConsole("Loading world map/hub level...")
-    if not Misc.inEditor() then
-        Level.load(GameData.SMASPlusPlus.game.hubLevel)
-    elseif Misc.inEditor() then
-        Level.load(SaveData.SMASPlusPlus.misc.editor.levelReloadOnWinTo)
-    end
+    Level.load(GameData.SMASPlusPlus.game.hubLevel)
 end
 
 function SysManager.exitLevel(winType) --Exits a level with the win type specified.
@@ -311,7 +307,7 @@ function SysManager.exitLevel(winType) --Exits a level with the win type specifi
                 SysManager.loadMap()
             end
         else
-            local warp = p:mem(0x15E, FIELD_WORD) - 1
+            local warp = p:mem(0x15E, FIELD_WORD)
             if Warp.get()[warp] and Warp.get()[warp].levelFilename ~= nil then
                 SysManager.sendToConsole("This warp has a level warp point. Warping to "..Warp.get()[warp].levelFilename.."...")
             else
@@ -326,7 +322,7 @@ end
 
 function SysManager.exitLevelToWarpPoint(warp)
     for _,p in ipairs(Player.get()) do
-        if (Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil)) or p:mem(0x15E, FIELD_WORD) <= 0 then
+        if (Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil)) then
             SysManager.loadMap()
         else
             Level.load(Warp.get()[warp].levelFilename)

@@ -52,7 +52,7 @@ end
 namehover.active = false
 local statusFont = textplus.loadFont("littleDialogue/font/6.ini")
 
-smasHud.visible.starcoins = false
+--smasHud.visible.starcoins = false
 GameData.activateAbilityMessage = false
 
 local easterCrash = false

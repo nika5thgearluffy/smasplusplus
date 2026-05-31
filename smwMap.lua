@@ -1177,10 +1177,10 @@ end
 
 local hudThingsToHude = {
     "bombs",
-    "coins",
-    "customitembox",
-    "deathcount",
-    "itembox",
+    "coinRegular",
+    "customItemBox",
+    "deathCount",
+    "reserveBox",
     "keys",
     "levelname",
     "lives",
@@ -1188,13 +1188,13 @@ local hudThingsToHude = {
     "pWing",
     "score",
     "starcoins",
-    "stars",
+    "starCount",
     "timer",
 }
 
 function smwMap.onStart()
     for k,v in ipairs(hudThingsToHude) do
-        smasHud.visible[v] = false
+        smasHud.elements.show[v] = false
     end
     
     for _,p in ipairs(Player.get()) do

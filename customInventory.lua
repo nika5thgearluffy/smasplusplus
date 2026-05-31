@@ -13,7 +13,7 @@ local inventory = {}
 inventory.startingItems = 0
 
 local particles = require("particles")
-local hOverride = require("smasHud")
+local hOverride = require("smasHud2")
 local shader = Misc.multiResolveFile("starman.frag", "shaders\\npc\\starman.frag")
 
 -- Variables --

@@ -463,7 +463,9 @@ function smasHudSystem.onInputUpdate()
 end
 
 function smasHudSystem.onPostPlayerKill(plr) --To cancel the death entirely
-    currentDeathRoutine = Routine.run(diedanimation, plr)
+    if not Playur.isAnyPlayerAlive() then
+        currentDeathRoutine = Routine.run(diedanimation, plr)
+    end
 end
 
 function smasHudSystem.onPlayerDie(eventObj, plr) -- We're not going to kick back to the map after 200 ticks has passed, so cancel the die sequence
@@ -499,12 +501,10 @@ function smasHudSystem.onTick()
         SaveData.totalCherries = 0
     end
     
-    if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then
-        if not Playur.isAnyPlayerAlive() then
-            deathTimer = deathTimer + 1
-            if deathTimer == 1 then
-                Routine.run(thirteenModeDeath)
-            end
+    if not Playur.isAnyPlayerAlive() then
+        deathTimer = deathTimer + 1
+        if deathTimer == 1 then
+            Routine.run(thirteenModeDeath)
         end
     end
     if(not killed1 and player:mem(0x13E,FIELD_BOOL)) then

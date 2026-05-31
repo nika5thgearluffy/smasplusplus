@@ -45,20 +45,17 @@ if smasMainMenu.active then
     aw.enabled = false
     littleDialogue.cursorEnabled = false
     Graphics.activateHud(false)
-    smasHud.visible.keys = false
-    smasHud.visible.itemBox = false
-    smasHud.visible.bombs = false
-    smasHud.visible.coins = false
-    smasHud.visible.score = false
-    smasHud.visible.lives = false
-    smasHud.visible.stars = false
-    smasHud.visible.starcoins = false
-    smasHud.visible.timer = false
-    smasHud.visible.levelname = false
-    smasHud.visible.overworldPlayer = false
-    smasHud.visible.deathCount = false
-    smasHud.visible.customItemBox = false
-    smasHud.visible.pWing = false
+    smasHud.elements.show.coinRegular = false
+    smasHud.elements.show.starCount = false
+    smasHud.elements.show.lives = false
+    smasHud.elements.show.reserveBox = false
+    smasHud.elements.show.hearts = false
+    smasHud.elements.show.deathCount = false
+    smasHud.elements.show.score = false
+    smasHud.elements.show.timer = false
+    smasHud.elements.show.customItemBox = false
+    smasHud.elements.show.pWing = false
+    smasHud.elements.show.bombs = false
     smasDateAndTime.position = 1
     smasExtraSounds.active = false
     smasMainMenu.startedmenu = 0
@@ -861,7 +858,7 @@ function smasMainMenu.onTick()
         end
         Graphics.activateHud(false)
         littleDialogue.defaultStyleName = "bootmenudialog" --Change the text box to the SMBX 1.3 menu textbox format
-        smasHud.visible.lives = false
+        smasHud.elements.show.lives = false
         if (not killed and player:mem(0x13E,FIELD_BOOL)) then
             killed = true
             SaveData.failsafeMessageOne = true

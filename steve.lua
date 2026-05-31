@@ -9,7 +9,7 @@
 ]]
 
 local playerManager = require("playerManager")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local blockutils = require("blocks/blockutils")
 
 local configFileReader = require("configFileReader")

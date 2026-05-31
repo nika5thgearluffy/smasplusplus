@@ -629,6 +629,7 @@ function costume.onInit(p)
 
         table.insert(costume.playersList,p)
     end
+    Misc.storeLatestCostumeData(costume, p.idx)
 end
 
 function costume.onCleanup(p)
@@ -857,19 +858,18 @@ end
 
 function costume.onDraw()
     for _,p in ipairs(costume.playersList) do
-        local data = costume.playerData[p]
+        if p and p.isValid then
+            local data = costume.playerData[p]
 
-        data.frameInOnDraw = p.frame
-        
-        local animationData = animations[data.currentAnimation]
-        
-        if (animationData ~= nil and animationData.setFrameInOnDraw) and data.forcedFrame ~= nil then
-            p.frame = data.forcedFrame
+            data.frameInOnDraw = p.frame
+            
+            local animationData = animations[data.currentAnimation]
+            
+            if (animationData ~= nil and animationData.setFrameInOnDraw) and data.forcedFrame ~= nil then
+                p.frame = data.forcedFrame
+            end
         end
     end
 end
-
-
-Misc.storeLatestCostumeData(costume)
 
 return costume

@@ -1,6 +1,6 @@
 local playerManager = require("playerManager")
 local smasExtraSounds = require("smasExtraSounds")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local rng = require("base/rng")
 local npcManager = require("npcManager")
 local npcutils = require("npcs/npcutils")

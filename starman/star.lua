@@ -317,7 +317,7 @@ function starman.onTick()
     if starman.active() then
         for k,v in ipairs(NPC.get(NPC.HITTABLE)) do
             for _,p in ipairs(Player.get()) do
-                if(v and v.isValid and starActivePlayers[p.idx] and Collisionz.CheckCollisionNoEntity(p.x - 2, p.y + 2, p.width + 4, p.height + 4, v.x, v.y, v.width, v.height)) then
+                if(v and v.isValid and starActivePlayers[p.idx] and Collisionz.CheckCollisionNoEntity(p.x - 2, p.y + 2, p.width + 2, p.height + 2, v.x, v.y, v.width, v.height)) then
                     local oldScore = NPC.config[v.id].score
                     if starScoreboard[p.idx] < 10 then
                         starScoreboard[p.idx] = starScoreboard[p.idx] + 1
@@ -334,7 +334,7 @@ function starman.onTick()
             killed = true
             starman.stop(p)
         end
-        if GameData.stopStarman == true then
+        if GameData.stopStarman then
             starman.stop(p)
             GameData.stopStarman = false
         end

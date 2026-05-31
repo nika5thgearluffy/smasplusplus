@@ -12,7 +12,7 @@ local ep3Playables = require("a2xt_ep3playables")
 local players = {}
 local playerCount = 0
 
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local smasFunctions = require("smasFunctions")
 
 -- Library table for the costume, config for default ep3Playables behavior goes here

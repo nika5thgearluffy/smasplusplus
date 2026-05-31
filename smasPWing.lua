@@ -1,6 +1,6 @@
 local smasPWing = {}
 
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local smasExtraSounds = require("smasExtraSounds")
 
 smasPWing.pMeter = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-4.png")
@@ -62,10 +62,10 @@ function smasPWing.isFlying(p)
 end
 
 function smasPWing.runningCounter(plr)
-    if smasCharacterCostumes.currentCostume ~= {} then
+    if smasCharacterCostumes.currentCostume[plr.idx] ~= {} then
         if smasCharacterCostumes.currentCostume.playersList ~= nil then
-            for _,p in ipairs(smasCharacterCostumes.currentCostume.playersList) do
-                local data = smasCharacterCostumes.currentCostume.playerData[p]
+            for _,p in ipairs(smasCharacterCostumes.currentCostume[plr.idx].playersList) do
+                local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[p]
                 if data.pSpeed ~= nil then
                     return data.pSpeed
                 end
@@ -79,10 +79,10 @@ function smasPWing.runningCounter(plr)
 end
 
 function smasPWing.canStartFlying(plr)
-    if smasCharacterCostumes.currentCostume ~= {} then
+    if smasCharacterCostumes.currentCostume[plr.idx] ~= {} then
         if smasCharacterCostumes.currentCostume.playersList ~= nil then
-            for _,p in ipairs(smasCharacterCostumes.currentCostume.playersList) do
-                local data = smasCharacterCostumes.currentCostume.playerData[p]
+            for _,p in ipairs(smasCharacterCostumes.currentCostume[plr.idx].playersList) do
+                local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[p]
                 local atPSpeed = (p.holdingNPC == nil)
 
                 if atPSpeed then
@@ -108,7 +108,7 @@ function smasPWing.remainingFlightTimer(p)
 end
 
 function smasPWing.drawPWingHud()
-    if smasHud.visible.pWing then
+    if smasHud.elements.show.pWing then
         if Graphics.isHudActivated() then
             local CenterX = camera.width / 2
             
@@ -160,11 +160,13 @@ function smasPWing.drawPWingHud()
 end
 
 function smasPWing.onTick()
-    if smasCharacterCostumes.currentCostume.playersList ~= nil then
-        if smasPWing.canStartFlying(player) and not smasPWing.leafPowerups[player.powerup] then
-            if smasExtraSounds.active then
-                if smasExtraSounds.enablePWingSFX then 
-                    Sound.playSFX(121, smasExtraSounds.volume, 1, smasExtraSounds.pWingDelay)
+    for _,p in ipairs(Player.get()) do
+        if smasCharacterCostumes.currentCostume[p.idx].playersList ~= nil then
+            if smasPWing.canStartFlying(player) and not smasPWing.leafPowerups[player.powerup] then
+                if smasExtraSounds.active then
+                    if smasExtraSounds.enablePWingSFX then 
+                        Sound.playSFX(121, smasExtraSounds.volume, 1, smasExtraSounds.pWingDelay)
+                    end
                 end
             end
         end
@@ -172,16 +174,18 @@ function smasPWing.onTick()
 end
 
 function smasPWing.onDraw()
-    if smasCharacterCostumes.currentCostume.playersList ~= nil then
-        for _,p in ipairs(smasCharacterCostumes.currentCostume.playersList) do
-            local data = smasCharacterCostumes.currentCostume.playerData[p]
-            if data.pSpeed ~= nil and not Misc.isPaused() and not smasPWing.leafPowerups[player.powerup] then
-                smasPWing.drawPWingHud()
+    for _,p in ipairs(Player.get()) do
+        if smasCharacterCostumes.currentCostume[p.idx].playersList ~= nil then
+            for _,p in ipairs(smasCharacterCostumes.currentCostume[p.idx].playersList) do
+                local data = smasCharacterCostumes.currentCostume[p.idx].playerData[p]
+                if data.pSpeed ~= nil and not Misc.isPaused() and not smasPWing.leafPowerups[player.powerup] then
+                    smasPWing.drawPWingHud()
+                end
             end
         end
-    end
-    if smasPWing.leafPowerups[player.powerup] and not Misc.isPaused() then
-        smasPWing.drawPWingHud()
+        if smasPWing.leafPowerups[player.powerup] and not Misc.isPaused() then
+            smasPWing.drawPWingHud()
+        end
     end
 end
 

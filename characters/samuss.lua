@@ -18,7 +18,7 @@ local rng = require("rng")
 local pm = require("playerManager")
 local imagic = require("imagic")
 local defs = require("expandedDefines")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 
 local megashroom = require("NPCs/AI/megashroom")
 

@@ -3,6 +3,7 @@ local smasHud = {}
 local smasFunctions = require("smasFunctions")
 local textplus = require("textplus")
 local timer = require("timer-mod")
+local playerManager = require("playerManager")
 
 local smasHudActivated = true
 
@@ -29,6 +30,7 @@ smasHud.elements.icons = {
     starCount = Graphics.sprites.hardcoded["33-5"].img,
     lives = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-2.png"),
     reserveBox = Graphics.sprites.hardcoded["48-0"].img,
+    reserveBox2 = Graphics.sprites.hardcoded["48-1"].img,
     deathCount = Graphics.loadImageResolved("graphics/hardcoded/hardcoded-100-3.png"),
     timer = Graphics.sprites.hardcoded["52"].img,
     heartFull = Graphics.sprites.hardcoded["36-1"].img,
@@ -71,6 +73,30 @@ function smasHud.activateHud(toggle)
         smasHud.elements.show.pWing = false
         smasHudActivated = false
     end
+end
+
+local function getValuesForPlayerReserve(p)
+    local reserveItem = SaveData.SMASPlusPlus.hud.reserve[p.idx]
+    local reserve = Graphics.sprites.npc[reserveItem].img
+
+    local w = NPC.config[reserveItem].gfxwidth
+    if w == 0 then
+        w = NPC.config[reserveItem].width
+    end
+
+    local h = NPC.config[reserveItem].gfxheight
+    if h == 0 then
+        h = NPC.config[reserveItem].height
+    end
+
+    local sourcex = 0;
+    local sourcey = 0;
+
+    --Special case for megashroom
+    if(reserveItem == 425) then
+        sourcey = 5*h;
+    end
+    return w,h,sourcex,sourcey,reserve
 end
 
 function smasHud.drawHud()
@@ -136,31 +162,39 @@ function smasHud.drawHud()
             end
         end
         -- Reserve Box
+        local chars = playerManager.getCharacters()
         if smasHud.elements.show.reserveBox then
-            Graphics.drawImageWP(smasHud.elements.icons.reserveBox, smasHud.drawing.angles.middle - 30, 15, smasHud.priority)
-            if SaveData.SMASPlusPlus.hud.reserve[player.idx] > 0 then
-                local reserveItem = SaveData.SMASPlusPlus.hud.reserve[player.idx]
-                local reserve = Graphics.sprites.npc[reserveItem].img
-
-                local w = NPC.config[reserveItem].gfxwidth
-                if w == 0 then
-                    w = NPC.config[reserveItem].width
+            for _,p in ipairs(Player.get()) do
+                if (chars[p.character].base == 1 or chars[p.character].base == 2) then
+                    Graphics.drawImageWP(smasHud.elements.icons.reserveBox, smasHud.drawing.angles.middle - 30, 15, smasHud.priority)
+                    if SaveData.SMASPlusPlus.hud.reserve[player.idx] > 0 then
+                        local w,h,sourcex,sourcey,reserve = getValuesForPlayerReserve(player)
+                        Graphics.drawImageWP(reserve, smasHud.drawing.angles.middle - 18, 28, sourcex, sourcey, w, h, smasHud.priority)
+                    end
+                    if Player.count() >= 2 then
+                        Graphics.drawImageWP(smasHud.elements.icons.reserveBox2, smasHud.drawing.angles.middle - 30, 85, smasHud.priority)
+                        if SaveData.SMASPlusPlus.hud.reserve[player2.idx] > 0 then
+                            local w,h,sourcex,sourcey,reserve = getValuesForPlayerReserve(player2)
+                            Graphics.drawImageWP(reserve, smasHud.drawing.angles.middle - 18, 98, sourcex, sourcey, w, h, smasHud.priority)
+                        end
+                    end
                 end
-
-                local h = NPC.config[reserveItem].gfxheight
-                if h == 0 then
-                    h = NPC.config[reserveItem].height
+                if (chars[p.character].base == 3 or chars[p.character].base == 4 or chars[p.character].base == 5) then
+                    for i = 1,3 do
+                        Graphics.drawImageWP(smasHud.elements.icons.heartEmpty, smasHud.drawing.angles.middle - 75 + (i * 32), 18, smasHud.priority)
+                    end
+                    for i = 1,player:mem(0x16, FIELD_WORD) do
+                        Graphics.drawImageWP(smasHud.elements.icons.heartFull, smasHud.drawing.angles.middle - 75 + (i * 32), 18, smasHud.priority)
+                    end
+                    if Player.count() >= 2 then
+                        for i = 1,3 do
+                            Graphics.drawImageWP(smasHud.elements.icons.heartEmpty, smasHud.drawing.angles.middle - 75 + (i * 32), 78, smasHud.priority)
+                        end
+                        for i = 1,player2:mem(0x16, FIELD_WORD) do
+                            Graphics.drawImageWP(smasHud.elements.icons.heartFull, smasHud.drawing.angles.middle - 75 + (i * 32), 78, smasHud.priority)
+                        end
+                    end
                 end
-
-                local sourcex = 0;
-                local sourcey = 0;
-
-                --Special case for megashroom
-                if(reserveItem == 425) then
-                    sourcey = 5*h;
-                end
-
-                Graphics.drawImageWP(reserve, smasHud.drawing.angles.middle - 18, 28, sourcex, sourcey, w, h, smasHud.priority)
             end
         end
         -- Death count
@@ -200,24 +234,51 @@ function smasHud.drawHud()
         end
         if smasHud.elements.show.timer then
             if timer.isActive() then
+                local timer = timer.getValue()
+                if timer == -0 then
+                    timer = 0
+                end
                 local timerPosition = 106
                 Graphics.drawImageWP(smasHud.elements.icons.timer, smasHud.drawing.angles.right - timerPosition, 50, smasHud.priority)
                 Graphics.drawImageWP(smasHud.elements.icons.x, smasHud.drawing.angles.right - timerPosition + 20, 50, smasHud.priority)
                 textplus.print{
                     x = smasHud.drawing.angles.right - timerPosition + 40,
                     y = 50,
-                    text = tostring(timer.getValue()),
+                    text = tostring(timer),
                     priority = smasHud.priority,
                     color = Color.white,
                     font = smasHud.font,
                 }
             end
         end
+        if smasHud.elements.show.bombs then
+            if Player.count() == 1 then
+                if player:mem(0x08, FIELD_WORD) > 0 then
+                    Graphics.drawImageWP(smasHud.elements.icons.bombs, smasHud.drawing.angles.middle - 31, 52, smasHud.priority)
+                    Graphics.drawImageWP(smasHud.elements.icons.x, smasHud.drawing.angles.middle - 7, 53, smasHud.priority)
+                    textplus.print{
+                        x = smasHud.drawing.angles.middle + 16,
+                        y = 53,
+                        text = tostring(player:mem(0x08, FIELD_WORD)),
+                        priority = smasHud.priority,
+                        color = Color.white,
+                        font = smasHud.font,
+                    }
+                end
+            else
+                if player:mem(0x08, FIELD_WORD) > 0 then
+                    
+                end
+                if player2:mem(0x08, FIELD_WORD) > 0 then
+                    
+                end
+            end
+        end
     end
 end
 
 function smasHud.onDraw()
-    smasHud.drawHud()
+    Graphics.overrideHUD(smasHud.drawHud)
 end
 
 return smasHud

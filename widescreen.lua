@@ -1,6 +1,6 @@
 local widescreen = {}
 
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 
 function widescreen.onInitAPI()
     --registerEvent(twilightHUD, "onStart", "onStart")

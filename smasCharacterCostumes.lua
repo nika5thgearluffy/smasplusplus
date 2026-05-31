@@ -5,5 +5,8 @@
 smasCharacterCostumes = {}
 
 smasCharacterCostumes.currentCostume = {}
+for i = 1,200 do
+    smasCharacterCostumes.currentCostume[i] = {}
+end
 
 return smasCharacterCostumes

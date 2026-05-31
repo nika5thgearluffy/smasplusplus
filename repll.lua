@@ -1,7 +1,9 @@
 local repll = {}
 
+repll.settings = {}
+
 --Whether to enable sounds by default. Toggle it false on the actual console if it gets annoying to you.
-repll.enableSounds = true
+repll.settings.enableSounds = true
 
 -- TODO: Handle unicode better. Textplus renders utf-8 fine, but repll for cursor management
 --       purposes repll is not respecting multi-byte characters properly.
@@ -177,17 +179,17 @@ end
 local function cmd(str)
     if isExpression(str) then
         eval(str)
-        if repll.enableSounds then
+        if repll.settings.enableSounds then
             Sound.playSFX("console/console_info.ogg")
         end
     elseif isValid(str) then
         exec(str)
-        if repll.enableSounds then
+        if repll.settings.enableSounds then
             Sound.playSFX("console/console_success.ogg")
         end
     else
         printError(select(2, load(str)))
-        if repll.enableSounds then
+        if repll.settings.enableSounds then
             Sound.playSFX("console/console_error.ogg")
         end
     end
@@ -285,7 +287,7 @@ end
 
 local consoleToggleCooldown = 0
 
-function repll.onKeyboardPressDirect(vk, repeated, char)
+function repll.onKeyboardPressDirect(vk, repeated, char, idx)
     if not (repll.activeInEpisode or Misc.inEditor()) then return end
 
     -- Debounce: ignore TAB for 1 frame after toggling
@@ -296,7 +298,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
     if not repll.active then
         if (vk == VK_TAB) and (not repeated) then
             repl.active = false
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 --Sound.playSFX("console/console_open.ogg")
             end
             Misc.pause()
@@ -310,7 +312,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
     
     local rngkey = rng.randomInt(1,7)
     if (not repeated) then
-        if repll.enableSounds then
+        if repll.settings.enableSounds then
             Sound.playSFX("console/console_keypress"..rngkey..".ogg")
         end
     end
@@ -320,8 +322,8 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
         repll.cursorOffsetY = 0
         if vk == VK_TAB or vk == VK_ESCAPE then
             if (not repeated) then
-                if repll.enableSounds then
-                    --Sound.playSFX("console/console_close.ogg")
+                if repll.settings.enableSounds then
+                    Sound.playSFX("console/console_close.ogg")
                 end
                 Misc.unpause()
                 repll.active = false
@@ -329,7 +331,7 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
                 consoleToggleCooldown = 2  -- block for 2 frames
             end
         elseif vk == VK_RETURN then
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_keypressenter.ogg")
             end
             if Misc.GetKeyState(VK_SHIFT) then
@@ -344,14 +346,14 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
             local left, right = split(repll.buffer, repll.cursorPos)
             repll.buffer = left:sub(1, -2) .. right
             repll.cursorPos = math.max(0, repll.cursorPos - 1)
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_keypressbackspace.ogg")
             end
             blinker = 1
         elseif vk == VK_DELETE then
             local left, right = split(repll.buffer, repll.cursorPos)
             repll.buffer = left .. right:sub(2)
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_keypress7.ogg")
             end
             blinker = 1
@@ -371,17 +373,17 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
         elseif vk == VK_LEFT then
             repll.cursorPos = math.max(0, repll.cursorPos - 1)
             blinker = 1
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_keypress"..rngkey..".ogg")
             end
         elseif vk == VK_RIGHT then
             repll.cursorPos = math.min(repll.cursorPos + 1, #repll.buffer)
             blinker = 1
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_keypress"..rngkey..".ogg")
             end
         elseif vk == VK_HOME then
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_resetfont.ogg")
             end
             if Misc.GetKeyState(VK_MENU) then
@@ -395,16 +397,16 @@ function repll.onKeyboardPressDirect(vk, repeated, char)
             blinker = 1
         elseif vk == VK_PRIOR then
             repll.increaseFontSize(0.1)
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_zoomin.ogg")
             end
         elseif vk == VK_NEXT then
             repll.decreaseFontSize(0.1)
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_zoomout.ogg")
             end
         elseif vk == VK_F9 then
-            if repll.enableSounds then
+            if repll.settings.enableSounds then
                 Sound.playSFX("console/console_resetfont.ogg")
             end
             repll.clearLog()
@@ -423,7 +425,7 @@ function repll.onPasteText(pastedText)
     repll.buffer = left .. pastedText .. right
     repll.cursorPos = repll.cursorPos + #pastedText
     if repll.active then
-        if repll.enableSounds then
+        if repll.settings.enableSounds then
             Sound.playSFX("console/console_paste.ogg")
         end
     end

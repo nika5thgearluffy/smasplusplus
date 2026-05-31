@@ -11,7 +11,7 @@ local panim = require("playeranim")
 local followa = require("followa")
 local vectr = require("vectr")
 local defs = require("expandedDefines")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 
 local bowser = {}
 

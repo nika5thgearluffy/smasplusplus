@@ -7,7 +7,7 @@ local areaNames = require("areaNames")
 local textplus = require("textplus")
 local ShopSystem = require("ShopSystem/ShopSystem")
 local anothercurrency = require("ShopSystem/anothercurrency")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 
 -- Images --
 local shopItems = Graphics.loadImageResolved("ShopSystem/ShopSystem/shopItems.png")

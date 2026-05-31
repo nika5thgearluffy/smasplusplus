@@ -3,7 +3,7 @@ local playerManager = require("playerManager")
 local textplus = require("textplus")
 local Routine = require("routine")
 local anothercurrency = require("ShopSystem/anothercurrency")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local rng = require("base/rng")
 local warpTransition = require("warpTransition")
 

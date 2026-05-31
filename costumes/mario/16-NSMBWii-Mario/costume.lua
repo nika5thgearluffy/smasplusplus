@@ -10,7 +10,7 @@ local playerManager = require("playerManager")
 local smasExtraSounds = require("smasExtraSounds")
 local rng = require("base/rng")
 local textplus = require("textplus")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local smasFunctions = require("smasFunctions")
 
 local costume = {}

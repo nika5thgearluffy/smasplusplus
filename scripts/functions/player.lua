@@ -477,7 +477,7 @@ function Playur.changeCharacter(p, isNumberOrString, characterID, variantID, alt
         end
     end
     if SaveData.SMASPlusPlus.player[playerID].currentCostume ~= smasCharacterChanger.namesCostume[characterID][variantID] then
-        smasCharacterCostumes.currentCostume = {} --Blank this out in case if it has any previous data in it
+        smasCharacterCostumes.currentCostume[playerID] = {} --Blank this out in case if it has any previous data in it
     end
     smasAlterationSystem.enableGraphicRevertation = true
     local charac = smasCharacterChanger.namesCharacter[characterID]

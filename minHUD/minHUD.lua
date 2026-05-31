@@ -5,7 +5,7 @@ local minHUD = {}
 -- Code made by Hatsune Blake! Please give credit!
 
 local textplus = require("textplus")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local smasFunctions = require("smasFunctions")
 local t = 0
 

@@ -1,6 +1,6 @@
 local littleDialogue = require("littleDialogue")
 local rng = require("base/rng")
-local smasHud = require("smasHud")
+local smasHud = require("smasHud2")
 local level_dependencies_rushmode = require("level_dependencies_rushmode")
 local mleb = require("multilayeredearthboundbg")
 local title = Graphics.loadImage("title-final-2x.png")

@@ -242,88 +242,86 @@ end
 
 
 
---[[if SaveData.SMASPlusPlus.game.onePointThreeModeActivated then --These will be 1.3 Mode specific
-    function smas2PlayerSystem.doorTeleportP1toP2()
-        Routine.waitFrames(30)
-        player:mem(0x140,FIELD_WORD,100)
-        Player(2):mem(0x140,FIELD_WORD,100)
-        if Player.count() >= 2 then
-            Player(1):teleport(Player(2).x - 32, Player(2).y - 32, bottomCenterAligned)
-        end
+function smas2PlayerSystem.doorTeleportP1toP2()
+    Routine.waitFrames(30)
+    player:mem(0x140,FIELD_WORD,100)
+    if Player.count() >= 2 then
+        player2:mem(0x140,FIELD_WORD,100)
+        player:teleport(player2.x, player2.y, true)
     end
-    
-    function smas2PlayerSystem.doorTeleportP2toP1()
-        Routine.waitFrames(30)
-        player:mem(0x140,FIELD_WORD,100)
-        if Player.count() >= 2 then
-            Player(2):mem(0x140,FIELD_WORD,100)
-            Player(2):teleport(Player(1).x - 32, Player(1).y - 32, bottomCenterAligned)
-        end
+end
+
+function smas2PlayerSystem.doorTeleportP2toP1()
+    Routine.waitFrames(30)
+    player:mem(0x140,FIELD_WORD,100)
+    if Player.count() >= 2 then
+        player2:mem(0x140,FIELD_WORD,100)
+        player2:teleport(player.x - 32, player.y - 32, true)
     end
-    
-    function smas2PlayerSystem.teleport2PlayerModeController(button, playerIdx) --Using the Special button to teleport within each other, same goes for the other two below except for keyboards
-        if Player.count() == 2 then
-            if playerIdx == 1 then
-                if not Misc.isPaused() then
-                    if button == SaveData.SMASPlusPlus.player[1].controls.specialButton then
-                        player:teleport(player2.x + 32, player2.y - 32, bottomCenterAligned)
-                        Sound.playSFX("player-tp-2player.ogg")
-                    end
-                end
-            end
-            if playerIdx == 2 then
-                if not Misc.isPaused() then
-                    if button == SaveData.SMASPlusPlus.player[2].controls.specialButton then
-                        player2:teleport(player.x - 32, player.y - 32, bottomCenterAligned)
-                        Sound.playSFX("player-tp-2player.ogg")
-                    end
+end
+
+function smas2PlayerSystem.teleport2PlayerModeController(button, playerIdx) --Using the Special button to teleport within each other, same goes for the other two below except for keyboards
+    if Player.count() == 2 then
+        if playerIdx == 1 then
+            if not Misc.isPaused() then
+                if button == SaveData.SMASPlusPlus.player[1].controls.specialButton then
+                    player:teleport(player2.x, player2.y, true)
+                    Sound.playSFX("player-tp-2player.ogg")
                 end
             end
         end
-    end
-
-    function smas2PlayerSystem.teleport2PlayerMode1P() --1st Player teleport, uses the keyboard key instead
-        if Player.count() == 2 then
+        if playerIdx == 2 then
             if not Misc.isPaused() then
-                player:teleport(player2.x + 32, player2.y - 32, bottomCenterAligned)
-                Sound.playSFX("player-tp-2player.ogg")
-            end
-        end
-    end
-
-    function smas2PlayerSystem.teleport2PlayerMode2P()--2nd Player teleport, uses the keyboard key instead
-        if Player.count() == 2 then
-            if not Misc.isPaused() then
-                player2:teleport(player.x - 32, player.y - 32, bottomCenterAligned)
-                Sound.playSFX("player-tp-2player.ogg")
-            end
-        end
-    end
-
-
-
-    function smas2PlayerSystem.onKeyboardPress(keyCode, repeated) --Now for the keyboard press detection code...
-        if Player.count() == 2 then
-            if not Misc.isPaused() then
-                local specialKey = SaveData.SMASPlusPlus.player[1].controls.specialKey
-                local specialKey2 = SaveData.SMASPlusPlus.player[2].controls.specialKey
-                if keyCode == smasTables.keyboardMap[specialKey] and not repeated then
-                    smas2PlayerSystem.teleport2PlayerMode1P()
-                elseif keyCode == smasTables.keyboardMap[specialKey2] and not repeated then
-                    smas2PlayerSystem.teleport2PlayerMode2P()
+                if button == SaveData.SMASPlusPlus.player[2].controls.specialButton then
+                    player2:teleport(player.x, player.y, true)
+                    Sound.playSFX("player-tp-2player.ogg")
                 end
             end
         end
     end
+end
 
-
-
-    function smas2PlayerSystem.onControllerButtonPress(button, playerIdx) --...along with the controller press detection code
-        if Player.count() == 2 then
-            smas2PlayerSystem.teleport2PlayerModeController(button, playerIdx)
+function smas2PlayerSystem.teleport2PlayerMode1P() --1st Player teleport, uses the keyboard key instead
+    if Player.count() == 2 then
+        if not Misc.isPaused() then
+            player:teleport(player2.x, player2.y, true)
+            Sound.playSFX("player-tp-2player.ogg")
         end
     end
-end]]
+end
+
+function smas2PlayerSystem.teleport2PlayerMode2P()--2nd Player teleport, uses the keyboard key instead
+    if Player.count() == 2 then
+        if not Misc.isPaused() then
+            player2:teleport(player.x, player.y, true)
+            Sound.playSFX("player-tp-2player.ogg")
+        end
+    end
+end
+
+
+
+function smas2PlayerSystem.onKeyboardPress(keyCode, repeated) --Now for the keyboard press detection code...
+    if Player.count() == 2 then
+        if not Misc.isPaused() then
+            local specialKey = SaveData.SMASPlusPlus.player[1].controls.specialKey
+            local specialKey2 = SaveData.SMASPlusPlus.player[2].controls.specialKey
+            if keyCode == smasTables.keyboardMap[specialKey] and not repeated then
+                smas2PlayerSystem.teleport2PlayerMode1P()
+            elseif keyCode == smasTables.keyboardMap[specialKey2] and not repeated then
+                smas2PlayerSystem.teleport2PlayerMode2P()
+            end
+        end
+    end
+end
+
+
+
+function smas2PlayerSystem.onControllerButtonPress(button, playerIdx) --...along with the controller press detection code
+    if Player.count() == 2 then
+        smas2PlayerSystem.teleport2PlayerModeController(button, playerIdx)
+    end
+end
 
 
 
