@@ -95,6 +95,19 @@ littleDialogue.defaultStyleName = "smbx13" --Change the text box to the SMBX 1.3
 smasExtraSounds.active = false
 smasBooleans.disablePauseMenu = true
 
+local IPHostBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
+local IPClientBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
+
+local function IPAddressHostEnter()
+    GameData.playerEnteringHostIP = true
+    IPHostBoard:open()
+end
+
+local function IPAddressClientEnter()
+    GameData.playerEnteringClientIP = true
+    IPClientBoard:open()
+end
+
 local function ExitToBootMenu()
     exitscreen = true
     Audio.MusicChange(0, 0)
@@ -109,38 +122,22 @@ end
 
 local function ExitToBootMenuWithSound()
     Sound.playSFX(14)
-    exitscreen = true
-    Audio.MusicChange(0, 0)
-    Routine.wait(0.4)
-    Misc.saveGame()
-    if Misc.isRunningWhenUnfocused() then
-        Misc.setRunWhenUnfocused(false)
-    end
-    GameData.SMASPlusPlus.online.state = 0
-    Level.load("SMAS - Start.lvlx")
+    ExitToBootMenu()
 end
 
 local function startConnecting()
-    exitwordswip = true
-    for i = 1,14 do
-        Sound.unmuteChannel(i)
+    local isValidIP = SysManager.checkValidIPAddress(GameData.SMASPlusPlus.online.ipClient)
+    if isValidIP then
+        exitwordswip = true
+        for i = 1,14 do
+            Sound.unmuteChannel(i)
+        end
+        for k,v in ipairs(lobbyChannelsToMute) do
+            Sound.muteChannel(v)
+        end
+    else
+        littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>Looks like this is an invalid IP address! Please reenter the address.<question IPAddressEntering>", pauses = false, updatesInPause = true})
     end
-    for k,v in ipairs(lobbyChannelsToMute) do
-        Sound.muteChannel(v)
-    end
-end
-
-local IPHostBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
-local IPClientBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
-
-local function IPAddressHostEnter()
-    GameData.playerEnteringHostIP = true
-    IPHostBoard:open()
-end
-
-local function IPAddressClientEnter()
-    GameData.playerEnteringClientIP = true
-    IPClientBoard:open()
 end
 
 local function enterIPAddress()
@@ -150,7 +147,7 @@ local function enterIPAddress()
     for k,v in ipairs(selectChannelsToMute) do
         Sound.muteChannel(v)
     end
-    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>First up, we need the client's IP address. Please enter it.<question IPAddressEntering>", pauses = false, updatesInPause = true})
+    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>We'll need the client's IP address in order to connect. Please enter it.<question IPAddressEntering>", pauses = false, updatesInPause = true})
 end
 
 local function onlineBegin()
@@ -160,6 +157,7 @@ end
 function onStart()
     if GameData.SMASPlusPlus.online.state == 0 then
         GameData.SMASPlusPlus.online.state = 1
+        Playur.activate1stPlayer()
     end
     smasExtraSounds.active = false
     if GameData.SMASPlusPlus.online.state == 1 then
@@ -216,6 +214,7 @@ local function menu_showExitMenu()
 end
 
 littleDialogue.registerAnswer("IPAddressEntering",{text = "Enter",chosenFunction = function() IPAddressClientEnter() end})
+littleDialogue.registerAnswer("IPAddressEntering",{text = "Exit",chosenFunction = function() Routine.run(ExitToBootMenu) end})
 
 littleDialogue.registerAnswer("QuitToMenuError",{text = "Exit",chosenFunction = function() Routine.run(ExitToBootMenu) end})
 

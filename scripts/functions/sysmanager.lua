@@ -656,4 +656,22 @@ function SysManager.getUserFilesSMASPlusPlusDirectory()
     return Misc.userFilesDirectory().."SMASPlusPlus\\"
 end
 
+function SysManager.checkValidIPAddress(ip)
+    if type(ip) ~= "string" then
+        return false
+    end
+    
+    -- Match 4 groups of 1-3 digits separated by dots
+    local a, b, c, d = ip:match("^(%d+)%.(%d+)%.(%d+)%.(%d+)$")
+    
+    if not a then
+        return false
+    end
+    
+    -- Convert to numbers and check range (0-255)
+    a, b, c, d = tonumber(a), tonumber(b), tonumber(c), tonumber(d)
+    
+    return (a <= 255 and b <= 255 and c <= 255 and d <= 255)
+end
+
 return SysManager

@@ -61,6 +61,21 @@ function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
             if onMainMenu then
                 SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 5
             end
+        elseif SaveData.SMASPlusPlus.options.resolution == "nes-snes" then
+            Screen.changeResolution(686,600)
+            if onMainMenu then
+                SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 6
+            end
+        elseif SaveData.SMASPlusPlus.options.resolution == "gba" then
+            Screen.changeResolution(900,600)
+            if onMainMenu then
+                SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 7
+            end
+        elseif SaveData.SMASPlusPlus.options.resolution == "3ds" then
+            Screen.changeResolution(1000,600)
+            if onMainMenu then
+                SaveData.pauseplus.selectionData["screensettings"]["switch resolution"] = 8
+            end
         else
             Screen.changeResolution(800,600)
             if onMainMenu then
