@@ -190,18 +190,20 @@ local function setHeldNPCPosition(p,x,y)
 end
 
 local function handleDucking(p)
-    if p.keys.down and not smb2Characters[p.character] and (p.powerup == PLAYER_SMALL) and canDuck(p) then
-        p:mem(0x12E,FIELD_BOOL,true)
+    if p and p.isValid then
+        if p.keys.down and not smb2Characters[p.character] and (p.powerup == PLAYER_SMALL) and canDuck(p) then
+            p:mem(0x12E,FIELD_BOOL,true)
 
-        if isOnGround(p) then
-            if p.keys.left then
-                p.direction = DIR_LEFT
-            elseif p.keys.right then
-                p.direction = DIR_RIGHT
+            if isOnGround(p) then
+                if p.keys.left then
+                    p.direction = DIR_LEFT
+                elseif p.keys.right then
+                    p.direction = DIR_RIGHT
+                end
+
+                p.keys.left = false
+                p.keys.right = false
             end
-
-            p.keys.left = false
-            p.keys.right = false
         end
     end
 end

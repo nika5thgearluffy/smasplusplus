@@ -234,6 +234,17 @@ function Playur.activate1stPlayer(enablexplosion) --Activates 1st player mode
     if enablexplosion == nil then
         enablexplosion = false
     end
+    -- Clear out any costume data and run onCleanup for players above 1
+    if smasCharacterCostumes then
+        for i = 2,200 do
+            if smasCharacterCostumes.currentCostume[i] ~= nil and Player(i) and Player(i).isValid then
+                if smasCharacterCostumes.currentCostume[i].onCleanup then
+                    smasCharacterCostumes.currentCostume[i].onCleanup(Player(i))
+                end
+                smasCharacterCostumes.currentCostume[i] = {}
+            end
+        end
+    end
     Playur.setCount(1)
     if smasBooleans then
         smasBooleans.introModeActivated = false

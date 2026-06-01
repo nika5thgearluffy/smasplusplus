@@ -75,8 +75,17 @@ function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
     end)
 end
 
+-- Dumb bug with multiplayer
+local function fixResolutionMultiplayer()
+    Routine.waitFrames(1, true)
+    smasResolutions.changeResolution(false, false)
+end
+
 function smasResolutions.onStart()
     smasResolutions.changeResolution(false, false)
+    if Player.count() >= 2 then
+        Routine.run(fixResolutionMultiplayer)
+    end
 end
 
 function smasResolutions.onDraw()

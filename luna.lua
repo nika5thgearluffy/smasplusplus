@@ -138,7 +138,7 @@ for i = 1,200 do
 end
 
 --Then we fix up some functions that the X2 team didn't fix yet (If they released a patch and fixed a certain thing, the code will be removed from here).
-if (VER_BETA4_PATCH_4_1 ~= nil) and (SMBX_VERSION <= VER_BETA4_PATCH_4_1 or SMBX_VERSION == VER_SEE_MOD) then
+if (VER_BETA4_PATCH_4_1 ~= nil) and (SMBX_VERSION <= VER_BETA4_PATCH_4_1) then
     function Player:teleport(x, y, bottomCenterAligned) --This fixes 2nd player teleporting, when using player/player2:teleport. This will be removed after a few months when the next SMBX2 patch releases (The next patch will fix this), to make sure people upgrade on time.
         -- If using bottom center aligned coordinates, handle that sensibly
         if bottomCenterAligned then
@@ -177,6 +177,8 @@ local npc_APIs = {
 for _,v in ipairs(npc_APIs) do
     require("extra-settings/"..v);
 end
+
+mem(0x00B25130,FIELD_WORD,0) --This will prevent split screen, again (Just in case)
 
 local loadactivate = true
 SysManager.sendToConsole("Loading Steve and SMW2 Yoshi characters...")
@@ -375,11 +377,16 @@ function onDraw()
     end
     
     --This'll update the costume throughout the game
-    local currentCostume = player:getCostume()
-    if currentCostume ~= nil then
-        SaveData.SMASPlusPlus.player[1].currentCostume = currentCostume
-    elseif currentCostume == nil then
-        SaveData.SMASPlusPlus.player[1].currentCostume = "N/A"
+    for _,p in ipairs(Player.get()) do
+        local currentCostume = p:getCostume()
+        if currentCostume ~= nil then
+            SaveData.SMASPlusPlus.player[p.idx].currentCostume = currentCostume
+        elseif currentCostume == nil then
+            SaveData.SMASPlusPlus.player[p.idx].currentCostume = "N/A"
+            if p.character <= 5 then
+                p.setCostume(p.character, "!DEFAULT", false)
+            end
+        end
     end
     
     --This'll update the path for costumes
@@ -395,7 +402,7 @@ end
 
 
 function onTick()
-    mem(0x00B25130,FIELD_WORD,2) --This will prevent split screen, again (Just in case)
+    mem(0x00B25130,FIELD_WORD,0) --This will prevent split screen, again (Just in case)
     if table.icontains(smasTables._friendlyPlaces,Level.filename()) then
         GameData.friendlyArea = true --Set this to prevent Mother Brain Rinka from getting killed in places such as the boot screen, intro, or the Hub
     end
