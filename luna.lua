@@ -325,6 +325,9 @@ function onLetterboxToggle(isToggled)
 end
 
 function onDraw()
+    if GameData.SMASPlusPlus.online.ipHost ~= Internet.ipAddress() then
+        GameData.SMASPlusPlus.online.ipHost = Internet.ipAddress()
+    end
     -- Do this so that the PFP would need to be removed if non-existant
     if SaveData.SMASPlusPlus.game.pfp ~= nil and type(SaveData.SMASPlusPlus.game.pfp) == "string" then
         local pfpFileSize = File.getSize(SaveData.SMASPlusPlus.game.pfp)

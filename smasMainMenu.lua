@@ -855,7 +855,7 @@ function smasMainMenu.onTick()
             Routine.run(FirstBootKeyboardConfig)
             GameData.firstbootkeyboardconfig = false
         end
-        if GameData.reopenmenumusreset == true then
+        if GameData.reopenmenumusreset then
             Routine.run(smasMainMenu.bootDialogue, true)
             GameData.reopenmenumusreset = false
         end

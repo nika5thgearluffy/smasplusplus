@@ -147,7 +147,7 @@ local function drawBoard(v) -- v is the kboard
 
     blinker = blinker + 1
     if blinker > 0 then
-        Graphics.drawImageWP(images.caret, mov.bar.position+18 + (#v.text * 18), 153+17, keyboard.leastPriority + 0.2)
+        Graphics.drawImageWP(images.caret, Screen.calculateCameraDimensions(mov.bar.position+18 + (#v.text * 18), 1), Screen.calculateCameraDimensions(153+17, 2), keyboard.leastPriority + 0.2)
     end
     if blinker > 32 then blinker = -32 end
 
@@ -159,26 +159,26 @@ local function drawBoard(v) -- v is the kboard
 
     if warningOpacity > 0 then
         warningOpacity = warningOpacity - 0.1
-        textplus.print{text = warningText, x = 400, y = 570, plaintext = true, font = keyFont, pivot = vector(0.5, 0.5), color = Color(warningOpacity,warningOpacity,warningOpacity,warningOpacity), priority = keyboard.leastPriority + 0.1}
+        textplus.print{text = warningText, x = Screen.calculateCameraDimensions(400, 1), y = Screen.calculateCameraDimensions(570, 2), plaintext = true, font = keyFont, pivot = vector(0.5, 0.5), color = Color(warningOpacity,warningOpacity,warningOpacity,warningOpacity), priority = keyboard.leastPriority + 0.1}
     else
         warningOpacity = 0
     end
 
-    Graphics.drawImageWP(bgTexture, bgTX - 32, bgTY - 32, bgTopacity, keyboard.leastPriority)
-    Graphics.drawImageWP(images.textBar, mov.bar.position, 153, keyboard.leastPriority + 0.1)
-    Graphics.drawImageWP(boardIMG, mov.board.position, 203, keyboard.leastPriority + 0.1)
-    Graphics.drawImageWP(images.buttons, 175, mov.buttons.position, 0, 0, 326, 52, keyboard.leastPriority + 0.1)
+    Graphics.drawImageWP(bgTexture, Screen.calculateCameraDimensions(bgTX - 32, 1), Screen.calculateCameraDimensions(bgTY - 32, 2), bgTopacity, keyboard.leastPriority)
+    Graphics.drawImageWP(images.textBar, Screen.calculateCameraDimensions(mov.bar.position, 1), Screen.calculateCameraDimensions(153, 2), keyboard.leastPriority + 0.1)
+    Graphics.drawImageWP(boardIMG, Screen.calculateCameraDimensions(mov.board.position, 1), Screen.calculateCameraDimensions(203, 2), keyboard.leastPriority + 0.1)
+    Graphics.drawImageWP(images.buttons, Screen.calculateCameraDimensions(175, 1), Screen.calculateCameraDimensions(mov.buttons.position, 2), 0, 0, 326, 52, keyboard.leastPriority + 0.1)
 
     if actBoard.text then
-        textplus.print{text = actBoard.text, x = mov.bar.position+18, y = 153+17, plaintext = true, font = keyFont, priority = keyboard.leastPriority + 0.2}
+        textplus.print{text = actBoard.text, x = Screen.calculateCameraDimensions(mov.bar.position+18, 1), y = Screen.calculateCameraDimensions(153+17, 2), plaintext = true, font = keyFont, priority = keyboard.leastPriority + 0.2}
     end
 
     if selection.x > 0 and selection.y > 0 then
-        Graphics.drawImageWP(images.selector, mov.board.position+16+(selection.x-1)*32, 203+16+(selection.y-1)*32, 0, selectorFrame * 32, 32, 32, keyboard.leastPriority + 0.2)
+        Graphics.drawImageWP(images.selector, Screen.calculateCameraDimensions(mov.board.position+16+(selection.x-1)*32, 1), Screen.calculateCameraDimensions(203+16+(selection.y-1)*32, 2), 0, selectorFrame * 32, 32, 32, keyboard.leastPriority + 0.2)
     end
 
     if v.upper then
-        Graphics.drawImageWP(images.buttons, 175+110, mov.buttons.position+2, 110, 106, 52, 48, keyboard.leastPriority + 0.15)
+        Graphics.drawImageWP(images.buttons, Screen.calculateCameraDimensions(175+110, 1), Screen.calculateCameraDimensions(mov.buttons.position+2, 2), 110, 106, 52, 48, keyboard.leastPriority + 0.15)
     end
 
     buttonSourceX = 54 * (buttonSel - 1)
@@ -193,7 +193,7 @@ local function drawBoard(v) -- v is the kboard
                 buttonSourceY = 106
             end
         end
-        Graphics.drawImageWP(images.buttons, 175+2+buttonSourceX, mov.buttons.position+2, buttonSourceX+2, buttonSourceY, 52, 48, keyboard.leastPriority + 0.2)
+        Graphics.drawImageWP(images.buttons, Screen.calculateCameraDimensions(175+2+buttonSourceX, 1), Screen.calculateCameraDimensions(mov.buttons.position+2, 2), buttonSourceX+2, buttonSourceY, 52, 48, keyboard.leastPriority + 0.2)
     end
 end
 
@@ -446,15 +446,12 @@ function keyboard.onDraw()
                 end
             end
             if GameData.playerEnteringHostIP then
-                smasOnlinePlay.IPHostAddressEntered = actBoard.text
-                smasOnlinePlay.hasEnteredHostIP = true
-                smasOnlinePlay.tempBoolean = true
+                smasOnlinePlay.IPHostAddress = actBoard.text
                 GameData.playerEnteringHostIP = false
             end
             if GameData.playerEnteringClientIP then
-                smasOnlinePlay.IPClientAddressEntered = actBoard.text
-                smasOnlinePlay.hasEnteredClientIP = true
-                smasOnlinePlay.tempBoolean = true
+                GameData.SMASPlusPlus.online.ipClient = actBoard.text
+                GameData.SMASPlusPlus.online.state = 2
                 GameData.playerEnteringClientIP = false
             end
             keyboard.timer = 2

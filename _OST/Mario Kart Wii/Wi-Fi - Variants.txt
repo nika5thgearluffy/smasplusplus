@@ -1,0 +1,18 @@
+Matchmaking : 
+
+2 ; 3 ; 5 ; 7
+
+
+Character & Kart Select : 
+
+1 - 3 ; 5 ; 7 ; 9 ; 10 ; 12
+
+
+Lobby : 
+
+All except 1 ; 4 ; 8 ; 11 ; 13
+
+
+Course Select : 
+
+All Channels

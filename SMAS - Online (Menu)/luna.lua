@@ -8,6 +8,38 @@ local newkeyboard = require("newkeyboard")
 
 local exitwordswip = false
 
+local matchChannelsToMute = {
+    1,
+    4,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+}
+
+local selectChannelsToMute = {
+    4,
+    6,
+    8,
+    11,
+    13,
+    14,
+}
+
+local lobbyChannelsToMute = {
+    1,
+    4,
+    8,
+    11,
+    13,
+}
+
+local timer = 0
+
 mleb.addShaderSection(0, {
         texture = bg_example,
         interlace = 4,
@@ -61,6 +93,7 @@ mleb.addShaderSection(0, {
 
 littleDialogue.defaultStyleName = "smbx13" --Change the text box to the SMBX 1.3 textbox format
 smasExtraSounds.active = false
+smasBooleans.disablePauseMenu = true
 
 local function ExitToBootMenu()
     exitscreen = true
@@ -70,6 +103,7 @@ local function ExitToBootMenu()
     if Misc.isRunningWhenUnfocused() then
         Misc.setRunWhenUnfocused(false)
     end
+    GameData.SMASPlusPlus.online.state = 0
     Level.load("SMAS - Start.lvlx")
 end
 
@@ -82,11 +116,18 @@ local function ExitToBootMenuWithSound()
     if Misc.isRunningWhenUnfocused() then
         Misc.setRunWhenUnfocused(false)
     end
+    GameData.SMASPlusPlus.online.state = 0
     Level.load("SMAS - Start.lvlx")
 end
 
-function startConnecting()
-    smasOnlinePlay.startConnecting()
+local function startConnecting()
+    exitwordswip = true
+    for i = 1,14 do
+        Sound.unmuteChannel(i)
+    end
+    for k,v in ipairs(lobbyChannelsToMute) do
+        Sound.muteChannel(v)
+    end
 end
 
 local IPHostBoard = newkeyboard.create{isImportant = true, isImportantButCanBeCancelled = true, clear = true, setVariable = SaveData.SMASPlusPlus.game.username, pause = false}
@@ -102,25 +143,32 @@ local function IPAddressClientEnter()
     IPClientBoard:open()
 end
 
-function enterIPAddress()
-    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>First up, please enter your IP Address.<question IPAddressEntering>", pauses = false, updatesInPause = true})
+local function enterIPAddress()
+    for i = 1,14 do
+        Sound.unmuteChannel(i)
+    end
+    for k,v in ipairs(selectChannelsToMute) do
+        Sound.muteChannel(v)
+    end
+    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>First up, we need the client's IP address. Please enter it.<question IPAddressEntering>", pauses = false, updatesInPause = true})
 end
 
-function enterIPAddress2()
-    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>Now finally, we need the client's IP address. Please enter it after pressing 'Enter'.<question IPAddressEntering2>", pauses = false, updatesInPause = true})
-end
-
-function onlineBegin()
-    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>Welcome to the world of online multiplayer.<page>This is the place to host and connect to other player sessions, and experience the game like never before!<page>Please note that this place is under testing, and things won't be done as of yet.<page>When you see an loading icon, it is connecting to the Internet. Please don't close the game during that sequence.<page>With that being said, welcome to Online Multiplayer.<question TestExitMenu>", pauses = false, updatesInPause = true})
-end
+local function onlineBegin()
+    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>Welcome to the world of online multiplayer.<page>This is the place to host and connect to other player sessions, and experience the game like never before!<page>Please note that this place is under testing, and things won't be done as of yet.<page>When you see an loading icon, it is connecting to the Internet. Please don't close the game during that sequence.<page>With that being said, welcome to Online Multiplayer.<question StartConnecting>", pauses = false, updatesInPause = true})
+end 
     
 function onStart()
-    smasExtraSounds.active = false
-    Routine.run(onlineBegin)
-    littleDialogue.defaultStyleName = "smbx13" --Change the text box to the SMBX 1.3 textbox format
-    for i = 3,5 do
-        Sound.muteChannel(i)
+    if GameData.SMASPlusPlus.online.state == 0 then
+        GameData.SMASPlusPlus.online.state = 1
     end
+    smasExtraSounds.active = false
+    if GameData.SMASPlusPlus.online.state == 1 then
+        Routine.run(onlineBegin)
+        for k,v in ipairs(matchChannelsToMute) do
+            Sound.muteChannel(v)
+        end
+    end
+    littleDialogue.defaultStyleName = "smbx13" --Change the text box to the SMBX 1.3 textbox format
     if not Misc.isRunningWhenUnfocused() then
         Misc.setRunWhenUnfocused(true)
     end
@@ -137,6 +185,12 @@ function onDraw()
     end
     if exitwordswip then
         Text.printWP("To exit, press PAGE DOWN.", Screen.calculateCameraDimensions(200, 1), Screen.calculateCameraDimensions(200, 2), 5)
+    end
+    if GameData.SMASPlusPlus.online.state == 2 then
+        timer = timer + 1
+        if timer == 1 then
+            startConnecting()
+        end
     end
 end
 
@@ -161,9 +215,7 @@ local function menu_showExitMenu()
     
 end
 
-littleDialogue.registerAnswer("IPAddressEntering",{text = "Enter",chosenFunction = function() IPAddressHostEnter() end})
-
-littleDialogue.registerAnswer("IPAddressEntering2",{text = "Enter",chosenFunction = function() IPAddressClientEnter() end})
+littleDialogue.registerAnswer("IPAddressEntering",{text = "Enter",chosenFunction = function() IPAddressClientEnter() end})
 
 littleDialogue.registerAnswer("QuitToMenuError",{text = "Exit",chosenFunction = function() Routine.run(ExitToBootMenu) end})
 

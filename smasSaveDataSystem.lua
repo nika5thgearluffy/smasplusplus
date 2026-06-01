@@ -7,6 +7,7 @@ GameData.SMASPlusPlus.options = GameData.SMASPlusPlus.options or {}
 GameData.SMASPlusPlus.audio = GameData.SMASPlusPlus.audio or {}
 GameData.SMASPlusPlus.game = GameData.SMASPlusPlus.game or {}
 GameData.SMASPlusPlus.misc = GameData.SMASPlusPlus.misc or {}
+GameData.SMASPlusPlus.online = GameData.SMASPlusPlus.online or {}
 
 --First time SaveData settings, for resolutions and other settings
 if SaveData.SMASPlusPlus == nil then
@@ -194,6 +195,20 @@ end
 if SaveData.SMASPlusPlus.player[2].currentCharacter == nil then
     SaveData.SMASPlusPlus.player[2].currentCharacter = 2
 end
+
+if GameData.SMASPlusPlus.online.ipHost == nil then
+    GameData.SMASPlusPlus.online.ipHost = Internet.ipAddress()
+end
+if GameData.SMASPlusPlus.online.ipClient == nil then
+    GameData.SMASPlusPlus.online.ipClient = ""
+end
+if GameData.SMASPlusPlus.online.state == nil then
+    GameData.SMASPlusPlus.online.state = 0
+end
+
+
+
+
 
 
 
