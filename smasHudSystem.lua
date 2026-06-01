@@ -486,6 +486,19 @@ function smasHudSystem.onTick()
     if mem(0x00B2C5AC, FIELD_FLOAT) < 1 then --This is to prevent the old Game Over system
         mem(0x00B2C5AC, FIELD_FLOAT, 1)
     end
+    -- Three crown SFX stuff
+    if not SaveData.SMASPlusPlus.accessibility.enableLives then
+        if SaveData.SMASPlusPlus.hud.lives >= 1000 and SaveData.SMASPlusPlus.game.lifeCrownState == 0 then
+            SaveData.SMASPlusPlus.game.lifeCrownState = 1
+            Sound.playSFX("one-crown-achieved.ogg")
+        elseif SaveData.SMASPlusPlus.hud.lives >= 1100 and SaveData.SMASPlusPlus.game.lifeCrownState == 1 then
+            SaveData.SMASPlusPlus.game.lifeCrownState = 2
+            Sound.playSFX("two-crowns-achieved.ogg")
+        elseif SaveData.SMASPlusPlus.hud.lives >= 1110 and SaveData.SMASPlusPlus.game.lifeCrownState == 2 then
+            SaveData.SMASPlusPlus.game.lifeCrownState = 3
+            Sound.playSFX("all-crowns-achieved.ogg")
+        end
+    end
     if SaveData.SMASPlusPlus.hud.coinsClassic > 99 then --This is to give the player a life when reaching 100 coins
         SysManager.sendToConsole("100 coins reached! Gaining an extra life...")
         SaveData.SMASPlusPlus.hud.coinsClassic = 0

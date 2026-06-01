@@ -206,6 +206,16 @@ if GameData.SMASPlusPlus.online.state == nil then
     GameData.SMASPlusPlus.online.state = 0
 end
 
+--[[
+    - 0 = < 1000
+    - 1 = >= 1000 and <= 1099
+    - 2 = >= 1100 and <= 1109
+    - 3 = 1110
+]]
+if SaveData.SMASPlusPlus.game.lifeCrownState == nil then
+    SaveData.SMASPlusPlus.game.lifeCrownState = 0
+end
+
 
 
 
