@@ -606,8 +606,8 @@ do
 
     function textEventFuncs.setPos(box,page,pos,args)
         if args[1] ~= nil and args[2] ~= nil then
-            box.forcedPosX = args[1]
-            box.forcedPosY = args[2]
+            box.forcedPosX = Screen.calculateCameraDimensions(args[1], 1)
+            box.forcedPosY = Screen.calculateCameraDimensions(args[2], 2)
             box.forcedPosHorizontalPivot = args[3] or 0.5
             box.forcedPosVerticalPivot = args[4] or 0.5
         else

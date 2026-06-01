@@ -366,97 +366,99 @@ function smasMainMenuSystem.onInputUpdate()
             local currentDialog = smasMainMenuSystem.getDialogMessage{text = transplate.getTranslation(smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu].dialogMessage)}
             if smasMainMenuSystem.PressDelay == 0 then
                 for _,p in ipairs(Player.get()) do
-                    if not smasMainMenuSystem.dontControlMenu then
-                        local currentOption = smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][MenuCursor + 1]
-                        if p.keys.up == KEYS_PRESSED then
-                            if MenuCursor > 0 then
-                                MenuCursor = MenuCursor - 1
-                                Sound.playSFX(26)
-                            else
-                                Sound.playSFX(26)
-                                MenuCursor = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
-                            end
-                        elseif p.keys.down == KEYS_PRESSED then
-                            if MenuCursor < #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1 then
-                                MenuCursor = MenuCursor + 1
-                                Sound.playSFX(26)
-                            else
-                                Sound.playSFX(26)
-                                MenuCursor = 0
-                            end
-                        elseif p.keys.left == KEYS_PRESSED then
-                            if currentOption.numberToUse ~= "" then
-                                if currentOption.isSaveData then
-                                    if SaveData[currentOption.numberToUse] > currentOption.minimumNumber then
-                                        Sound.playSFX(26)
-                                        SaveData[currentOption.numberToUse] = SaveData[currentOption.numberToUse] - currentOption.numberStep
-                                    end
-                                elseif currentOption.isGameData then
-                                    if GameData[currentOption.numberToUse] > currentOption.minimumNumber then
-                                        Sound.playSFX(26)
-                                        GameData[currentOption.numberToUse] = GameData[currentOption.numberToUse] - currentOption.numberStep
-                                    end
-                                elseif currentOption.isPauseplusValue then
-                                    if SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] > currentOption.minimumNumber then
-                                        Sound.playSFX(26)
-                                        SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] = SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] - currentOption.numberStep
-                                    end
-                                end
-                            else
-                                if MenuCursor > 3 then
-                                    MenuCursor = MenuCursor - 4
-                                    Sound.playSFX(74)
-                                elseif MenuCursor <= 3 and MenuCursor > 0 then
-                                    MenuCursor = 0
-                                    Sound.playSFX(74)
-                                end
-                            end
-                        elseif p.keys.right == KEYS_PRESSED then
-                            if currentOption.numberToUse ~= "" then
-                                if currentOption.isSaveData then
-                                    if SaveData[currentOption.numberToUse] < currentOption.maxNumber then
-                                        Sound.playSFX(26)
-                                        SaveData[currentOption.numberToUse] = SaveData[currentOption.numberToUse] + currentOption.numberStep
-                                    end
-                                elseif currentOption.isGameData then
-                                    if GameData[currentOption.numberToUse] < currentOption.maxNumber then
-                                        Sound.playSFX(26)
-                                        GameData[currentOption.numberToUse] = GameData[currentOption.numberToUse] + currentOption.numberStep
-                                    end
-                                elseif currentOption.isPauseplusValue then
-                                    if SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] < currentOption.maxNumber then
-                                        Sound.playSFX(26)
-                                        SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] = SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] + currentOption.numberStep
-                                    end
-                                end
-                            else
-                                local numberEnder = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 5
-                                local endingPoint = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
-                                if MenuCursor < numberEnder then
-                                    MenuCursor = MenuCursor + 4
-                                    Sound.playSFX(74)
-                                elseif MenuCursor >= numberEnder and MenuCursor < endingPoint then
-                                    MenuCursor = endingPoint
-                                    Sound.playSFX(74)
-                                end
-                            end
-                        elseif p.keys.jump == KEYS_PRESSED then
-                            if not smasMainMenuSystem.dontRunFunctions then
-                                smasMainMenuSystem.runMenuFunction(false)
-                            end
-                            if smasMainMenuSystem.isOnDialog then
-                                if not smasMainMenuSystem.atEndOfDialog then
-                                    smasMainMenuSystem.currentPageMarker = smasMainMenuSystem.currentPageMarker + 1
+                    if p and p.isValid then
+                        if not smasMainMenuSystem.dontControlMenu then
+                            local currentOption = smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu][MenuCursor + 1]
+                            if p.keys.up == KEYS_PRESSED then
+                                if MenuCursor > 0 then
+                                    MenuCursor = MenuCursor - 1
                                     Sound.playSFX(26)
-                                    smasMainMenuSystem.PressDelay = 10
+                                else
+                                    Sound.playSFX(26)
+                                    MenuCursor = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
                                 end
-                            end
-                        elseif p.keys.run == KEYS_PRESSED then
-                            if smasMainMenuSystem.onMenu > 1 and not smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu].cantGoBack then
-                                smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu].menuBackTo, 0, true)
-                            elseif smasMainMenuSystem.onMenu == 1 then
-                                Sound.playSFX(26)
-                                MenuCursor = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
+                            elseif p.keys.down == KEYS_PRESSED then
+                                if MenuCursor < #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1 then
+                                    MenuCursor = MenuCursor + 1
+                                    Sound.playSFX(26)
+                                else
+                                    Sound.playSFX(26)
+                                    MenuCursor = 0
+                                end
+                            elseif p.keys.left == KEYS_PRESSED then
+                                if currentOption.numberToUse ~= "" then
+                                    if currentOption.isSaveData then
+                                        if SaveData[currentOption.numberToUse] > currentOption.minimumNumber then
+                                            Sound.playSFX(26)
+                                            SaveData[currentOption.numberToUse] = SaveData[currentOption.numberToUse] - currentOption.numberStep
+                                        end
+                                    elseif currentOption.isGameData then
+                                        if GameData[currentOption.numberToUse] > currentOption.minimumNumber then
+                                            Sound.playSFX(26)
+                                            GameData[currentOption.numberToUse] = GameData[currentOption.numberToUse] - currentOption.numberStep
+                                        end
+                                    elseif currentOption.isPauseplusValue then
+                                        if SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] > currentOption.minimumNumber then
+                                            Sound.playSFX(26)
+                                            SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] = SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] - currentOption.numberStep
+                                        end
+                                    end
+                                else
+                                    if MenuCursor > 3 then
+                                        MenuCursor = MenuCursor - 4
+                                        Sound.playSFX(74)
+                                    elseif MenuCursor <= 3 and MenuCursor > 0 then
+                                        MenuCursor = 0
+                                        Sound.playSFX(74)
+                                    end
+                                end
+                            elseif p.keys.right == KEYS_PRESSED then
+                                if currentOption.numberToUse ~= "" then
+                                    if currentOption.isSaveData then
+                                        if SaveData[currentOption.numberToUse] < currentOption.maxNumber then
+                                            Sound.playSFX(26)
+                                            SaveData[currentOption.numberToUse] = SaveData[currentOption.numberToUse] + currentOption.numberStep
+                                        end
+                                    elseif currentOption.isGameData then
+                                        if GameData[currentOption.numberToUse] < currentOption.maxNumber then
+                                            Sound.playSFX(26)
+                                            GameData[currentOption.numberToUse] = GameData[currentOption.numberToUse] + currentOption.numberStep
+                                        end
+                                    elseif currentOption.isPauseplusValue then
+                                        if SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] < currentOption.maxNumber then
+                                            Sound.playSFX(26)
+                                            SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] = SaveData.pauseplus.selectionData[currentOption.pauseplusSubmenu][currentOption.numberToUse] + currentOption.numberStep
+                                        end
+                                    end
+                                else
+                                    local numberEnder = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 5
+                                    local endingPoint = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
+                                    if MenuCursor < numberEnder then
+                                        MenuCursor = MenuCursor + 4
+                                        Sound.playSFX(74)
+                                    elseif MenuCursor >= numberEnder and MenuCursor < endingPoint then
+                                        MenuCursor = endingPoint
+                                        Sound.playSFX(74)
+                                    end
+                                end
+                            elseif p.keys.jump == KEYS_PRESSED then
+                                if not smasMainMenuSystem.dontRunFunctions then
+                                    smasMainMenuSystem.runMenuFunction(false)
+                                end
+                                if smasMainMenuSystem.isOnDialog then
+                                    if not smasMainMenuSystem.atEndOfDialog then
+                                        smasMainMenuSystem.currentPageMarker = smasMainMenuSystem.currentPageMarker + 1
+                                        Sound.playSFX(26)
+                                        smasMainMenuSystem.PressDelay = 10
+                                    end
+                                end
+                            elseif p.keys.run == KEYS_PRESSED then
+                                if smasMainMenuSystem.onMenu > 1 and not smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu].cantGoBack then
+                                    smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu].menuBackTo, 0, true)
+                                elseif smasMainMenuSystem.onMenu == 1 then
+                                    Sound.playSFX(26)
+                                    MenuCursor = #smasMainMenuSystem.menuItems[smasMainMenuSystem.onMenu] - 1
+                                end
                             end
                         end
                     end

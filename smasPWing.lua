@@ -82,14 +82,14 @@ function smasPWing.canStartFlying(plr)
     if smasCharacterCostumes.currentCostume[plr.idx] ~= {} then
         if smasCharacterCostumes.currentCostume.playersList ~= nil then
             for _,p in ipairs(smasCharacterCostumes.currentCostume[plr.idx].playersList) do
-                local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[p]
-                local atPSpeed = (p.holdingNPC == nil)
+                local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[plr.idx]
+                local atPSpeed = (plr.holdingNPC == nil)
 
                 if atPSpeed then
-                    if smasPWing.leafPowerups[p.powerup] then
+                    if smasPWing.leafPowerups[plr.powerup] then
                         atPSpeed = p:mem(0x16C,FIELD_BOOL) or p:mem(0x16E,FIELD_BOOL)
                     else
-                        atPSpeed = (data.pSpeed >= smasPWing.pSpeedCounters[p.character])
+                        atPSpeed = (data.pSpeed >= smasPWing.pSpeedCounters[plr.character])
                     end
                 end
                 

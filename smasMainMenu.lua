@@ -73,6 +73,8 @@ smasMainMenu.showPFPImageOnScreen = false
 smasMainMenu.showWebsiteTextOnScreen = true
 smasMainMenu.hideGameSMBXAndSMBX2Credits = false
 
+smasMainMenu.showStatusOfMultiplayerOnScreen = true
+
 smasMainMenu.showGlitchScreen = false
 local glitchScreenTime = 0
 
@@ -525,6 +527,15 @@ function SaveOptions1()
     littleDialogue.create({text = transplate.getTranslation("0x0000000000000052"), speakerName = "Saving Options", pauses = false, updatesInPause = true})
 end
 
+local function MultiplayerToggle()
+    Sound.playSFX(32)
+    if Player.count() == 1 then
+        Playur.activate2ndPlayer()
+    elseif Player.count() >= 2 then
+        Playur.activate1stPlayer()
+    end
+end
+
 function smasMainMenuSystem.changeSaveSlotMenu()
     if not Misc.inEditor() then
         smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_SETTINGS_SAVESWITCH, 0, false)
@@ -645,18 +656,14 @@ function BootGameHelpPreExecute() --Boot the game help level, the boot menu vers
 end
 
 function BootOnlinePreExecute() --Boot the Online Menu level
-    if SMBX_VERSION == VER_SEE_MOD then
-        smasMainMenuSystem.menuOpen = false
-        Sound.playSFX(29)
-        smasMainMenu.showBlackScreen = true
-        autoscroll.scrollLeft(5000)
-        Sound.muteMusic(-1)
-        Routine.wait(0.4)
-        Misc.saveGame()
-        Level.load("SMAS - Online (Menu).lvlx")
-    else
-        Sound.playSFX(152)
-    end
+    smasMainMenuSystem.menuOpen = false
+    Sound.playSFX(29)
+    smasMainMenu.showBlackScreen = true
+    autoscroll.scrollLeft(5000)
+    Sound.muteMusic(-1)
+    Routine.wait(0.4)
+    Misc.saveGame()
+    Level.load("SMAS - Online (Menu).lvlx")
 end
 
 function PigeonRaca1() --This executes the True Final Battle
@@ -1131,6 +1138,13 @@ function smasMainMenu.onDraw()
                 Graphics.drawImageWP(smasMainMenu.smasLogoImg, (camera.width / 2) - 233, 16, -4)
             end
         end
+        if smasMainMenu.showStatusOfMultiplayerOnScreen then
+            if Player.count() == 1 then
+                textplus.print{x=(camera.width / 2) - 134, y=10, text = "Multiplayer is OFF", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
+            elseif Player.count() >= 2 then
+                textplus.print{x=(camera.width / 2) - 130, y=10, text = "Multiplayer is ON", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
+            end
+        end
         if smasMainMenu.showBlackScreen then
             Graphics.drawScreen{color = Color.black, priority = 10}
         end
@@ -1180,11 +1194,13 @@ end
 smasMainMenuSystem.addSection{section = smasMainMenuSystem.menuSections.SECTION_MAIN, title = "Main Menu", xCenter = 150, yCenter = 310}
 smasMainMenuSystem.addMenuItem{name = "Start Game", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 1, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BootSMASPlusPlusPreExecute) end}
 smasMainMenuSystem.addMenuItem{name = "Load Game Help", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 2, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BootGameHelpPreExecute) end}
-smasMainMenuSystem.addMenuItem{name = "Main Menu Themes", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Settings/Options", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_SETTINGS_MAIN, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Credits", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_CREDITS, 0, false) end}
-smasMainMenuSystem.addMenuItem{name = "Exit Main Menu", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.exitDialogue(false) end}
-smasMainMenuSystem.addMenuItem{name = "Exit Game", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 7, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(ExitGame1) end}
+smasMainMenuSystem.addMenuItem{name = "Toggle Multiplayer", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 3, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(MultiplayerToggle) end}
+smasMainMenuSystem.addMenuItem{name = "Online Multiplayer", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 4, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(BootOnlinePreExecute) end}
+smasMainMenuSystem.addMenuItem{name = "Main Menu Themes", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 5, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_THEMESELECTION, 0, false) end}
+smasMainMenuSystem.addMenuItem{name = "Settings/Options", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 6, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_SETTINGS_MAIN, 0, false) end}
+smasMainMenuSystem.addMenuItem{name = "Credits", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 7, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.DIALOG_CREDITS, 0, false) end}
+smasMainMenuSystem.addMenuItem{name = "Exit Main Menu", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 8, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() smasMainMenuSystem.exitDialogue(false) end}
+smasMainMenuSystem.addMenuItem{name = "Exit Game", section = smasMainMenuSystem.menuSections.SECTION_MAIN, sectionItem = 9, menuType = smasMainMenuSystem.menuTypes.MENU_SELECTABLE, isFunction = true, functionToRun = function() Routine.run(ExitGame1) end}
 
 
 
