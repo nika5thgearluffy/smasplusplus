@@ -308,20 +308,18 @@ function SysManager.exitLevel(winType) --Exits a level with the win type specifi
             end
         else
             local warp = p:mem(0x15E, FIELD_WORD)
+            p:mem(0x15E, FIELD_WORD, 0)
             if Warp.get()[warp] and Warp.get()[warp].levelFilename ~= nil then
                 SysManager.sendToConsole("This warp has a level warp point. Warping to "..Warp.get()[warp].levelFilename.."...")
-            else
-                SysManager.sendToConsole("This warp has a level warp point, but there's no filename detected. Warping anyway...")
+                SysManager.exitLevelToWarpPoint(warp)
             end
-            EventManager.callEvent("onWarpToOtherLevel", warp, p)
-            p:mem(0x15E, FIELD_WORD, 0)
-            SysManager.exitLevelToWarpPoint(warp)
+            SysManager.sendToConsole("This warp has no level warp point. Warping with the vanilla level exit system...")
         end
     end
 end
 
 function SysManager.exitLevelToWarpPoint(warp)
-    for _,p in ipairs(Player.get()) do
+    if warp and warp ~= nil then
         if (Warp.get()[warp] and (Warp.get()[warp].levelFilename == "" or Warp.get()[warp].levelFilename == nil)) then
             SysManager.loadMap()
         else
