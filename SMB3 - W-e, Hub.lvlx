@@ -1224,6 +1224,26 @@ ID:94;X:-179040;Y:-180608;
 ID:161;X:-159600;Y:-160224;
 ID:161;X:-159520;Y:-160224;
 ID:161;X:-159552;Y:-160272;
+ID:107;X:-158560;Y:-160128;
+ID:107;X:-158272;Y:-160128;
+ID:107;X:-158080;Y:-160128;
+ID:107;X:-157888;Y:-160128;
+ID:107;X:-157632;Y:-160128;
+ID:107;X:-157472;Y:-160128;
+ID:107;X:-157344;Y:-160128;
+ID:107;X:-139232;Y:-140096;
+ID:107;X:-138880;Y:-140096;
+ID:107;X:-138592;Y:-140096;
+ID:107;X:-138208;Y:-140192;
+ID:107;X:-137888;Y:-140384;
+ID:107;X:-138208;Y:-140576;
+ID:107;X:-138496;Y:-140736;
+ID:107;X:-138688;Y:-140736;
+ID:107;X:-138944;Y:-140736;
+ID:107;X:-139360;Y:-140736;
+ID:107;X:-139584;Y:-140736;
+ID:107;X:-139136;Y:-140736;
+ID:107;X:-139840;Y:-140736;
 BGO_END
 NPC
 ID:94;X:-199456;Y:-200118;D:-1;MG:"Welcome to World e!<page>This is the Hub full of levels that not only are challenging\, but also fun at the same time!<page>Head in the castle to play some of those levels!<page>Oh\, and if you want to head back to the World Map\, use that exit back there.";FD:1;
@@ -1240,6 +1260,9 @@ ID:92;X:-159616;Y:-160096;D:-1;MG:"Your friendly vegetable will tell you what's 
 ID:92;X:-159104;Y:-160096;D:-1;MG:"Your friendly vegetable will tell you what's behind this door!<page>Slidin' the Slopes";FD:1;NM:1;
 ID:92;X:-158880;Y:-160096;D:-1;MG:"Your friendly vegetable will tell you what's behind this door!<page>Vegetable Volley";FD:1;NM:1;
 ID:142;X:-158816;Y:-160222;D:-1;MG:"Hey I'm on this level!";FD:1;NM:1;
+ID:1005;X:-158688;Y:-160128;D:-1;MG:"What a nice castle we got here!<page>I also checked the levels out. They're quite challenging!<page>I died a few times trying to jump through the slopes on that sliding level.<page>I beat it though!";FD:1;NM:1;
+ID:427;X:-157728;Y:-160128;D:-1;MG:"Hey dude! It's really cool coming here and all.<page>I'm getting bored standing on this stand. When can I go home?<page>Being an engine mascot and all\, all the fame can sometimes rush though my head.";FD:1;NM:1;
+ID:92;X:-158624;Y:-160096;D:-1;MG:"Your friendly vegetable will tell you what's behind this door!<page>Doors o' Plenty";FD:1;NM:1;
 NPC_END
 DOORS
 IX:-199872;IY:-200256;DT:1;ID:3;OD:3;LF:"map.lvlx";LI:0;EX:1;
@@ -1252,6 +1275,7 @@ IX:-177888;IY:-180064;DT:2;ID:1;OD:1;LF:"SMB3 - W-e\, L-5.lvlx";LI:0;EX:1;
 IX:-177440;IY:-180064;OX:-159856;OY:-160096;DT:2;ID:1;OD:1;TW:1;
 IX:-157072;IY:-160096;OX:-139616;OY:-140064;DT:2;ID:1;OD:1;TW:1;
 IX:-159552;IY:-160096;DT:2;ID:1;OD:1;LF:"SMB3 - W-e\, L-6.lvlx";LI:0;EX:1;
+IX:-159040;IY:-160096;DT:2;ID:1;OD:1;LF:"SMB3 - W-e\, L-7.lvlx";LI:0;EX:1;
 DOORS_END
 LAYERS
 LR:"Default";
