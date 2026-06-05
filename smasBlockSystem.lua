@@ -35,6 +35,7 @@ smasBlockSystem.enableSMB1Invisible1UPSystem = true
 smasBlockSystem.enableMultiplayerPowerupBlockSystem = true
 smasBlockSystem.enableYoshi1UPBlockSystem = true
 smasBlockSystem.enableTurnBlockSpinjumpBlockHits = false
+smasBlockSystem.enableNoteBlockSpringOnSlide = true
 
 local block90 = {}
 
@@ -195,7 +196,17 @@ function smasBlockSystem.onPostBlockHit(block, fromUpper, playerornil)
     end
 
 
-
+    -- If true, the player can bounce on a note block when sliding on it. Used for SMB3 World e's "Slidin' the Slopes"
+    if smasBlockSystem.enableNoteBlockSpringOnSlide then
+        if playerornil and playerornil.isValid and playerornil:mem(0x3C, FIELD_BOOL) and fromUpper and playerornil.keys.jump == KEYS_DOWN then
+            Sound.playSFX(1)
+            playerornil:mem(0x11C, FIELD_WORD, Defines.jumpheight_noteblock)
+            if playerornil.character == 2 then
+                local tempJump = Defines.jumpheight_noteblock + 2
+                playerornil:mem(0x11C, FIELD_WORD, tempJump)
+            end
+        end
+    end
 end
 
 function smasBlockSystem.onPostNPCKill(npc, harmType)

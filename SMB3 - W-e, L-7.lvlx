@@ -6210,7 +6210,7 @@ ID:10;X:-193310;Y:-199360;D:-1;
 ID:10;X:-193342;Y:-199328;D:-1;
 ID:10;X:-193342;Y:-199360;D:-1;
 ID:614;X:-193024;Y:-199248;D:-1;
-ID:985;X:-192768;Y:-199328;D:-1;XTRA:"{\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
+ID:985;X:-192768;Y:-199328;D:-1;XTRA:"{\n    \"incrementStarCount\"\: true\,\n    \"useOptionalTable\"\: false\n}\n";
 NPC_END
 LAYERS
 LR:"Default";
