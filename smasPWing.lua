@@ -63,7 +63,7 @@ end
 
 function smasPWing.runningCounter(plr)
     if smasCharacterCostumes.currentCostume[plr.idx] ~= {} then
-        if smasCharacterCostumes.currentCostume.playersList ~= nil then
+        if smasCharacterCostumes.currentCostume[plr.idx].playersList ~= nil then
             for _,p in ipairs(smasCharacterCostumes.currentCostume[plr.idx].playersList) do
                 local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[p]
                 if data.pSpeed ~= nil then
@@ -80,9 +80,9 @@ end
 
 function smasPWing.canStartFlying(plr)
     if smasCharacterCostumes.currentCostume[plr.idx] ~= {} then
-        if smasCharacterCostumes.currentCostume.playersList ~= nil then
+        if smasCharacterCostumes.currentCostume[plr.idx].playersList ~= nil then
             for _,p in ipairs(smasCharacterCostumes.currentCostume[plr.idx].playersList) do
-                local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[plr.idx]
+                local data = smasCharacterCostumes.currentCostume[plr.idx].playerData[plr]
                 local atPSpeed = (plr.holdingNPC == nil)
 
                 if atPSpeed then
@@ -160,13 +160,11 @@ function smasPWing.drawPWingHud()
 end
 
 function smasPWing.onTick()
-    for _,p in ipairs(Player.get()) do
-        if smasCharacterCostumes.currentCostume[p.idx].playersList ~= nil then
-            if smasPWing.canStartFlying(player) and not smasPWing.leafPowerups[player.powerup] then
-                if smasExtraSounds.active then
-                    if smasExtraSounds.enablePWingSFX then 
-                        Sound.playSFX(121, smasExtraSounds.volume, 1, smasExtraSounds.pWingDelay)
-                    end
+    if smasCharacterCostumes.currentCostume[player.idx].playersList ~= nil then
+        if smasPWing.canStartFlying(player) and not smasPWing.leafPowerups[player.powerup] then
+            if smasExtraSounds.active then
+                if smasExtraSounds.enablePWingSFX then 
+                    Sound.playSFX(121, smasExtraSounds.volume, 1, smasExtraSounds.pWingDelay)
                 end
             end
         end

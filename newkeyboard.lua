@@ -273,7 +273,10 @@ function keyb:open()
     movementOver = false
 end
 
-function keyb:close()    
+function keyb:close(shouldReturnText)   
+    if shouldReturnText == nil then
+        shouldReturnText = false
+    end
     mov.bar.type = 2
     mov.board.type = 2
     mov.buttons.type = 2
@@ -281,6 +284,9 @@ function keyb:close()
     movementOver = false
     if not keyboard.closedWithoutValues then
         keyboard.closed = true
+    end
+    if shouldReturnText then
+        return self.text
     end
 end
 
