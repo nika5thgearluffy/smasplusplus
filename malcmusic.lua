@@ -481,8 +481,8 @@ function malcmusic.onStart()
     Internet.downloadFile(malcmusic.weatherJsonURL, "")
 end
 
-function malcmusic.onDownloadComplete(bufferResult)
-    if Internet.downloadURL() == malcmusic.weatherJsonURL and Internet.isDownloading() then
+function malcmusic.onDownloadComplete(bufferResult, url)
+    if url == malcmusic.weatherJsonURL and Internet.isDownloading(url) then
         -- Parse the JSON
         malcmusic.weatherJsonParsed = json.decode(bufferResult)
         -- Also reupdate the weather
