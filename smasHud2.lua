@@ -145,7 +145,7 @@ function smasHud.drawHud()
                 textplus.print{
                     x = smasHud.drawing.angles.middle - livesPosition + 54,
                     y = 40,
-                    text = SysManager.coinCountClassicWith99Limit(),
+                    text = tostring(SysManager.coinCountClassicWith99Limit()),
                     priority = smasHud.priority,
                     color = Color.white,
                     font = smasHud.font,
