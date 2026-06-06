@@ -275,7 +275,7 @@ function onStart() --Now do onStart...
     if not Misc.inEditor() and (SaveData.SMASPlusPlus.player[1].currentCharacter ~= nil and SaveData.SMASPlusPlus.player[1].currentCostume ~= nil) then
         player.character = SaveData.SMASPlusPlus.player[1].currentCharacter
         player.setCostume(SaveData.SMASPlusPlus.player[1].currentCharacter, SaveData.SMASPlusPlus.player[1].currentCostume, false)
-        if player2 and player2.isVaild and (SaveData.SMASPlusPlus.player[2].currentCharacter ~= nil and SaveData.SMASPlusPlus.player[2].currentCostume ~= nil) then
+        if player2 and player2.isValid and (SaveData.SMASPlusPlus.player[2].currentCharacter ~= nil and SaveData.SMASPlusPlus.player[2].currentCostume ~= nil) then
             player2.character = SaveData.SMASPlusPlus.player[2].currentCharacter
             player2.setCostume(SaveData.SMASPlusPlus.player[2].currentCharacter, SaveData.SMASPlusPlus.player[2].currentCostume, false)
         end
