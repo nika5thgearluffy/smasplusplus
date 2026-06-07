@@ -11,7 +11,9 @@ registerEvent(smasOnlinePlay,"onDraw")
 
 
 function smasOnlinePlay.onDraw()
-    
+    if smasOnlinePlay.onlineActivated then
+        
+    end
 end
 
 

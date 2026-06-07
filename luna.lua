@@ -411,13 +411,13 @@ function onTick()
     end
     --Now we'll overhaul the door star required system
     if warpstaractive then
-        for _,warp in ipairs(Warp.get()) do
+        --[[for _,warp in ipairs(Warp.get()) do
             if warp.starsRequired <= SaveData.SMASPlusPlus.levels.starCount then
                 warp.starsRequired = 0
             elseif warp.starsRequired > SaveData.SMASPlusPlus.levels.starCount then
                 --warp.starsRequired = warpStarDoorList(warp) --Try to have this read-only?
             end
-        end
+        end]]
     end
     for i = 1,200 do
         if Player(i).isValid then

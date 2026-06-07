@@ -256,7 +256,7 @@ function smas2PlayerSystem.doorTeleportP2toP1()
     player:mem(0x140,FIELD_WORD,100)
     if Player.count() >= 2 then
         player2:mem(0x140,FIELD_WORD,100)
-        player2:teleport(player.x - 32, player.y - 32, true)
+        player2:teleport(player.x, player.y, true)
     end
 end
 
