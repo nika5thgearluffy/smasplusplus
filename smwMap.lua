@@ -234,11 +234,11 @@ local function getStarCoinCounts(giveStats)
     return starcoinCounts
 end
 
-if Misc.GetKeyState(VK_S) and Misc.GetKeyState(VK_SHIFT) and Misc.inEditor() then
+--[[if Misc.GetKeyState(VK_S) and Misc.GetKeyState(VK_SHIFT) and Misc.inEditor() then
     gameData.starcoinCounts = getStarCoinCounts(true)
 elseif gameData.starcoinCounts == nil then
     gameData.starcoinCounts = getStarCoinCounts(false)
-end
+end]]
 
 
 
@@ -2010,7 +2010,7 @@ do
                     
                     Sound.playSFX(smwMap.playerSettings.levelSelectedSound)
                 end
-            elseif Misc.GetKeyState(VK_SHIFT) and v.levelObj ~= nil and Misc.inEditor() then -- unlock one thing (only works from in editor)
+            elseif Misc.GetKeyState(VK_U) and v.levelObj ~= nil and Misc.inEditor() then -- unlock one thing (only works from in editor)
                 gameData.winType = 7
                 v.state = PLAYER_STATE.WON
                 v.timer = 1000
