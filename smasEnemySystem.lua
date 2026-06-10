@@ -12,6 +12,7 @@ local heldNPC
 smasEnemySystem.enableWallNPCFix = false --Enable this to prevent killing NPCs when held and let go right smack by a wall.
 smasEnemySystem.enableTanookiThwompAndDiscKilling = true --Enable this to kill Thwomps and/or Roto-Discs while active as a statue.
 smasEnemySystem.enableShellCoinGrabbing = true --Enable to let shells collect coins, dragon coins, cherries, etc.
+smasEnemySystem.enableVegetableAceCoinGrabbing = true -- Enable this to grab ace coins by throwing vegetables at them. Used for SMB3's e-Reader levels
 smasEnemySystem.enableTurtleTipping = false --Enable this to activate the famous Infinite 1UP trick, from SMB1 and onwards
 
 smasEnemySystem.shellTipPointIndicator = 1
@@ -127,7 +128,24 @@ function smasEnemySystem.onTick()
     end
     
     
-    
+    -- Vegetable ace coin grabbing
+    if smasEnemySystem.enableVegetableAceCoinGrabbing then
+        for k,v in ipairs(NPC.get(NPC.VEGETABLE)) do -- Vegetables
+            for j,l in ipairs(NPC.get(smasTables.allDragonCoinNPCIDs)) do --Dragon coins
+                if Colliders.collide(v, l) and v:mem(0x136, FIELD_BOOL) then
+                    l.killFlag = HARM_TYPE_VANISH --Kills the dragon coin
+                    local c = NPC.config[l.id]
+                    c.score = c.score + 1 --Replicate basegame point combo
+                    if c.score > 14 then
+                        c.score = 14
+                    end
+                    Effect.spawn(78, l.x, l.y) --Spawns coin sparkle effect
+                    Effectx.spawnScoreEffect(c.score, l.x, l.y) --Spawns score effect
+                    smasExtraSounds.playDragonCoinSFX(l)
+                end
+            end
+        end
+    end
 end
 
 return smasEnemySystem
