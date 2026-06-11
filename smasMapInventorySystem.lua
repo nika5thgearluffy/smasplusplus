@@ -38,7 +38,7 @@ smasMapInventorySystem.itemList = {
     HAMMER = 9,
     WARP_WHISTLE = 10,
 }
-smasMapInventorySystem.menuSelectionAt = 1 --For naviagting the menu
+smasMapInventorySystem.menuSelectionAt = 1 --For navigating the menu
 smasMapInventorySystem.menuSelectionAtSelector = 10 --For where to draw the selector
 smasMapInventorySystem.menuSelectionIsSelected = 0 --For what to show when selecting something
 smasMapInventorySystem.minimumPriority = 4 --For drawing things
@@ -140,7 +140,7 @@ function smasMapInventorySystem.openInventory()
     end
     smasMapInventorySystem.menuSelectionAt = 1
     smasMapInventorySystem.menuSelectionAtSelector = 10
-    Sound.playSFX("OverworldHUD/Enter.spc")
+    --Sound.playSFX("OverworldHUD/Enter.spc")
 end
 
 function smasMapInventorySystem.closeInventory()
@@ -154,14 +154,18 @@ function smasMapInventorySystem.closeInventory()
     Sound.playSFX("OverworldHUD/Exit.spc")
 end
 
+function smasMapInventorySystem.onInputUpdate()
+    
+end
+
 function smasMapInventorySystem.onDrawEnd()
     for _,p in ipairs(Player.get()) do
         if isOnSMWMap then
-            if smwMap.PLAYER_STATE == 0 then
+            if smwMap.mainPlayer.state == smwMap.PLAYER_STATE.NORMAL then
                 if p.keys.altRun == KEYS_PRESSED then
                     if not smasMapInventorySystem.isOpen then
                         smasMapInventorySystem.openInventory()
-                    elseif smasMapInventorySystem.isOpen then
+                    else
                         smasMapInventorySystem.closeInventory()
                     end
                 end

@@ -51,14 +51,6 @@ function onDraw()
     if smwMap.unlockingCurrentPath == "toSMB33-Bonus1" then
         smwMap.unlockPath("toSMB33-8")
     end
-    if smwMap.unlockingCurrentPath == "toSMB35-TowerPath2" then
-        smwMap.unlockPath("toSMB35-TowerPath1")
-        smwMap.unlockPath("toSMB35-Tower")
-    end
-    if smwMap.unlockingCurrentPath == "toSMB3W-5Path3" then
-        smwMap.unlockPath("toSMB35-TowerPath1")
-        smwMap.unlockPath("toSMB35-Tower")
-    end
     if smwMap.unlockingCurrentPath == "toSMB3W-7Path1" then
         smwMap.unlockPath("toSMB37-4")
         smwMap.unlockPath("toSMB37-5")

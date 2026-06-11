@@ -4328,7 +4328,7 @@ do
         local levelObj = smwMap.mainPlayer.levelObj
 
         -- Star coin counter
-        if hudSettings.starcoinsEnabled and levelObj ~= nil then
+        if hudSettings.starcoinsEnabled and levelObj ~= nil and gameData.starcoinCounts[levelObj.settings.levelFilename] ~= nil then
             local starcoinCount = gameData.starcoinCounts[levelObj.settings.levelFilename]
 
             if starcoinCount ~= nil and starcoinCount > 0 then
@@ -4900,7 +4900,7 @@ smwMap.hudSettings = {
     starcoinsMaxPerLine = 5,
     starcoinsAtBottom = false,
 
-    starcoinsEnabled = true,
+    starcoinsEnabled = false,
 
 
     priority = 5,
