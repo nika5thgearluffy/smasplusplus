@@ -4,8 +4,10 @@ save*-ext.dat
 LuaData_Save*_save.txt
 LuaData_systemData.txt
 
-# Ignore any autosave levels
+# Ignore any autosave levels, world files, and .bak files
 *_autosave.lvlx
+*_autosave.wldx
+*.bak
 
 # Ignore progress.json
 progress.json
