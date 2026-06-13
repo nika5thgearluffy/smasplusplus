@@ -9,6 +9,11 @@ function onStart()
     -- Start the autoscroll, as well as start the autoscroll for the pop
     autoscroll.scrollRight(2)
     smlPop.autoscrollXSpeed(2)
+    for _,p in ipairs(Player.get()) do
+        local pop = NPC.spawn(738, p.x, p.y)
+        pop.direction = p.direction
+    end
+    triggerEvent("Boss Move 1")
 end
 
 function onTick()

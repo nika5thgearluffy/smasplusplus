@@ -955,7 +955,7 @@ smasTables.allDragonCoinNPCIDsTableMapped = table.map{274}
 smasTables.allStarCoinNPCIDsTableMapped = table.map{310}
 smasTables.allYoshiMountNPCIDsTableMapped = table.map{95,100,98,99,149,150,228,148}
 
-smasTables.allNPCsToExcludeOnSMASSMB1System = table.map{21,88,476}
+smasTables.allNPCsToExcludeOnSMASSMB1System = table.map{21,88,476,730,742,743,1004}
 
 smasTables.allInteractableNPCIDs = {9,10,14,31,33,34,35,88,90,92,139,140,141,142,143,144,145,146,147,153,154,155,156,157,169,170,184,185,186,187,188,191,193,249,250,258,274,293,425,462,559,994,996,997}
 

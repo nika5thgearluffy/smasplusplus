@@ -7,9 +7,9 @@ function onEvent(eventName)
     end
     if eventName == "Reward Received" then
         Sound.muteMusic(-1)
-        inventory.addPowerUp(6, 1)
+        smasMapInventorySystem.addPowerUp(6, 1)
         Sound.playSFX("chest.ogg")
-        Sound.playSFX("_OST/Super Mario Bros 3/Battle Mode Win.ogg")
+        Sound.playSFX("_OST/Super Mario Bros 3/Battle Mode Win.spc")
     end
     if eventName == "Win Level" then
         Level.exit(LEVEL_WIN_TYPE_STAR)

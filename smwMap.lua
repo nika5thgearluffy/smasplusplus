@@ -4235,21 +4235,45 @@ do
                     
                     if not SaveData.SMASPlusPlus.map.inventory.canUseStarman then
                         p:render{
-                            x = Screen.calculateCameraDimensions(x, 1),y = Screen.calculateCameraDimensions(y, 2),
-                            ignorestate = true,sceneCoords = false,priority = -2,color = (Defines.cheat_shadowmario and Color.black) or Color.white,
+                            x = Screen.calculateCameraDimensions(x, 1),
+                            y = Screen.calculateCameraDimensions(y, 2),
+                            ignorestate = true,
+                            sceneCoords = false,
+                            priority = -2,
+                            color = (Defines.cheat_shadowmario and Color.black) or Color.white,
                             frame = frame,
                         }
                     elseif SaveData.SMASPlusPlus.map.inventory.canUseStarman then
                         p:render{
-                            x = Screen.calculateCameraDimensions(x, 1),y = Screen.calculateCameraDimensions(y, 2),
-                            ignorestate = true,sceneCoords = false,priority = -1.9,color = (Defines.cheat_shadowmario and Color.black) or Color.white,
+                            x = Screen.calculateCameraDimensions(x, 1),
+                            y = Screen.calculateCameraDimensions(y, 2),
+                            ignorestate = true,
+                            sceneCoords = false,
+                            priority = -1.9,
+                            color = (Defines.cheat_shadowmario and Color.black) or Color.white,
                             frame = frame,
                             shader = starmanShader,
+                            uniforms = {
+                                time = lunatime.tick()*2;
+                            },
+                        }
+                        p:render{
+                            x = Screen.calculateCameraDimensions(x, 1),
+                            y = Screen.calculateCameraDimensions(y, 2),
+                            ignorestate = true,
+                            sceneCoords = false,
+                            priority = -2,
+                            color = (Defines.cheat_shadowmario and Color.black) or Color.white,
+                            frame = frame,
                         }
                     else
                         p:render{
-                            x = Screen.calculateCameraDimensions(x, 1),y = Screen.calculateCameraDimensions(y, 2),
-                            ignorestate = true,sceneCoords = false,priority = -2,color = (Defines.cheat_shadowmario and Color.black) or Color.white,
+                            x = Screen.calculateCameraDimensions(x, 1),
+                            y = Screen.calculateCameraDimensions(y, 2),
+                            ignorestate = true,
+                            sceneCoords = false,
+                            priority = -2,
+                            color = (Defines.cheat_shadowmario and Color.black) or Color.white,
                             frame = frame,
                         }
                     end

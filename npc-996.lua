@@ -37,7 +37,7 @@ function star.onInitAPI()
 end
 
 function star:onTickNPC()
-    if not self.isHidden and self:mem(0x124, FIELD_WORD) ~= 0 --[[new spawn]] then
+    if not self.isHidden and self:mem(0x124, FIELD_WORD) ~= 0 and not self.dontMove --[[new spawn]] then
         if math.abs(self.speedX) < 1.5 * NPC.config[npcID].speed then
             self.speedX = self.direction * 1.5 * NPC.config[npcID].speed
         else
@@ -45,10 +45,12 @@ function star:onTickNPC()
         end
     end
     
-    if self.collidesBlockBottom then
-        self.speedY = -8
-    elseif self.collidesBlockUp then
-        self.speedY = 2
+    if not self.dontMove then
+        if self.collidesBlockBottom then
+            self.speedY = -8
+        elseif self.collidesBlockUp then
+            self.speedY = 2
+        end
     end
 end
 
