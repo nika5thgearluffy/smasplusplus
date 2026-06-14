@@ -1,5 +1,5 @@
 HEAD
-TL:"Super Mario Land\: World 4-2";CPID:"SMBX2";
+TL:"Super Mario Land\: World 4-2";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
 SC:0;L:-200000;R:-187200;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Land/Chai Kingdom.spc|0\;g=2.5\;e0";BG:1;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
@@ -3049,6 +3049,11 @@ ID:88;X:-159626;Y:-160144;D:-1;
 ID:578;X:-189184;Y:-200256;D:-1;
 ID:578;X:-190464;Y:-200256;D:1;
 ID:578;X:-190848;Y:-200096;D:-1;
+ID:1010;X:-198384;Y:-200112;D:-1;
+ID:1009;X:-196904;Y:-200242;D:-1;
+ID:1010;X:-195184;Y:-200112;D:-1;
+ID:1009;X:-190696;Y:-200210;D:-1;
+ID:1009;X:-189544;Y:-200114;D:-1;
 NPC_END
 DOORS
 IX:-198000;IY:-200128;OX:-179856;OY:-180560;DT:1;ID:3;OD:1;LR:"Warp 1";

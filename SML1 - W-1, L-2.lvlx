@@ -2,7 +2,7 @@ HEAD
 TL:"Super Mario Land\: World 1-2";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-191232;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Land/Birabuto Kingdom.spc|0\;g=2.5\;e0";BG:51;
+SC:0;L:-200000;R:-191232;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Land/Birabuto Kingdom.spc|0\;g=2.5\;e0";BG:51;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SECTION_END
 STARTPOINT
 ID:1;X:-199852;Y:-200118;D:1;
