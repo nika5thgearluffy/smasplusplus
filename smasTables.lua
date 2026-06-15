@@ -249,24 +249,7 @@ smasTables.__smwLevels = {
 }
 
 smasTables.__smbspencerLevels = {
-    "SMBS - W-1, L-1.lvlx",
-    "SMBS - W-1, L-2.lvlx",
-    "SMBS - W-1, L-3.lvlx",
-    "SMBS - W-1, L-4.lvlx",
-    "SMBS - W-1, L-5.lvlx",
-    "SMBS - W-1, L-6.lvlx",
-    "SMBS - W-1, L-A.lvlx",
-    "SMBS - W-1, L-Castle.lvlx",
-    "SMBS - W-1, L-Tower.lvlx",
-    "SMBS - W-2, L-1.lvlx",
-    "SMBS - W-2, L-2.lvlx",
-    "SMBS - W-2, L-3.lvlx",
-    "SMBS - W-2, L-4.lvlx",
-    "SMBS - W-2, L-5.lvlx",
-    "SMBS - W-2, L-A.lvlx",
-    "SMBS - W-2, L-Tower.lvlx",
-    "SMBS - W-2, L-Castle.lvlx",
-    "SMBS - W-3, L-1.lvlx",
+    
 }
 
 --All WSMBA levels
@@ -326,10 +309,10 @@ smasTables.__sml1Levels = {
 
 --All SMB Special levels
 smasTables.__smbspecialLevels = {
-    "SMBSp - W-1, L-1.lvlx",
-    "SMBSp - W-1, L-2.lvlx",
-    "SMBSp - W-1, L-3.lvlx",
-    "SMBSp - W-1, L-4.lvlx",
+    "SMBS - W-1, L-1.lvlx",
+    "SMBS - W-1, L-2.lvlx",
+    "SMBS - W-1, L-3.lvlx",
+    "SMBS - W-1, L-4.lvlx",
 }
 
 -- All "Mario 3: All Around the World" levels

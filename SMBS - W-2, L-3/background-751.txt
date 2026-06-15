@@ -1,3 +1,0 @@
-priority=-87
-frames=8
-framespeed=15
