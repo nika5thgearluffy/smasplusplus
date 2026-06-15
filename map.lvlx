@@ -2304,6 +2304,9 @@ ID:795;X:-200224;Y:-194272;
 ID:795;X:-200256;Y:-194272;
 ID:795;X:-200288;Y:-194272;
 ID:752;X:-199584;Y:-196832;
+ID:795;X:-200256;Y:-194400;
+ID:795;X:-200320;Y:-194400;
+ID:3;X:-199520;Y:-196960;
 BGO_END
 NPC
 ID:753;X:-199904;Y:-197056;D:-1;XTRA:"{\n    \"backgroundName\"\: \"sky\"\,\n    \"customMusicPath\"\: \"_OST/Mario Forever/World 1 (Original).mod\"\,\n    \"height\"\: 1200\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: false\,\n    \"width\"\: 1500\n}\n";
