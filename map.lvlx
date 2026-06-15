@@ -3582,7 +3582,7 @@ ID:752;X:-199776;Y:-197856;D:-1;XTRA:"{\n    \"name\"\: \"toSML1W2-2\"\,\n    \"
 ID:752;X:-199840;Y:-197856;D:-1;XTRA:"{\n    \"name\"\: \"toSML1W2-3\"\,\n    \"points\"\: \"32\, 0\, -64\, 0\, -64\, 64\"\n}\n";
 ID:801;X:-199904;Y:-197792;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SML1 - W-2\, L-3.lvlx\"\,\n    \"levelTitle\"\: \"2-3\: Submarine GO!\"\,\n    \"path_right\"\: \"toSML1W3-1\"\,\n    \"path_up\"\: \"toSML1W2-3\"\,\n    \"unlock_right\"\: 9\n}\n";
 ID:752;X:-199872;Y:-197792;D:-1;XTRA:"{\n    \"name\"\: \"toSML1W3-1\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
-ID:802;X:-199840;Y:-197792;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SML1 - W-3\, L-1.lvlx\"\,\n    \"levelTitle\"\: \"3-1\: Easton Kingdom's Rocks\"\,\n    \"path_left\"\: \"toSML1W3-1\"\,\n    \"unlock_right\"\: 9\n}\n";
+ID:802;X:-199840;Y:-197792;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SML1 - W-3\, L-1.lvlx\"\,\n    \"levelTitle\"\: \"3-1\: Easton Kingdom's Rocks\"\,\n    \"path_left\"\: \"toSML1W3-1\"\,\n    \"path_right\"\: \"toSML1W3-2\"\,\n    \"unlock_right\"\: 9\n}\n";
 ID:752;X:-199808;Y:-197792;D:-1;XTRA:"{\n    \"name\"\: \"toSML1W3-2\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
 ID:802;X:-199776;Y:-197792;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SML1 - W-3\, L-2.lvlx\"\,\n    \"levelTitle\"\: \"3-2\: The Waterfalls\"\,\n    \"path_left\"\: \"toSML1W3-2\"\,\n    \"path_right\"\: \"toSML1W3-3\"\,\n    \"unlock_right\"\: 9\n}\n";
 ID:802;X:-199712;Y:-197728;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SML1 - W-3\, L-3.lvlx\"\,\n    \"levelTitle\"\: \"3-3\: Rocks and Caves\"\,\n    \"path_left\"\: \"toSML1W4-1\"\,\n    \"path_up\"\: \"toSML1W3-3\"\,\n    \"unlock_left\"\: 9\n}\n";

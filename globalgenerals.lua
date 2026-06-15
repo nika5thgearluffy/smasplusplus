@@ -106,8 +106,7 @@ end
 
 --New pause menu was made, this is to prevent the old pause menu from opening
 function globalgenerals.onPause(evt)
-    evt.cancelled = true;
-    isPauseMenuOpen = not isPauseMenuOpen
+    evt.cancelled = true
 end
 
 function globalgenerals.onEvent(eventName)

@@ -106,7 +106,7 @@ function smas2PlayerSystem.onDraw()
     
     if smas2PlayerSystem.enableSplitScreen then
         if Player.count() == 2 then
-            Graphics.drawBox{width = 2, height = 600, x = 399, y = 0, color = Color.black, priority = 5}
+            Graphics.drawBox{width = 2, height = Screem.height(), x = Screen.width() / 2, y = 0, color = Color.black, priority = 5}
             
             smas2PlayerSystem.player1CameraEdgeX = Screen.viewPortCoordinateX(player.x - camera.x + 40, player.width)
             smas2PlayerSystem.player1CameraEdgeY = 0
@@ -203,30 +203,28 @@ end]]
 function smas2PlayerSystem.onTick()
     for _,p in ipairs(Player.get()) do --Make sure all players are counted if i.e. using supermario128...
         if Player.count() == 2 then
-            if SMBX_VERSION ~= VER_SEE_MOD then
-                if Player(1).forcedState == FORCEDSTATE_PIPE then
-                    if Player(1).forcedTimer >= 70 and not Misc.isPaused() then
-                        player:mem(0x140,FIELD_WORD,100)
-                        Player(2):mem(0x140,FIELD_WORD,100)
-                        Player(2):teleport(player.x - 32, player.y - 32, bottomCenterAligned)
-                    end
+            if Player(1).forcedState == FORCEDSTATE_PIPE then
+                if Player(1).forcedTimer >= 70 and not Misc.isPaused() then
+                    player:mem(0x140,FIELD_WORD,100)
+                    Player(2):mem(0x140,FIELD_WORD,100)
+                    Player(2):teleport(player.x - 32, player.y - 32, bottomCenterAligned)
                 end
-                if Player(2).forcedState == FORCEDSTATE_PIPE then
-                    if Player(2).forcedTimer >= 70 and not Misc.isPaused() then
-                        player:mem(0x140,FIELD_WORD,100)
-                        Player(2):mem(0x140,FIELD_WORD,100)
-                        Player(1):teleport(Player(2).x - 32, Player(2).y - 32, bottomCenterAligned)
-                    end
+            end
+            if Player(2).forcedState == FORCEDSTATE_PIPE then
+                if Player(2).forcedTimer >= 70 and not Misc.isPaused() then
+                    player:mem(0x140,FIELD_WORD,100)
+                    Player(2):mem(0x140,FIELD_WORD,100)
+                    Player(1):teleport(Player(2).x - 32, Player(2).y - 32, bottomCenterAligned)
                 end
-                if Player(1).forcedState == FORCEDSTATE_DOOR then
-                    if Player(1).forcedTimer == 1 then
-                        Routine.run(smas2PlayerSystem.doorTeleportP2toP1)
-                    end
+            end
+            if Player(1).forcedState == FORCEDSTATE_DOOR then
+                if Player(1).forcedTimer == 1 then
+                    Routine.run(smas2PlayerSystem.doorTeleportP2toP1)
                 end
-                if Player(2).forcedState == FORCEDSTATE_DOOR then
-                    if Player(2).forcedTimer == 1 then
-                        Routine.run(smas2PlayerSystem.doorTeleportP1toP2)
-                    end
+            end
+            if Player(2).forcedState == FORCEDSTATE_DOOR then
+                if Player(2).forcedTimer == 1 then
+                    Routine.run(smas2PlayerSystem.doorTeleportP1toP2)
                 end
             end
         end
