@@ -4254,7 +4254,7 @@ do
                             frame = frame,
                             shader = starmanShader,
                             uniforms = {
-                                time = lunatime.tick()*2;
+                                time = lunatime.tick()*2
                             },
                         }
                         p:render{

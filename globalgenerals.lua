@@ -416,10 +416,13 @@ function globalgenerals.onExit()
         SysManager.sendToConsole("Credits exiting detected! Exiting to the credits level...")
         Level.load("SMAS - Credits.lvlx")
     end
-    for _,p in ipairs(Player.get()) do
-        if Misc.inEditor() then
+    if Misc.inEditor() then
+        -- Retain reserve when reloading level
+        for _,p in ipairs(Player.get()) do
             GameData.tempReserve[p.idx] = p.reservePowerup
         end
+        -- This is done so that the current level if traveling to different levels is the main testing level
+        Editor.setTestModeLevel(Misc.episodePath()..Level.filename())
     end
     File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(Screen.width())..","..tostring(Screen.height()))
 end
