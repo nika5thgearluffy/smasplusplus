@@ -970,7 +970,6 @@ ID:817;X:-199520;Y:-196768;W:32;H:16;
 ID:819;X:-199536;Y:-196816;W:64;H:48;
 ID:810;X:-199488;Y:-196736;W:14;H:14;
 ID:819;X:-199536;Y:-196752;W:64;H:48;
-ID:862;X:-200640;Y:-199872;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"lockedPathEventName\"\: \"toSMB3W-4LockedGate\"\,\n        \"partOfLockedLevel\"\: \"SMB3 - W-4\, L-Fortress1.lvlx\"\,\n        \"partOfLockedPath\"\: \"toSMB3W-4WarpAEnd\"\n    }\n}\n";
 ID:862;X:-197408;Y:-197856;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"lockedPathEventName\"\: \"toSMB3W-3LockedGate\"\,\n        \"partOfLockedLevel\"\: \"SMB3 - W-3\, L-Fortress1.lvlx\"\,\n        \"partOfLockedPath\"\: \"toSMB3SectionAPipeEnd\"\n    }\n}\n";
 ID:828;X:-201536;Y:-198624;W:32;H:32;
 ID:828;X:-201536;Y:-198720;W:32;H:32;
@@ -1050,6 +1049,7 @@ ID:817;X:-199648;Y:-196528;W:32;H:16;
 ID:817;X:-199648;Y:-196512;W:32;H:16;
 ID:817;X:-199648;Y:-196496;W:32;H:16;
 ID:817;X:-199648;Y:-196480;W:32;H:16;
+ID:862;X:-200640;Y:-199872;W:32;H:32;XTRA:"{\n    \"global\"\: {\n        \"lockedPathEventName\"\: \"toSMB3W-4LockedGate\"\,\n        \"partOfLockedLevel\"\: \"SMB3 - W-4\, L-Fortress1.lvlx\"\,\n        \"partOfLockedPath\"\: \"toSMB3W-4WarpAEnd\"\n    }\n}\n";
 BLOCK_END
 BGO
 ID:751;X:-195584;Y:-197984;
@@ -3271,7 +3271,7 @@ ID:821;X:-201216;Y:-199744;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"toSMB3W
 ID:752;X:-201216;Y:-199840;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-4WarpB\"\,\n    \"points\"\: \"0\, -32\, 0\, 96\"\n}\n";
 ID:821;X:-201152;Y:-199872;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"toSMB3W-4WarpAEnd\"\,\n    \"levelTitle\"\: \"Warp A\"\,\n    \"path_left\"\: \"toSMB3W-4WarpA\"\,\n    \"warpName\"\: \"toSMB3W-4WarpAStart\"\n}\n";
 ID:752;X:-201184;Y:-199872;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-4WarpA\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
-ID:821;X:-200672;Y:-199872;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"toSMB3W-4WarpBStart\"\,\n    \"levelTitle\"\: \"Warp A\"\,\n    \"path_right\"\: \"toSMB3W-4WarpAEnd\"\,\n    \"warpName\"\: \"toSMB3W-4WarpBEnd\"\n}\n";
+ID:821;X:-200672;Y:-199872;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"toSMB3W-4WarpBStart\"\,\n    \"levelTitle\"\: \"Warp B\"\,\n    \"path_right\"\: \"toSMB3W-4WarpAEnd\"\,\n    \"warpName\"\: \"toSMB3W-4WarpBEnd\"\n}\n";
 ID:752;X:-200640;Y:-199872;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-4WarpAEnd\"\,\n    \"points\"\: \"32\, 0\, -32\, 0\"\,\n    \"smb3settings\"\: {\n        \"canUnlockWhenBeatingLevelSMB3\"\: true\,\n        \"cantUnlockWithHammerSMB3\"\: true\,\n        \"isLockedSMB3\"\: true\,\n        \"levelBeatBeforeUnlockedSMB3\"\: \"SMB3 - W-4\, L-Fortress1.lvlx\"\,\n        \"lockedPathEventNameSMB3\"\: \"toSMB3W-4LockedGate\"\n    }\n}\n";
 ID:821;X:-197376;Y:-197856;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-3Area1WarpBegin\"\,\n    \"levelTitle\"\: \"Section A\"\,\n    \"path_left\"\: \"toSMB3SectionAPipeEnd\"\,\n    \"warpName\"\: \"SMB3W-3Area1WarpEnd\"\n}\n";
 ID:752;X:-197408;Y:-197856;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3SectionAPipeEnd\"\,\n    \"points\"\: \"32\, 0\, -32\, 0\, -32\, -64\"\,\n    \"smb3settings\"\: {\n        \"canUnlockWhenBeatingLevelSMB3\"\: true\,\n        \"cantUnlockWithHammerSMB3\"\: true\,\n        \"isLockedSMB3\"\: true\,\n        \"levelBeatBeforeUnlockedSMB3\"\: \"SMB3 - W-3\, L-Fortress1.lvlx\"\,\n        \"lockedPathEventNameSMB3\"\: \"toSMB3W-3LockedGate\"\n    }\n}\n";
