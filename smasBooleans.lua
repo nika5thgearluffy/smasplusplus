@@ -63,5 +63,7 @@ smasBooleans.lavaPlayerBypassLava = false
 smasBooleans.disablePlayerKeys = false
 -- If there's a win state active. Replaces the legacy GameData variable.
 smasBooleans.winStateActive = false
+-- If we're online.
+smasBooleans.isOnline = false
 
 return smasBooleans

@@ -1,18 +1,80 @@
 local smasOnlinePlay = {}
 
--- True if online should be activated. This is only true when a session is active.
-smasOnlinePlay.onlineActivated = false
+-- True if online should be enabled.
+smasOnlinePlay.enabled = false
 
-
+local discoveredPlayers = {}
+local MY_PORT = 7777
+local MY_IP = Internet.ipAddress()
+local playersCount = 1
 
 -- Register events below
 registerEvent(smasOnlinePlay,"onDraw")
 
 
+function smasOnlinePlay.toggle(enabled)
+    if enabled then
+        -- Toggle this on
+        smasOnlinePlay.enabled = true
+        -- Start listening
+        Internet.socketStartListening(7777)
+    else
+        -- Toggle this off
+        smasOnlinePlay.enabled = false
+        -- Close socket
+        Internet.socketClose()
+    end
+end
+
+-- Get list of discovered players
+function smasOnlinePlay.getDiscoveredPlayers()
+    return discoveredPlayers
+end
+
 
 function smasOnlinePlay.onDraw()
-    if smasOnlinePlay.onlineActivated then
-        
+    if smasOnlinePlay.enabled then
+        local packet = Internet.socketReceivePacket()
+        if packet ~= "" then
+            local data = json.decode(packet)
+            
+        end
+
+        -- Broadcast presence every 64 ticks (roughly every second at 64fps)
+        if lunatime.tick() % 64 == 0 then
+            Internet.broadcastEnable()
+            Internet.broadcastSend(MY_PORT, json.encode({
+                type = "discover",
+                ip = MY_IP,
+                name = SaveData.SMASPlusPlus.game.username or "Player",
+                pfp = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp),
+            }))
+        end
+
+        -- Check for other players broadcasting
+        local data = Internet.broadcastReceive()
+        if data ~= "" then
+            local senderIP = Internet.broadcastGetLastSender()
+            local packet = json.decode(data)
+
+            if packet and packet.type == "discover" and senderIP ~= MY_IP then
+                -- Found another player on the LAN
+                if not discoveredPlayers[senderIP] then
+                    discoveredPlayers[senderIP] = packet.name
+                    SysManager.sendToConsole("Found player: "..packet.name.." at "..senderIP)
+                    Sound.playSFX("online/online-connected.ogg")
+                end
+                -- Client side - send player position
+                Network.sendPacket(senderIP, 7777, json.encode({
+                    x = player.x,
+                    y = player.y,
+                    character = player.character,
+                    frame = player.frame,
+                    speedX = player.speedX,
+                    speedY = player.speedY,
+                }))
+            end
+        end
     end
 end
 

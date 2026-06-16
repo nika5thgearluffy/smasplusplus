@@ -3062,7 +3062,7 @@ ID:752;X:-201408;Y:-197728;D:-1;XTRA:"{\n    \"name\"\: \"toSMB35-Airship\"\,\n 
 ID:854;X:-201504;Y:-197728;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-5\, L-Airship.lvlx\"\,\n    \"levelTitle\"\: \"Airship #5\: Roy\"\,\n    \"path_down\"\: \"\"\,\n    \"path_right\"\: \"toSMB35-Airship\"\,\n    \"path_up\"\: \"toSMB3W-5Path6\"\,\n    \"unlock_up\"\: 9\n}\n";
 ID:752;X:-201504;Y:-197760;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-5Path6\"\,\n    \"points\"\: \"0\, 32\, 0\, -32\"\n}\n";
 ID:821;X:-201504;Y:-197792;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-6BeginWarp\"\,\n    \"levelTitle\"\: \"Warp to World 6\"\,\n    \"path_down\"\: \"toSMB3W-5Path6\"\,\n    \"warpName\"\: \"SMB3W-5bEndWarp\"\n}\n";
-ID:753;X:-201600;Y:-194560;D:-1;XTRA:"{\n    \"backgroundName\"\: \"\"\,\n    \"customMusicPath\"\: \"_OST/Super Mario Bros 3/Ice Land.spc|0\;g=2.5\"\,\n    \"height\"\: 416\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: true\,\n    \"width\"\: 1600\n}\n";
+ID:753;X:-201600;Y:-194560;D:-1;XTRA:"{\n    \"backgroundName\"\: \"\"\,\n    \"customMusicPath\"\: \"_OST/Super Mario Bros 3/Ice Land.spc|0\;g=2.5\"\,\n    \"height\"\: 384\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: true\,\n    \"width\"\: 1600\n}\n";
 ID:821;X:-201536;Y:-194368;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-5bEndWarp\"\,\n    \"levelTitle\"\: \"Warp to World 6\"\,\n    \"path_down\"\: \"\"\,\n    \"path_right\"\: \"toSMB36-1\"\,\n    \"warpName\"\: \"SMB3W-6BeginWarp\"\n}\n";
 ID:752;X:-201504;Y:-194368;D:-1;XTRA:"{\n    \"name\"\: \"toSMB36-1\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
 ID:755;X:-201472;Y:-194368;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-6\, L-1.lvlx\"\,\n    \"levelTitle\"\: \"6-1\: Snowy Regions\"\,\n    \"path_left\"\: \"toSMB36-1\"\,\n    \"path_right\"\: \"toSMB36-2\"\,\n    \"unlock_right\"\: 9\n}\n";
@@ -3103,7 +3103,7 @@ ID:821;X:-200128;Y:-194368;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-7
 ID:752;X:-200160;Y:-194368;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-6Path1\"\,\n    \"points\"\: \"-32\, 0\, 32\, 0\"\n}\n";
 ID:852;X:-200832;Y:-194496;D:-1;XTRA:"{\n    \"levelTitle\"\: \"Bonus Challenge! #5\"\,\n    \"path_down\"\: \"toSMB3W-6Path2\"\n}\n";
 ID:752;X:-200832;Y:-194400;D:-1;XTRA:"{\n    \"name\"\: \"toSMB3W-6Path2\"\,\n    \"points\"\: \"0\, 32\, 0\, -96\"\n}\n";
-ID:753;X:-201600;Y:-195136;D:-1;XTRA:"{\n    \"backgroundName\"\: \"\"\,\n    \"customMusicPath\"\: \"_OST/Super Mario Bros 3/Pipe Land.spc|0\;g=2.5\"\,\n    \"height\"\: 416\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: true\,\n    \"width\"\: 1152\n}\n";
+ID:753;X:-201600;Y:-195136;D:-1;XTRA:"{\n    \"backgroundName\"\: \"\"\,\n    \"customMusicPath\"\: \"_OST/Super Mario Bros 3/Pipe Land.spc|0\;g=2.5\"\,\n    \"height\"\: 384\,\n    \"music\"\: 2\,\n    \"restrictCamera\"\: true\,\n    \"width\"\: 1152\n}\n";
 ID:821;X:-201472;Y:-195072;D:-1;XTRA:"{\n    \"destinationWarpName\"\: \"SMB3W-6EndWarp\"\,\n    \"levelTitle\"\: \"Warp to World 6\"\,\n    \"path_down\"\: \"toSMB37-1\"\,\n    \"path_left\"\: \"\"\,\n    \"warpName\"\: \"SMB3W-7BeginWarp\"\n}\n";
 ID:755;X:-201472;Y:-195008;D:-1;XTRA:"{\n    \"levelFilename\"\: \"SMB3 - W-7\, L-1.lvlx\"\,\n    \"levelTitle\"\: \"7-1\: The Pipe Directories\"\,\n    \"path_right\"\: \"toSMB3W-7Pipe1\"\,\n    \"path_up\"\: \"toSMB37-1\"\,\n    \"unlock_right\"\: 9\n}\n";
 ID:752;X:-201472;Y:-195040;D:-1;XTRA:"{\n    \"name\"\: \"toSMB37-1\"\,\n    \"points\"\: \"0\, -32\, 0\, 32\"\n}\n";

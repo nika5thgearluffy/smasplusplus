@@ -52,93 +52,91 @@ function SysManager.lifeCountWithCrownsAndZeroFailsafe() --This lists the curren
     end
 end
 
-if Misc.inSuperMarioAllStarsPlusPlus() then
-    function SysManager.manageLives(lives, mathcount) --arg1 = number of lives, arg2 = to add (true) or subtract them (false)
-        if lives == nil then
-            error("You need to specify the number of lives.")
-        end
-        if mathcount == nil then
-            error("You need to specify whenever to add (true) or subtract (false) the life count.")
-        end
-        if not mathcount then
-            SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - lives
-        elseif mathcount then
-            SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives + lives
-        end
+function SysManager.manageLives(lives, mathcount) --arg1 = number of lives, arg2 = to add (true) or subtract them (false)
+    if lives == nil then
+        error("You need to specify the number of lives.")
     end
+    if mathcount == nil then
+        error("You need to specify whenever to add (true) or subtract (false) the life count.")
+    end
+    if not mathcount then
+        SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives - lives
+    elseif mathcount then
+        SaveData.SMASPlusPlus.hud.lives = SaveData.SMASPlusPlus.hud.lives + lives
+    end
+end
 
-    function SysManager.maxOutLives() --This maxes out the lives to 1110 (All three crowns).
-        Sound.playSFX(98)
-        SaveData.SMASPlusPlus.hud.lives = 1110
-        SysManager.sendToConsole("Lives are now maxed out.")
-    end
+function SysManager.maxOutLives() --This maxes out the lives to 1110 (All three crowns).
+    Sound.playSFX(98)
+    SaveData.SMASPlusPlus.hud.lives = 1110
+    SysManager.sendToConsole("Lives are now maxed out.")
+end
 
-    function SysManager.resetLives() --This resets the lives back to 5
-        Sound.playSFX(67)
-        SaveData.SMASPlusPlus.hud.lives = 5
-        SysManager.sendToConsole("Lives have been reset.")
-    end
+function SysManager.resetLives() --This resets the lives back to 5
+    Sound.playSFX(67)
+    SaveData.SMASPlusPlus.hud.lives = 5
+    SysManager.sendToConsole("Lives have been reset.")
+end
 
-    --Death Count
+--Death Count
 
-    function SysManager.deathCount() --This lists the current life count
-        if SaveData.SMASPlusPlus.hud.deathCount == nil then
-            return 0
-        else
-            return SaveData.SMASPlusPlus.hud.deathCount
-        end
+function SysManager.deathCount() --This lists the current life count
+    if SaveData.SMASPlusPlus.hud.deathCount == nil then
+        return 0
+    else
+        return SaveData.SMASPlusPlus.hud.deathCount
     end
+end
 
-    function SysManager.maxOutDeathCount() --This maxes out the death count to 999
-        Sound.playSFX(67)
-        SaveData.SMASPlusPlus.hud.deathCount = 999
-        SysManager.sendToConsole("Death count is now maxed out.")
-    end
+function SysManager.maxOutDeathCount() --This maxes out the death count to 999
+    Sound.playSFX(67)
+    SaveData.SMASPlusPlus.hud.deathCount = 999
+    SysManager.sendToConsole("Death count is now maxed out.")
+end
 
-    function SysManager.resetDeathCount() --This resets the death count back to 0
-        Sound.playSFX(98)
-        SaveData.SMASPlusPlus.hud.deathCount = 0
-        SysManager.sendToConsole("Death count has been reset.")
+function SysManager.resetDeathCount() --This resets the death count back to 0
+    Sound.playSFX(98)
+    SaveData.SMASPlusPlus.hud.deathCount = 0
+    SysManager.sendToConsole("Death count has been reset.")
+end
+
+--Star Count
+
+function SysManager.maxOutStars() --This maxs the star count to 9999
+    SaveData.SMASPlusPlus.levels.starCount = 9999
+    SysManager.sendToConsole("Star count is now maxed out.")
+end
+
+function SysManager.clearAllStars() --This clears all the stars, and even all the level tables
+    Sound.playSFX(67)
+    SaveData.SMASPlusPlus.levels.starCount = 0
+    for k in pairs(SaveData.SMASPlusPlus.levels.complete.normal) do
+        SaveData.SMASPlusPlus.levels.complete.normal[k] = nil
     end
-    
-    --Star Count
-    
-    function SysManager.maxOutStars() --This maxs the star count to 9999
-        SaveData.SMASPlusPlus.levels.starCount = 9999
-        SysManager.sendToConsole("Star count is now maxed out.")
+    for k in pairs(SaveData.SMASPlusPlus.levels.complete.optional) do
+        SaveData.SMASPlusPlus.levels.complete.optional[k] = nil
     end
-    
-    function SysManager.clearAllStars() --This clears all the stars, and even all the level tables
-        Sound.playSFX(67)
-        SaveData.SMASPlusPlus.levels.starCount = 0
-        for k in pairs(SaveData.SMASPlusPlus.levels.complete.normal) do
-            SaveData.SMASPlusPlus.levels.complete.normal[k] = nil
-        end
-        for k in pairs(SaveData.SMASPlusPlus.levels.complete.optional) do
-            SaveData.SMASPlusPlus.levels.complete.optional[k] = nil
-        end
-        SaveData.SMASPlusPlus.levels.complete.normal = {}
-        SaveData.SMASPlusPlus.levels.complete.optional = {}
-        SysManager.sendToConsole("Star count has been reset and cleared. All level completion status has also been deleted.")
+    SaveData.SMASPlusPlus.levels.complete.normal = {}
+    SaveData.SMASPlusPlus.levels.complete.optional = {}
+    SysManager.sendToConsole("Star count has been reset and cleared. All level completion status has also been deleted.")
+end
+
+function SysManager.manageStars(arg1, arg2) --arg1 = Number of stars, arg2 = To add or subtract them
+    if arg1 == nil then
+        error("You need to specify the number of stars.")
     end
-    
-    function SysManager.manageStars(arg1, arg2) --arg1 = Number of stars, arg2 = To add or subtract them
-        if arg1 == nil then
-            error("You need to specify the number of stars.")
-        end
-        if arg2 == nil then
-            error("You need to specify whenever to subtract or add the stars.")
-        end
-        if (arg1 ~= nil) and (arg2 ~= nil) then
-            stars = arg1
-            mathcount = arg2
-        else
-        end
-        if mathcount == subtract then
-            SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount - stars
-        elseif mathcount == add then
-            SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount + stars
-        end
+    if arg2 == nil then
+        error("You need to specify whenever to subtract or add the stars.")
+    end
+    if (arg1 ~= nil) and (arg2 ~= nil) then
+        stars = arg1
+        mathcount = arg2
+    else
+    end
+    if mathcount == subtract then
+        SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount - stars
+    elseif mathcount == add then
+        SaveData.SMASPlusPlus.levels.starCount = SaveData.SMASPlusPlus.levels.starCount + stars
     end
 end
     

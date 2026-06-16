@@ -50,6 +50,11 @@ smasCharacterChanger.iniFile = SysManager.loadDefaultCharacterIni() --Used to up
 smasCharacterChanger.characterPreviewImagesCostume = {} --Will be used to add character preview images throughout the menu
 smasCharacterChanger.characterPreviewImagesCharacter = {} --Will be used to add character preview images throughout the menu
 
+-- Whether to toggle music for changer or not
+local shouldPlayMusic = true
+-- Should we pause when changing characters?
+local shouldWePause = true
+
 local rainbowHue = 0
 local reserveChange = 0
 
@@ -211,7 +216,15 @@ local function textPrintCentered(t, x, y, color) --Taken from the input config m
     textplus.print{text=t, x=x, y=y, plaintext=true, pivot=vector.v2(0.5,0.5), xscale=1.5, yscale=1.5, color=color, priority = 7.4, font = smbx13font}
 end
 
-function smasCharacterChanger.startChanger() --This is the command that starts the menu up. Use this to enable the menu.
+function smasCharacterChanger.startChanger(shouldEnableMusic, shouldPause) --This is the command that starts the menu up. Use this to enable the menu.
+    if shouldEnableMusic == nil then
+        shouldEnableMusic = true
+    end
+    if shouldPause == nil then
+        shouldPause = true
+    end
+    shouldPlayMusic = shouldEnableMusic
+    shouldWePause = shouldPause
     smasCharacterChanger.menuActive = true
     smasCharacterChanger.animationActive = true
     SysManager.sendToConsole("Character changer menu starting...")
@@ -223,8 +236,12 @@ function smasCharacterChanger.stopChanger() --This is the command that stops the
 end
 
 function smasCharacterChanger.startupChanger() --The animation that starts the menu up.
-    Misc.pause()
-    Sound.muteMusic(-1)
+    if shouldWePause then
+        Misc.pause()
+    end
+    if shouldPlayMusic then
+        Sound.muteMusic(-1)
+    end
     if pauseplus then
         pauseplus.canPause = false
     end
@@ -244,7 +261,9 @@ function smasCharacterChanger.startupChanger() --The animation that starts the m
     SFX.play(smasCharacterChanger.turnOnSFX)
     Routine.waitFrames(14, true)
     smasCharacterChanger.animationActive = false
-    menuBGMObject = SFX.play(smasCharacterChanger.menuBGM, Audio.MusicVolume() / 100, 0)
+    if shouldPlayMusic then
+        menuBGMObject = SFX.play(smasCharacterChanger.menuBGM, Audio.MusicVolume() / 100, 0)
+    end
     started = true
 end
 
@@ -256,13 +275,17 @@ function smasCharacterChanger.shutdownChanger() --The animation that shuts the m
     Routine.waitFrames(35, true)
     smasCharacterChanger.selectionNumberUpDown = 1
     smasCharacterChanger.selectionNumberAlteration = 0
-    Misc.unpause()
+    if shouldWePause then
+        Misc.unpause()
+    end
     if changed then
         smasCharacterInfo.setCostumeSpecifics()
         changed = false
     end
     Sound.loadCostumeSounds()
-    Sound.restoreMusic(-1)
+    if shouldPlayMusic then
+        Sound.restoreMusic(-1)
+    end
     if pauseplus then
         pauseplus.canPause = true
     end
@@ -271,8 +294,13 @@ function smasCharacterChanger.shutdownChanger() --The animation that shuts the m
     smasCharacterChanger.tvScrollNumber = -628
     smasCharacterChanger.animationTimer = 0
     ending = false
+    shouldPlayMusic = true
+    shouldWePause = true
     if smasBooleans.isOnMainMenu then
         optionsMenu1()
+    end
+    if smasBooleans.isOnline and GameData.SMASPlusPlus.online.state == 1 then
+        GameData.SMASPlusPlus.online.state = 2
     end
 end
 
@@ -364,7 +392,9 @@ function smasCharacterChanger.onDraw()
                 Routine.run(smasCharacterChanger.startupChanger)
             end
             if smasCharacterChanger.animationTimer >= 1 and smasCharacterChanger.animationTimer <= 64 then
-                Misc.pause()
+                if shouldWePause then
+                    Misc.pause()
+                 end
                 smasCharacterChanger.tvScrollNumber = smasCharacterChanger.tvScrollNumber + 9.2
                 Graphics.drawImageWP(smasCharacterChanger.tvImage, Screen.calculateCameraDimensions(-20, 1), Screen.calculateCameraDimensions(smasCharacterChanger.tvScrollNumber, 2), 7.5)
                 local tvOffColor = Color(0, 0, 0)
@@ -450,7 +480,7 @@ function smasCharacterChanger.onDraw()
             colorIncrease = 0
         end
     elseif not smasCharacterChanger.menuActive and started then
-        if menuBGMObject ~= nil then
+        if menuBGMObject ~= nil and shouldPlayMusic then
             if Audio.MusicVolume() ~= 0 then
                 menuBGMObject:FadeOut(2000)
             else

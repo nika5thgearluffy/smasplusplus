@@ -8,6 +8,8 @@ local newkeyboard = require("newkeyboard")
 
 local exitwordswip = false
 
+smasBooleans.isOnline = true
+
 local matchChannelsToMute = {
     1,
     4,
@@ -125,16 +127,21 @@ local function ExitToBootMenuWithSound()
     ExitToBootMenu()
 end
 
+local function startConnectingMain()
+    exitwordswip = true
+    for i = 1,14 do
+        Sound.unmuteChannel(i)
+    end
+    for k,v in ipairs(lobbyChannelsToMute) do
+        Sound.muteChannel(v)
+    end
+    smasOnlinePlay.toggle(true)
+end
+
 local function startConnecting()
     local isValidIP = SysManager.checkValidIPAddress(GameData.SMASPlusPlus.online.ipClient)
     if isValidIP then
-        exitwordswip = true
-        for i = 1,14 do
-            Sound.unmuteChannel(i)
-        end
-        for k,v in ipairs(lobbyChannelsToMute) do
-            Sound.muteChannel(v)
-        end
+        startConnectingMain()
     else
         littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>Looks like this is an invalid IP address! Please reenter the address.<question IPAddressEntering>", pauses = false, updatesInPause = true})
     end
@@ -147,7 +154,7 @@ local function enterIPAddress()
     for k,v in ipairs(selectChannelsToMute) do
         Sound.muteChannel(v)
     end
-    littleDialogue.create({text = "<setPos 400 32 0.5 -1.7>We'll need the client's IP address in order to connect. Please enter it.<question IPAddressEntering>", pauses = false, updatesInPause = true})
+    littleDialogue.create({text = "<setPos 400 32 0.5 -1.4>Would you like to change your character before you start connecting?<question IPAddressEntering>", pauses = false, updatesInPause = true})
 end
 
 local function onlineBegin()
@@ -187,7 +194,16 @@ function onDraw()
     if GameData.SMASPlusPlus.online.state == 2 then
         timer = timer + 1
         if timer == 1 then
-            startConnecting()
+            startConnectingMain()
+        end
+        local data = Internet.broadcastReceive()
+        if data ~= "" then
+            local senderIP = Internet.broadcastGetLastSender()
+            local packet = json.decode(data)
+            Graphics.drawImageWP(Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp), 100, 100, 5)
+            if packet.pfp ~= nil then
+                Graphics.drawImageWP(packet.pfp, 100, 200, 5)
+            end
         end
     end
 end
@@ -213,7 +229,8 @@ local function menu_showExitMenu()
     
 end
 
-littleDialogue.registerAnswer("IPAddressEntering",{text = "Enter",chosenFunction = function() IPAddressClientEnter() end})
+littleDialogue.registerAnswer("IPAddressEntering",{text = "Sure!",chosenFunction = function() smasCharacterChanger.startChanger(false, false) end})
+littleDialogue.registerAnswer("IPAddressEntering",{text = "No thanks.",chosenFunction = function() GameData.SMASPlusPlus.online.state = 2 end})
 littleDialogue.registerAnswer("IPAddressEntering",{text = "Exit",chosenFunction = function() Routine.run(ExitToBootMenu) end})
 
 littleDialogue.registerAnswer("QuitToMenuError",{text = "Exit",chosenFunction = function() Routine.run(ExitToBootMenu) end})
