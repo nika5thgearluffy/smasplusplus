@@ -7,6 +7,7 @@ local smasExtraSounds = require("smasExtraSounds")
 local newkeyboard = require("newkeyboard")
 
 local exitwordswip = false
+local waitingForPlayersSFX
 
 smasBooleans.isOnline = true
 
@@ -135,6 +136,7 @@ local function startConnectingMain()
     for k,v in ipairs(lobbyChannelsToMute) do
         Sound.muteChannel(v)
     end
+    waitingForPlayersSFX = Sound.playSFX("online/online_loading.ogg", Audio.MusicVolume() / 100, 0)
     smasOnlinePlay.toggle(true)
 end
 
@@ -214,14 +216,16 @@ function onKeyboardPressDirect(k, repeated, str)
             
         end
     end
-    if exitwordswip and k == VK_NEXT and not Misc.isPaused() then --PAGE_DOWN
+    if exitwordswip and k == VK_NEXT and not Misc.isPaused() and not repeated then --PAGE_DOWN
         exitwordswip = false
         Routine.run(ExitToBootMenuWithSound)
     end
 end
 
 function onExit()
-    
+    if waitingForPlayersSFX ~= nil then
+        waitingForPlayersSFX:Stop()
+    end
 end
 
 local function menu_showExitMenu()

@@ -6,6 +6,7 @@ LuaData_systemData.txt
 
 # Ignore any autosave levels, world files, and .bak files
 *_autosave.lvlx
+*_autosave-0.lvlx
 *_autosave.wldx
 *.bak
 

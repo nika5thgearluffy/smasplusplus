@@ -31,6 +31,23 @@ smasSMB1System.checkpointCoordinates = {
 
     ["SMBLL - W-1, L-1.lvlx"] = {x = -196058, y = -200128, crossed = false, section = 0},
     ["SMBLL - W-1, L-2.lvlx"] = {x = -177018, y = -180128, crossed = false, section = 1},
+    ["SMBLL - W-1, L-3.lvlx"] = {x = -197088, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-2, L-1.lvlx"] = {x = -195968, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-2, L-2.lvlx"] = {x = -196128, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-2, L-3.lvlx"] = {x = -196832, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-3, L-1.lvlx"] = {x = -196864, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-3, L-2.lvlx"] = {x = -177024, y = -180128, crossed = false, section = 0},
+    ["SMBLL - W-3, L-3.lvlx"] = {x = -196480, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-4, L-1.lvlx"] = {x = -196512, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-4, L-2.lvlx"] = {x = -196448, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-4, L-3.lvlx"] = {x = -196992, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-5, L-1.lvlx"] = {x = -193920, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-5, L-2.lvlx"] = {x = -176832, y = -180128, crossed = false, section = 0},
+    ["SMBLL - W-6, L-1.lvlx"] = {x = -196448, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-6, L-2.lvlx"] = {x = -176256, y = -180128, crossed = false, section = 1},
+    ["SMBLL - W-6, L-3.lvlx"] = {x = -195840, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-7, L-1.lvlx"] = {x = -196256, y = -200128, crossed = false, section = 0},
+    ["SMBLL - W-7, L-3.lvlx"] = {x = -193760, y = -200128, crossed = false, section = 0},
 
     ["SML1 - W-1, L-1.lvlx"] = {x = -197280, y = -200128, crossed = false, section = 0},
     ["SML1 - W-1, L-2.lvlx"] = {x = -197376, y = -200128, crossed = false, section = 0},
@@ -110,10 +127,8 @@ function smasSMB1System.onStart()
     if (table.icontains(smasTables.__smb1Levels,Level.filename()) or table.icontains(smasTables.__smbllLevels,Level.filename())) or table.icontains(smasTables.__sml1Levels,Level.filename()) then 
         if SysManager.getEnteredCheckpointID() > 0 then
             for k,v in ipairs(NPC.get()) do
-                if NPC.isOnScreen(v) then
-                    if not smasTables.allNPCsToExcludeOnSMASSMB1System[v.id] or smasTables.allNPCsToExcludeOnSMASSMB1System[v.id] == nil then
-                        v:kill(HARM_TYPE_VANISH)
-                    end
+                if NPC.isOnScreen(v) and (not smasTables.allNPCsToExcludeOnSMASSMB1System[v.id] or smasTables.allNPCsToExcludeOnSMASSMB1System[v.id] == nil) then
+                    v:kill(HARM_TYPE_OFFSCREEN)
                 end
             end
         end

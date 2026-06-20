@@ -16,7 +16,6 @@ local rngItemChosen = false
 
 function onTick()
     if rngItemState == 1 then
-        Text.printWP(rngTimer, 50, 50, 8)
         rngTimer = rngTimer + 1
         if rngTimer >= lunatime.toTicks(0.2) then
             triggerEvent(rngItemList[rngItem])

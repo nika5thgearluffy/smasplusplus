@@ -250,19 +250,19 @@ function smasCharacterChanger.startupChanger() --The animation that starts the m
     else
         smasCharacterChanger.oldIniFile = SysManager.loadDefaultCharacterIni()
     end
-    soundObject1 = SFX.play(smasCharacterChanger.scrollSFX)
+    soundObject1 = Sound.playSFX(smasCharacterChanger.scrollSFX)
     smasBooleans.toggleOffInventory = true
     Routine.waitFrames(64, true)
     if soundObject1 ~= nil then
         soundObject1:FadeOut(10)
     end
-    SFX.play(smasCharacterChanger.stopSFX)
+    Sound.playSFX(smasCharacterChanger.stopSFX)
     Routine.waitFrames(14, true)
-    SFX.play(smasCharacterChanger.turnOnSFX)
+    Sound.playSFX(smasCharacterChanger.turnOnSFX)
     Routine.waitFrames(14, true)
     smasCharacterChanger.animationActive = false
     if shouldPlayMusic then
-        menuBGMObject = SFX.play(smasCharacterChanger.menuBGM, Audio.MusicVolume() / 100, 0)
+        menuBGMObject = Sound.playSFX(smasCharacterChanger.menuBGM, Audio.MusicVolume() / 100, 0)
     end
     started = true
 end
@@ -358,7 +358,7 @@ function smasCharacterChanger.onInputUpdate()
         
         if player.keys.altJump == KEYS_PRESSED then
             Sound.playSFX(smasCharacterChanger.moveSFX)
-            if smasCharacterChanger.namesAlteration[smasCharacterChanger.selectionNumber][smasCharacterChanger.selectionNumberUpDown] ~= nil then
+            if smasCharacterChanger.namesAlteration[smasCharacterChanger.selectionNumber] ~= nil and smasCharacterChanger.namesAlteration[smasCharacterChanger.selectionNumber][smasCharacterChanger.selectionNumberUpDown] ~= nil then
                 smasCharacterChanger.selectionNumberAlteration = smasCharacterChanger.selectionNumberAlteration + 1
                 if smasCharacterChanger.selectionNumberAlteration > #smasCharacterChanger.namesAlteration[smasCharacterChanger.selectionNumber][smasCharacterChanger.selectionNumberUpDown] then
                     smasCharacterChanger.selectionNumberAlteration = 0

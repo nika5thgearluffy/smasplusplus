@@ -2,7 +2,7 @@ HEAD
 TL:"Super Mario Bros. Lost Levels\: World 4-2";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-193152;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Desert.spc|0\;g=2.5";BG:33;
+SC:0;L:-200000;R:-193152;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Desert.spc|0\;g=2.5";BG:33;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Bonus.spc|0\;g=2.5";BG:7;
 SC:2;L:-160000;R:-159200;T:-160600;B:-160000;MZ:0;MF:"";BG:0;
 SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:0;MF:"";BG:0;
@@ -728,7 +728,6 @@ ID:21;X:-199392;Y:-200096;D:-1;
 ID:21;X:-199296;Y:-200224;D:-1;
 ID:23;X:-198816;Y:-200096;D:-1;
 ID:23;X:-198784;Y:-200096;D:-1;
-ID:610;X:-197728;Y:-200448;D:-1;
 ID:612;X:-197728;Y:-200224;D:-1;
 ID:89;X:-197376;Y:-200096;D:-1;
 ID:89;X:-197328;Y:-200096;D:-1;
@@ -768,6 +767,8 @@ ID:972;X:-194704;Y:-200112;D:-1;
 ID:972;X:-194640;Y:-200112;D:-1;
 ID:972;X:-194480;Y:-200176;D:-1;
 ID:998;X:-193664;Y:-200384;D:-1;XTRA:"{\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
+ID:637;X:-197728;Y:-200448;D:-1;XTRA:"{\n    \"delay\"\: 960\,\n    \"idx\"\: 1\,\n    \"npc\"\: 610\n}\n";
+ID:637;X:-196288;Y:-200448;D:-1;XTRA:"{\n    \"despawnMethod\"\: 5\n}\n";
 NPC_END
 DOORS
 IX:-194704;IY:-200096;OX:-179824;OY:-180480;DT:1;ID:3;OD:1;

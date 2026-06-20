@@ -213,7 +213,7 @@ function smasHud.drawHud()
                 }
             else
                 textplus.print{
-                    x = smasHud.drawing.angles.middle - deathPosition + 40,
+                    x = smasHud.drawing.angles.middle + deathPosition + 40,
                     y = 40,
                     text = "999+",
                     priority = smasHud.priority,
