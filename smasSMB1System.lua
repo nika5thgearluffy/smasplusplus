@@ -127,7 +127,7 @@ function smasSMB1System.onStart()
     if (table.icontains(smasTables.__smb1Levels,Level.filename()) or table.icontains(smasTables.__smbllLevels,Level.filename())) or table.icontains(smasTables.__sml1Levels,Level.filename()) then 
         if SysManager.getEnteredCheckpointID() > 0 then
             for k,v in ipairs(NPC.get()) do
-                if NPC.isOnScreen(v) and (not smasTables.allNPCsToExcludeOnSMASSMB1System[v.id] or smasTables.allNPCsToExcludeOnSMASSMB1System[v.id] == nil) then
+                if NPC.isOnScreen(v) and (not smasTables.allNPCsToExcludeOnSMASSMB1System[v.id]) then
                     v:kill(HARM_TYPE_OFFSCREEN)
                 end
             end

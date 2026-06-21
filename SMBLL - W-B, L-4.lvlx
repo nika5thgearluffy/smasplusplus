@@ -2,9 +2,9 @@ HEAD
 TL:"Super Mario Bros. Lost Levels\: World B-4";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 300\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-197472;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Album.spc|0\;g=2.5";BG:33;
-SC:1;L:-180000;R:-171200;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Castle.ogg";BG:41;
-SC:2;L:-160000;R:-158944;T:-160600;B:-160000;MZ:24;MF:"_OST/Super Mario Bros/Desert.spc|0\;g=2.5";BG:33;
+SC:0;L:-200000;R:-197472;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Album.spc|0\;g=2.5";BG:33;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
+SC:1;L:-180000;R:-171200;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Castle.ogg";BG:41;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
+SC:2;L:-160000;R:-158944;T:-160600;B:-160000;MZ:24;MF:"_OST/Super Mario Bros/Desert.spc|0\;g=2.5";BG:33;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT
@@ -2706,12 +2706,12 @@ ID:60;X:-177056;Y:-180704;
 ID:60;X:-177056;Y:-180576;
 ID:60;X:-176928;Y:-180704;
 ID:60;X:-176928;Y:-180576;
-ID:201;X:-177776;Y:-180160;
-ID:201;X:-177616;Y:-180160;
-ID:203;X:-177744;Y:-180160;
-ID:203;X:-177712;Y:-180160;
-ID:203;X:-177680;Y:-180160;
-ID:203;X:-177648;Y:-180160;
+ID:448;X:-177776;Y:-180160;
+ID:448;X:-177616;Y:-180160;
+ID:444;X:-177744;Y:-180160;
+ID:444;X:-177712;Y:-180160;
+ID:444;X:-177680;Y:-180160;
+ID:444;X:-177648;Y:-180160;
 ID:147;X:-172224;Y:-180192;LR:"Bridge";
 ID:79;X:-159968;Y:-160096;
 ID:79;X:-159968;Y:-160128;
@@ -2986,23 +2986,23 @@ ID:60;X:-173088;Y:-180576;
 BGO_END
 NPC
 ID:998;X:-198016;Y:-200384;D:-1;XTRA:"{\n    \"incrementStarCount\"\: false\,\n    \"useOptionalTable\"\: true\n}\n";
-ID:972;X:-179344;Y:-180176;D:-1;
-ID:770;X:-178784;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
-ID:770;X:-178432;Y:-180192;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:523;X:-179344;Y:-180176;D:-1;
+ID:1003;X:-178784;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-178432;Y:-180192;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
 ID:476;X:-177696;Y:-180161;D:-1;XTRA:"{\n    \"activeByDefault\"\: 1\n}\n";
-ID:770;X:-177184;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
-ID:972;X:-176688;Y:-180208;D:-1;
-ID:770;X:-176256;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
-ID:770;X:-175328;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
-ID:972;X:-175760;Y:-180208;D:-1;
-ID:770;X:-174400;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
-ID:972;X:-174832;Y:-180208;D:-1;
-ID:972;X:-173904;Y:-180208;D:-1;
-ID:770;X:-173568;Y:-180192;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-177184;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:523;X:-176688;Y:-180208;D:-1;
+ID:1003;X:-176256;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-175328;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:523;X:-175760;Y:-180208;D:-1;
+ID:1003;X:-174400;Y:-180224;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
+ID:523;X:-174832;Y:-180208;D:-1;
+ID:523;X:-173904;Y:-180208;D:-1;
+ID:1003;X:-173568;Y:-180192;D:-1;XTRA:"{\n    \"angle\"\: 180\,\n    \"speed\"\: 3\n}\n";
 ID:200;X:-172384;Y:-180232;D:-1;EA:"Boss Start";ED:"Boss End";
 ID:178;X:-172192;Y:-180224;D:-1;ED:"Bridge";
 ID:94;X:-171680;Y:-180118;D:-1;MG:"Thank you\, <characterName>! But the princess is in another castle!";FD:1;
-ID:972;X:-159888;Y:-160176;D:-1;
+ID:523;X:-159888;Y:-160176;D:-1;
 ID:151;X:-159256;Y:-160432;D:-1;MG:"Welcome to the warp zone!<page>This pipe will take you to World D.";FD:1;
 NPC_END
 DOORS

@@ -359,7 +359,7 @@ function NPC.isOnScreen(npc)
     local top = camera.y;
     local bottom = top + camera.height;
     -- Check if offscreen
-    if (npc.x + npc.width < left or npc.x > right) and (npc.y + npc.height < top or npc.y > bottom) then
+    if (npc.x + npc.width < left or npc.x > right) and (npc.y + npc.height > top or npc.y < bottom) then
         return false
     else
         return true

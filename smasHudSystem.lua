@@ -466,7 +466,7 @@ function smasHudSystem.onTick()
         mem(0x00B2C5AC, FIELD_FLOAT, 1)
     end
     -- Three crown SFX stuff
-    if not SaveData.SMASPlusPlus.accessibility.enableLives then
+    if SaveData.SMASPlusPlus.accessibility.enableLives then
         if SaveData.SMASPlusPlus.hud.lives >= 1000 and SaveData.SMASPlusPlus.game.lifeCrownState == 0 then
             SaveData.SMASPlusPlus.game.lifeCrownState = 1
             Sound.playSFX("one-crown-achieved.ogg")
