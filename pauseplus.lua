@@ -313,8 +313,6 @@ do
                     submenuName = val
                 end
             end
-
-            return nil
         end
         
 
@@ -333,8 +331,6 @@ do
         if selectionNames[submenu] ~= nil and selectionNames[submenu][name] ~= nil then
             selectionNames[submenu][name][value] = val
         end
-
-        return value
     end
 
 

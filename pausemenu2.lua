@@ -1397,16 +1397,34 @@ local function dlcteleport()
     Misc.unpause()
 end
 
-function musicVolume()
+local function musicVolume()
     -- Update music volume right away
-    GameData.SMASPlusPlus.audio.musicVolume = pauseplus.getSelectionValue("soundsettings","Music Volume")
-    smasAudioVolumeSystem.setVolumeNow = true
+    if player.keys.left == KEYS_PRESSED then
+        if GameData.SMASPlusPlus.audio.musicVolume > 0 then
+            GameData.SMASPlusPlus.audio.musicVolume = GameData.SMASPlusPlus.audio.musicVolume - 5
+        end
+    elseif player.keys.right == KEYS_PRESSED then
+        if GameData.SMASPlusPlus.audio.musicVolume < 100 then
+            GameData.SMASPlusPlus.audio.musicVolume = GameData.SMASPlusPlus.audio.musicVolume + 5
+        end
+    end
+    SaveData.pauseplus.selectionData["soundsettings"]["music volume"] =  GameData.SMASPlusPlus.audio.musicVolume
+    smasAudioVolumeSystem.setVolumeNow.music = true
 end
 
-function sfxVolume()
+local function sfxVolume()
     -- Update SFX volume right away
-    GameData.SMASPlusPlus.audio.sfxVolume = pauseplus.getSelectionValue("soundsettings","SFX Volume")
-    smasAudioVolumeSystem.setVolumeNow = true
+    if player.keys.left == KEYS_PRESSED then
+        if GameData.SMASPlusPlus.audio.sfxVolume > 0 then
+            GameData.SMASPlusPlus.audio.sfxVolume = GameData.SMASPlusPlus.audio.sfxVolume - 0.1
+        end
+    elseif player.keys.right == KEYS_PRESSED then
+        if GameData.SMASPlusPlus.audio.sfxVolume < 1 then
+            GameData.SMASPlusPlus.audio.sfxVolume = GameData.SMASPlusPlus.audio.sfxVolume + 0.1
+        end
+    end
+    SaveData.pauseplus.selectionData["soundsettings"]["sfx volume"] = GameData.SMASPlusPlus.audio.sfxVolume
+    smasAudioVolumeSystem.setVolumeNow.sfx = true
 end
 
 function pauseSpecifics()
@@ -1557,6 +1575,8 @@ function pauseSpecifics()
     Routine.run(toggleabilitiescost)
     Routine.run(toggleprofanecostume)
     Routine.run(toggleintroscostume)
+    musicVolume()
+    sfxVolume()
 end
 
 --Main Menu

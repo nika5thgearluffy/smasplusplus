@@ -49,7 +49,7 @@ function smasPSwitch.stopPSwitchMusic(resetLevelMusic) --Stops the P-Switch musi
             SysManager.sendToConsole("P-Switch music deactivated!")
             smasBooleans.musicMuted = false
             Sound.restoreMusic(-1)
-            smasAudioVolumeSystem.setVolumeNow = true
+            smasAudioVolumeSystem.setVolumeNow.music = true
             Routine.run(replayLevelMusicRoutine)
         end
     end
