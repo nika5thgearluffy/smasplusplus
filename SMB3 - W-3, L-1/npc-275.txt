@@ -4,3 +4,4 @@ gfxheight=64
 gfxwidth=48
 nofireball=1
 noyoshi=1
+nowaterphysics = true
