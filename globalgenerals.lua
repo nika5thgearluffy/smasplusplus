@@ -87,6 +87,7 @@ function globalgenerals.onInitAPI()
     registerEvent(globalgenerals,"onDraw")
     registerEvent(globalgenerals,"onPostNPCKill")
     registerEvent(globalgenerals,"onPause")
+    registerEvent(globalgenerals,"onEngineExit")
     
     ready = true
 end
@@ -423,6 +424,11 @@ function globalgenerals.onExit()
         end
     end
     File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(Screen.width())..","..tostring(Screen.height()))
+end
+
+function globalgenerals.onEngineExit()
+    -- Clear all temp files as the engine closes
+    SysManager.clearTempFiles()
 end
 
 return globalgenerals

@@ -73,6 +73,12 @@ SysManager.sendToConsole("Window title set.")
 Misc.setWindowIcon(Graphics.loadImageResolved("graphics/icon/icon.png"))
 SysManager.sendToConsole("Window icon set.")
 
+-- Create temp folder in the user files directory
+if not File.folderExists(SysManager.getUserFilesSMASPlusPlusDirectory().."temp/") then
+    File.createFolder(SysManager.getUserFilesSMASPlusPlusDirectory().."temp/")
+    SysManager.sendToConsole("Created temp folder in the user files directory. Will be deleted when the engine closes.")
+end
+
 --Register some custom global event handlers...
 SysManager.sendToConsole("Registering global event handlers...")
 Misc.LUNALUA_EVENTS_TBL["onPlaySFX"] = true

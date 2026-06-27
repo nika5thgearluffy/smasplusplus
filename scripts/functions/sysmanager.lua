@@ -690,4 +690,15 @@ function SysManager.checkEpisodeVersion()
     return versionOfEpisode
 end
 
+-- Clears temp files under the temp folder.
+function SysManager.clearTempFiles()
+    local tempFolder = SysManager.getUserFilesSMASPlusPlusDirectory().."temp/"
+    if File.folderExists(tempFolder) then
+        for _, file in ipairs(Misc.listFiles(tempFolder)) do
+            os.remove(tempFolder..file)
+        end
+        os.remove(tempFolder)
+    end
+end
+
 return SysManager

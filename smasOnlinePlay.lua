@@ -41,13 +41,14 @@ function smasOnlinePlay.onDraw()
         end
 
         -- Broadcast presence every 64 ticks (roughly every second at 64fps)
-        if lunatime.tick() % 64 == 0 then
+        if lunatime.drawtick() % 64 == 0 then
             Internet.broadcastEnable()
+            local dataImg, w, h = Graphics.getPixelData(Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp))
             Internet.broadcastSend(MY_PORT, json.encode({
-                type = "discover",
+                typeToUse = "discover",
                 ip = MY_IP,
                 name = SaveData.SMASPlusPlus.game.username or "Player",
-                pfp = Graphics.loadImage(SaveData.SMASPlusPlus.game.pfp),
+                --pfp = tostring(inspect(dataImg)),
             }))
         end
 
@@ -57,7 +58,7 @@ function smasOnlinePlay.onDraw()
             local senderIP = Internet.broadcastGetLastSender()
             local packet = json.decode(data)
 
-            if packet and packet.type == "discover" and senderIP ~= MY_IP then
+            if packet and packet.typeToUse == "discover" and senderIP ~= MY_IP then
                 -- Found another player on the LAN
                 if not discoveredPlayers[senderIP] then
                     discoveredPlayers[senderIP] = packet.name
@@ -65,7 +66,7 @@ function smasOnlinePlay.onDraw()
                     Sound.playSFX("online/online-connected.ogg")
                 end
                 -- Client side - send player position
-                Network.sendPacket(senderIP, 7777, json.encode({
+                Internet.socketSendPacket(senderIP, 7777, json.encode({
                     x = player.x,
                     y = player.y,
                     character = player.character,
