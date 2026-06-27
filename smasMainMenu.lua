@@ -1116,10 +1116,10 @@ function smasMainMenu.onDraw()
             end
         end
         if smasMainMenu.showVersionNumber then
-            Graphics.drawBox{x = Screen.width() - 90, y = 5, width=84, height=28, color=Color.black..0.5, priority=-7}
             local formattedText = textplus.parse(SysManager.checkEpisodeVersion(), {font = smasMainMenu.sonicManiaFont, xscale = 1.6, yscale = 1.6, color = Color.white})
             local versionText = textplus.layout(formattedText, 80)
             textplus.render{x = Screen.width() - 8 - versionText.width, y = 10, layout = versionText, priority = -6}
+            Graphics.drawBox{x = Screen.width() - 12 - versionText.width, y = 5, width = versionText.width + 8, height = 28, color = Color.black..0.5, priority = -7}
         end
         if smasMainMenu.showEscapeToQuitMessage then
             textplus.print{x = 12, y = 12, text = "Press pause to quit.", priority=-6, color=Color.yellow, xscale = 1.6, yscale = 1.6}

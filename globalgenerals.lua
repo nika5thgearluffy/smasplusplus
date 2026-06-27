@@ -135,10 +135,9 @@ function globalgenerals.onStart()
     Sound.startupRefreshSystem()
     Playur.failsafeStartupPlayerCheck()
     if Misc.inEditor() then
-        if SMBX_VERSION == VER_SEE_MOD then
-            Misc.setNewTestModeLevelData(Level.filename())
-            SysManager.sendToConsole("SEE MOD ACTIVE! Editor level starter has been set to "..Level.filename()..".")
-        end
+        -- This is done so that the current level if traveling to different levels is the main testing level
+        Editor.setTestModeLevel(Misc.episodePath()..Level.filename())
+        SysManager.sendToConsole("Editor level starter has been set to "..Level.filename()..".")
     end
     if GameData.SMASPlusPlus.game.mainMenuCompleted then
         mem(0x00B25724, FIELD_STRING, GameData.SMASPlusPlus.game.hubLevel)
@@ -422,8 +421,6 @@ function globalgenerals.onExit()
         for _,p in ipairs(Player.get()) do
             GameData.tempReserve[p.idx] = p.reservePowerup
         end
-        -- This is done so that the current level if traveling to different levels is the main testing level
-        Editor.setTestModeLevel(Misc.episodePath()..Level.filename())
     end
     File.writeToFile("loadscreeninfo.txt", "normal,"..tostring(Screen.width())..","..tostring(Screen.height()))
 end
