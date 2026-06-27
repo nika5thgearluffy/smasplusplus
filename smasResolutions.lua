@@ -24,12 +24,15 @@ function smasResolutions.changeCRTSetting(onMainMenu)
     end)
 end
 
-function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
+function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow, shouldCenterWindow)
     if onMainMenu == nil then
         onMainMenu = false
     end
     if shouldResizeWindow == nil then
         shouldResizeWindow = false
+    end
+    if shouldCenterWindow == nil then
+        shouldCenterWindow = false
     end
     Routine.run(function()
         -- Wait one frame, since it won't update unless we do so
@@ -86,6 +89,9 @@ function smasResolutions.changeResolution(onMainMenu, shouldResizeWindow)
         -- And set the window size after changing the resolution if set to do so.
         if shouldResizeWindow then
             Window.setSize(Window.getWidthFromResolution(Screen.width()), Window.getHeightFromResolution(Screen.height()))
+        end
+        if shouldCenterWindow then
+            Window.center(Window.findMonitor())
         end
     end)
 end

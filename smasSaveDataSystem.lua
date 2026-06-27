@@ -22,6 +22,7 @@ SaveData.SMASPlusPlus.game = SaveData.SMASPlusPlus.game or {}
 SaveData.SMASPlusPlus.player = SaveData.SMASPlusPlus.player or {}
 SaveData.SMASPlusPlus.misc = SaveData.SMASPlusPlus.misc or {}
 SaveData.SMASPlusPlus.misc.editor = SaveData.SMASPlusPlus.misc.editor or {}
+SaveData.SMASPlusPlus.misc.resolutions = SaveData.SMASPlusPlus.misc.resolutions or {}
 SaveData.SMASPlusPlus.levels = SaveData.SMASPlusPlus.levels or {}
 SaveData.SMASPlusPlus.levels.complete = SaveData.SMASPlusPlus.levels.complete or {}
 SaveData.SMASPlusPlus.characters = SaveData.SMASPlusPlus.characters or {}
@@ -214,6 +215,15 @@ end
 ]]
 if SaveData.SMASPlusPlus.game.lifeCrownState == nil then
     SaveData.SMASPlusPlus.game.lifeCrownState = 0
+end
+
+-- Options for resizing window / centering window
+if SaveData.SMASPlusPlus.misc.resolutions.shouldResizeWindow == nil then
+    SaveData.SMASPlusPlus.misc.resolutions.shouldResizeWindow = false
+end
+
+if SaveData.SMASPlusPlus.misc.resolutions.shouldCenterWindow == nil then
+    SaveData.SMASPlusPlus.misc.resolutions.shouldCenterWindow = false
 end
 
 

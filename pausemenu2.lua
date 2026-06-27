@@ -221,7 +221,7 @@ local function changeResolutionSettings()
         SaveData.SMASPlusPlus.options.resolution = "3ds"
     end
     Routine.waitFrames(1, false)
-    smasResolutions.changeResolution(false, true)
+    smasResolutions.changeResolution(false, SaveData.SMASPlusPlus.misc.resolutions.shouldResizeWindow, SaveData.SMASPlusPlus.misc.resolutions.shouldCenterWindow)
 end
 
 local function togglepwingsfx()
@@ -1427,6 +1427,14 @@ local function sfxVolume()
     smasAudioVolumeSystem.setVolumeNow.sfx = true
 end
 
+local function setShouldResizeWindow()
+    SaveData.SMASPlusPlus.misc.resolutions.shouldResizeWindow = pauseplus.getSelectionValue("screensettings","Should Resize Window")
+end
+
+local function setShouldCenterWindow()
+    SaveData.SMASPlusPlus.misc.resolutions.shouldCenterWindow = pauseplus.getSelectionValue("screensettings","Should Center Window")
+end
+
 function pauseSpecifics()
     pauseplus.font = textplus.loadFont("littleDialogue/font/sonicMania-smallFont.ini")
     pauseplus.scale = 1.5
@@ -1535,6 +1543,8 @@ function pauseSpecifics()
         --Screen Settings
         pauseplus.createOption("screensettings",{text = "Enable CRT Display",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Enable a CRT display when playing the game! Great for TV nostalgia.", action =  function() crtChangeSettings() end})
         pauseplus.createOption("screensettings",{text = "Switch Resolution",selectionType = pauseplus.SELECTION_NAMES, description = "Switch between resolutions.", selectionNames = {"Fullscreen","Widescreen","Ultrawide","Steam Deck","Dynamic Widescreen","NES/SNES","Game Boy Advance","Nintendo 3DS"}, action = function() Routine.run(changeResolutionSettings) end})
+        pauseplus.createOption("screensettings",{text = "Should Resize Window",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Should the game resize the window when changing resolutions?", action = function() setShouldResizeWindow() end})
+        pauseplus.createOption("screensettings",{text = "Should Center Window",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Should the game center the window when changing resolutions?", action = function() setShouldCenterWindow() end})
         
         --Character Menu
         pauseplus.createOption("charactermenu",{text = "Change Character",closeMenu = true,description = "Switch the player's character to anything of your choice!", action =  function() smasCharacterChanger.startChanger() end})
@@ -1577,6 +1587,8 @@ function pauseSpecifics()
     Routine.run(toggleintroscostume)
     musicVolume()
     sfxVolume()
+    setShouldResizeWindow()
+    setShouldCenterWindow()
 end
 
 --Main Menu
