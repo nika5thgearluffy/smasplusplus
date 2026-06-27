@@ -911,6 +911,7 @@ smasTables.allRupeeNPCIDs = {251,252,253}
 smasTables.allDragonCoinNPCIDs = {274}
 smasTables.allStarCoinNPCIDs = {310}
 smasTables.allYoshiMountNPCIDs = {95,100,98,99,149,150,228,148}
+smasTables.allBigEnemies = {71,72,466,467,618}
 
 smasTables.allShakableBlockIDsTableMapped = table.map{4,625,55,60,90,159,169,170,173,176,179,188,226,281,282,283,622,623,624,625}
 smasTables.allBrickBlockIDsTableMapped = table.map{4,60,188,226,293,526,668}
@@ -937,6 +938,7 @@ smasTables.allRupeeNPCIDsTableMapped = table.map{251,252,253}
 smasTables.allDragonCoinNPCIDsTableMapped = table.map{274}
 smasTables.allStarCoinNPCIDsTableMapped = table.map{310}
 smasTables.allYoshiMountNPCIDsTableMapped = table.map{95,100,98,99,149,150,228,148}
+smasTables.allBigEnemiesTableMapped = table.map{71,72,466,467,618}
 
 smasTables.allNPCsToExcludeOnSMASSMB1System = table.map{21,88,476,730,742,743,1001,1002,1004}
 
@@ -1097,7 +1099,7 @@ smasTables.soundNamesInOrder = {
     "smb1-world-clear", --138
     "dialog", --139
     "dialog-confirm", --140
-    "nothing", --141, Reserved
+    "luigi-scuttle-1", --141
     "goaltape-countdown-start", --142
     "goaltape-countdown-loop", --143
     "goaltape-countdown-end", --144
@@ -1126,7 +1128,10 @@ smasTables.soundNamesInOrder = {
     "fireball2", --167
     "fireball3", --168
     "fireball-hit-hammershield", --169
-    "sml1-exit", --170
+    "sml1-exit", -- 170
+    "luigi-scuttle-2", -- 171 (141 for scuttle 1)
+    "luigi-scuttle-3", -- 172
+    "luigi-scuttle-4", -- 173
 }
 
 smasTables.keyboardMap = {

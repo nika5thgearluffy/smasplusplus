@@ -28,19 +28,6 @@ smasExtraSounds.active = true
 --What is the volume limit smasExtraSounds should go? This can be set to any number, which playSoumd will automatically play in that specified volume.
 smasExtraSounds.volume = 1
 
---(Non-SMAS++ only) The SaveData used for certain things for the episode outside of SMAS++.
-if not isSMASPlusPlus then
-    SaveData.smasExtraSounds = {}
-end
---(Non-SMAS++ only) Should life sounds be enabled? If false a 0UP sound will play instead. This is an non-SMAS++ specific setting, toggle this for your own episode instead.
-smasExtraSounds.enableLives = true
---(Non-SMAS++ only) The coin count for the episode outside of SMAS++. This will be updated automatically.
-if not isSMASPlusPlus then
-    if SaveData.smasExtraSounds.coinCount == nil then
-        SaveData.smasExtraSounds.coinCount = 0
-    end
-end
-
 --**DELAY SETTINGS**
 --Set this to any number to change how much the P-Switch Timer should delay to. Default is 50.
 smasExtraSounds.pSwitchTimerDelay = 50
@@ -273,6 +260,7 @@ function smasExtraSounds.onInitAPI() --This'll require a bunch of events to star
     registerEvent(smasExtraSounds, "onPostBlockHit")
     registerEvent(smasExtraSounds, "onEvent")
     registerEvent(smasExtraSounds, "onSFXStart")
+    registerEvent(smasExtraSounds, "onPostNPCCollect")
 
     blockManager.registerEvent(90, extrasoundsBlock90, "onCollideBlock")
     blockManager.registerEvent(668, extrasoundsBlock668, "onCollideBlock")
@@ -473,9 +461,16 @@ local items = table.map{9,184,185,249,14,182,183,34,169,170,277,264,996,994}
 local healitems = table.map{9,184,185,249,14,182,183,34,169,170,277,264}
 local allenemies = table.map{1,2,3,4,5,6,7,8,12,15,17,18,19,20,23,24,25,27,28,29,36,37,38,39,42,43,44,47,48,51,52,53,54,55,59,61,63,65,71,72,73,74,76,77,89,93,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,135,137,161,162,163,164,165,166,167,168,172,173,174,175,176,177,180,189,199,200,201,203,204,205,206,207,209,210,229,230,231,232,233,234,235,236,242,243,244,245,247,261,262,267,268,270,271,272,275,280,281,284,285,286,294,295,296,298,299,301,302,303,304,305,307,309,311,312,313,314,315,316,317,318,321,323,324,333,345,346,347,350,351,352,357,360,365,368,369,371,372,373,374,375,377,379,380,382,383,386,388,389,392,393,395,401,406,407,408,409,413,415,431,437,446,447,448,449,459,460,461,463,464,466,467,469,470,471,472,485,486,487,490,491,492,493,509,510,512,513,514,515,516,517,418,519,520,521,522,523,524,529,530,539,562,563,564,572,578,579,580,586,587,588,589,590,610,611,612,613,614,616,618,619,624,666} --Every single X2 enemy.
 local allsmallenemies = table.map{1,2,3,4,5,6,7,8,12,15,17,18,19,20,23,24,25,27,28,29,36,37,38,39,42,43,44,47,48,51,52,53,54,55,59,61,63,65,73,74,76,77,89,93,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,135,137,161,162,163,164,165,166,167,168,172,173,174,175,176,177,180,189,199,200,201,203,204,205,206,207,209,210,229,230,231,232,233,234,235,236,242,243,244,245,247,261,262,267,268,270,271,272,275,280,281,284,285,286,294,295,296,298,299,301,302,303,304,305,307,309,311,312,313,314,315,316,317,318,321,323,324,333,345,346,347,350,351,352,357,360,365,368,369,371,372,373,374,375,377,379,380,382,383,386,388,389,392,393,395,401,406,407,408,409,413,415,431,437,446,447,448,449,459,460,461,463,464,469,470,471,472,485,486,487,490,491,492,493,509,510,512,513,514,515,516,517,418,519,520,521,522,523,524,529,530,539,562,563,564,572,578,579,580,586,587,588,589,590,610,611,612,613,614,616,619,624,666} --Every single small X2 enemy.
-local allbigenemies = table.map{71,72,466,467,618} --Every single big X2 enemy.
+
 local enemyfireballs = table.map{85,87,246,276} --All enemy fireballs.
 
+local shouldPlayCherrySFX = false
+
+function smasExtraSounds.onPostNPCCollect(collectedNPC)
+    if collectedNPC.id == 558 then
+        shouldPlayCherrySFX = true
+    end
+end
 
 function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
     if smasExtraSounds.active then
@@ -537,7 +532,7 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
 
             --**SLIDING**
             if p:isOnGround() then
-                if (p.speedX < 0 and p.rightKeyPressing) or (p.speedX > 0 and p.leftKeyPressing) and soundID == 10 then --Is the player sliding?
+                if ((p.speedX < 0 and p.keys.right == KEYS_DOWN) or (p.speedX > 0 and p.keys.left == KEYS_DOWN)) and soundID == 10 then --Is the player sliding?
                     eventObj.cancelled = true
                     if smasExtraSounds.enableSlidingSFX then
                         Sound.playSFX(10, smasExtraSounds.volume, 1, smasExtraSounds.playerSlidingDelay) --Sliding SFX
@@ -687,6 +682,14 @@ function smasExtraSounds.onSFXStart(eventObj, soundID, soundPath)
                 eventObj.cancelled = true
                 Routine.run(smasExtraSounds.comboSoundRoutine)
             end
+            
+            
+            
+            -- **CHERRIES**
+            if soundID == 14 and shouldPlayCherrySFX and smasExtraSounds.enableCherryCollecting then
+                eventObj.cancelled = true
+                Sound.playSFX(103)
+            end
         end
     end
 end
@@ -708,7 +711,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
         --Audio.sounds[4].muted = true --block-smash.ogg
         Audio.sounds[7].muted = true --mushroom.ogg
         Audio.sounds[8].muted = true --player-dead.ogg
-        Audio.sounds[14].muted = true --coin.ogg
+        --Audio.sounds[14].muted = true --coin.ogg
         Audio.sounds[15].muted = true --1up.ogg
         --Audio.sounds[17].muted = true --warp.ogg
         Audio.sounds[36].muted = true --smash.ogg
@@ -1066,42 +1069,6 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             
             
             
-            
-            
-            --**NPCTOCOIN**
-            if mem(0x00A3C87F, FIELD_BYTE) == 14 and Level.endState() == 2 or Level.endState() == 4 then --This plays a coin sound when NpcToCoin happens
-                npcToCoinTimer = npcToCoinTimer + 1
-                if smasExtraSounds.enableNPCtoCoin then
-                    if npcToCoinTimer == 1 then
-                        Sound.playSFX(14)
-                    end
-                end
-            end
-            
-            
-            
-            
-            if not isSMASPlusPlus then
-                --**100 COIN 1UP SYSTEM (Non-SMAS++)**
-                --Unfortunately this means that the coin count in the HUD would need to be graphically remade. smasExtraSounds doesn't remake the graphics side of things, so that'll mean that the user would need to remake it instead.
-                if mem(0x00B2C5A8, FIELD_WORD) > 0 then
-                    SaveData.smasExtraSounds.coinCount = SaveData.smasExtraSounds.coinCount + mem(0x00B2C5A8, FIELD_WORD)
-                    mem(0x00B2C5A8, FIELD_WORD, 0)
-                end
-                if SaveData.smasExtraSounds.coinCount > 99 then
-                    if smasExtraSounds.enableLives then
-                        Sound.playSFX(15)
-                    else
-                        Sound.playSFX(150)
-                    end
-                    SaveData.smasExtraSounds.coinCount = 0
-                end
-            end
-            
-            
-            
-            
-            
         end
     end
     if not smasExtraSounds.active then --Unmute when not active
@@ -1109,7 +1076,7 @@ function smasExtraSounds.onTick() --This is a list of sounds that'll need to be 
             --Audio.sounds[4].muted = false --block-smash.ogg
             Audio.sounds[7].muted = false --mushroom.ogg
             Audio.sounds[8].muted = false --player-dead.ogg
-            Audio.sounds[14].muted = false --coin.ogg
+            --Audio.sounds[14].muted = false --coin.ogg
             Audio.sounds[15].muted = false --1up.ogg
             --Audio.sounds[17].muted = false --warp.ogg
             Audio.sounds[33].muted = false --tail.ogg
@@ -1174,7 +1141,7 @@ function extrasoundsBlock90.onCollideBlock(block, hitter) --SMW BLock
     if type(hitter) == "Player" then
         if (hitter.y+hitter.height) <= (block.y+4) then
             if (hitter:mem(0x50, FIELD_BOOL)) then --Is the player spinjumping?
-                Routine.run(brickkillsound,block,hitter)
+                --Routine.run(brickkillsound,block,hitter)
             end
         end
     end
@@ -1217,7 +1184,7 @@ function smasExtraSounds.onPostBlockHit(block, fromUpper, playerornil) --Let's s
                     if playerornil then
                         if normalCharacters[playerornil.character] then
                             if smasExtraSounds.enableBlockCoinCollecting then
-                                Sound.playSFX(14)
+                                --Sound.playSFX(14)
                             end
                         elseif linkCharacters[playerornil.character] then
                             if smasExtraSounds.enableBlockCoinCollecting then
@@ -1225,7 +1192,7 @@ function smasExtraSounds.onPostBlockHit(block, fromUpper, playerornil) --Let's s
                             end
                         end
                     else
-                        Sound.playSFX(14)
+                        --Sound.playSFX(14)
                     end
                 end
                 
@@ -1432,17 +1399,7 @@ function smasExtraSounds.playDragonCoinSFX(npc)
             Sound.playSFX(102)
         end
     elseif smasExtraSounds.useOriginalDragonCoinSounds then
-        if NPC.config[npc.id].score == 7 then
-            Sound.playSFX(59)
-        elseif NPC.config[npc.id].score == 8 then
-            Sound.playSFX(59)
-        elseif NPC.config[npc.id].score == 9 then
-            Sound.playSFX(59)
-        elseif NPC.config[npc.id].score == 10 then
-            Sound.playSFX(59)
-        elseif NPC.config[npc.id].score == 11 then
-            Sound.playSFX(59)
-        end
+        Sound.playSFX(59)
     end
 end
 
@@ -1517,7 +1474,7 @@ function smasExtraSounds.onPostNPCKill(npc, harmtype) --NPC Kill stuff, for cust
                 if npc.id >= 751 and harmtype == HARM_TYPE_SPINJUMP then
                     Sound.playSFX(36)
                 end
-                if allbigenemies[npc.id] and harmtype == HARM_TYPE_SPINJUMP then
+                if smasTables.allBigEnemiesTableMapped[npc.id] and harmtype == HARM_TYPE_SPINJUMP then
                     if not smasExtraSounds.useOriginalSpinJumpForBigEnemies then
                         Sound.playSFX(125)
                     elseif smasExtraSounds.useOriginalSpinJumpForBigEnemies then
@@ -1529,24 +1486,9 @@ function smasExtraSounds.onPostNPCKill(npc, harmtype) --NPC Kill stuff, for cust
                 
                 
                 --**COIN COLLECTING**
-                if smasExtraSounds.allCoinNPCIDsTableMapped[npc.id] and Colliders.collide(p, npc) then --Any coin ID that was marked above will play this sound when collected
-                    if smasExtraSounds.enableCoinCollecting then
-                        Sound.playSFX(14)
-                    end
-                end
                 if smasExtraSounds.allRupeeNPCIDsTableMapped[npc.id] and Colliders.collide(p, npc) then --Any coin ID that was marked above will play this sound when collected
                     if smasExtraSounds.enableRupeeCollecting then
                         Sound.playSFX(81)
-                    end
-                end
-                
-                
-                
-                
-                --**CHERRY COLLECTING**
-                if npc.id == 558 and Colliders.collide(p, npc) then --Cherry sound effect
-                    if smasExtraSounds.enableCherryCollecting then
-                        Sound.playSFX(103)
                     end
                 end
                 

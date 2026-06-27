@@ -215,6 +215,28 @@ function SysManager.loadIntroTheme() --Loads the theme after execution. If setti
     Level.load(smasTables.__introLevels[SaveData.introselect])
 end
 
+
+-- Gets the extension from a filepath.
+function SysManager.getExtensionFromFilepath(filePath)
+    return filePath:match("^.+(%..+)$")
+end
+
+-- Same as last, except it gets the filename
+function SysManager.getFilenameFromFilepath(filePath)
+    return filePath:match("^.+/(.+)$")
+end
+
+-- This gets the filepath starting from the episode directory.
+function SysManager.getFilepathFromEpisodeDirectory(filePath)
+    local episodePath = Misc.episodePath()
+    local startPos = string.find(filePath, episodePath, 1, true)  -- plain search, no pattern
+    if startPos == nil then
+        return filePath  -- episode path not found, return as-is
+    end
+    return string.sub(filePath, startPos + #episodePath)
+end
+
+
 function SysManager.parseSMBX64Bool(string) --Parses a bool from a save file
     if string.match(string, "#TRUE#") then return true end
     if string.match(string, "#FALSE#") then return false end
@@ -223,6 +245,10 @@ end
 function SysManager.parseSaveFile(slot) --Parses a save file
     local t = {}
     local savFile = Misc.resolveFile("save" .. slot ..".sav")
+    if savFile == nil then
+        error("This can only parse save files from the SMBX 1.3 save file format. savx files are not supported.")
+        return {}
+    end
     local lines = io.readFileLines(savFile)
     local currentLine = 0
     local objectIndex = 1
@@ -334,9 +360,9 @@ function SysManager.restartGame()
 end
 
 function SysManager.loadDefaultCharacterIni()
-    return (Misc.episodePath()..playerManager.getName(player.character).."-"..player.powerup..".ini"
-        or Misc.levelPath()..playerManager.getName(player.character).."-"..player.powerup..".ini"
-        or getSMBXPath().."config/character_defaults/"..playerManager.getName(player.character).."-"..player.powerup..".ini"
+    return (Misc.resolveFile(Misc.episodePath()..playerManager.getName(player.character).."-"..player.powerup..".ini")
+        or Misc.resolveFile(Misc.levelPath()..playerManager.getName(player.character).."-"..player.powerup..".ini")
+        or Misc.resolveFile(getSMBXPath().."config/character_defaults/"..playerManager.getName(player.character).."-"..player.powerup..".ini")
     )
 end
 
@@ -626,26 +652,11 @@ function SysManager.checkEditorEntity()
     end
 end
 
--- Changes the map/hub to this filename. Note that this'll be the exit for all levels, so be careful.
+-- Changes the map/hub to this filename. Note that this'll be the exit for all levels, so be careful when setting this.
 function SysManager.changeMapHub(levelFilename)
     mem(0x00B25724, FIELD_STRING, levelFilename)
     GameData.SMASPlusPlus.game.hubLevel = levelFilename
     SysManager.sendToConsole("Map hub changed to \""..levelFilename.."\".")
-end
-
--- Gets the extension from a filepath.
-function SysManager.getExtensionFromFilepath(filePath)
-    return filePath:match("^.+(%..+)$")
-end
-
--- Same as last, except it gets the filename
-function SysManager.getFilenameFromFilepath(filePath)
-    return filePath:match("^.+/(.+)$")
-end
-
--- This gets the filepath starting from the episode directory.
-function SysManager.getFilepathFromEpisodeDirectory(filePath)
-    return
 end
 
 function SysManager.getUserFilesSMASPlusPlusDirectory()
@@ -668,6 +679,15 @@ function SysManager.checkValidIPAddress(ip)
     a, b, c, d = tonumber(a), tonumber(b), tonumber(c), tonumber(d)
     
     return (a <= 255 and b <= 255 and c <= 255 and d <= 255)
+end
+
+-- This is the version number of this episode. It can be changed to any version we're on.
+function SysManager.checkEpisodeVersion()
+    local versionOfEpisode = Git.getCommitHashShort(Misc.episodePath())
+    if versionOfEpisode == "unknown" then
+        return "v0.0.0.1"
+    end
+    return versionOfEpisode
 end
 
 return SysManager
