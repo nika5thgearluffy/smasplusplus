@@ -2,7 +2,7 @@ HEAD
 TL:"Super Mario Bros. 1\: World 9-2 (EIGPSK - 5)";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-194624;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Ghost House.spc|0\;g=2.5";BG:8;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
+SC:0;L:-200000;R:-194624;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Volcano.spc|0\;g=2.5\;e0";BG:8;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SC:1;L:-180000;R:-179200;T:-180600;B:-180000;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT
@@ -429,12 +429,12 @@ ID:88;X:-197754;Y:-200416;D:-1;
 ID:88;X:-197786;Y:-200416;D:-1;
 ID:88;X:-198138;Y:-200416;D:-1;
 ID:88;X:-197818;Y:-200416;D:-1;
-ID:770;X:-198976;Y:-200192;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-198352;Y:-200368;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-198064;Y:-200320;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-197344;Y:-200192;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-197184;Y:-200352;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
-ID:770;X:-196640;Y:-200240;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-198976;Y:-200192;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-198352;Y:-200368;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-198064;Y:-200320;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-197344;Y:-200192;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-197184;Y:-200352;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
+ID:1003;X:-196640;Y:-200240;D:-1;XTRA:"{\n    \"speed\"\: 3\n}\n";
 ID:998;X:-195040;Y:-200384;D:-1;
 ID:175;X:-198496;Y:-200288;D:-1;LR:"SMB1 Hard Mode";
 ID:175;X:-198080;Y:-200160;D:-1;LR:"SMB1 Hard Mode";

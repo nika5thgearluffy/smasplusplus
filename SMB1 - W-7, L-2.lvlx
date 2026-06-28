@@ -2,14 +2,14 @@ HEAD
 TL:"Super Mario Bros. 1\: World 7-2";XTRA:"{\n    \"timer\"\: {\n        \"enable\"\: true\,\n        \"time\"\: 400\n    }\n}\n";CPID:"SMBX2";
 HEAD_END
 SECTION
-SC:0;L:-200000;R:-199200;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Going Underground (Sky).ogg";BG:62;
+SC:0;L:-200000;R:-199200;T:-200600;B:-200000;MZ:24;MF:"_OST/Super Mario Bros/Going Underground (Pipe Land).ogg";BG:62;
 SC:1;L:-180000;R:-173600;T:-180600;B:-180000;MZ:24;MF:"_OST/Super Mario Bros/Swimming.spc|0\;g=2.5";BG:23;XTRA:"{\n    \"effects\"\: {\n        \"screenEffects\"\: 5\,\n        \"weather\"\: 0\n    }\,\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
-SC:2;L:-160000;R:-158720;T:-160600;B:-160000;MZ:24;MF:"_OST/Super Mario Bros/Forest.spc|0\;g=2.5";BG:62;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
+SC:2;L:-160000;R:-158720;T:-160600;B:-160000;MZ:24;MF:"_OST/Super Mario Bros/Pipe Land.spc|0\;g=2.5\;e0";BG:62;XTRA:"{\n    \"newTurnBack\"\: {\n        \"horizontal\"\: 1\n    }\n}\n";
 SC:3;L:-140000;R:-139200;T:-140600;B:-140000;MZ:0;MF:"";BG:0;
 SC:7;L:-60000;R:-59200;T:-60600;B:-60000;MZ:0;MF:"";BG:0;
 SECTION_END
 STARTPOINT
-ID:1;X:-199882;Y:-200118;D:1;
+ID:1;X:-199868;Y:-200118;D:1;
 ID:2;X:-199914;Y:-200124;D:1;
 STARTPOINT_END
 BLOCK
@@ -1850,7 +1850,7 @@ ID:235;X:-176640;Y:-180128;D:-1;
 ID:235;X:-175232;Y:-180192;D:-1;
 ID:235;X:-174336;Y:-180128;D:-1;
 ID:235;X:-174144;Y:-180128;D:-1;
-ID:93;X:-159888;Y:-160176;D:-1;
+ID:522;X:-159888;Y:-160176;D:-1;
 ID:998;X:-159296;Y:-160384;D:-1;
 NPC_END
 PHYSICS

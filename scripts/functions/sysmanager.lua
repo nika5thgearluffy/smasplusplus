@@ -692,12 +692,15 @@ end
 
 -- Clears temp files under the temp folder.
 function SysManager.clearTempFiles()
-    local tempFolder = SysManager.getUserFilesSMASPlusPlusDirectory().."temp/"
+    local tempFolder = SysManager.getUserFilesSMASPlusPlusDirectory().."temp\\"
     if File.folderExists(tempFolder) then
-        for _, file in ipairs(Misc.listFiles(tempFolder)) do
-            os.remove(tempFolder..file)
+        local files = Misc.listFiles(tempFolder)
+        for _, file in ipairs(files) do
+            local fullPath = tempFolder..file
+            os.remove(fullPath)
         end
-        os.remove(tempFolder)
+        -- Remove the folder itself after emptying
+        File.removeDirectory(tempFolder)
     end
 end
 
