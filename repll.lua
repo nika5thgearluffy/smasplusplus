@@ -2,8 +2,11 @@ local repll = {}
 
 repll.settings = {}
 
---Whether to enable sounds by default. Toggle it false on the actual console if it gets annoying to you.
+-- Whether to enable sounds by default. Toggle it false on the actual console if it gets annoying to you.
 repll.settings.enableSounds = true
+
+-- Should repll paste text by right clicking the window?
+repll.settings.rightClickToPaste = true
 
 -- TODO: Handle unicode better. Textplus renders utf-8 fine, but repll for cursor management
 --       purposes repll is not respecting multi-byte characters properly.
@@ -17,6 +20,7 @@ local unpack = _G.unpack or table.unpack
 local memo_mt = {__mode = "k"} --recommended by Rednaxela
 
 local blinker = 0
+local pasteDelay = 0
 
 -- Memoize a function with one argument.
 local function memoize(func)
@@ -254,10 +258,8 @@ function repll.onInitAPI()
     registerEvent(repll, "onCameraDraw")
     registerEvent(repll, "onPasteText")
     registerEvent(repll, "onInputUpdate")
-    
-    if SMBX_VERSION == VER_SEE_MOD then
-        registerEvent(repll, "onMouseWheelEvent")
-    end
+    registerEvent(repll, "onMouseButtonEvent")
+    registerEvent(repll, "onMouseWheelEvent")
 end
 
 function repll.onInputUpdate()
@@ -420,16 +422,31 @@ function repll.onKeyboardPressDirect(vk, repeated, char, idx)
     Misc.cheatBuffer("")
 end
 
+local function pasteText()
+    if Clipboard.hasText() and pasteDelay == 0 then
+        local left, right = split(repll.buffer, repll.cursorPos)
+        repll.buffer = left .. Clipboard.getText() .. right
+        repll.cursorPos = repll.cursorPos + #Clipboard.getText()
+        if repll.active then
+            if repll.settings.enableSounds then
+                Sound.playSFX("console/console_paste.ogg")
+            end
+        end
+        blinker = 1
+    end
+end
+
 function repll.onPasteText(pastedText)
-    local left, right = split(repll.buffer, repll.cursorPos)
-    repll.buffer = left .. pastedText .. right
-    repll.cursorPos = repll.cursorPos + #pastedText
-    if repll.active then
-        if repll.settings.enableSounds then
-            Sound.playSFX("console/console_paste.ogg")
+    pasteText()
+end
+
+function repll.onMouseButtonEvent(mouseButton, state)
+    if repll.settings.rightClickToPaste then
+        if mouseButton == MOUSE_CLICK_RIGHT and state == MOUSE_CLICKED and repll.active then
+            pasteText()
+            pasteDelay = 4
         end
     end
-    blinker = 1
 end
 
 function repll.onMouseWheelEvent(wheel, delta)
@@ -503,6 +520,9 @@ do
     function repll.onCameraDraw(camIdx)
         if consoleToggleCooldown > 0 then
             consoleToggleCooldown = consoleToggleCooldown - 1
+        end
+        if pasteDelay > 0 then
+            pasteDelay = pasteDelay - 1
         end
         
         if not repll.active then
