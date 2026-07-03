@@ -289,7 +289,7 @@ function koopalings.onTickNPC(v)
         if data.jumping and v.speedY == 0 then
             if idslist[v.id].koopalingConfig == "roy" or idslist[v.id].koopalingConfig == "ludwig" then
                 if v.collidesBlockBottom then
-                    Misc.doPOW(12, true, false, "SMB3 Koopaling Earthquake")
+                    Misc.doPOWSMAS(12, true, false, "SMB3 Koopaling Earthquake")
                     data.jumping = false
                     SFX.play(37)
                 end

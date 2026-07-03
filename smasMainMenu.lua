@@ -6,7 +6,6 @@ local smasMainMenu = {}
 local littleDialogue = require("littleDialogue")
 local textplus = require("textplus")
 local smasDateAndTime = require("smasDateAndTime")
-local autoscroll = require("autoscrolla")
 local rng = require("base/rng")
 local inputconfigurator = require("inputconfig")
 local keyboard = require("keyboard")
@@ -16,6 +15,7 @@ local sprite = require("base/sprite")
 local aw = require("anotherwalljump")
 
 _G.smasMainMenuSystem = require("smasMainMenuSystem")
+_G.smasMainMenuIntroSystem = require("smasMainMenuIntroSystem")
 
 local ready = false
 
@@ -92,7 +92,6 @@ local statusFont = textplus.loadFont("littleDialogue/font/6.ini")
 
 function introExit()
     GameData.SMASPlusPlus.game.mainMenuCompleted = true
-    autoscroll.scrollLeft(5000)
     Routine.waitFrames(38)
     smasMainMenu.startedmenu = 0
     Level.load("SMAS - Opening Cutscene.lvlx")
@@ -101,7 +100,6 @@ end
 function battleRandomLevelSelect()
     Sound.playSFX(29)
     smasMainMenu.showBlackScreen = true
-    autoscroll.scrollLeft(5000)
     Sound.muteMusic(-1)
     GameData.battlemoderngactive = true
     GameData.enableBattleMode = true
@@ -113,7 +111,6 @@ end
 function battleLevelSelected()
     Sound.playSFX(29)
     smasMainMenu.showBlackScreen = true
-    autoscroll.scrollLeft(5000)
     Sound.muteMusic(-1)
     GameData.battlemoderngactive = false
     GameData.enableBattleMode = true
@@ -127,7 +124,6 @@ end
 function startRushMode()
     Sound.playSFX(29)
     smasMainMenu.showBlackScreen = true
-    autoscroll.scrollLeft(5000)
     Sound.muteMusic(-1)
     GameData.rushModeActive = true
     Routine.wait(0.4)
@@ -141,101 +137,10 @@ function themeSelected()
     Sound.playSFX(29)
     SaveData.introselect = smasMainMenu.themeSelected
     smasMainMenu.showBlackScreen = true
-    autoscroll.scrollLeft(5000)
     Sound.muteMusic(-1)
     Routine.wait(0.4)
     Misc.saveGame()
     Level.load(smasTables.__mainMenuThemes[SaveData.introselect])
-end
-
-function theme4scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(19)
-    autoscroll.scrollLeft(15)
-    Routine.wait(8.2)
-    Routine.loop(1768, theme4scrolling, true)
-end
-
-function theme5scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(17.3)
-    autoscroll.scrollLeft(15)
-    Routine.wait(7.2)
-    Routine.loop(1571, theme5scrolling, true)
-end
-
-function theme6scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(19.5)
-    autoscroll.scrollLeft(15)
-    Routine.wait(8)
-    Routine.loop(1787, theme6scrolling, true)
-end
-
-function theme8scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(17.5)
-    autoscroll.scrollLeft(15)
-    Routine.wait(7.5)
-    Routine.loop(1625, theme8scrolling, true)
-end
-
-function theme9scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(13.8)
-    autoscroll.scrollLeft(15)
-    Routine.wait(6.2)
-    Routine.loop(1265, theme9scrolling, true)
-end
-
-function theme11scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(16.2)
-    autoscroll.scrollLeft(15)
-    Routine.wait(7.2)
-    Routine.loop(1521, theme11scrolling, true)
-end
-
-function theme14scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollUp(6)
-    Routine.wait(13.6)
-    autoscroll.scrollDown(15)
-    Routine.wait(6.4)
-    Routine.loop(1300, theme14scrolling, true)
-end
-
-function theme15scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(26.2)
-    autoscroll.scrollLeft(15)
-    Routine.wait(11.0)
-    Routine.loop(2418, theme15scrolling, true)
-end
-
-function theme17scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(10.6)
-    autoscroll.scrollLeft(15)
-    Routine.wait(4.6)
-    Routine.loop(lunatime.toTicks(15.2), theme17scrolling, true)
-end
-
-function theme18scrolling()
-    NPC.restoreClass("NPC")
-    autoscroll.scrollRight(6)
-    Routine.wait(16.6)
-    autoscroll.scrollLeft(15)
-    Routine.wait(7)
-    Routine.loop(lunatime.toTicks(23.6), theme18scrolling, true)
 end
 
 function mapExit()
@@ -245,8 +150,7 @@ function mapExit()
     Level.load(GameData.SMASPlusPlus.game.hubLevel)
 end
 
-function easterEgg() --SnooPINGAS I see? ._.
-    Routine.wait(0.1, true)
+function easterEgg() -- SnooPINGAS I see? ._.
     Routine.wait(900, true)
     smasBooleans.overrideMusicVolume = true
     Audio.MusicFadeOut(player.section, 4000)
@@ -608,7 +512,6 @@ function BootSMASPlusPlusPreExecute() --This is the routine animation to execute
     Sound.playSFX("startsmasboot-fullyexecuted.ogg")
     smasMainMenu.showBlackScreen = true --Black out everything
     smasMainMenu.showLogoOnScreen = false
-    autoscroll.scrollLeft(5000) --Make sure that autoscroll doesn't move the player when loading any other level by accident
     Sound.muteMusic(-1) --Change the music to nothing
     Routine.wait(0.5)
     GameData.gameFirstLoaded = false
@@ -647,7 +550,6 @@ function BootGameHelpPreExecute() --Boot the game help level, the boot menu vers
     smasMainMenuSystem.menuOpen = false
     Sound.playSFX(29)
     smasMainMenu.showBlackScreen = true
-    autoscroll.scrollLeft(5000)
     Sound.muteMusic(-1)
     Routine.wait(0.4)
     Misc.saveGame()
@@ -659,7 +561,6 @@ function BootOnlinePreExecute() --Boot the Online Menu level
     smasMainMenuSystem.menuOpen = false
     Sound.playSFX(29)
     smasMainMenu.showBlackScreen = true
-    autoscroll.scrollLeft(5000)
     Sound.muteMusic(-1)
     Routine.wait(0.4)
     Misc.saveGame()
@@ -729,8 +630,6 @@ function smasMainMenu.onInitAPI() --This requires some libraries to start
 
     registerEvent(smasMainMenu,"onFramebufferResize")
     
-    local Routine = require("routine")
-    
     ready = true --We're ready, so we can begin
 end
 
@@ -796,36 +695,6 @@ function smasMainMenu.onStart()
         if Time.month() == 03 and Time.day() == 17 then --St. Patrick's Day event
             stpatricksday = true
         end
-        if Level.filename() == "intro_SMBX1.2.lvlx" then
-            Routine.run(theme4scrolling)
-        end
-        if Level.filename() == "intro_SMBX1.3.lvlx" then
-            Routine.run(theme5scrolling)
-        end
-        if Level.filename() == "intro_WSMBA.lvlx" then
-            Routine.run(theme6scrolling)
-        end
-        if Level.filename() == "intro_theeditedboss.lvlx" then
-            Routine.run(theme8scrolling)
-        end
-        if Level.filename() == "intro_SMBX1.3og.lvlx" then
-            Routine.run(theme9scrolling)
-        end
-        if Level.filename() == "intro_8bit.lvlx" then
-            Routine.run(theme11scrolling)
-        end
-        if Level.filename() == "intro_scrollingheights.lvlx" then
-            Routine.run(theme14scrolling)
-        end
-        if Level.filename() == "intro_jakebrito1.lvlx" then
-            Routine.run(theme15scrolling)
-        end
-        if Level.filename() == "intro_jakebrito2.lvlx" then
-            Routine.run(theme17scrolling)
-        end
-        if Level.filename() == "intro_circuitcity.lvlx" then
-            Routine.run(theme18scrolling)
-        end
     end
 end
 
@@ -889,7 +758,7 @@ function smasMainMenu.onInputUpdate()
         player.keys.altJump = false
         player.keys.altRun = false
         player.keys.dropItem = false
-        if player.rawKeys.pause == KEYS_PRESSED and not smasMainMenu.menuActive then
+        if player.rawKeys.pause == KEYS_PRESSED and not smasMainMenu.menuActive and not Misc.inEditor() then
             if SaveData.firstBootCompleted then
                 Routine.run(ExitGame1)
                 Sound.playSFX("littleDialogue/smbx13/choose.wav")
@@ -1089,28 +958,18 @@ function smasMainMenu.onDraw()
                     spark.speedY = RNG.random() * 4 - 2
                 end
                 for _,npc in ipairs(hitNPCs) do
-                    if not NPC.config[npc.id].iscoin then
-                        -- Hurt the NPC, and make sure to not give the automatic score
-                        local oldScore = NPC.config[npc.id].score
-                        NPC.config[npc.id].score = 0
-                        
-                        local hurtNPC = harmNPC(npc,HARM_TYPE_NPC)
-                        
-                        if hurtNPC then
-                            Misc.givePoints(0,{x = npc.x+npc.width*1.5,y = npc.y+npc.height*0.5},true)
-                        end
-                    else
-                        -- Hurt the NPC, and make sure to not give the automatic score
-                        local oldScore = NPC.config[npc.id].score
-                        NPC.config[npc.id].score = 0
-                        
+                    -- Hurt the NPC, and make sure to not give the automatic score
+                    local oldScore = NPC.config[npc.id].score
+                    NPC.config[npc.id].score = 0
+                    
+                    if NPC.config[npc.id].iscoin then
                         local effect = Effect.spawn(78, npc.x, npc.y, player.section, false, true)
-                        
-                        local hurtNPC = harmNPC(npc,HARM_TYPE_NPC)
-                        
-                        if hurtNPC then
-                            Misc.givePoints(0,{x = npc.x+npc.width*1.5,y = npc.y+npc.height*0.5},true)
-                        end
+                    end
+                    
+                    local hurtNPC = harmNPC(npc,HARM_TYPE_NPC)
+                    
+                    if hurtNPC then
+                        Misc.givePoints(0,{x = npc.x+npc.width*1.5,y = npc.y+npc.height*0.5},true)
                     end
                 end
             end
@@ -1118,12 +977,12 @@ function smasMainMenu.onDraw()
         if smasMainMenu.showVersionNumber then
             local formattedText = textplus.parse(SysManager.checkEpisodeVersion(), {font = smasMainMenu.sonicManiaFont, xscale = 1.6, yscale = 1.6, color = Color.white})
             local versionText = textplus.layout(formattedText, 80)
-            textplus.render{x = Screen.width() - 8 - versionText.width, y = 10, layout = versionText, priority = -6}
-            Graphics.drawBox{x = Screen.width() - 12 - versionText.width, y = 5, width = versionText.width + 8, height = 28, color = Color.black..0.5, priority = -7}
+            textplus.render{x = Screen.width() - 8 - versionText.width, y = 10, layout = versionText, priority = 3}
+            Graphics.drawBox{x = Screen.width() - 12 - versionText.width, y = 5, width = versionText.width + 8, height = 28, color = Color.black..0.5, priority = 2}
         end
         if smasMainMenu.showEscapeToQuitMessage then
-            textplus.print{x = 12, y = 12, text = "Press pause to quit.", priority=-6, color=Color.yellow, xscale = 1.6, yscale = 1.6}
-            Graphics.drawBox{x = 5, y = 5, width=148, height=28, color=Color.red..0.5, priority=-7}
+            textplus.print{x = 12, y = 12, text = "Press pause to quit.", priority=3, color=Color.yellow, xscale = 1.6, yscale = 1.6}
+            Graphics.drawBox{x = 5, y = 5, width=148, height=28, color=Color.red..0.5, priority=2}
         end
         if smasMainMenu.showPressJumpText then
             textplus.print{x = (Screen.width() / 2) - 200, y = Screen.height() - 210, text = "Press jump to start", priority=-6, xscale = 2, yscale = 2, color=Color.white, font=smasMainMenu.mainMenuFont}
@@ -1173,13 +1032,11 @@ end
 function smasMainMenu.onExit()
     if smasMainMenu.active then
         Audio.MusicVolume(nil)
-        autoscroll.unlockSection(0, 1)
         if SaveData.firstBootCompleted then
             smasMainMenu.startedmenu = 0
         elseif not SaveData.firstBootCompleted then
             smasMainMenu.startedmenu = 1
         end
-        autoscroll.scrollLeft(5000)
         Misc.setCursor(nil)
     end
 end

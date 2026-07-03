@@ -43,7 +43,7 @@ function npc.onTickEndNPC(v)
             e.speedY = -6
             e.speedX = v.speedX / 2
             
-            Misc.doPOW()
+            Misc.doPOWSMAS()
             v.y = v.y - 1
             v.speedY = -6
             

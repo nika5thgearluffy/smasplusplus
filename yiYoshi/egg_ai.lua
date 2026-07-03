@@ -364,7 +364,7 @@ function egg.onTickEndThrown(v)
 
             v:kill(HARM_TYPE_VANISH)
 
-            --Misc.doPOW()
+            --Misc.doPOWSMAS()
             doBigEggPOW(v)
         end
 

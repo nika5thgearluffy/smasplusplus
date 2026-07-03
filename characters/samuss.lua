@@ -605,7 +605,7 @@ local function onBombTick(bomb)
                 end
                 if hurtableNPC.id == 241 then
                     hurtableNPC:kill()
-                    Misc.doPOW()
+                    Misc.doPOWSMAS()
                 end
                 if hurtableNPC.id == 154 or hurtableNPC.id == 155 or hurtableNPC.id == 156 or hurtableNPC.id == 157 or hurtableNPC.id == 158 then
                     hurtableNPC.speedX = rng.randomInt(1,4) * player:mem(0x106,FIELD_WORD); 

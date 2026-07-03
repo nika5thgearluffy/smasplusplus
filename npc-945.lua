@@ -119,7 +119,7 @@ function bowserKilled(npc, harmType)
     Sound.playSFX(44)
     Routine.wait(4, false)
     Sound.playSFX(37)
-    Misc.doPOW(45, true, false, "SMB3 Bowser Death Event")
+    Misc.doPOWSMAS(45, true, false, "SMB3 Bowser Death Event")
 end
 
 function SMB3BowserNPC.onNPCKill(eventToken, npc, harmType)
@@ -392,7 +392,7 @@ function SMB3BowserNPC.onTickEndNPC(v)
                         v.speedY = 8
                     end
                     if data.ai2 > 35 and v.collidesBlockBottom and not data.hitBlocks then
-                        Misc.doPOW(35, true, false, "SMB3 Bowser Ground Pound Event")
+                        Misc.doPOWSMAS(35, true, false, "SMB3 Bowser Ground Pound Event")
                         Sound.playSFX(104)
                         for k,v in ipairs(Block.getIntersecting(v.x, v.y + 8, v.x + v.width, v.y + v.height + 8)) do
                             if v.id == 186 then

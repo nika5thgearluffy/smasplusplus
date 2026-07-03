@@ -215,7 +215,7 @@ function koopalingShells.onTickEndNPC(v)
             if v.collidesBlockBottom and data.counter < 45 then
                 v.speedY = -7.5
                 if idslist[v.id].koopalingShellConfig == "ludwig" then
-                    Misc.doPOW(12, true, false, "SMB3 Koopaling Shell Earthquake")
+                    Misc.doPOWSMAS(12, true, false, "SMB3 Koopaling Shell Earthquake")
                     SFX.play(37)
                 end
             end
@@ -235,7 +235,7 @@ function koopalingShells.onTickEndNPC(v)
 	elseif data.special == 2 then
 		v.speedY = -5 - rng.randomInt(1,3)
         if idslist[v.id].koopalingShellConfig == "ludwig" then
-            Misc.doPOW(12, true, false, "SMB3 Koopaling Shell Earthquake")
+            Misc.doPOWSMAS(12, true, false, "SMB3 Koopaling Shell Earthquake")
             SFX.play(37)
         end
 		data.special = 3
