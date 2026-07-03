@@ -267,7 +267,7 @@ function smasMainMenu.bootDialogue(resetMusic)
     smasMainMenu.showPlayerNameOnScreen = false
     smasMainMenu.showPFPImageOnScreen = false
     --littleDialogue.create({text = transplate.getTranslation("0x0000000000000014"), speakerName = "Main Menu", pauses = false, updatesInPause = true})
-    Sound.playSFX(29)
+    --Sound.playSFX(29)
     smasMainMenuSystem.menuOpen = true
     smasMainMenuSystem.goToMenuSection(smasMainMenuSystem.menuSections.SECTION_MAIN, 0, false)
     if resetMusic then
@@ -1001,9 +1001,9 @@ function smasMainMenu.onDraw()
         end
         if smasMainMenu.showStatusOfMultiplayerOnScreen then
             if Player.count() == 1 then
-                textplus.print{x=(camera.width / 2) - 134, y=10, text = "Multiplayer is OFF", priority=-7, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
+                textplus.print{x=(camera.width / 2) - 134, y=10, text = "Multiplayer is OFF", priority=3, color=Color.yellow, font=statusFont, xscale = 1.6, yscale = 1.6}
             elseif Player.count() >= 2 then
-                textplus.print{x=(camera.width / 2) - 130, y=10, text = "Multiplayer is ON", priority=-7, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
+                textplus.print{x=(camera.width / 2) - 130, y=10, text = "Multiplayer is ON", priority=3, color=Color.lightred, font=statusFont, xscale = 1.6, yscale = 1.6}
             end
         end
         if smasMainMenu.showBlackScreen then

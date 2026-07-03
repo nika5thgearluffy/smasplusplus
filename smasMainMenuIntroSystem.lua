@@ -23,10 +23,11 @@ smasMainMenuIntroSystem.introTypesForIntros = {
     smasMainMenuIntroSystem.introTypes.STILL, -- "intro_SMBX2.lvlx"
     smasMainMenuIntroSystem.introTypes.LEFT_TO_RIGHT, -- "intro_theeditedboss.lvlx"
     smasMainMenuIntroSystem.introTypes.LEFT_TO_RIGHT, -- "intro_SMBX1.3og.lvlx"
+    smasMainMenuIntroSystem.introTypes.STILL, -- "intro_SMBX2b3.lvlx"
     smasMainMenuIntroSystem.introTypes.LEFT_TO_RIGHT, -- "intro_8bit.lvlx"
     smasMainMenuIntroSystem.introTypes.STILL, -- "intro_S!TS!.lvlx"
     smasMainMenuIntroSystem.introTypes.STILL, -- "intro_sunsetbeach.lvlx"
-    smasMainMenuIntroSystem.introTypes.BOTTOM_TO_TOP, -- "intro_scrollingheights.lvlx"
+    smasMainMenuIntroSystem.introTypes.TOP_TO_BOTTOM, -- "intro_scrollingheights.lvlx"
     smasMainMenuIntroSystem.introTypes.LEFT_TO_RIGHT, -- "intro_jakebrito1.lvlx"
     smasMainMenuIntroSystem.introTypes.STILL, -- "intro_marioforever.lvlx"
     smasMainMenuIntroSystem.introTypes.LEFT_TO_RIGHT, -- "intro_jakebrito2.lvlx"
@@ -146,6 +147,7 @@ function smasMainMenuIntroSystem.onTick()
                 end
             end
         elseif introType == smasMainMenuIntroSystem.introTypes.TOP_TO_BOTTOM then
+            Text.print(autoscrollEventID, 100, 100)
             if autoscrollEventID == 0 then
                 autoscroll.scrollUp(smasMainMenuIntroSystem.firstScrollSpeed)
                 autoscrollEventID = 1
