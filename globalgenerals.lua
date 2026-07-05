@@ -39,6 +39,7 @@ _G.smasZoomSystem = require("smasZoomSystem")
 _G.smasM3ATWSystem = require("smasM3ATWSystem")
 _G.smasOnlinePlay = require("smasOnlinePlay")
 _G.smasSMB3System13 = require("smasSMB3System13")
+_G.smasMagicWandSystem = require("smasMagicWandSystem")
 
 local numberfont = textplus.loadFont("littleDialogue/font/1.ini")
 

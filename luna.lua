@@ -97,6 +97,8 @@ Misc.LUNALUA_EVENTS_TBL["onWarpToOtherLevel"] = true
 Misc.LUNALUA_EVENTS_TBL["onWarpBegin"] = true
 Misc.LUNALUA_EVENTS_TBL["onCharacterChangeSMAS"] = true
 Misc.LUNALUA_EVENTS_TBL["onCharacterAlterationChange"] = true
+Misc.LUNALUA_EVENTS_TBL["onMagicWandEndSequence"] = true
+Misc.LUNALUA_EVENTS_TBL["onMagicWandChangeSection"] = true
 
 --Now, before we get started, we require the most important libraries on the top.
 SysManager.sendToConsole("Loading important libraries...")

@@ -2,6 +2,7 @@
 local npcManager = require("npcManager")
 local smasFunctions = require("smasFunctions")
 local smasBooleans = require("smasBooleans")
+local smasMagicWandSystem = require("smasMagicWandSystem")
 
 --Create the library table
 local sampleNPC = {}
@@ -99,6 +100,7 @@ local sampleNPCSettings = {
 	--lightcolor = Color.white,
 
 	--Define custom properties below
+    selectedSection = 4,
 }
 
 --Applies NPC settings
@@ -133,35 +135,7 @@ npcManager.registerHarmTypes(npcID,
 );
 
 --Custom local definitions below
-local function playerCoordinatesForSectionTransition(plr, newSection, x, y)
-    -- Get current section bounds
-    local currentSection = Section(plr.section)
-    local currentBounds = currentSection.boundary
-    
-    -- Calculate player's relative position within current section (0 to 1)
-    local relX = (plr.x - currentBounds.left) / (currentBounds.right - currentBounds.left)
-    local relY = (plr.y - currentBounds.top) / (currentBounds.bottom - currentBounds.top)
-    
-    -- Get new section bounds
-    local sectionNew = Section(newSection)
-    local sectionNewBounds = sectionNew.boundary
-    
-    -- Apply same relative position to new section
-    local newX = sectionNewBounds.left + relX * (sectionNewBounds.right - sectionNewBounds.left)
-    local newY = sectionNewBounds.top + relY * (sectionNewBounds.bottom - sectionNewBounds.top)
-    
-    -- Override with explicit x/y if provided
-    if x ~= nil then newX = x end
-    if y ~= nil then newY = y end
-    
-    return newX, newY
-end
 
-local function magicWandCalculation(plr)
-    return
-        plr.x + (plr.width / 2 - (plr.width / 2)),
-        plr.y - (plr.height / 2 + 10)
-end
 
 --Register events
 function sampleNPC.onInitAPI()
@@ -193,16 +167,6 @@ function sampleNPC.onTickNPC(v)
         data.hitGroundTimer = 0
         data.hasHitGroundOnce = false
         data.hasHitGroundTwice = false
-
-        data.playerGrabbedWandX = 0
-        data.playerGrabbedWandY = 0
-        data.playerGrabbedWandDirection = 0
-        data.playerGrabbedWandShouldntDie = false
-
-        data.cutsceneTimer = 0
-        data.startTimerCountdown = false
-        data.timerOn0 = false
-        data.isDone = false
 
         Sound.playSFX(122)
 
@@ -243,63 +207,17 @@ function sampleNPC.onTickNPC(v)
     for _,p in ipairs(Player.get()) do
         if Colliders.collide(p, v) then
             data.hasGrabbed = true
-            data.playerGrabbedWand = p
-            data.playerGrabbedWandX = p.x
-            data.playerGrabbedWandY = p.y
-            data.playerGrabbedWandDirection = p.direction
-            p.nonpcinteraction = true
+            if data.wandMoveSFX and data.wandMoveSFX ~= nil then
+                data.wandMoveSFX:Stop()
+            end
+            smasMagicWandSystem.collectWand(p)
+            v:kill()
             break
         end
     end
-    if data.hasGrabbed and not data.isDone then
-        smasBooleans.hasGrabbedMagicWand = true
+    if data.hasGrabbed then
         if data.wandMoveSFX and data.wandMoveSFX ~= nil then
             data.wandMoveSFX:Stop()
-        end
-        data.cutsceneTimer = data.cutsceneTimer + 1
-        if not data.timerOn0 then
-            if data.cutsceneTimer == 1 then
-                Misc.npcToCoins()
-                Sound.muteMusic(data.playerGrabbedWand.section)
-                Sound.playSFX(21)
-            end
-            if data.cutsceneTimer == lunatime.toTicks(4.5) then
-                data.startTimerCountdown = true
-            end
-        else
-            if data.cutsceneTimer == lunatime.toTicks(2.5) then
-                local newX,newY = playerCoordinatesForSectionTransition(data.playerGrabbedWand, 4)
-                data.playerGrabbedWandX = newX
-                data.playerGrabbedWandY = newY
-                data.playerGrabbedWand:teleport(data.playerGrabbedWandX, data.playerGrabbedWandY)
-            end
-            if data.cutsceneTimer >= lunatime.toTicks(8) then
-                data.playerGrabbedWand.y = data.playerGrabbedWand.y + 5
-                data.playerGrabbedWandY = data.playerGrabbedWandY + 5
-                data.playerGrabbedWandShouldntDie = true
-                if data.cutsceneTimer >= lunatime.toTicks(8.5) then
-                    triggerEvent(v.data._settings.eventName)
-                    data.isDone = true
-                end
-            end
-        end
-        smasBooleans.winStateActive = true
-        if data.startTimerCountdown then
-            if Timer.isActive() and Timer.getValue() > 0 then
-                Sound.playSFX(113)
-                if Timer.getValue() >= 100 then
-                    Timer.add(-5)
-                    SaveData.SMASPlusPlus.hud.score = SaveData.SMASPlusPlus.hud.score + 100
-                else
-                    Timer.add(-1)
-                    SaveData.SMASPlusPlus.hud.score = SaveData.SMASPlusPlus.hud.score + 10
-                end
-            else
-                Sound.playSFX(114)
-                data.timerOn0 = true
-                data.cutsceneTimer = 0
-                data.startTimerCountdown = false
-            end
         end
     end
 end
@@ -311,40 +229,6 @@ function sampleNPC.onDrawNPC(v)
 
     if data.hasHitGroundTwice or data.hasGrabbed then
         v.animationFrame = 0
-    end
-    if data.hasGrabbed and not data.isDone then
-        NPC.config[NPC_ID].nogravity = true
-        data.playerGrabbedWand.x = data.playerGrabbedWandX
-        data.playerGrabbedWand.y = data.playerGrabbedWandY
-        data.playerGrabbedWand.direction = data.playerGrabbedWandDirection
-        v.x, v.y = magicWandCalculation(data.playerGrabbedWand)
-        v.despawnTimer = 1000
-        data.playerGrabbedWand.frame = Playur.jumpPose(data.playerGrabbedWand)
-        for _,p in ipairs(Player.get()) do
-            if p.idx ~= data.playerGrabbedWand.idx then
-                p.section = data.playerGrabbedWand.section
-                p.x = (data.playerGrabbedWand.x+(data.playerGrabbedWand.width/2)-(p.width/2))
-                p.y = (data.playerGrabbedWand.y+data.playerGrabbedWand.height-p.height)
-                p.speedX,p.speedY = 0,0
-                p.forcedState,p.forcedTimer = 8,-data.playerGrabbedWand.idx
-            end
-        end
-    end
-end
-
-function sampleNPC.onSFXStart(eventObj, soundID)
-    for k,v in ipairs(NPC.get(NPC_ID)) do
-        if v.data.hasGrabbed and (soundID == 1 or soundID == 10) then
-            eventObj.cancelled = true
-        end
-    end
-end
-
-function sampleNPC.onPlayerKill(eventObj)
-    for k,v in ipairs(NPC.get(NPC_ID)) do
-        if v.data.playerGrabbedWandShouldntDie then
-            eventObj.cancelled = true
-        end
     end
 end
 
