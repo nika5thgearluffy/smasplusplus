@@ -25,4 +25,35 @@ function onEvent(eventName)
     if eventName == "Door Forms" then
         Sound.playSFX(20)
     end
+    if eventName == "Ending 1" then
+        for _,p in ipairs(Player.get()) do
+            p:teleport(-99904, -100416)
+            p.direction = 1
+        end
+        Sound.playSFX(45)
+    end
+end
+
+local function magicWandCalculation(plr)
+    return
+        plr.x + (plr.width / 2 - (plr.width / 2)),
+        plr.y - (plr.height / 2 + 10)
+end
+
+function onDraw()
+    for _,p in ipairs(Player.get()) do
+        if smasBooleans.hasGrabbedMagicWand then
+            tempX,tempY = magicWandCalculation(p)
+            Graphics.drawImageWP(
+                Graphics.sprites.npc[755].img,
+                tempX,
+                tempY,
+                0,
+                0,
+                NPC.config[755].width,
+                NPC.config[755].height,
+                -15
+            )
+        end
+    end
 end

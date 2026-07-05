@@ -65,5 +65,7 @@ smasBooleans.disablePlayerKeys = false
 smasBooleans.winStateActive = false
 -- If we're online.
 smasBooleans.isOnline = false
+-- If a player has grabbed a magic wand on SMB3 levels.
+smasBooleans.hasGrabbedMagicWand = false
 
 return smasBooleans

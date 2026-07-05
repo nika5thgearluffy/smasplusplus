@@ -10,11 +10,11 @@ function onStart()
 end
 
 function onLoadSection1()
-    autoscrolla.scrollRight(1)
+    autoscroll.scrollRight(1)
 end
 
 function onLoadSection2()
-    autoscrolla.scrollRight(1)
+    autoscroll.scrollRight(1)
 end
 
 function onEvent(eventName)

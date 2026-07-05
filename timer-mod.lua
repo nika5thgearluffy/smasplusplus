@@ -150,7 +150,7 @@ function timer.onTick()
         
 	end
 	
-	if timer_deathTimer <= timer.hurryTime * second and not timer_hurry then
+	if timer_deathTimer <= timer.hurryTime * second and not timer_hurry and not smasBooleans.winStateActive then
 		SFX.play(timer.audio_hurryup)
 		timer_hurry = true
 	end

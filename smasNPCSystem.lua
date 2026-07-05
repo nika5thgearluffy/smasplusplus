@@ -56,13 +56,13 @@ local function awardComboPoints(shell, idx)
         Misc.givePoints(10, pointPos, false)  -- SCORE_1UP
     else
         local pointIdx = pointsTable[shellComboCount[idx]]
-        Misc.givePoints(pointIdx, pointPos, false)
+        Misc.givePoints(pointIdx, pointPos, true)
     end
 end
 
 function smasNPCSystem.onInitAPI()
     registerEvent(smasNPCSystem,"onStart")
-    --registerEvent(smasNPCSystem,"onTick")
+    registerEvent(smasNPCSystem,"onTick")
     registerEvent(smasNPCSystem,"onDraw")
 end
 
@@ -188,69 +188,74 @@ function smasNPCSystem.onStart()
     end
 end
 
+-- Set to true if koopa shells should give 1UPs when stomped by a block
+smasNPCSystem.enableTurtleTipping = false
+
 -- [CLAUDE AI WAS USED IN THIS PART OF THE CODE]
 function smasNPCSystem.onTick()
-    -- Loop through all koopa shell NPCs
-    for k, shell in ipairs(NPC.get(NPC.SHELL)) do
-        local idx = shell.idx
+    if smasNPCSystem.enableTurtleTipping then
+        -- Loop through all koopa shell NPCs
+        for k, shell in ipairs(NPC.get(NPC.SHELL)) do
+            local idx = shell.idx
 
-        if shellPrevX[idx] == nil then
-            shellPrevX[idx] = shell.x
-            shellComboCount[idx] = 0
-            shellStuck[idx] = false
-        end
-
-        -- Check if shell is active OR stuck
-        if shell.speedX ~= 0 then
-            local posChanged = math.abs(shell.x - shellPrevX[idx]) > 0.1
-
-            if not posChanged and not shellStuck[idx] then
-                local nearbyBlocks = Block.getIntersecting(
-                    shell.x - 2, shell.y,
-                    shell.x + shell.width + 2, shell.y + shell.height
-                )
-
-                if #nearbyBlocks > 0 then
-                    shell.speedX = 0
-                    shellStuck[idx] = true
-                end
+            if shellPrevX[idx] == nil then
+                shellPrevX[idx] = shell.x
+                shellComboCount[idx] = 0
+                shellStuck[idx] = false
             end
 
-            if shellStuck[idx] then
-                local touchingNPCs = NPC.getIntersecting(
-                    shell.x, shell.y,
-                    shell.x + shell.width, shell.y + shell.height
-                )
+            -- Check if shell is active OR stuck
+            if shell.speedX ~= 0 then
+                local posChanged = math.abs(shell.x - shellPrevX[idx]) > 0.1
 
-                for _, npc in ipairs(touchingNPCs) do
-                    if npc ~= shell then
-                        awardComboPoints(shell, idx)
+                if not posChanged and not shellStuck[idx] then
+                    local nearbyBlocks = Block.getIntersecting(
+                        shell.x - 16, shell.y,
+                        shell.x + shell.width + 16, shell.y + shell.height
+                    )
+
+                    if #nearbyBlocks > 0 then
+                        shell.speedX = 0
+                        shellStuck[idx] = true
                     end
                 end
 
-                for i = 1, Player.count() do
-                    local playerIntersects = Player.getIntersecting(
+                if shellStuck[idx] then
+                    local touchingNPCs = NPC.getIntersecting(
                         shell.x, shell.y,
                         shell.x + shell.width, shell.y + shell.height
                     )
 
-                    for _, pl in ipairs(playerIntersects) do
-                        if pl.speedY > 0 and pl.y - pl.height <= shell.y - 8 then
-                            pl.speedY = -7
+                    for _, npc in ipairs(touchingNPCs) do
+                        if npc ~= shell then
                             awardComboPoints(shell, idx)
                         end
                     end
-                end
-            else
-                shellComboCount[idx] = 0
-            end
 
-            shellPrevX[idx] = shell.x
-        else
-            -- Shell is fully stopped and not stuck, clean up
-            shellPrevX[idx] = nil
-            shellComboCount[idx] = nil
-            shellStuck[idx] = nil
+                    for i = 1, Player.count() do
+                        local playerIntersects = Player.getIntersecting(
+                            shell.x, shell.y,
+                            shell.x + shell.width, shell.y + shell.height
+                        )
+
+                        for _, pl in ipairs(playerIntersects) do
+                            if pl.speedY > 0 and pl.y - pl.height <= shell.y - 8 then
+                                pl.speedY = -7
+                                awardComboPoints(shell, idx)
+                            end
+                        end
+                    end
+                else
+                    shellComboCount[idx] = 0
+                end
+
+                shellPrevX[idx] = shell.x
+            else
+                -- Shell is fully stopped and not stuck, clean up
+                shellPrevX[idx] = nil
+                shellComboCount[idx] = nil
+                shellStuck[idx] = nil
+            end
         end
     end
 end
