@@ -357,6 +357,10 @@ function smasHudSystem.deathAnimationRoutine() --The entire animation when dying
                 Routine.waitFrames(110, true)
                 smasBooleans.musicMuted = false
                 Misc.unpause()
+                -- Reload level with the selected editor powerup if set to do so
+                if GameData.SMASPlusPlus.editor.shouldReloadWithPowerup then
+                    GameData.SMASPlusPlus.editor.reloadingWithPowerup = true
+                end
                 if not gameoveractivate then --If not in a gameover state...
                     fadeoutcompleted = true --...when waited enough time, unpause and reload the level
                 end

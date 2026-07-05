@@ -167,8 +167,7 @@ if SaveData.reloadLevelFilenameInEditor == nil then
     SaveData.reloadLevelFilenameInEditor = false
 end
 
-local function editorreloadchooser()
-    Sound.playSFX("console/console_info.ogg")
+local function reloadChooserMain()
     reloadChooser = pauseplus.getSelectionValue("editormenu","Reload on Level Win Exit to")
     if reloadChooser == "World Map/Hub" then
         SaveData.reloadLevelFilenameInEditor = false
@@ -182,11 +181,16 @@ local function editorreloadchooser()
     end
 end
 
+local function editorreloadchooser()
+    Sound.playSFX("console/console_info.ogg")
+    reloadChooserMain()
+end
+
 local function toggleeditorpowerupstate()
-    if pauseplus.getSelectionValue("editormenu","Reload with Selected Powerup") then
-        SaveData.enablePowerupReloadOnEditor = true
+    if pauseplus.getSelectionValue("editormenu","Reload after Death with Editor Powerup") then
+        GameData.SMASPlusPlus.editor.shouldReloadWithPowerup = true
     else
-        SaveData.enablePowerupReloadOnEditor = false
+        GameData.SMASPlusPlus.editor.shouldReloadWithPowerup = false
     end
 end
 
@@ -688,13 +692,18 @@ local function disable2player()
 end
 
 function pausemenu2.onDraw()
-    sectionNumberArea = pauseplus.getSelectionValue("editormenu","Select Area")
-    if sectionNumberArea == 0 then
-        GameData.editorAreaStartingPoint = 0
-    else
-        for i = 1, Warp.count() do
-            if sectionNumberArea == i then
-                GameData.editorAreaStartingPoint = i
+    if lunatime.drawtick() == 1 then
+        if Misc.inEditor() then
+            if GameData.SMASPlusPlus.editor.reloadingWithPowerup then
+                local testModeSettings = Editor.getSettings()
+                for _,p in ipairs(Player.get()) do
+                    p.powerup = testModeSettings.player1.powerup
+                end
+                -- Player 2, if valid, needs its own powerup set since it's a separate option on the test mode menu
+                if player2 and player2.isValid then
+                    player2.powerup = testModeSettings.player2.powerup
+                end
+                GameData.SMASPlusPlus.editor.reloadingWithPowerup = false
             end
         end
     end
@@ -1500,11 +1509,8 @@ function pauseSpecifics()
         --Editor Menu
         if Misc.inEditor() then
             pauseplus.createSubmenu("editormenuhud",{headerText = "<size 1.5>Editor Menu (Hud Options)</size>"})
-            pauseplus.createOption("editormenu",{text = "Instantly Restart Level",description = "Instantly restart the level, at the selected area on this menu.",pauseplus.save,closeMenu = true, actions = {function() Level.load(Level.filename(), nil, GameData.editorAreaStartingPoint) end}})
-            pauseplus.createOption("editormenu",{text = "Reload on Level Win Exit to",selectionType = pauseplus.SELECTION_NAMES,description = "Whenever winning the level, reload to this specific area.",selectionNames = {"World Map","Restart Level","Boot Menu"}, action = function() editorreloadchooser() end})
-            pauseplus.createOption("editormenu",{text = "Choose Powerup",selectionType = pauseplus.SELECTION_NAMES,description = "Choose the powerup of every player. This will affect all players.",selectionNames = {POWERUP_SMALL, POWERUP_BIG, POWERUP_FIRE, POWERUP_LEAF, POWERUP_TANOOKI, POWERUP_HAMMER, POWERUP_ICE}, action = function() debugpowerup() end})
-            pauseplus.createOption("editormenu",{text = "Select Area",description = "Select the area you want to load. This will be affected by the next restart.",selectionType = pauseplus.SELECTION_NUMBERS,selectionDefault = 0,selectionMin = 0,selectionMax = Warp.count(),selectionStep = 1,selectionFormat = "%d%%"})
-            pauseplus.createOption("editormenu",{text = "Reload with Selected Powerup",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Reload with the selected powerup in this menu, or not.", action = function() toggleeditorpowerupstate() end})
+            pauseplus.createOption("editormenu",{text = "Reload on Level Win Exit to",selectionType = pauseplus.SELECTION_NAMES,description = "Whenever winning the level, reload to this specific area.",selectionNames = {"World Map/Hub","Restart Level","Boot Menu"}, action = function() editorreloadchooser() end})
+            pauseplus.createOption("editormenu",{text = "Reload after Death with Editor Powerup",selectionType = pauseplus.SELECTION_CHECKBOX,description = "Reload with the selected editor powerup after dying, or not.", action = function() toggleeditorpowerupstate() end})
             pauseplus.createOption("editormenu",{text = "Hud Options",goToSubmenu = "editormenuhud",description = "Options specific for the Hud."})
             
             --Editor Menu (Hud Options)
@@ -1589,17 +1595,14 @@ function pauseSpecifics()
     sfxVolume()
     setShouldResizeWindow()
     setShouldCenterWindow()
+    if Misc.inEditor() then
+        toggleeditorpowerupstate()
+        reloadChooserMain()
+    end
 end
 
 --Main Menu
 function pausemenu2.onStart()
-    if Misc.inEditor() then
-        for _,p in ipairs(Player.get()) do
-            if SaveData.enablePowerupReloadOnEditor then
-                p.powerup = GameData.____editorPowerupState
-            end
-        end
-    end
     pauseSpecifics()
 end
 

@@ -8,6 +8,7 @@ GameData.SMASPlusPlus.audio = GameData.SMASPlusPlus.audio or {}
 GameData.SMASPlusPlus.game = GameData.SMASPlusPlus.game or {}
 GameData.SMASPlusPlus.misc = GameData.SMASPlusPlus.misc or {}
 GameData.SMASPlusPlus.online = GameData.SMASPlusPlus.online or {}
+GameData.SMASPlusPlus.editor = GameData.SMASPlusPlus.editor or {}
 
 --First time SaveData settings, for resolutions and other settings
 if SaveData.SMASPlusPlus == nil then
@@ -224,6 +225,13 @@ end
 
 if SaveData.SMASPlusPlus.misc.resolutions.shouldCenterWindow == nil then
     SaveData.SMASPlusPlus.misc.resolutions.shouldCenterWindow = false
+end
+
+if GameData.SMASPlusPlus.editor.reloadingWithPowerup == nil then
+    GameData.SMASPlusPlus.editor.reloadingWithPowerup = false
+end
+if GameData.SMASPlusPlus.editor.shouldReloadWithPowerup == nil then
+    GameData.SMASPlusPlus.editor.shouldReloadWithPowerup = false
 end
 
 
