@@ -142,9 +142,9 @@ function sampleNPC.onInitAPI()
 	npcManager.registerEvent(npcID, sampleNPC, "onTickNPC")
 	--npcManager.registerEvent(npcID, sampleNPC, "onTickEndNPC")
 	npcManager.registerEvent(npcID, sampleNPC, "onDrawNPC")
-	registerEvent(sampleNPC, "onSFXStart")
-    registerEvent(sampleNPC, "onPlayerKill")
 end
+
+local animationFrames = {1,2,3,4,5,6,7,8}
 
 function sampleNPC.onTickNPC(v)
 	--Don't act during time freeze
@@ -168,6 +168,11 @@ function sampleNPC.onTickNPC(v)
         data.hasHitGroundOnce = false
         data.hasHitGroundTwice = false
 
+        data.animationFrame = 1
+        data.animationArray = 0
+        data.animationSpeed = 8
+        data.animationTimer = 0
+
         Sound.playSFX(122)
 
 		data.initialized = true
@@ -184,9 +189,20 @@ function sampleNPC.onTickNPC(v)
 	end
 	
 	-- Put main AI below here
+    if not (data.hitGroundState == 2) and not data.hasHitGroundTwice then
+        data.animationTimer = data.animationTimer + 1
+        data.animationArray = data.animationTimer % data.animationSpeed
+        if data.animationArray >= (data.animationSpeed - 1) then
+            data.animationFrame = data.animationFrame + 1
+        end
+        if data.animationFrame > #animationFrames then
+            data.animationFrame = 1
+        end
+    end
     if data.hitGroundState == 1 and not data.hasHitGroundTwice then
         data.hitGroundTimer = data.hitGroundTimer + 1
         if data.hitGroundTimer == 1 then
+            data.animationSpeed = 2
             data.wandMoveSFX = Sound.playSFX(123, 1, 0, 12)
         end
     end
@@ -211,7 +227,7 @@ function sampleNPC.onTickNPC(v)
                 data.wandMoveSFX:Stop()
             end
             smasMagicWandSystem.collectWand(p)
-            v:kill()
+            v:kill(HARM_TYPE_OFFSCREEN)
             break
         end
     end
@@ -227,6 +243,12 @@ function sampleNPC.onDrawNPC(v)
 
 	local data = v.data
 
+    if not (data.hitGroundState == 2) and not data.hasHitGroundTwice then
+        if data.animationFrame == nil then
+            data.animationFrame = 1
+        end
+        v.animationFrame = animationFrames[data.animationFrame] - 1
+    end
     if data.hasHitGroundTwice or data.hasGrabbed then
         v.animationFrame = 0
     end
