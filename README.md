@@ -17,6 +17,8 @@
     <a href="https://github.com/nika5thgearluffy/smasplusplus/issues">Report Bugs</a>
     ·
     <a href="https://github.com/nika5thgearluffy/smasplusplus/wiki">How to Install & Other Info</a>
+    ·
+    <a href="https://discord.gg/PNJhPJsH7h">Discord Server</a>
     <br />
   </p>
 </div>
