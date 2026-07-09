@@ -21,3 +21,12 @@ function onEvent(eventName)
         Sound.playSFX(20)
     end
 end
+
+function onMagicWandEndSequence()
+    for _,p in ipairs(Player.get()) do
+        p:teleport(-99872, -100416)
+        p.direction = 1
+    end
+    Sound.playSFX(45)
+    triggerEvent("Ending 1")
+end
