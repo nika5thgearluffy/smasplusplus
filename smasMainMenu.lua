@@ -17,6 +17,10 @@ local aw = require("anotherwalljump")
 _G.smasMainMenuSystem = require("smasMainMenuSystem")
 _G.smasMainMenuIntroSystem = require("smasMainMenuIntroSystem")
 
+-- This is needed to immediately set pauseplus SaveData values for when first booting SMAS++
+local pausemenu2 = require("pausemenu2")
+smasBooleans.disablePauseMenu = true -- Duh
+
 local ready = false
 
 smasMainMenu.sonicManiaFont = textplus.loadFont("littleDialogue/font/sonicMania-smallFont.ini")
@@ -553,8 +557,8 @@ function BootGameHelpPreExecute() --Boot the game help level, the boot menu vers
     Sound.muteMusic(-1)
     Routine.wait(0.4)
     Misc.saveGame()
-    --GameData.gameHelpIntroActive = true
-    Level.load("SMAS - Game Help (Boot Menu).lvlx")
+    GameData.gameHelpIntroActive = true
+    Level.load("SMAS - Game Help.lvlx")
 end
 
 function BootOnlinePreExecute() --Boot the Online Menu level
