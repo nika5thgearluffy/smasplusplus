@@ -1138,6 +1138,7 @@ smasTables.soundNamesInOrder = {
     "luigi-scuttle-2", -- 171 (141 for scuttle 1)
     "luigi-scuttle-3", -- 172
     "luigi-scuttle-4", -- 173
+    "e-coin", -- 174
 }
 
 smasTables.keyboardMap = {
