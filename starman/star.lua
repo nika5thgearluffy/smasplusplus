@@ -59,23 +59,49 @@ end
 
 Player._hasStarman = starman.active;
 
+local function npcKillCheck(npc,...) -- npc:kill but it returns if it actually did anything
+    local oldKilled     = npc:mem(0x122,FIELD_WORD)
+    local oldProjectile = npc:mem(0x136,FIELD_BOOL)
+    local oldHitCount   = npc:mem(0x148,FIELD_FLOAT)
+    local oldImmune     = npc:mem(0x156,FIELD_WORD)
+    local oldID         = npc.id
+    local oldSpeedX     = npc.speedX
+    local oldSpeedY     = npc.speedY
+
+    npc:kill(...)
+
+    return (
+           oldKilled     ~= npc:mem(0x122,FIELD_WORD)
+        or oldProjectile ~= npc:mem(0x136,FIELD_BOOL)
+        or oldHitCount   ~= npc:mem(0x148,FIELD_FLOAT)
+        or oldImmune     ~= npc:mem(0x156,FIELD_WORD)
+        or oldID         ~= npc.id
+        or oldSpeedX     ~= npc.speedX
+        or oldSpeedY     ~= npc.speedY
+    )
+end
+
+local function startMusicInternal()
+    starSoundObject = SFX.play(starman.sfxFile, Audio.MusicVolume() / 100, 0)
+    if(musicvolcache == nil) then
+        musicvolcache = Audio.MusicVolume();
+        if smasBooleans.musicMuted then
+            Audio.MusicVolume(0)
+        end
+        if not smasBooleans.pSwitchActive then
+            smasBooleans.musicMuted = true
+            Sound.refreshMusic(-1)
+            Audio.MusicVolume(0)
+            Sound.muteMusic(-1)
+        end
+    end
+end
+
 local function startMusic()
     if(starman.active() and starSoundObject ~= nil) then
         return
     else
-    starSoundObject = SFX.play(starman.sfxFile, Audio.MusicVolume() / 100, 0)
-        if(musicvolcache == nil) then
-            musicvolcache = Audio.MusicVolume();
-            if smasBooleans.musicMuted then
-                Audio.MusicVolume(0)
-            end
-            if not smasBooleans.pSwitchActive then
-                smasBooleans.musicMuted = true
-                Sound.refreshMusic(-1)
-                Audio.MusicVolume(0)
-                Sound.muteMusic(-1)
-            end
-        end
+        startMusicInternal()
     end
 end
 
@@ -318,14 +344,16 @@ function starman.onTick()
         for k,v in ipairs(NPC.get(NPC.HITTABLE)) do
             for _,p in ipairs(Player.get()) do
                 if(v and v.isValid and starActivePlayers[p.idx] and Collisionz.CheckCollisionNoEntity(p.x - 2, p.y + 2, p.width + 2, p.height + 2, v.x, v.y, v.width, v.height)) then
-                    local oldScore = NPC.config[v.id].score
-                    if starScoreboard[p.idx] < 10 then
-                        starScoreboard[p.idx] = starScoreboard[p.idx] + 1
+                    local checkKill = npcKillCheck(v, HARM_TYPE_NPC)
+                    if checkKill then
+                        local oldScore = NPC.config[v.id].score
+                        if starScoreboard[p.idx] < 10 then
+                            starScoreboard[p.idx] = starScoreboard[p.idx] + 1
+                        end
+                        NPC.config[v.id].score = 0
+                        Misc.givePoints(starScoreboard[p.idx],{x = v.x+v.width*0.5,y = v.y+v.height*0.5},true)
+                        Routine.run(restoreOldScoreRoutine, v.id, oldScore)
                     end
-                    NPC.config[v.id].score = 0
-                    Misc.givePoints(starScoreboard[p.idx],{x = v.x+v.width*0.5,y = v.y+v.height*0.5},true)
-                    Routine.run(restoreOldScoreRoutine, v.id, oldScore)
-                    v:harm(HARM_TYPE_NPC)
                 end
             end
         end
